@@ -1,0 +1,4 @@
+set solib-search-path ./obj/local/armeabi
+directory /Developer/Android/android-ndk-r8b/platforms/android-14/arch-arm/usr/include /Developer/Android/android-ndk-r8b/sources/cxx-stl/gnu-libstdc++/4.6/include /Developer/Android/android-ndk-r8b/sources/cxx-stl/gnu-libstdc++/4.6/libs/armeabi/include jni/dictionary jni/huffman
+file ./obj/local/armeabi/app_process
+
