@@ -6,6 +6,8 @@
 *.dex
 
 *.DS_Store
+*.o
+*.d
 
 # Java class files
 *.class
