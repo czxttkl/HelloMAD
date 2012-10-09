@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-	<item android:id="@+id/settings"
-		android:title="@string/sudoku_settings_label"
-		android:alphabeticShortcut="@string/sudoku_settings_shortcut" />
-</menu>
