@@ -14,8 +14,11 @@ public class BoggleMusic {
 		// Start music only if not disabled in preferences
 		if (BogglePrefs.getMusic(context)) {
 			mp = MediaPlayer.create(context, resource);
-			mp.setLooping(true);
-			mp.start();
+			if (mp != null) {
+				mp.setLooping(true);
+				mp.setVolume(0.2f, 0.2f);
+				mp.start();
+			}
 		}
 	}
 

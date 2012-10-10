@@ -299,15 +299,13 @@ public class BoggleGame extends Activity implements OnClickListener {
     	// fill list view
         listView.setAdapter(
 		 	new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, getData())
-		); 
-        BoggleMusic.play(this, R.raw.boggle_game);
+		);         
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		Log.d(TAG, "onPause");
-		BoggleMusic.stop(this);		
+		Log.d(TAG, "onPause");		
 		savePreferences();		
 		pauseGame(true);
 	}
@@ -340,9 +338,11 @@ public class BoggleGame extends Activity implements OnClickListener {
 		if (paused) {
 			pauseButton.setText("Resume");
 			handler.removeCallbacks(runnable);
+			BoggleMusic.stop(this);
 		} else {
 			pauseButton.setText("Pause");
 			handler.postDelayed(runnable, 1000);
+			BoggleMusic.play(this, R.raw.boggle_game);
 		}
 		this.puzzleView.invalidate();
 	}
