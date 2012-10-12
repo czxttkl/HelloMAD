@@ -61,11 +61,11 @@ public class Boggle extends Activity implements OnClickListener {
 		}
 	}
 
-	private void startGame(int i) {
-		Log.d(TAG, "clicked on " + i);
-		Intent intent = new Intent(this, BoggleGame.class);
-		startActivity(intent);
-	}
+//	private void startGame(int i) {
+//		Log.d(TAG, "clicked on " + i);
+//		Intent intent = new Intent(this, BoggleGame.class);
+//		startActivity(intent);
+//	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

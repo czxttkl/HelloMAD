@@ -20,15 +20,13 @@
     <string name="sudoku_about_label">About</string>
     <string name="sudoku_exit_label">Exit</string>
     <string name="sudoku_about_title">About Android Sudoku</string>
-    <string name="sudoku_about_text">\
+    <string name="sudoku_about_text">\    	
 		Sudoku is a logic-based number placement puzzle.
 		Starting with a partially completed 9x9 grid, the
 		objective is to fill the grid so that each
 		row, each column, and each of the 3x3 boxes
 		(also called <i>blocks</i>) contains the digits
-		1 to 9 exactly once. 
-		The background music was downloaded from a Chinese
-		web site a long time ago.
+		1 to 9 exactly once. 		
 	</string>
     <string name="sudoku_game_name">Sudoku</string>
     <string name="sudoku_title">Android Sudoku</string>
@@ -59,6 +57,8 @@
     <string name="boggle_time_label">Time Left</string>
     <string name="boggle_about_title">About Android Boggle</string>
     <string name="boggle_about_text">\
+    	The background music was download from a Chinese
+		web site a long time ago.
 		The game begins by shaking a covered tray of sixteen cubic dice, 
 		each with a different letter printed on each of its sides. The 
 		dice settle into a 4x4 tray so that only the top letter of each 

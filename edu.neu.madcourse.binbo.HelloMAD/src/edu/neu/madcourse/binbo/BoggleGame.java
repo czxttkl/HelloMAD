@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
@@ -76,7 +77,7 @@ public class BoggleGame extends Activity implements OnClickListener {
 	private String boggleString = "";
 	private BogglePuzzleView puzzleView;
 	
-	private final int PREQUENCY[] = {
+	private final int FREQUENCY[] = {
 		326395, 73910, 169177, 129257, 437303, 46188, 98557, 104164, 
 		355476, 6416, 33829, 215219, 119469, 285562, 280921, 127706, 
 		6784, 280998, 326647, 262874, 146434, 37786, 27811, 11837, 74044, 17531
@@ -102,10 +103,22 @@ public class BoggleGame extends Activity implements OnClickListener {
 	private int game_best_score = 0;	
 	private List<String> wordsFound = new ArrayList<String>();
 	
-	ToneGenerator tonePlayer = null;  
+	private ToneGenerator tonePlayer = null;  
+	private int defTextColor = Color.WHITE;
 	
-	Handler handler = new Handler();
-	Runnable runnable = new Runnable() {
+	Handler colorHandler = new Handler();
+	Runnable colorRunnable = new Runnable() {
+		public void run() {
+			int curColor = timeView.getCurrentTextColor(); 
+			
+			timeView.setTextColor(
+				(curColor == defTextColor ? Color.RED : defTextColor));
+			colorHandler.postDelayed(this, 500);
+		}
+	};
+	
+	Handler textHandler  = new Handler();
+	Runnable textRunnable = new Runnable() {
 	    public void run() {	        
 	    	// format and set the time
 	    	game_time--;
@@ -114,11 +127,21 @@ public class BoggleGame extends Activity implements OnClickListener {
 	    	if (second.length() == 1) {
 	    		second = "0" + second;
 	    	}
-	    	timeView.setText(minute + ":" + second);
+	    	
+	    	if (game_time <= 20) {
+	    		if (game_time == 20) {
+	    			colorHandler.postDelayed(colorRunnable, 500);
+	    		}
+	    		if (tonePlayer != null) {
+	    			tonePlayer.startTone(ToneGenerator.TONE_DTMF_5, 100);
+	    		}	    		
+	    	} 
+	    	timeView.setText(minute + ":" + second);	    	
 	    	
 	    	if (game_time > 0) { 
-	    		handler.postDelayed(this, 1000);
-	    	} else {	    		
+	    		textHandler.postDelayed(this, 1000);
+	    	} else {	    	
+	    		timeView.setTextColor(defTextColor);
 	    		doGameOver();
 	    	}
 	    }
@@ -147,7 +170,9 @@ public class BoggleGame extends Activity implements OnClickListener {
 		listView  = (ListView)findViewById(R.id.listView);
 		//resetButton = (Button)findViewById(R.id.boggle_reset_button); 		
  		pauseButton = (Button)findViewById(R.id.boggle_pause_button);
-		
+ 		// get current text color of timeView
+ 		defTextColor = timeView.getCurrentTextColor();
+	
  		// register events handler
  		//resetButton.setOnClickListener(this);
 		pauseButton.setOnClickListener(this);				      
@@ -179,6 +204,19 @@ public class BoggleGame extends Activity implements OnClickListener {
  		// If the activity is restarted, do a continue next time
  		getIntent().putExtra(KEY_COMMAND, CONTINUE); 	
  		tonePlayer = new ToneGenerator(AudioManager.STREAM_MUSIC, 70); 
+ 		
+ 		// create the boggle music
+ 		BoggleMusic.create(this, R.raw.boggle_game);
+ 		if (command == NEW_GAME) {
+ 			BoggleMusic.reset();
+ 		}
+	}
+	
+	@Override
+	protected void onDestroy() {
+		BoggleMusic.stop(this);
+		// TODO Auto-generated method stub
+		super.onDestroy();		
 	}
 	
 	private void loadPreferences(int command) {
@@ -271,6 +309,11 @@ public class BoggleGame extends Activity implements OnClickListener {
         laParams = llButtons.getLayoutParams();
         laParams.width = (int)((width - height) * (1 - GOLDEN_DIVIDE));
         llButtons.setLayoutParams(laParams);
+        
+        LinearLayout llLog = (LinearLayout)findViewById(R.id.linearLayoutLog);
+        laParams = llLog.getLayoutParams();
+        laParams.height = (int)(height * (GOLDEN_DIVIDE + 0.1));
+        llLog.setLayoutParams(laParams);
 	}
 	
 	private List<String> getData() {        
@@ -323,8 +366,9 @@ public class BoggleGame extends Activity implements OnClickListener {
 	}
 	
 	private void doGameOver() {
-		game_over = true;
-		handler.removeCallbacks(runnable);		
+		game_over = true;		
+		textHandler.removeCallbacks(textRunnable);
+		colorHandler.removeCallbacks(colorRunnable);
 		pauseButton.setEnabled(false);
 		puzzleView.invalidate();
 	}
@@ -337,12 +381,16 @@ public class BoggleGame extends Activity implements OnClickListener {
 		this.paused = paused;
 		if (paused) {
 			pauseButton.setText("Resume");
-			handler.removeCallbacks(runnable);
-			BoggleMusic.stop(this);
+			textHandler.removeCallbacks(textRunnable);
+			colorHandler.removeCallbacks(colorRunnable);
+			BoggleMusic.pause();
 		} else {
-			pauseButton.setText("Pause");
-			handler.postDelayed(runnable, 1000);
-			BoggleMusic.play(this, R.raw.boggle_game);
+			pauseButton.setText("Pause");			
+			textHandler.postDelayed(textRunnable, 1000);
+			if (game_time <= 20) {
+				colorHandler.postDelayed(colorRunnable, 500);
+			}
+			BoggleMusic.play();
 		}
 		this.puzzleView.invalidate();
 	}
@@ -409,12 +457,12 @@ public class BoggleGame extends Activity implements OnClickListener {
 		
 		int i;
 		for (i = 0; i < 26; ++i) {
-			r += PREQUENCY[i];
+			r += FREQUENCY[i];
 			if (l < t && t < r) {
 				letter = (char)(65 + i);
 				break;
 			}
-			l += PREQUENCY[i];
+			l += FREQUENCY[i];
 		}		
 		assert(i < 26);
 		
@@ -427,9 +475,9 @@ public class BoggleGame extends Activity implements OnClickListener {
 	}
 
 	/** Change the tile at the given coordinates */
-	private void setTile(int x, int y, char value) {
-		puzzle[y * 4 + x] = value;
-	}
+//	private void setTile(int x, int y, char value) {
+//		puzzle[y * 4 + x] = value;
+//	}
 
 	/** Return a string for the tile at the given coordinates */
 	protected String getTileString(int x, int y) {
@@ -489,7 +537,7 @@ public class BoggleGame extends Activity implements OnClickListener {
 			if (bonus <= 1) {
 				toastText = "Good! +";
 			} else if (bonus > 1 && bonus <= 4) {
-				toastText = "Greate! +";
+				toastText = "Great! +";
 			} else {
 				toastText = "Excellent! +";
 			}
@@ -513,4 +561,5 @@ public class BoggleGame extends Activity implements OnClickListener {
 		
 		return bonus;
 	}
+	
 }

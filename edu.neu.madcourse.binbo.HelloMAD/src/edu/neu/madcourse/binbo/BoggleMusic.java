@@ -5,10 +5,10 @@ import android.media.MediaPlayer;
 
 public class BoggleMusic {
 	private static MediaPlayer mp = null;
-
+	private static int seekPos = 0;
 	/** Stop old song and start new one */
 
-	public static void play(Context context, int resource) {
+	public static void create(Context context, int resource) {
 		stop(context);
 
 		// Start music only if not disabled in preferences
@@ -16,9 +16,32 @@ public class BoggleMusic {
 			mp = MediaPlayer.create(context, resource);
 			if (mp != null) {
 				mp.setLooping(true);
-				mp.setVolume(0.2f, 0.2f);
+				mp.setVolume(0.2f, 0.2f);				
+			}
+		}
+	}
+	
+	public static void play() {
+		if (mp != null) {
+			if (!mp.isPlaying()) {
 				mp.start();
 			}
+			mp.seekTo(seekPos);
+		}
+	}
+	
+	public static void reset() {
+		if (mp != null) {
+			seekPos = 0;
+		}
+	}
+	
+	public static void pause() {
+		if (mp != null) {
+			if (mp.isPlaying()) {
+				mp.pause();
+				seekPos = mp.getCurrentPosition();
+			}			
 		}
 	}
 
