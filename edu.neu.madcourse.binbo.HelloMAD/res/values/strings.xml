@@ -48,6 +48,7 @@
     <string name="boggle_continue_label">Continue</string>
     <string name="boggle_new_game_label">New Game</string>
     <string name="boggle_about_label">About</string>
+    <string name="boggle_acknowledge_label">Acknowledge</string>
     <string name="boggle_exit_label">Exit</string>
     <string name="boggle_reset_label">Reset</string>
     <string name="boggle_pause_label">Pause</string>
@@ -56,13 +57,17 @@
     <string name="boggle_best_score_label">Best:</string>
     <string name="boggle_time_label">Time Left</string>
     <string name="boggle_about_title">About Android Boggle</string>
-    <string name="boggle_about_text">\
-    	The background music was download from a Chinese
-		web site a long time ago.
+    <string name="boggle_about_text">\    	
 		The game begins by shaking a covered tray of sixteen cubic dice, 
 		each with a different letter printed on each of its sides. The 
 		dice settle into a 4x4 tray so that only the top letter of each 
 		cube is visible. After they have settled into the grid, a three-minute 
 		sand timer is started and all players simultaneously begin the main phase of play.
 	</string>
+	<string name="boggle_acknowledge_title">Acknowledge Android Boggle</string>
+	<string name="boggle_acknowledge_text">\
+		The background music was download from a Chinese
+		web site a long time ago. The huffman code is from an old project.
+	</string>
+	
 </resources>

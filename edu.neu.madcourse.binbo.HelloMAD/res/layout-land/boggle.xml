@@ -38,6 +38,11 @@
 					android:id="@+id/boggle_about_button"
 					android:text="@string/boggle_about_label" />
 				<Button
+					android:id="@+id/boggle_acknowledge_button"
+					android:text="@string/boggle_acknowledge_label" />
+			</TableRow>
+			<TableRow>
+				<Button
 					android:id="@+id/boggle_exit_button"
 					android:text="@string/boggle_exit_label" />
 			</TableRow>

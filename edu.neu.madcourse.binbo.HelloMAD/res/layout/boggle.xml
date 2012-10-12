@@ -29,6 +29,11 @@
 	   android:layout_height="wrap_content"
 	   android:text="@string/boggle_about_label" />
 	<Button
+	   android:id="@+id/boggle_acknowledge_button"
+	   android:layout_width="fill_parent"
+	   android:layout_height="wrap_content"
+	   android:text="@string/boggle_acknowledge_label" />
+	<Button
 	   android:id="@+id/boggle_exit_button"
 	   android:layout_width="fill_parent"
 	   android:layout_height="wrap_content"

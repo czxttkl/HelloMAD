@@ -29,6 +29,8 @@ public class Boggle extends Activity implements OnClickListener {
 		newButton.setOnClickListener(this);
 		View aboutButton = findViewById(R.id.boggle_about_button);
 		aboutButton.setOnClickListener(this);
+		View acknowledgeButton = findViewById(R.id.boggle_acknowledge_button);
+		acknowledgeButton.setOnClickListener(this);
 		View exitButton = findViewById(R.id.boggle_exit_button);
 		exitButton.setOnClickListener(this);
 		
@@ -47,14 +49,18 @@ public class Boggle extends Activity implements OnClickListener {
 			i.putExtra(BoggleGame.KEY_COMMAND, BoggleGame.CONTINUE);
 			startActivity(i);
 			break;
-		case R.id.boggle_about_button:
-			i = new Intent(this, BoggleAbout.class);
-			startActivity(i);
-			break;
 		case R.id.boggle_new_button:
 			i = new Intent(this, BoggleGame.class);			
 			startActivityForResult(i, BOGGLE_GAME_ACTIVITY);
 			break;
+		case R.id.boggle_about_button:
+			i = new Intent(this, BoggleAbout.class);
+			startActivity(i);
+			break;
+		case R.id.boggle_acknowledge_button:
+			i = new Intent(this, BoggleAcknowledge.class);
+			startActivity(i);
+			break;		
 		case R.id.boggle_exit_button:
 			finish();
 			break;

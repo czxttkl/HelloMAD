@@ -541,6 +541,10 @@ public class BoggleGame extends Activity implements OnClickListener {
 			} else {
 				toastText = "Excellent! +";
 			}
+			// special sound
+			if (tonePlayer != null) {
+    			tonePlayer.startTone(ToneGenerator.TONE_CDMA_CALL_SIGNAL_ISDN_NORMAL, 100);
+    		}
 			Toast.makeText(this, toastText + bonus, Toast.LENGTH_SHORT).show();
 		}
 		
