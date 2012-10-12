@@ -190,7 +190,7 @@ public class BoggleGame extends Activity implements OnClickListener {
         // load dictionaries of high frequency
 		dict = new NativeDictionary(getAssets());
         for (int i = 0; i < high_frequency.length; ++i) {        	
-        	// use ".mpg" to make sure that android won't consider the files in the pkg
+        	// use ".mpg" to make sure that android won't consider the files in the apk
         	// as the compressed files, or it won't be available to get a valid native fd.
         	// these files have been compressed to huffman coding.
         	// due to the singleton pattern used in NDK code, if the corresponding wordlist
