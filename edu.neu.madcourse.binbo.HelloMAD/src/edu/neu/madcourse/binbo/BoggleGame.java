@@ -4,8 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
@@ -13,7 +19,9 @@ import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+import android.view.MotionEvent;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.View;
 import android.view.Window;
@@ -57,7 +65,7 @@ import android.widget.Toast;
    the sum of all occurrences is 4002295 
 */
 
-public class BoggleGame extends Activity implements OnClickListener {
+public class BoggleGame extends Activity implements OnClickListener, OnTouchListener {
 	private static final String TAG = "Boggle";	
 	private static final String BOGGLE_PUZZLE = "puzzle";
 	private static final String BOGGLE_TIME = "time_left";
@@ -67,15 +75,18 @@ public class BoggleGame extends Activity implements OnClickListener {
 	private static final String BOGGLE_GAME_BEST_SCORE = "game_best_score";
 	private static final String BOGGLE_WORDS = "words";
 	private static final String BOGGLE_WORDS_SIZE = "words_size";
-	private static final int DEFAULT_GAME_TIME = 179; 
+	private static final int DEFAULT_GAME_TIME = 179;
+	private static final int ACC_DETECTION_ACCURACY = 13;
 	public static final String KEY_COMMAND = "edu.neu.madcourse.binbo.boggle.command";
 	public static final int NEW_GAME = 0;
 	public static final int CONTINUE = 1;	
+	public static final int LETTER_COUNT = 16;	
 	
 	private NativeDictionary dict = null;
 	private char puzzle[] = null;
 	private String boggleString = "";
 	private BogglePuzzleView puzzleView;
+	private SensorManager sm = null;
 	
 	private final int FREQUENCY[] = {
 		326395, 73910, 169177, 129257, 437303, 46188, 98557, 104164, 
@@ -96,17 +107,18 @@ public class BoggleGame extends Activity implements OnClickListener {
 	private TextView bestView  = null;
 	private TextView scoreView = null;
 	private Button pauseButton = null;
-	//private Button resetButton = null;
+	private Button shakeButton = null;
 	private ListView listView  = null;
 	
 	private int game_score = 0; 
 	private int game_best_score = 0;	
 	private List<String> wordsFound = new ArrayList<String>();
 	
-	private ToneGenerator tonePlayer = null;  
+	private ToneGenerator tonePlayer = null; 
+	private boolean shaking = false;
 	private int defTextColor = Color.WHITE;
 	
-	Handler colorHandler = new Handler();
+	Handler  colorHandler  = new Handler();
 	Runnable colorRunnable = new Runnable() {
 		public void run() {
 			int curColor = timeView.getCurrentTextColor(); 
@@ -117,7 +129,7 @@ public class BoggleGame extends Activity implements OnClickListener {
 		}
 	};
 	
-	Handler textHandler  = new Handler();
+	Handler  textHandler  = new Handler();
 	Runnable textRunnable = new Runnable() {
 	    public void run() {	        
 	    	// format and set the time
@@ -163,20 +175,9 @@ public class BoggleGame extends Activity implements OnClickListener {
 		);
 		setContentView(R.layout.boggle_game);					
         
-		// get views
-		timeView  = (TextView)findViewById(R.id.textViewTime);
-		bestView  = (TextView)findViewById(R.id.textViewBestScore);
-		scoreView = (TextView)findViewById(R.id.textViewScore);
-		listView  = (ListView)findViewById(R.id.listView);
-		//resetButton = (Button)findViewById(R.id.boggle_reset_button); 		
- 		pauseButton = (Button)findViewById(R.id.boggle_pause_button);
- 		// get current text color of timeView
- 		defTextColor = timeView.getCurrentTextColor();
-	
- 		// register events handler
- 		//resetButton.setOnClickListener(this);
-		pauseButton.setOnClickListener(this);				      
-        
+		// get views and set listeners
+		initViews();
+
 		// adjust layouts according to the screen resolution
 		DisplayMetrics dm = new DisplayMetrics();  
         Display display = getWindowManager().getDefaultDisplay(); 		
@@ -186,20 +187,8 @@ public class BoggleGame extends Activity implements OnClickListener {
 		} else if (dm.widthPixels > dm.heightPixels) {
 			adjustLandscapeLayout(dm.widthPixels, dm.heightPixels);
 		}		
-
-        // load dictionaries of high frequency
-		dict = new NativeDictionary(getAssets());
-        for (int i = 0; i < high_frequency.length; ++i) {        	
-        	// use ".mpg" to make sure that android won't consider the files in the apk
-        	// as the compressed files, or it won't be available to get a valid native fd.
-        	// these files have been compressed to huffman coding.
-        	// due to the singleton pattern used in NDK code, if the corresponding wordlist
-        	// has been loaded before, it won't be loaded again when the activity is created again.
-        	String dictName = "" + high_frequency[i];
-        	if (!dict.isLoaded(dictName)) {
-        		dict.load("wordlist_" + dictName + ".mpg", dictName, getAssets());
-        	}
-        }                
+		
+		loadDictionaries();
  
  		// If the activity is restarted, do a continue next time
  		getIntent().putExtra(KEY_COMMAND, CONTINUE); 	
@@ -210,6 +199,9 @@ public class BoggleGame extends Activity implements OnClickListener {
  		if (command == NEW_GAME) {
  			BoggleMusic.reset();
  		}
+ 		
+ 		// create accelerometer
+ 		createSensor();
 	}
 	
 	@Override
@@ -265,10 +257,48 @@ public class BoggleGame extends Activity implements OnClickListener {
 		getPreferences(MODE_PRIVATE).edit().putString(BOGGLE_PUZZLE, puzzleToSave).commit();
 	}
 	
+	private void initViews() {
+		// get views
+		timeView  = (TextView)findViewById(R.id.textViewTime);
+		bestView  = (TextView)findViewById(R.id.textViewBestScore);
+		scoreView = (TextView)findViewById(R.id.textViewScore);
+		listView  = (ListView)findViewById(R.id.listView);
+		shakeButton = (Button)findViewById(R.id.boggle_shake_button); 		
+ 		pauseButton = (Button)findViewById(R.id.boggle_pause_button);
+ 		// register events handler
+ 	 	shakeButton.setOnTouchListener(this);
+ 		pauseButton.setOnClickListener(this);
+ 		// get current text color of timeView
+ 		defTextColor = timeView.getCurrentTextColor();
+	}
+
+	private void loadDictionaries() {
+		// load dictionaries of high frequency
+		dict = new NativeDictionary(getAssets());
+        for (int i = 0; i < high_frequency.length; ++i) {        	
+        	// use ".mpg" to make sure that android won't consider the files in the apk
+        	// as the compressed files, or it won't be available to get a valid native fd.
+        	// these files have been compressed to huffman coding.
+        	// due to the singleton pattern used in NDK code, if the corresponding wordlist
+        	// has been loaded before, it won't be loaded again when the activity is created again.
+        	String dictName = "" + high_frequency[i];
+        	if (!dict.isLoaded(dictName)) {
+        		dict.load("wordlist_" + dictName + ".mpg", dictName, getAssets());
+        	}
+        } 
+	}
+	
 	private void adjustPortraitLayout(int width, int height) {
 		// adjust the layout according to the screen resolution
 		LinearLayout main = (LinearLayout)findViewById(R.id.linearLayoutRoot);
-		puzzleView = new BogglePuzzleView(this);
+		List<Point> selList = null;
+		if (puzzleView != null) {
+			selList = puzzleView.selList;
+			puzzleView = new BogglePuzzleView(this);
+			puzzleView.selList = selList;
+		} else {
+			puzzleView = new BogglePuzzleView(this);
+		}		
 		main.addView(puzzleView);				
       
         LayoutParams laParams = null;
@@ -291,7 +321,14 @@ public class BoggleGame extends Activity implements OnClickListener {
 	private void adjustLandscapeLayout(int width, int height) {
 		// adjust the layout according to the screen resolution
 		LinearLayout main = (LinearLayout)findViewById(R.id.linearLayoutRoot);
-		puzzleView = new BogglePuzzleView(this);
+		List<Point> selList = null;
+		if (puzzleView != null) {
+			selList = puzzleView.selList;
+			puzzleView = new BogglePuzzleView(this);
+			puzzleView.selList = selList;
+		} else {
+			puzzleView = new BogglePuzzleView(this);
+		}	
 		main.addView(puzzleView);				
       
         LayoutParams laParams = null;
@@ -316,20 +353,47 @@ public class BoggleGame extends Activity implements OnClickListener {
         llLog.setLayoutParams(laParams);
 	}
 	
+	private void createSensor() {
+		// get system sensor manager to deal with sensor issues  
+        sm = (SensorManager)getSystemService(Context.SENSOR_SERVICE);                              
+	}
+
+	/* 
+     * SensorEventListener implement
+     * method1: onSensorChanged 
+     * method2: onAccuracyChanged 
+     * */  
+    final SensorEventListener boggleAccelerometerListener = new SensorEventListener() {  
+           
+        public void onSensorChanged(SensorEvent sensorEvent){  
+            if(sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER){  
+                Log.i(TAG, "onSensorChanged");  
+ 
+                float X_lateral = sensorEvent.values[0];  
+                float Y_longitudinal = sensorEvent.values[1];  
+                float Z_vertical = sensorEvent.values[2];                
+                //Log.i(TAG,"\n heading " + X_lateral);  
+                //Log.i(TAG,"\n pitch " + Y_longitudinal);  
+                //Log.i(TAG,"\n roll " + Z_vertical);
+                double distance = Math.sqrt(X_lateral * X_lateral + 
+          			  					    Y_longitudinal * Y_longitudinal + 
+          			  					    Z_vertical * Z_vertical);
+                if (distance >= ACC_DETECTION_ACCURACY) {
+                	changePuzzleDirection();
+                }
+            }  
+        }  
+ 
+        public void onAccuracyChanged(Sensor sensor, int accuracy){  
+            Log.i(TAG, "onAccuracyChanged");  
+        }  
+    };  
+	
 	private List<String> getData() {        
         return wordsFound;
     }
 
-	@Override
-	protected void onResume() {
-		super.onResume();							
-		
-		if (game_over) {
-			doGameOver();
-		} else {
-			pauseGame(paused);
-		}
-		
+	private void updateViews() {
 		// update text views
  		scoreView.setText("score: " + game_score);
  		bestView.setText("best: " + game_best_score);
@@ -342,7 +406,20 @@ public class BoggleGame extends Activity implements OnClickListener {
     	// fill list view
         listView.setAdapter(
 		 	new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, getData())
-		);         
+		); 
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();							
+		
+		if (game_over) {
+			doGameOver();
+		} else {
+			pauseGame(paused);
+		}
+		
+		updateViews();   
 	}
 
 	@Override
@@ -355,37 +432,65 @@ public class BoggleGame extends Activity implements OnClickListener {
 	
 	public void onClick(View v) {
 		switch (v.getId()) {
-//		case R.id.boggle_reset_button:
-//			resetGame();
-//			break;
-		// ...
+		case R.id.boggle_shake_button:
+			shakeGame();
+			break;		
 		case R.id.boggle_pause_button:
 			pauseGame(!paused);			
 			break;
 		}
 	}
 	
+	public boolean onTouch(View v, MotionEvent event) {  
+        if (v.getId() == R.id.boggle_shake_button){         
+            if (event.getAction() == MotionEvent.ACTION_DOWN){  
+                Log.d(TAG, "shake button ---> down");  
+                if (sm != null) {
+                	int sensorType = Sensor.TYPE_ACCELEROMETER;
+                	sm.registerListener(
+                		boggleAccelerometerListener,
+                		sm.getDefaultSensor(sensorType),
+                		SensorManager.SENSOR_DELAY_NORMAL
+                	); 
+                	shaking = true;
+                }
+            }   
+            if (event.getAction() == MotionEvent.ACTION_UP){  
+                Log.d(TAG, "shake button ---> up");  
+                if (sm != null) {
+                	sm.unregisterListener(boggleAccelerometerListener);
+                	shaking = false;
+                }
+            }  
+        }  
+        return false;  
+    }  
+	
 	private void doGameOver() {
 		game_over = true;		
 		textHandler.removeCallbacks(textRunnable);
 		colorHandler.removeCallbacks(colorRunnable);
 		pauseButton.setEnabled(false);
-		puzzleView.invalidate();
+		shakeButton.setEnabled(false);
+		BoggleMusic.play(); // play the music whatever
+		puzzleView.invalidate();		
 	}
 	
-//	private void resetGame() {
-//		
-//	}
-//	
+	private void shakeGame() {
+		
+	}
+	
 	private void pauseGame(boolean paused) {
 		this.paused = paused;
 		if (paused) {
 			pauseButton.setText("Resume");
+			shakeButton.setEnabled(false);
 			textHandler.removeCallbacks(textRunnable);
 			colorHandler.removeCallbacks(colorRunnable);
 			BoggleMusic.pause();
 		} else {
-			pauseButton.setText("Pause");			
+			pauseButton.setText("Pause");
+			shakeButton.setEnabled(true);
 			textHandler.postDelayed(textRunnable, 1000);
 			if (game_time <= 20) {
 				colorHandler.postDelayed(colorRunnable, 500);
@@ -415,12 +520,12 @@ public class BoggleGame extends Activity implements OnClickListener {
 		char[] new_puzzle = null;
 		
 		if (command == NEW_GAME) {
-			char letters[] = new char[16];			
+			char letters[] = new char[LETTER_COUNT];			
 			
-			for (int i = 0; i < 16; ++i) {
+			for (int i = 0; i < LETTER_COUNT; ++i) {
 				letters[i] = ' ';
 			}
-			for (int i = 0; i < 16; ++i) {
+			for (int i = 0; i < LETTER_COUNT; ++i) {
 				char letter = generateLetter();
 				letters[i] = letter;
 				while (isRepeatedTooMuch(letters, letter)) {
@@ -437,6 +542,22 @@ public class BoggleGame extends Activity implements OnClickListener {
 		}		
 		
 		return new_puzzle;
+	}
+	
+	private void changePuzzleDirection() {
+		char[] new_puzzle = new char[LETTER_COUNT];  
+		int size = (int)Math.sqrt(LETTER_COUNT);
+		
+		int k = 0;
+		for (int i = 0; i < size; ++i) {
+			for (int j = size - 1; j >= 0; --j) {
+				new_puzzle[size * j + i] = puzzle[k++];
+			}
+		}
+		
+		puzzle = new_puzzle;
+		puzzleView.changePuzzleDirection();
+		puzzleView.invalidate();
 	}
 	
 	private boolean isRepeatedTooMuch(char[] letters, char letter) {
@@ -473,11 +594,6 @@ public class BoggleGame extends Activity implements OnClickListener {
 	private char getTile(int x, int y) {
 		return puzzle[y * 4 + x];
 	}
-
-	/** Change the tile at the given coordinates */
-//	private void setTile(int x, int y, char value) {
-//		puzzle[y * 4 + x] = value;
-//	}
 
 	/** Return a string for the tile at the given coordinates */
 	protected String getTileString(int x, int y) {
@@ -564,6 +680,37 @@ public class BoggleGame extends Activity implements OnClickListener {
 		}
 		
 		return bonus;
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+				
+		DisplayMetrics dm = new DisplayMetrics();  
+        Display display = getWindowManager().getDefaultDisplay(); 		
+        display.getMetrics(dm);
+
+		if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
+			setContentView(R.layout.boggle_game);
+			adjustLandscapeLayout(dm.widthPixels, dm.heightPixels);						
+		} else {		  
+			setContentView(R.layout.boggle_game);
+			adjustPortraitLayout(dm.widthPixels, dm.heightPixels);
+		}
+		
+		initViews();
+		updateViews();
+		puzzleView.invalidate();
+		
+		// when the screen rotates, the touch up event cannot be grabbed
+		// I wonder if there is anyway to prevent the screen from rotating
+		// when I'm pressing the "shake" button all the time without loose.
+		if (sm != null) {
+        	sm.unregisterListener(boggleAccelerometerListener);
+        	shaking = false;
+        }
+		
+		// TODO Auto-generated method stub
+		super.onConfigurationChanged(newConfig);
 	}
 	
 }

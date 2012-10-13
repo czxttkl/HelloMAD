@@ -73,14 +73,14 @@
                 android:gravity="center"
                 android:text="@string/boggle_time_label" />
 
-            <!-- <Button
-                android:id="@+id/boggle_reset_button"
+            <Button
+                android:id="@+id/boggle_shake_button"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:layout_marginBottom="8dip"
-                android:text="@string/boggle_reset_label" /> -->
+                android:text="@string/boggle_shake_label" />
 
             <Button
                 android:id="@+id/boggle_pause_button"

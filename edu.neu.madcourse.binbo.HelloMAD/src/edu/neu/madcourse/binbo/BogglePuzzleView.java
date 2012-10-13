@@ -385,4 +385,13 @@ public class BogglePuzzleView extends View {
 		
 		return ptScr;
 	}
+	
+	public void changePuzzleDirection() {
+		for (int i = 0; i < selList.size(); ++i) {
+			Point ptInList = selList.get(i);
+			int x = ptInList.x;
+			ptInList.x = ptInList.y;
+			ptInList.y = 3 - x;
+		}
+	}
 }

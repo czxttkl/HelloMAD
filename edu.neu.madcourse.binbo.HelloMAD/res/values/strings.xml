@@ -50,7 +50,7 @@
     <string name="boggle_about_label">About</string>
     <string name="boggle_acknowledge_label">Acknowledge</string>
     <string name="boggle_exit_label">Exit</string>
-    <string name="boggle_reset_label">Reset</string>
+    <string name="boggle_shake_label">Shake</string>
     <string name="boggle_pause_label">Pause</string>
     <string name="boggle_resume_label">Resume</string>
     <string name="boggle_score_label">Score:</string>
@@ -64,10 +64,9 @@
 		cube is visible. After they have settled into the grid, a three-minute 
 		sand timer is started and all players simultaneously begin the main phase of play.
 	</string>
-	<string name="boggle_acknowledge_title">Acknowledge Android Boggle</string>
-	<string name="boggle_acknowledge_text">\
+    <string name="boggle_acknowledge_title">Acknowledge Android Boggle</string>
+    <string name="boggle_acknowledge_text">\
 		The background music was download from a Chinese
 		web site a long time ago. The huffman code is from an old project.
 	</string>
-	
 </resources>
