@@ -407,7 +407,13 @@ public class BoggleGame extends Activity implements OnClickListener, OnTouchList
         listView.setAdapter(
 		 	new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, getData())
 		); 
+        
+        if (game_over) {
+        	pauseButton.setEnabled(false);
+    		shakeButton.setEnabled(false);
+        }
 	}
+	
 	
 	@Override
 	protected void onResume() {
@@ -442,7 +448,8 @@ public class BoggleGame extends Activity implements OnClickListener, OnTouchList
 	}
 	
 	public boolean onTouch(View v, MotionEvent event) {  
-        if (v.getId() == R.id.boggle_shake_button){         
+        if (v.getId() == R.id.boggle_shake_button) { 
+        	
             if (event.getAction() == MotionEvent.ACTION_DOWN){  
                 Log.d(TAG, "shake button ---> down");  
                 if (sm != null) {
@@ -562,12 +569,38 @@ public class BoggleGame extends Activity implements OnClickListener, OnTouchList
 	
 	private boolean isRepeatedTooMuch(char[] letters, char letter) {
 		int count = 0;
+		
 		for (int i = 0; i < letters.length; ++i) {
 			if (letters[i] == letter) {
 				++count;
 			}
 		}
-		return count > 3;
+		if (count > 3) {
+			return true;
+		} else if (count == 3) {
+			int occurs[] = new int[26];
+			for (int i = 0; i < 26; ++i) {
+				occurs[i] = 0;
+			}
+			// get the occurrence of each letter
+			for (int i = 0; i < letters.length; ++i) {
+				int k = (int)letters[i] - 65;
+				if (k >= 0) {
+					occurs[k]++;
+				}				 
+			}		
+			// check whether some other letter already occurred 3 times,
+			// if so, the repeated letters are too much.
+			for (int i = 0; i < 26; ++i) {
+				if (occurs[i] > 2) {
+					if ((char)(i + 65) == letter) // skip the current letter 
+						continue;
+					return true; // more than one letter occurred 3 times
+				}
+			}			
+		}
+		
+		return false;
 	}
 	
 	/** Generate every letter */
