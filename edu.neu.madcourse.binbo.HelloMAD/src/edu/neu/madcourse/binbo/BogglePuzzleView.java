@@ -266,7 +266,7 @@ public class BogglePuzzleView extends View {
 		if (event.getAction() != MotionEvent.ACTION_DOWN)
 			return super.onTouchEvent(event);
 		
-		if (game.isGamePaused()) {
+		if (game.isGamePaused() || game.isGameOver()) {
 			return true;
 		}
 		
