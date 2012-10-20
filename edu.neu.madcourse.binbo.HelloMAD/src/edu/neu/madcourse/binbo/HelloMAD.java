@@ -26,7 +26,7 @@ public class HelloMAD extends Activity implements OnClickListener {
 		View quitButton = this.findViewById(R.id.quit_button);
 		quitButton.setOnClickListener(this);
 
-		PhoneCheckAPI.doAuthorization(this);
+		//PhoneCheckAPI.doAuthorization(this);
 	}
 
 	public void onClick(View v) {
