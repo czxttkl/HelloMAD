@@ -69,4 +69,13 @@
 		The background music was download from a Chinese
 		web site a long time ago. The huffman code is from an old project.
 	</string>
+	<string name="pbsignup_title">""</string>
+	<string name="pbmain_title">""</string>
+	<string name="pbinvite_title">""</string>
+	<string name="pbgame_title">""</string>
+	<string name="pbrank_title">""</string>
+	<string name="pbresult_title">""</string>
+	<string name="pboption_title">""</string>
+	<string name="pbacknowledge_title">""</string>
+	<string name="pbabout_title">""</string>
 </resources>

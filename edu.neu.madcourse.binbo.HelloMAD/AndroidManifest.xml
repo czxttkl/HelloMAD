@@ -66,6 +66,38 @@
             android:theme="@android:style/Theme.Dialog">
 		</activity>
 		
+		<!-- persist boggle activities -->
+		
+		<activity android:name=".PBSignUp" 
+            android:label="@string/pbsignup_title" />
+		
+		<activity android:name=".PBMain" 
+            android:label="@string/pbmain_title" />
+		
+		<activity android:name=".PBInvite" 
+            android:label="@string/pbinvite_title" />
+		
+		<activity android:name=".PBGame" 
+            android:label="@string/pbgame_title"
+            android:configChanges="orientation|keyboardHidden" />
+		
+		<activity android:name=".PBResult" 
+            android:label="@string/pbresult_title" />
+		
+		<activity android:name=".PBRank"
+			android:label="@string/pbrank_title" />
+		
+		<activity android:name=".PBOption"
+			android:label="@string/pboption_title" />
+		
+		<activity android:name=".PBAbout"
+			android:label="@string/pbabout_title" />
+		
+		<activity android:name=".PBAcknowledge"
+			android:label="@string/pbacknowledge_title"
+            android:theme="@android:style/Theme.Dialog">
+		</activity>
+		
     </application>
 
 </manifest>
