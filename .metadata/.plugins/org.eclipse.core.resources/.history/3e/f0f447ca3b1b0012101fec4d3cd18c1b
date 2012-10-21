@@ -1,0 +1,333 @@
+package edu.neu.madcourse.binbo;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
+import android.graphics.Point;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.media.ToneGenerator;
+import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Display;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class PBGame extends Activity implements IBoggleGame, OnClickListener, OnTouchListener {
+	private static final String TAG = "Persistent Boggle";	
+	private static final int DEFAULT_GAME_TIME = 179;
+	private static final int ACCEL_ACCURACY = 13;
+	
+	private NativeDictionary mDict = null;
+	private BogglePuzzle mPuzzle = null;
+	private BogglePuzzleView mPuzzleView = null;
+	private SensorManager mSensorMgr = null;	
+	private ToneGenerator mToneGen = null;	
+	private List<String> mWordsFound = new ArrayList<String>();
+	private final String mHighPrequency[] = { 
+		"a", "e", "i", "l", "n", "o", "r", "s", "t"
+	};
+	
+	private TextView mTextViewName1   = null;	
+	private TextView mTextViewName2   = null;
+	private TextView mTextViewScore1  = null;	
+	private TextView mTextViewScore2  = null;
+	private TextView mTextViewStatus1 = null;	
+	private TextView mTextViewStatus2 = null;
+	private TextView mTextViewTime    = null;
+	private TextView mTextViewBest    = null;
+	private Button   mButtonPause     = null;
+	private Button   mButtonShake     = null;
+	private ListView mListViewWords   = null;
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);		
+		setContentView(R.layout.pb_game);
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
+		// init views
+		initViews();
+		// make a new puzzle
+		mPuzzle = new BogglePuzzle(this, 5); // should get the size from the option
+		// adjust layouts according to the screen resolution
+		DisplayMetrics dm = new DisplayMetrics();
+        Display display = getWindowManager().getDefaultDisplay(); 		
+        display.getMetrics(dm);
+		if (dm.heightPixels >= dm.widthPixels) {
+			adjustPortraitLayout(dm.widthPixels, dm.heightPixels);
+		} else if (dm.widthPixels > dm.heightPixels) {
+			adjustLandscapeLayout(dm.widthPixels, dm.heightPixels);
+		}
+		// load dictionaries
+		loadDictionaries();
+	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+	}
+
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+	}
+
+	@Override
+	protected void onRestart() {
+		// TODO Auto-generated method stub
+		super.onRestart();
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+	}
+
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+	}
+
+	@Override
+	protected void onStop() {
+		// TODO Auto-generated method stub
+		super.onStop();
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {		
+		// TODO Auto-generated method stub
+		super.onConfigurationChanged(newConfig);
+	}
+	
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.boggle_shake_button:			
+			break;		
+		case R.id.boggle_pause_button:
+			//pauseGame(!paused);			
+			break;
+		}
+	}
+	
+	public boolean onTouch(View v, MotionEvent event) {  
+        if (v.getId() == R.id.boggle_shake_button) { 
+        	
+            if (event.getAction() == MotionEvent.ACTION_DOWN){  
+                Log.d(TAG, "shake button ---> down");  
+                if (mSensorMgr != null) {
+                	int sensorType = Sensor.TYPE_ACCELEROMETER;
+                	mSensorMgr.registerListener(
+                		boggleAccelerometerListener,
+                		mSensorMgr.getDefaultSensor(sensorType),
+                		SensorManager.SENSOR_DELAY_NORMAL
+                	);                 	
+                }
+            }   
+            if (event.getAction() == MotionEvent.ACTION_UP){  
+                Log.d(TAG, "shake button ---> up");  
+                if (mSensorMgr != null) {
+                	mSensorMgr.unregisterListener(boggleAccelerometerListener);                
+                }
+            }  
+        }  
+        return false;  
+    }  
+	
+	private void initViews() {
+//		// get views
+//		timeView  = (TextView)findViewById(R.id.textViewTime);
+//		bestView  = (TextView)findViewById(R.id.textViewBestScore);
+//		scoreView = (TextView)findViewById(R.id.textViewScore);
+//		listView  = (ListView)findViewById(R.id.listView);
+//		shakeButton = (Button)findViewById(R.id.boggle_shake_button); 		
+// 		pauseButton = (Button)findViewById(R.id.boggle_pause_button);
+// 		// register events handler
+// 	 	shakeButton.setOnTouchListener(this);
+// 		pauseButton.setOnClickListener(this);
+// 		// get current text color of timeView
+// 		defTextColor = timeView.getCurrentTextColor();
+	}	
+
+	protected void loadDictionaries() {
+		// load dictionaries of high frequency
+		mDict = new NativeDictionary(getAssets());
+        for (int i = 0; i < mHighPrequency.length; ++i) {        	
+        	// use ".mpg" to make sure that android won't consider the files in the apk
+        	// as the compressed files, or it won't be available to get a valid native fd.
+        	// these files have been compressed to huffman coding.
+        	// due to the singleton pattern used in NDK code, if the corresponding wordlist
+        	// has been loaded before, it won't be loaded again when the activity is recreated.
+        	String dictName = "" + mHighPrequency[i];
+        	if (!mDict.isLoaded(dictName)) {
+        		mDict.load("wordlist_" + dictName + ".mpg", dictName, getAssets());
+        	}
+        } 
+	}
+	
+	protected void adjustPortraitLayout(int width, int height) {
+		// adjust the layout according to the screen resolution
+		LinearLayout root = (LinearLayout)findViewById(R.id.linearLayoutRootOfPB);
+		
+		if (mPuzzleView == null) {
+			mPuzzleView = new BogglePuzzleView(this, mPuzzle);
+		}				
+		root.addView(mPuzzleView);				
+//      
+//        LayoutParams laParams = null;
+//        RelativeLayout rl = (RelativeLayout)findViewById(R.id.relativeLayout);
+//        laParams = rl.getLayoutParams();
+//        laParams.height = height - width;
+//        rl.setLayoutParams(laParams);
+        
+//        LinearLayout llLog = (LinearLayout)findViewById(R.id.linearLayoutLog);
+//        laParams = llLog.getLayoutParams();
+//        laParams.width = (int)(width * GOLDEN_DIVIDE);
+//        llLog.setLayoutParams(laParams);
+//        
+//        LinearLayout llTime = (LinearLayout)findViewById(R.id.linearLayoutTime);
+//        laParams = llTime.getLayoutParams();
+//        laParams.width = (int)(width * (1 - GOLDEN_DIVIDE));
+//        llTime.setLayoutParams(laParams);
+	}
+	
+	protected void adjustLandscapeLayout(int width, int height) {
+		// force the screen to portrait on this version
+		// so do nothing here now.
+	}
+
+	protected void createSensor() {
+		// get system sensor manager to deal with sensor issues  
+        mSensorMgr = (SensorManager)getSystemService(Context.SENSOR_SERVICE);                              
+	}
+
+	/* 
+     * SensorEventListener implement
+     * method1: onSensorChanged 
+     * method2: onAccuracyChanged 
+     * */  
+    final SensorEventListener boggleAccelerometerListener = new SensorEventListener() {  
+           
+        public void onSensorChanged(SensorEvent sensorEvent){  
+            if(sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER){  
+                Log.i(TAG, "onSensorChanged");  
+ 
+                float X_lateral = sensorEvent.values[0];  
+                float Y_longitudinal = sensorEvent.values[1];  
+                float Z_vertical = sensorEvent.values[2];                
+                //Log.i(TAG,"\n heading " + X_lateral);  
+                //Log.i(TAG,"\n pitch " + Y_longitudinal);  
+                //Log.i(TAG,"\n roll " + Z_vertical);
+                double offset = Math.sqrt(X_lateral * X_lateral + 
+          			  					    Y_longitudinal * Y_longitudinal + 
+          			  					    Z_vertical * Z_vertical);
+                if (offset >= ACCEL_ACCURACY) {
+                	mPuzzle.rotatePuzzle();
+                }
+            }  
+        }  
+ 
+        public void onAccuracyChanged(Sensor sensor, int accuracy){  
+            Log.i(TAG, "onAccuracyChanged");  
+        }  
+    };
+    
+    
+    
+    // IBoggleGame    
+    public boolean isGamePaused() {
+		return false;
+	}
+	
+	public boolean isGameOver() {
+		return false;
+	}
+	
+	public void playClickSound() {
+		if (mToneGen != null) {
+			mToneGen.startTone(ToneGenerator.TONE_DTMF_2, 100);
+		}
+	}	
+	
+	public boolean lookUpWord(String word) {
+		String dictName = "" + word.charAt(0);
+		
+		if (!mDict.isLoaded(dictName)) {
+			mDict.load("wordlist_" + dictName + ".mpg", dictName, getAssets());			
+		} 
+		
+		if (mWordsFound.contains(word)) {
+			Toast.makeText(this, "Oops! Repeated!", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+				
+		if (mDict.lookupWord(word)) {
+			mWordsFound.add(word);
+			mListViewWords.setAdapter(
+	        	new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, mWordsFound)
+	        );			
+			int bonus = measureBonus(word);
+			//game_score += bonus;			
+			String toastText = "";
+			if (bonus <= 1) {
+				toastText = "Good! +";
+			} else if (bonus > 1 && bonus <= 4) {
+				toastText = "Great! +";
+			} else {
+				toastText = "Excellent! +";
+			}
+			// special sound
+			if (mToneGen != null) {
+				mToneGen.startTone(ToneGenerator.TONE_CDMA_CALL_SIGNAL_ISDN_NORMAL, 100);
+    		}
+			Toast.makeText(this, toastText + bonus, Toast.LENGTH_SHORT).show();
+			
+			return true;
+		}
+		
+		return false;
+	}
+	
+	private int measureBonus(String wordFound) {
+		int bonus  = 0;
+		int length = wordFound.length();
+		
+		switch (length) {
+		case 3: bonus = 1; break;
+		case 4: bonus = 2; break;
+		case 5: bonus = 4; break;
+		case 6: bonus = 6; break;
+		default: bonus = 10; break;
+		}
+		
+		return bonus;
+	}
+}

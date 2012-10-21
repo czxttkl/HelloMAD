@@ -1,0 +1,10 @@
+package edu.neu.madcourse.binbo;
+
+public interface IBoggleGame {
+	public boolean isGameOver();
+	public boolean isGamePaused();
+	public String getTileString(int x, int y);
+	public void playClickSound();
+	public void updateBoggleStringFromSelection();
+	public boolean isWordInDictionary();
+}

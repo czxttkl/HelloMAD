@@ -1,0 +1,25 @@
+package edu.neu.madcourse.binbo;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import android.content.Context;
+import android.graphics.Point;
+import android.graphics.RectF;
+
+public class PBPuzzleView extends BogglePuzzleView {
+	
+	private PBGame mGame = null;
+	private static final String TAG = "PersistentBoggle";
+
+	private static final String VIEW_STATE = "viewState";
+	private static final int ID = 50;
+	private static final String SELX = "selX";
+	private static final String SELY = "selY";
+	private static final String LIST_SIZE = "sizeList";
+	
+	public PBPuzzleView(Context context, int size) {
+		super(context, size);						
+		setId(ID);			
+	}
+}

@@ -28,6 +28,13 @@
 	   android:layout_width="fill_parent"
 	   android:layout_height="wrap_content"
 	   android:text="@string/boggle_label" />
+	<!-- temporary use -->
+	<Button
+	   android:id="@+id/pbgame_button"
+	   android:layout_width="fill_parent"
+	   android:layout_height="wrap_content"
+	   android:text="PBGame" />
+	<!-- end of temporary use -->
 	<Button
 	   android:id="@+id/error_button"
 	   android:layout_width="fill_parent"

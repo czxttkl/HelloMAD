@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -65,7 +66,7 @@ import android.widget.Toast;
    the sum of all occurrences is 4002295 
 */
 
-public class BoggleGame extends Activity implements OnClickListener, OnTouchListener {
+public class BoggleGame extends Activity implements IBoggleGame, OnClickListener, OnTouchListener {
 	private static final String TAG = "Boggle";	
 	private static final String BOGGLE_PUZZLE = "puzzle";
 	private static final String BOGGLE_TIME = "time_left";
@@ -83,17 +84,9 @@ public class BoggleGame extends Activity implements OnClickListener, OnTouchList
 	public static final int LETTER_COUNT = 16;	
 	
 	private NativeDictionary dict = null;
-	private char puzzle[] = null;
-	private String boggleString = "";
+	private BogglePuzzle mPuzzle = null;
 	private BogglePuzzleView puzzleView;
 	private SensorManager sm = null;
-	
-	private final int FREQUENCY[] = {
-		326395, 73910, 169177, 129257, 437303, 46188, 98557, 104164, 
-		355476, 6416, 33829, 215219, 119469, 285562, 280921, 127706, 
-		6784, 280998, 326647, 262874, 146434, 37786, 27811, 11837, 74044, 17531
-	};
-	private final int SUM_OF_CHARS = 4002295;
 	private final String high_frequency[] = { 
 		"a", "e", "i", "l", "n", "o", "r", "s", "t"
 	};
@@ -115,7 +108,6 @@ public class BoggleGame extends Activity implements OnClickListener, OnTouchList
 	private List<String> wordsFound = new ArrayList<String>();
 	
 	private ToneGenerator tonePlayer = null; 
-	private boolean shaking = false;
 	private int defTextColor = Color.WHITE;
 	
 	Handler  colorHandler  = new Handler();
@@ -164,7 +156,7 @@ public class BoggleGame extends Activity implements OnClickListener, OnTouchList
 		super.onCreate(savedInstanceState);
 				
 		int command = getIntent().getIntExtra(KEY_COMMAND, NEW_GAME);
-		puzzle = getPuzzle(command);
+		makePuzzle(command);
 		
 		loadPreferences(command);
 		
@@ -251,6 +243,7 @@ public class BoggleGame extends Activity implements OnClickListener, OnTouchList
 		}			
 		// Save the current puzzle
 		String puzzleToSave = "";
+		char[] puzzle = mPuzzle.getPuzzle();
 		for (int i = 0; i < puzzle.length; ++i) {
 			puzzleToSave += puzzle[i];
 		}		
@@ -293,11 +286,11 @@ public class BoggleGame extends Activity implements OnClickListener, OnTouchList
 		LinearLayout main = (LinearLayout)findViewById(R.id.linearLayoutRoot);
 		List<Point> selList = null;
 		if (puzzleView != null) {
-			selList = puzzleView.selList;
-			puzzleView = new BogglePuzzleView(this);
-			puzzleView.selList = selList;
+			selList = puzzleView.mSelList;			
+			puzzleView = new BogglePuzzleView(this, mPuzzle);
+			puzzleView.mSelList = selList;
 		} else {
-			puzzleView = new BogglePuzzleView(this);
+			puzzleView = new BogglePuzzleView(this, mPuzzle);
 		}		
 		main.addView(puzzleView);				
       
@@ -323,11 +316,11 @@ public class BoggleGame extends Activity implements OnClickListener, OnTouchList
 		LinearLayout main = (LinearLayout)findViewById(R.id.linearLayoutRoot);
 		List<Point> selList = null;
 		if (puzzleView != null) {
-			selList = puzzleView.selList;
-			puzzleView = new BogglePuzzleView(this);
-			puzzleView.selList = selList;
+			selList = puzzleView.mSelList;
+			puzzleView = new BogglePuzzleView(this, mPuzzle);
+			puzzleView.mSelList = selList;
 		} else {
-			puzzleView = new BogglePuzzleView(this);
+			puzzleView = new BogglePuzzleView(this, mPuzzle);
 		}	
 		main.addView(puzzleView);				
       
@@ -379,7 +372,7 @@ public class BoggleGame extends Activity implements OnClickListener, OnTouchList
           			  					    Y_longitudinal * Y_longitudinal + 
           			  					    Z_vertical * Z_vertical);
                 if (distance >= ACC_DETECTION_ACCURACY) {
-                	changePuzzleDirection();
+                	rotatePuzzle();
                 }
             }  
         }  
@@ -388,10 +381,6 @@ public class BoggleGame extends Activity implements OnClickListener, OnTouchList
             Log.i(TAG, "onAccuracyChanged");  
         }  
     };  
-	
-	private List<String> getData() {        
-        return wordsFound;
-    }
 
 	private void updateViews() {
 		// update text views
@@ -405,7 +394,7 @@ public class BoggleGame extends Activity implements OnClickListener, OnTouchList
     	timeView.setText(minute + ":" + second);
     	// fill list view
         listView.setAdapter(
-		 	new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, getData())
+		 	new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, wordsFound)
 		); 
         
         if (game_over) {
@@ -438,8 +427,7 @@ public class BoggleGame extends Activity implements OnClickListener, OnTouchList
 	
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.boggle_shake_button:
-			shakeGame();
+		case R.id.boggle_shake_button:			
 			break;		
 		case R.id.boggle_pause_button:
 			pauseGame(!paused);			
@@ -458,15 +446,15 @@ public class BoggleGame extends Activity implements OnClickListener, OnTouchList
                 		boggleAccelerometerListener,
                 		sm.getDefaultSensor(sensorType),
                 		SensorManager.SENSOR_DELAY_NORMAL
-                	); 
-                	shaking = true;
+                	);                 	
+                	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
                 }
             }   
             if (event.getAction() == MotionEvent.ACTION_UP){  
                 Log.d(TAG, "shake button ---> up");  
                 if (sm != null) {
                 	sm.unregisterListener(boggleAccelerometerListener);
-                	shaking = false;
+                	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);             
                 }
             }  
         }  
@@ -482,11 +470,7 @@ public class BoggleGame extends Activity implements OnClickListener, OnTouchList
 		BoggleMusic.play(); // play the music whatever
 		puzzleView.invalidate();		
 	}
-	
-	private void shakeGame() {
-		
-	}
-	
+
 	private void pauseGame(boolean paused) {
 		this.paused = paused;
 		if (paused) {
@@ -522,160 +506,42 @@ public class BoggleGame extends Activity implements OnClickListener, OnTouchList
 	}
 	
 	/** Come up with a new puzzle */
-	private char[] getPuzzle(int command) {		
+	private void makePuzzle(int command) {		
 		StringBuffer sf = new StringBuffer();
-		char[] new_puzzle = null;
 		
 		if (command == NEW_GAME) {
-			char letters[] = new char[LETTER_COUNT];			
-			
-			for (int i = 0; i < LETTER_COUNT; ++i) {
-				letters[i] = ' ';
-			}
-			for (int i = 0; i < LETTER_COUNT; ++i) {
-				char letter = generateLetter();
-				letters[i] = letter;
-				while (isRepeatedTooMuch(letters, letter)) {
-					letter = generateLetter();
-					letters[i] = letter;
-				}
-				sf.append(String.valueOf(letter));
-			}
-			new_puzzle = sf.toString().toCharArray();
+			mPuzzle = new BogglePuzzle(this, 4);			
 		} else if (command == CONTINUE) {
 			String defaultPuzzle = "ABCDEFGHIJKLMNOP";
-			String savedPuzzle = getPreferences(MODE_PRIVATE).getString(BOGGLE_PUZZLE, defaultPuzzle);
-			new_puzzle = savedPuzzle.toCharArray();
+			String savedPuzzle = getPreferences(MODE_PRIVATE).getString(BOGGLE_PUZZLE, defaultPuzzle);			
+			mPuzzle = new BogglePuzzle(this, savedPuzzle.toCharArray());
 		}		
-		
-		return new_puzzle;
 	}
 	
-	private void changePuzzleDirection() {
-		char[] new_puzzle = new char[LETTER_COUNT];  
-		int size = (int)Math.sqrt(LETTER_COUNT);
-		
-		int k = 0;
-		for (int i = 0; i < size; ++i) {
-			for (int j = size - 1; j >= 0; --j) {
-				new_puzzle[size * j + i] = puzzle[k++];
-			}
-		}
-		
-		puzzle = new_puzzle;
-		puzzleView.changePuzzleDirection();
-		puzzleView.invalidate();
+	private void rotatePuzzle() {
+		mPuzzle.rotatePuzzle();
+		puzzleView.rotatePuzzle();		
 	}
 	
-	private boolean isRepeatedTooMuch(char[] letters, char letter) {
-		int count = 0;
-		
-		for (int i = 0; i < letters.length; ++i) {
-			if (letters[i] == letter) {
-				++count;
-			}
-		}
-		if (count > 3) {
-			return true;
-		} else if (count == 3) {
-			int occurs[] = new int[26];
-			for (int i = 0; i < 26; ++i) {
-				occurs[i] = 0;
-			}
-			// get the occurrence of each letter
-			for (int i = 0; i < letters.length; ++i) {
-				int k = (int)letters[i] - 65;
-				if (k >= 0) {
-					occurs[k]++;
-				}				 
-			}		
-			// check whether some other letter already occurred 3 times,
-			// if so, the repeated letters are too much.
-			for (int i = 0; i < 26; ++i) {
-				if (occurs[i] > 2) {
-					if ((char)(i + 65) == letter) // skip the current letter 
-						continue;
-					return true; // more than one letter occurred 3 times
-				}
-			}			
-		}
-		
-		return false;
-	}
-	
-	/** Generate every letter */
-	private char generateLetter() {
-		char letter = 'e';
-		int l = 0, r = 0;
-		int t = (int)(Math.random() * SUM_OF_CHARS);	
-		
-		int i;
-		for (i = 0; i < 26; ++i) {
-			r += FREQUENCY[i];
-			if (l < t && t < r) {
-				letter = (char)(65 + i);
-				break;
-			}
-			l += FREQUENCY[i];
-		}		
-		assert(i < 26);
-		
-		return letter;
-	}
-	
-	/** Return the tile at the given coordinates */
-	private char getTile(int x, int y) {
-		return puzzle[y * 4 + x];
-	}
-
-	/** Return a string for the tile at the given coordinates */
-	protected String getTileString(int x, int y) {
-		char v = getTile(x, y);
-		return String.valueOf(v);
-	}
-	
-	private String listToString(List<Point> selList) {
-		String s = "";		
-		for (int i = 0; i < selList.size(); ++i) {
-			Point pt = selList.get(i);
-			s += getTileString(pt.x, pt.y);
-		}		
-		return s.toLowerCase();
-	}
-
-	protected void updateBoggleStringFromSelection(List<Point> selList) {
-		boggleString = listToString(selList);
-		Log.d(TAG, "boogleString = " + boggleString);
-		// update list view
-	}
-	
-	protected boolean isWordInDictionary(List<Point> selList) {
-		String s = listToString(selList);
-		if (lookupWordInDictionary(s)) {
-			return true;
-		}
-		return false;
-	}
-	
-	private boolean lookupWordInDictionary(String wordToLookup) {
-		String dictName = "" + wordToLookup.charAt(0);
+	public boolean lookUpWord(String word) {
+		String dictName = "" + word.charAt(0);
 		
 		if (!dict.isLoaded(dictName)) {
 			dict.load("wordlist_" + dictName + ".mpg", dictName, getAssets());			
 		} 
 		
-		if (wordsFound.contains(wordToLookup)) {
+		if (wordsFound.contains(word)) {
 			Toast.makeText(this, "Oops! Repeated!", Toast.LENGTH_SHORT).show();
 			return false;
 		}
 		
-		boolean found = dict.lookupWord(wordToLookup);		
+		boolean found = dict.lookupWord(word);		
 		if (found) {
-			wordsFound.add(wordToLookup);
+			wordsFound.add(word);
 			listView.setAdapter(
-	        	new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, getData())
+	        	new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, wordsFound)
 	        );			
-			int bonus = measureBonus(wordToLookup);
+			int bonus = measureBonus(word);
 			game_score += bonus;
 			if (game_best_score < game_score) {
 				game_best_score = game_score;
@@ -733,15 +599,7 @@ public class BoggleGame extends Activity implements OnClickListener, OnTouchList
 		initViews();
 		updateViews();
 		puzzleView.invalidate();
-		
-		// when the screen rotates, the touch up event cannot be grabbed
-		// I wonder if there is anyway to prevent the screen from rotating
-		// when I'm pressing the "shake" button all the time without loose.
-		if (sm != null) {
-        	sm.unregisterListener(boggleAccelerometerListener);
-        	shaking = false;
-        }
-		
+
 		// TODO Auto-generated method stub
 		super.onConfigurationChanged(newConfig);
 	}

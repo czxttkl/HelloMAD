@@ -1,0 +1,48 @@
+package edu.neu.madcourse.binbo;
+
+public class BogglePuzzle {
+	protected char[] mPuzzle = null;
+	protected int mSize = 4;
+	
+	public BogglePuzzle(int size) {
+		
+	}
+	
+	public void makePuzzle(int size) {	
+		mSize = size;
+		
+		StringBuffer sf = new StringBuffer();		
+		int count = mSize * mSize;		
+		char letters[] = new char[count];			
+		
+		for (int i = 0; i < count; ++i) {
+			letters[i] = ' ';
+		}
+		for (int i = 0; i < count; ++i) {
+			char letter = makeLetter();
+			letters[i] = letter;
+			while (isTooMuchRepeated(letters, letter)) {
+				letter = makeLetter(); // try to make another letter
+				letters[i] = letter;
+			}
+			sf.append(String.valueOf(letter));
+		}
+
+		mPuzzle = sf.toString().toCharArray();
+	}
+	
+	private void changePuzzleDirection() {
+		char[] puzzle = new char[mSize * mSize];  		
+		
+		int k = 0;
+		for (int i = 0; i < mSize; ++i) {
+			for (int j = mSize - 1; j >= 0; --j) {
+				puzzle[mSize * j + i] = mPuzzle[k++];
+			}
+		}
+		
+		mPuzzle = puzzle;
+		mPuzzleView.changePuzzleDirection();
+		mPuzzleView.invalidate();
+	}
+}
