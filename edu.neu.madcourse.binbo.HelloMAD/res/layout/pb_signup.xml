@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/background"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="20dip"
+    android:orientation="vertical" >
+
+	<TextView
+	   android:text="@string/pb_account_name_label"
+	   android:layout_height="wrap_content"
+	   android:layout_width="wrap_content"
+	   android:layout_gravity="center"
+	   android:layout_marginBottom="20dip"
+	   android:textSize="18sp" />
+    
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:hint="@string/pbsignup_name_hint"
+        android:layout_marginBottom="40dip" >
+        
+    </EditText>
+	
+	<Button
+	   android:id="@+id/pbsignup_signup_button"
+	   android:layout_width="fill_parent"
+	   android:layout_height="wrap_content"
+	   android:text="@string/pb_signup_label"
+	   android:layout_marginBottom="6dip" />
+
+</LinearLayout>

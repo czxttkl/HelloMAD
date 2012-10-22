@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/background"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="30dip"
+    android:orientation="vertical" >
+
+	<TextView
+	   android:text="@string/pb_welcome_label"
+	   android:layout_height="wrap_content"
+	   android:layout_width="wrap_content"
+	   android:layout_gravity="center"
+	   android:layout_marginBottom="36dip"
+	   android:textSize="24.5sp" />
+	
+	<Button
+	   android:id="@+id/pbwelcome_login_button"
+	   android:layout_width="fill_parent"
+	   android:layout_height="wrap_content"
+	   android:text="@string/pb_login_label"
+	   android:layout_marginBottom="6dip" />
+	
+	<TextView
+	   android:text="@string/pb_login_summary"
+	   android:layout_height="wrap_content"
+	   android:layout_width="wrap_content"
+	   android:layout_gravity="center"
+	   android:layout_marginBottom="25dip"
+	   android:textSize="10sp" />
+	
+	<Button
+	   android:id="@+id/pbwelcome_signup_button"
+	   android:layout_width="fill_parent"
+	   android:layout_height="wrap_content"
+	   android:text="@string/pb_signup_label"
+	   android:layout_marginBottom="6dip" />
+	
+	<TextView
+	   android:text="@string/pb_signup_summary"
+	   android:layout_height="wrap_content"
+	   android:layout_width="wrap_content"
+	   android:layout_gravity="center"
+	   android:layout_marginBottom="25dip"
+	   android:textSize="10sp" />
+
+</LinearLayout>

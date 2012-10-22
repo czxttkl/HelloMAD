@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/background"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="20dip"
+    android:orientation="vertical" >
+
+	<TextView
+	   android:id="@+id/pbmain_account_name_label"
+	   android:layout_height="wrap_content"
+	   android:layout_width="wrap_content"
+	   android:layout_gravity="center"
+	   android:layout_marginBottom="20dip"
+	   android:textSize="20sp" />
+	
+	<Button
+	   android:id="@+id/pbmain_new_game_button"
+	   android:layout_width="fill_parent"
+	   android:layout_height="wrap_content"
+	   android:text="@string/pb_new_game_label"
+	   android:layout_marginBottom="6dip" />
+	
+	<Button
+	   android:id="@+id/pbmain_rank_button"
+	   android:layout_width="fill_parent"
+	   android:layout_height="wrap_content"
+	   android:text="@string/pb_rank_label"
+	   android:layout_marginBottom="6dip" />
+	
+	<Button
+	   android:id="@+id/pbmain_options_button"
+	   android:layout_width="fill_parent"
+	   android:layout_height="wrap_content"
+	   android:text="@string/pb_options_label"
+	   android:layout_marginBottom="6dip" />
+	
+	<Button
+	   android:id="@+id/pbmain_about_button"
+	   android:layout_width="fill_parent"
+	   android:layout_height="wrap_content"
+	   android:text="@string/pb_about_label"
+	   android:layout_marginBottom="6dip" />
+	
+	<Button
+	   android:id="@+id/pbmain_exit_button"
+	   android:layout_width="fill_parent"
+	   android:layout_height="wrap_content"
+	   android:text="@string/pb_exit_label"
+	   android:layout_marginBottom="6dip" />
+
+</LinearLayout>

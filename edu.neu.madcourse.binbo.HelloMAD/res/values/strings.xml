@@ -69,6 +69,10 @@
 		The background music was download from a Chinese
 		web site a long time ago. The huffman code is from an old project.
 	</string>
+	
+    <!-- Persistent Boggle -->
+    <string name="pbwelcome_title">""</string>
+    <string name="pblogin_title">""</string>
 	<string name="pbsignup_title">""</string>
 	<string name="pbmain_title">""</string>
 	<string name="pbinvite_title">""</string>
@@ -78,4 +82,26 @@
 	<string name="pboption_title">""</string>
 	<string name="pbacknowledge_title">""</string>
 	<string name="pbabout_title">""</string>
+	
+	<string name="pb_pb_label">"Persistent Boggle"</string>
+    <string name="pb_welcome_label">"Welcome"</string>
+    <string name="pb_login_label">"Login In"</string>
+    <string name="pb_signup_label">"Sign Up"</string>
+    <string name="pb_login_summary">"Login with your account name"</string>
+    <string name="pb_signup_summary">"Sign up a new account"</string>
+    <string name="pb_account_name_label">Account Name</string>
+    <string name="pblogin_name_hint">Please enter your account name</string>
+    <string name="pbsignup_name_hint">Please enter a new account name</string>
+    
+    <string name="pb_new_game_label">New Game</string>
+    <string name="pb_rank_label">Rank</string>
+    <string name="pb_options_label">Options</string>
+    <string name="pb_about_label">About</string>
+    <string name="pb_exit_label">Exit</string>
+    
+    <string name="pbinvite_user_list_title">Player List</string>
+    <string name="pb_back_label">Back</string>
+    <string name="pb_invite_label">Invite</string>
+    <string name="pb_playing_status_label">(Playing)</string>
+	
 </resources>
