@@ -21,6 +21,8 @@ import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
@@ -36,6 +38,7 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 	private static final String TAG = "Persistent Boggle";	
 	private static final int DEFAULT_GAME_TIME = 179;
 	private static final int ACCEL_ACCURACY = 13;
+	private static final float GOLDEN_DIVIDE = 0.618f;
 	
 	private NativeDictionary mDict = null;
 	private BogglePuzzle mPuzzle = null;
@@ -67,7 +70,14 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);		
+		super.onCreate(savedInstanceState);				
+		// do not show title bar and change to full screen mode
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(
+			WindowManager.LayoutParams.FLAG_FULLSCREEN, 
+			WindowManager.LayoutParams.FLAG_FULLSCREEN
+		);
+		// set views from xml layout
 		setContentView(R.layout.pb_game);
 		// disable screen rotation on this version
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
@@ -87,6 +97,8 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 		loadDictionaries();
 		// initialize tone generator
 		mToneGen = new ToneGenerator(AudioManager.STREAM_MUSIC, 70);
+		// initialize sensors
+		initSensors();
 	}
 
 	@Override
@@ -132,17 +144,15 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 	}
 	
 	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.boggle_shake_button:			
-			break;		
-		case R.id.boggle_pause_button:
+		switch (v.getId()) {	
+		case R.id.pbgame_buttonPause:
 			//pauseGame(!paused);			
 			break;
 		}
 	}
 	
 	public boolean onTouch(View v, MotionEvent event) {  
-        if (v.getId() == R.id.boggle_shake_button) { 
+        if (v.getId() == R.id.pbgame_buttonShake) { 
             if (event.getAction() == MotionEvent.ACTION_DOWN){  
                 Log.d(TAG, "shake button ---> down");  
                 if (mSensorMgr != null) {
@@ -200,28 +210,46 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 	
 	protected void adjustPortraitLayout(int width, int height) {
 		// adjust the layout according to the screen resolution
-		LinearLayout root = (LinearLayout)findViewById(R.id.linearLayoutRootOfPB);
+		LinearLayout llRoot = (LinearLayout)findViewById(R.id.linearLayoutPBGameRoot);
 		
 		if (mPuzzleView == null) {
 			mPuzzleView = new BogglePuzzleView(this, mPuzzle);
 		}				
-		root.addView(mPuzzleView);				
-//      
-//        LayoutParams laParams = null;
-//        RelativeLayout rl = (RelativeLayout)findViewById(R.id.relativeLayout);
-//        laParams = rl.getLayoutParams();
-//        laParams.height = height - width;
-//        rl.setLayoutParams(laParams);
+		llRoot.addView(mPuzzleView);				
+      
+        LayoutParams laParams = null;
+        LinearLayout llSubRoot = (LinearLayout)findViewById(R.id.linearLayoutPBGameSubRoot);
+        laParams = llSubRoot.getLayoutParams();
+        laParams.height = height - width;
+        llSubRoot.setLayoutParams(laParams);
         
-//        LinearLayout llLog = (LinearLayout)findViewById(R.id.linearLayoutLog);
-//        laParams = llLog.getLayoutParams();
-//        laParams.width = (int)(width * GOLDEN_DIVIDE);
-//        llLog.setLayoutParams(laParams);
-//        
-//        LinearLayout llTime = (LinearLayout)findViewById(R.id.linearLayoutTime);
-//        laParams = llTime.getLayoutParams();
-//        laParams.width = (int)(width * (1 - GOLDEN_DIVIDE));
-//        llTime.setLayoutParams(laParams);
+        LinearLayout llInfoTime = (LinearLayout)findViewById(R.id.linearLayoutPBGameInfoTime);
+        laParams = llInfoTime.getLayoutParams();
+        laParams.height = (int)((height - width) * 0.5);
+        llInfoTime.setLayoutParams(laParams);               
+        
+        LinearLayout llPlayer1Info = (LinearLayout)findViewById(R.id.linearLayoutP1Info);
+        laParams = llPlayer1Info.getLayoutParams();
+        laParams.width = (int)(width * 0.36);
+        llPlayer1Info.setLayoutParams(laParams);
+        
+        LinearLayout llTime = (LinearLayout)findViewById(R.id.linearLayoutTime);
+        laParams = llTime.getLayoutParams();
+        laParams.width = (int)(width * 0.28);
+        llTime.setLayoutParams(laParams);
+        
+        LinearLayout llPlayer2Info = (LinearLayout)findViewById(R.id.linearLayoutP2Info);
+        laParams = llPlayer2Info.getLayoutParams();
+        laParams.width = (int)(width * 0.36);
+        llPlayer2Info.setLayoutParams(laParams);
+        
+        laParams = mListViewWords.getLayoutParams();
+        laParams.width = (int)(width * GOLDEN_DIVIDE);        
+        
+        LinearLayout llControl = (LinearLayout)findViewById(R.id.linearLayoutControl);
+        laParams = llControl.getLayoutParams();
+        laParams.height = (int)(width * (1 - GOLDEN_DIVIDE));
+        llControl.setLayoutParams(laParams);
 	}
 	
 	protected void adjustLandscapeLayout(int width, int height) {
@@ -229,7 +257,7 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 		// so do nothing here now.
 	}
 
-	protected void createSensor() {
+	protected void initSensors() {
 		// get system sensor manager to deal with sensor issues  
         mSensorMgr = (SensorManager)getSystemService(Context.SENSOR_SERVICE);                              
 	}
@@ -256,6 +284,7 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
           			  					    Z_vertical * Z_vertical);
                 if (offset >= ACCEL_ACCURACY) {
                 	mPuzzle.rotatePuzzle();
+                	mPuzzleView.rotatePuzzle();
                 }
             }  
         }  
