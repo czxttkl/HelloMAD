@@ -1,7 +1,0 @@
-package edu.neu.madcourse.binbo;
-
-public class PBPlayerInfo {
-	public String mName = "";
-	public String mStatus = "";
-	public 
-}

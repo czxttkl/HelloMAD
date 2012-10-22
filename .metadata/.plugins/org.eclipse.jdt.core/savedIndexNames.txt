@@ -1,6 +1,0 @@
-INDEX VERSION 1.126+/Users/bigbug/Documents/Code/Android/Assignment/.metadata/.plugins/org.eclipse.jdt.core
-1119962141.index
-225320058.index
-1925515865.index
-2238021426.index
-2105457129.index
