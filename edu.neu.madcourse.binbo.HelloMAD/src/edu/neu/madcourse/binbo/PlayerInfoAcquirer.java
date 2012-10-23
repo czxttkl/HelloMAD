@@ -76,6 +76,7 @@ public class PlayerInfoAcquirer extends Thread {
 	private void sendErrorMessage() {
 		Message msg = mHandler.obtainMessage(); 
         msg.arg1 = UPDATE_PLAYERS_ERROR;
+        msg.arg2 = KeyValueAPI.isServerAvailable() ? 1 : 0;
         msg.obj = null;
         mHandler.sendMessage(msg);
 	}

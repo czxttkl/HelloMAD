@@ -367,11 +367,17 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
                 break;
             case UPDATE_PLAYERS_ERROR:  
             	Toast.makeText(getApplicationContext(), 
-                       "error in update", Toast.LENGTH_LONG).show();                                                       
+                       "error in update", Toast.LENGTH_LONG).show();     
+            	if (msg.arg2 == 1) {
+            		// server available, but can't get data
+            	}
                 break;
             case COMMIT_PLAYERS_ERROR:  
             	Toast.makeText(getApplicationContext(), 
-                       "error in commit", Toast.LENGTH_LONG).show();                                                       
+                       "error in commit", Toast.LENGTH_LONG).show();   
+            	if (msg.arg2 == 1) {
+            		// server available, but can't commit data
+            	}
                 break;  
         	default:  
             } 
