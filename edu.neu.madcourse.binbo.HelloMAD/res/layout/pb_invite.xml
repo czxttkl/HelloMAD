@@ -10,10 +10,22 @@
         android:gravity="center"
         android:textSize="18sp"
         android:padding="6dp"
+        android:background="@color/pb_blue"
+        android:textColor="@color/pb_white"
         android:text="@string/pbinvite_user_list_title" />
     
-    <ListView ></ListView>
+    <ListView
+        android:id="@+id/pbinvite_user_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="40dp" >
+        
+    </ListView>
     
-    <Button />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:text="@string/pb_back_label" />
     
 </LinearLayout>
