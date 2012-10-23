@@ -40,6 +40,7 @@ public class PlayerInfoCommitter extends AsyncTask<ArrayList<PBPlayerInfo>, Inte
     private void sendErrorMessage() {
 		Message msg = mHandler.obtainMessage(); 
         msg.arg1 = COMMIT_PLAYERS_ERROR;
+        msg.arg2 = KeyValueAPI.isServerAvailable() ? 1 : 0;
         msg.obj = null;
         mHandler.sendMessage(msg);
 	}
