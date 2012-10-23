@@ -8,31 +8,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.graphics.Point;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
+import android.hardware.*;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
-import android.os.Bundle;
+import android.os.*;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.*;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 
 public class PBGame extends Activity implements IBoggleGame, OnClickListener, OnTouchListener {
 	private static final String TAG = "Persistent Boggle";	
@@ -43,9 +29,12 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 	private NativeDictionary mDict = null;
 	private BogglePuzzle mPuzzle = null;
 	private BogglePuzzleView mPuzzleView = null;
+	private PlayerInfoAcquirer mAcquirer = null;
 	private SensorManager mSensorMgr = null;	
 	private ToneGenerator mToneGen = null;	
 	private List<String> mWordsFound = new ArrayList<String>();
+	private ArrayList<PBPlayerInfo> mInfos = null;
+	
 	private final String mHighPrequency[] = { 
 		"a", "e", "i", "l", "n", "o", "r", "s", "t"
 	};
@@ -129,12 +118,20 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
+		
+		if (mAcquirer == null) {
+			mAcquirer = new PlayerInfoAcquirer(mHandler);
+		}
+		mAcquirer.start();
 	}
 
 	@Override
 	protected void onStop() {
+		if (mAcquirer != null) {
+			mAcquirer.end();
+		}
 		// TODO Auto-generated method stub
-		super.onStop();
+		super.onStop();		
 	}
 
 	@Override
@@ -145,8 +142,7 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 	
 	public void onClick(View v) {
 		switch (v.getId()) {	
-		case R.id.pbgame_buttonPause:
-			//pauseGame(!paused);			
+		case R.id.pbgame_buttonPause:								
 			break;
 		}
 	}
@@ -172,7 +168,7 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
             }  
         }  
         return false;  
-    }  
+    }  	
 	
 	private void initViews() {
 		// get views
@@ -350,4 +346,36 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 		return false;
 	}
 
+		
+	// here we can even skip the configuration of looper, because the 
+	// handler uses the looper of the current thread as the default.
+    private final Handler mHandler = new Handler(Looper.getMainLooper()) {
+    	private static final int UPDATE_PLAYERS_INFO  = 0;   
+        private static final int UPDATE_PLAYERS_ERROR = 1;
+        private static final int COMMIT_PLAYERS_ERROR = 2;
+ 
+        @SuppressWarnings("unchecked")
+		public void handleMessage(Message msg) {
+             
+            switch (msg.arg1) { 
+            case UPDATE_PLAYERS_INFO:                 
+            	mInfos = (ArrayList<PBPlayerInfo>)msg.obj;
+            	if (mInfos == null) {
+            		Toast.makeText(getApplicationContext(), 
+            				"update successfully", Toast.LENGTH_LONG).show();
+            	}
+                break;  
+            case UPDATE_PLAYERS_ERROR:  
+            	Toast.makeText(getApplicationContext(), 
+                       "error in update", Toast.LENGTH_LONG).show();                                                       
+                break;  
+            case COMMIT_PLAYERS_ERROR:  
+            	Toast.makeText(getApplicationContext(), 
+                       "error in commit", Toast.LENGTH_LONG).show();                                                       
+                break;  
+        	default:  
+            } 
+        } 
+    };
+ 
 }

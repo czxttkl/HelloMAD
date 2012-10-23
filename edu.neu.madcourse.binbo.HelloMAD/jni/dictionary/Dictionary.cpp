@@ -9,8 +9,6 @@
 #include "Dictionary.h"
 #include "Huffman.h"
 
-#define WORD_LENGTH 15
-
 CSubDictionary::CSubDictionary(const char* pszName)
 {
 	memset(this, 0, sizeof(CSubDictionary));

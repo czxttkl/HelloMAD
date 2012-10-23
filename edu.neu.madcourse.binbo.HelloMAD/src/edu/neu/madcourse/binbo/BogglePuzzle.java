@@ -1,6 +1,39 @@
 package edu.neu.madcourse.binbo;
 
-import android.content.Context;
+// There is little difference between the word lists I used for persistent boggle
+// and the normal boggle, so I haven't updated the statistics below.
+// However, this time I have not deleted any words over 16 letters.
+
+/* after deleting words whose length are over 16, 
+the number of occurrence for each letter is below: 
+	a: 326395	8.1552% *
+	b: 73910	1.84669%
+	c: 169177	4.227%
+	d: 129257	3.22957%
+	e: 437303	10.9263% *
+	f: 46188	1.15404%
+	g: 98557	2.46251%
+	h: 104164	2.60261%
+	i: 355476	8.8818% *
+	j: 6416		0.160308%
+	k: 33829	0.84524%
+	l: 215219	5.37739% *
+	m: 119469	2.98501%
+	n: 285562	7.13496% *
+	o: 280921	7.019% *
+	p: 127706	3.19082%
+	q: 6784		0.169503%
+	r: 280998	7.02092% *
+	s: 326647	8.16149% *
+	t: 262874	6.56808% *
+	u: 146434	3.65875%
+	v: 37786	0.944108%
+	w: 27811	0.694876%
+	x: 11837	0.295755%
+	y: 74044	1.85004%
+	z: 17531	0.438024%
+the sum of all occurrences is 4002295 
+*/
 
 public class BogglePuzzle {			
 	protected char[] mPuzzle = null;
