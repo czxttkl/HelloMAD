@@ -13,6 +13,7 @@ public class PlayerInfoAcquirer extends Thread {
     private Handler mHandler = null;
     private boolean mRun = false;
     private boolean mEnd = false;
+    private boolean mRunOnce = false;
  
     private static final int UPDATE_PLAYERS_INFO  = 0;   
     private static final int UPDATE_PLAYERS_ERROR = 1;
@@ -20,8 +21,9 @@ public class PlayerInfoAcquirer extends Thread {
     ArrayList<PBPlayerInfo> infos = null;
     ServerDelegator mDelegator = new ServerDelegator();
 
-    public PlayerInfoAcquirer(Handler handler) { 
-        mHandler = handler;        
+    public PlayerInfoAcquirer(Handler handler, boolean runOnce) { 
+        mHandler = handler;  
+        mRunOnce = runOnce;
     } 
 
     @Override 
@@ -50,6 +52,10 @@ public class PlayerInfoAcquirer extends Thread {
 				}
 			}
         }    
+        
+        if (mRunOnce) {
+        	mRun = false;
+        }
         
         mEnd = true;
     }      

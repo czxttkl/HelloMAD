@@ -120,7 +120,7 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 		super.onStart();
 		
 		if (mAcquirer == null) {
-			mAcquirer = new PlayerInfoAcquirer(mHandler);
+			mAcquirer = new PlayerInfoAcquirer(mHandler, false);
 		}
 		mAcquirer.start();
 	}
@@ -361,14 +361,14 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
             case UPDATE_PLAYERS_INFO:                 
             	mInfos = (ArrayList<PBPlayerInfo>)msg.obj;
             	if (mInfos == null) {
-            		Toast.makeText(getApplicationContext(), 
+            		Toast.makeText(getApplicationContext(),
             				"update successfully", Toast.LENGTH_LONG).show();
             	}
-                break;  
+                break;
             case UPDATE_PLAYERS_ERROR:  
             	Toast.makeText(getApplicationContext(), 
                        "error in update", Toast.LENGTH_LONG).show();                                                       
-                break;  
+                break;
             case COMMIT_PLAYERS_ERROR:  
             	Toast.makeText(getApplicationContext(), 
                        "error in commit", Toast.LENGTH_LONG).show();                                                       
