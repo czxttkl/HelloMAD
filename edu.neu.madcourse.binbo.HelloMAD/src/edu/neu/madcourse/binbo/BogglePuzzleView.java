@@ -31,10 +31,10 @@ public class BogglePuzzleView extends View {
 	private static final String SELY = "selY";
 	private static final String LIST_SIZE = "listSize";
 
-	protected int   mSize;   // could be 4, 5 or 6
+	protected int   mSize;   // could be 4Ñ6
 	protected float mWidth;  // width of one tile
 	protected float mHeight; // height of one tile	
-	protected RectF oval = new RectF();	
+	protected RectF mOval = new RectF();	
 	protected List<Point> mSelList = new ArrayList<Point>();	
 	protected IBoggleGame mGame = null;
 	protected BogglePuzzle mPuzzle = null;
@@ -95,7 +95,7 @@ public class BogglePuzzleView extends View {
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		mWidth  = w / mSize;
 		mHeight = h / mSize;
-//		getRect(selX, selY, selRect);
+
 		Log.d(TAG, "onSizeChanged: width " + mWidth + ", height " + mHeight);
 		super.onSizeChanged(w, h, oldw, oldh);
 	}
@@ -180,10 +180,6 @@ public class BogglePuzzleView extends View {
 			}
 		}
 
-//		if (SudokuPrefs.getHints(getContext())) {
-			// Draw the hints...
-//		}
-
 		// Draw the selection circles		
 		Paint selected = new Paint();	
 		selected.setStyle(Paint.Style.STROKE);
@@ -219,53 +215,53 @@ public class BogglePuzzleView extends View {
 			int dy = ptCur.y - ptPrev.y;
 			// Eight conditions for deciding the arrow direction
 			if (dx == 0 && dy < 0) { // up
-				oval.left   = mWidth * ptPrev.x + mWidth / 4;
-				oval.top    = mHeight * ptPrev.y - mHeight / 2;
-				oval.right  = mWidth * (ptPrev.x + 1) - mWidth / 4;
-				oval.bottom = mHeight * ptPrev.y + mHeight / 8;
-				canvas.drawArc(oval, 80, 20, true, arrow);
+				mOval.left   = mWidth * ptPrev.x + mWidth / 4;
+				mOval.top    = mHeight * ptPrev.y - mHeight / 2;
+				mOval.right  = mWidth * (ptPrev.x + 1) - mWidth / 4;
+				mOval.bottom = mHeight * ptPrev.y + mHeight / 8;
+				canvas.drawArc(mOval, 80, 20, true, arrow);
 			} else if (dx == 0 && dy > 0) { // down
-				oval.left   = mWidth * ptPrev.x + mWidth / 4;
-				oval.top    = mHeight * ptCur.y - mHeight / 8;
-				oval.right  = mWidth * (ptPrev.x + 1) - mWidth / 4;
-				oval.bottom = mHeight * ptCur.y + mHeight / 2;
-				canvas.drawArc(oval, 260, 20, true, arrow);
+				mOval.left   = mWidth * ptPrev.x + mWidth / 4;
+				mOval.top    = mHeight * ptCur.y - mHeight / 8;
+				mOval.right  = mWidth * (ptPrev.x + 1) - mWidth / 4;
+				mOval.bottom = mHeight * ptCur.y + mHeight / 2;
+				canvas.drawArc(mOval, 260, 20, true, arrow);
 			} else if (dx < 0 && dy == 0) { // left
-				oval.left   = mWidth * ptPrev.x - mWidth / 2;
-				oval.top    = mHeight * ptPrev.y + mHeight / 4;
-				oval.right  = mWidth * ptPrev.x + mWidth / 8;
-				oval.bottom = mHeight * (ptPrev.y + 1) - mHeight / 4;
-				canvas.drawArc(oval, -10, 20, true, arrow);
+				mOval.left   = mWidth * ptPrev.x - mWidth / 2;
+				mOval.top    = mHeight * ptPrev.y + mHeight / 4;
+				mOval.right  = mWidth * ptPrev.x + mWidth / 8;
+				mOval.bottom = mHeight * (ptPrev.y + 1) - mHeight / 4;
+				canvas.drawArc(mOval, -10, 20, true, arrow);
 			} else if (dx > 0 && dy == 0) { // right
-				oval.left   = mWidth * ptCur.x - mWidth / 8;
-				oval.top    = mHeight * ptPrev.y + mHeight / 4;
-				oval.right  = mWidth * ptCur.x + mWidth / 2;
-				oval.bottom = mHeight * (ptPrev.y + 1) - mHeight / 4;
-				canvas.drawArc(oval, 170, 20, true, arrow);
+				mOval.left   = mWidth * ptCur.x - mWidth / 8;
+				mOval.top    = mHeight * ptPrev.y + mHeight / 4;
+				mOval.right  = mWidth * ptCur.x + mWidth / 2;
+				mOval.bottom = mHeight * (ptPrev.y + 1) - mHeight / 4;
+				canvas.drawArc(mOval, 170, 20, true, arrow);
 			} else if (dx < 0 && dy < 0) { // up-left
-				oval.left   = mWidth * ptPrev.x - mWidth * 7 / 16;
-				oval.top    = mHeight * ptPrev.y - mHeight * 7 / 16;
-				oval.right  = mWidth * ptPrev.x + mWidth * 3 / 16;
-				oval.bottom = mHeight * ptPrev.y + mHeight * 3 / 16;
-				canvas.drawArc(oval, 37, 16, true, arrow);
+				mOval.left   = mWidth * ptPrev.x - mWidth * 7 / 16;
+				mOval.top    = mHeight * ptPrev.y - mHeight * 7 / 16;
+				mOval.right  = mWidth * ptPrev.x + mWidth * 3 / 16;
+				mOval.bottom = mHeight * ptPrev.y + mHeight * 3 / 16;
+				canvas.drawArc(mOval, 37, 16, true, arrow);
 			} else if (dx < 0 && dy > 0) { // down-left
-				oval.left   = mWidth * ptPrev.x - mWidth * 7 / 16;
-				oval.top    = mHeight * (ptPrev.y + 1) - mHeight * 3 / 16;
-				oval.right  = mWidth * ptPrev.x + mWidth * 3 / 16;
-				oval.bottom = mHeight * (ptPrev.y + 1) + mHeight * 7 / 16;
-				canvas.drawArc(oval, 307, 16, true, arrow);
+				mOval.left   = mWidth * ptPrev.x - mWidth * 7 / 16;
+				mOval.top    = mHeight * (ptPrev.y + 1) - mHeight * 3 / 16;
+				mOval.right  = mWidth * ptPrev.x + mWidth * 3 / 16;
+				mOval.bottom = mHeight * (ptPrev.y + 1) + mHeight * 7 / 16;
+				canvas.drawArc(mOval, 307, 16, true, arrow);
 			} else if (dx > 0 && dy < 0) { // up-right
-				oval.left   = mWidth * (ptPrev.x + 1) - mWidth * 3 / 16;
-				oval.top    = mHeight * ptPrev.y - mHeight * 7 / 16;
-				oval.right  = mWidth * (ptPrev.x + 1) + mWidth * 7 / 16;
-				oval.bottom = mHeight * ptPrev.y + mHeight * 3 / 16;
-				canvas.drawArc(oval, 127, 16, true, arrow);
+				mOval.left   = mWidth * (ptPrev.x + 1) - mWidth * 3 / 16;
+				mOval.top    = mHeight * ptPrev.y - mHeight * 7 / 16;
+				mOval.right  = mWidth * (ptPrev.x + 1) + mWidth * 7 / 16;
+				mOval.bottom = mHeight * ptPrev.y + mHeight * 3 / 16;
+				canvas.drawArc(mOval, 127, 16, true, arrow);
 			} else if (dx > 0 && dy > 0) { // down-right
-				oval.left   = mWidth * ptCur.x - mWidth * 3 / 16;
-				oval.top    = mHeight * ptCur.y - mHeight * 3 / 16;
-				oval.right  = mWidth * ptCur.x + mWidth * 7 / 16;
-				oval.bottom = mHeight * ptCur.y + mHeight * 7 / 16;
-				canvas.drawArc(oval, 217, 16, true, arrow);
+				mOval.left   = mWidth * ptCur.x - mWidth * 3 / 16;
+				mOval.top    = mHeight * ptCur.y - mHeight * 3 / 16;
+				mOval.right  = mWidth * ptCur.x + mWidth * 7 / 16;
+				mOval.bottom = mHeight * ptCur.y + mHeight * 7 / 16;
+				canvas.drawArc(mOval, 217, 16, true, arrow);
 			}			
 		}
 	}
@@ -287,6 +283,16 @@ public class BogglePuzzleView extends View {
 		//game.showKeypadOrError(selX, selY);		
 
 		return true;
+	}
+	
+	public void rotatePuzzle() {
+		for (int i = 0; i < mSelList.size(); ++i) {
+			Point ptInList = mSelList.get(i);
+			int x = ptInList.x;
+			ptInList.x = ptInList.y;
+			ptInList.y = mSize - 1 - x;
+		}
+		invalidate();
 	}
 	
 	private void selectNextLetter(int x, int y) {
@@ -404,14 +410,5 @@ public class BogglePuzzleView extends View {
 		}		
 		return s.toLowerCase();
 	}
-	
-	public void rotatePuzzle() {
-		for (int i = 0; i < mSelList.size(); ++i) {
-			Point ptInList = mSelList.get(i);
-			int x = ptInList.x;
-			ptInList.x = ptInList.y;
-			ptInList.y = mSize - 1 - x;
-		}
-		invalidate();
-	}
+		
 }
