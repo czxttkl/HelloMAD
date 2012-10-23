@@ -68,8 +68,16 @@
 		
 		<!-- persist boggle activities -->
 		
+		<activity android:name=".PBWelcome" 
+            android:label="@string/pb_pb_label"
+            android:screenOrientation="portrait" />
+		
+		<activity android:name=".PBLogIn" 
+            android:label="@string/pb_pb_label"
+            android:screenOrientation="portrait" />
+		
 		<activity android:name=".PBSignUp" 
-            android:label="@string/pbsignup_title" />
+            android:label="@string/pb_pb_label" />
 		
 		<activity android:name=".PBMain" 
             android:label="@string/pbmain_title" />

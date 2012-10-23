@@ -65,7 +65,7 @@ public class HelloMAD extends Activity implements OnClickListener {
 			finish();
 			break;
 		case R.id.pbgame_button:
-			i = new Intent(this, PBGame.class);
+			i = new Intent(this, PBWelcome.class);
 			startActivity(i);
 		// More buttons go here (if any) ...
 		}
