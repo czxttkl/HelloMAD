@@ -25,10 +25,12 @@ public class PBWelcome extends Activity implements OnClickListener {
 		switch (v.getId()) {
 			case R.id.pbwelcome_login_button:
 				i = new Intent(this, PBLogIn.class);
+				finish();
 				startActivity(i);
 				break;
 			case R.id.pbwelcome_signup_button:
 				i = new Intent(this, PBSignUp.class);
+				finish();
 				startActivity(i);
 				break;
 		}
