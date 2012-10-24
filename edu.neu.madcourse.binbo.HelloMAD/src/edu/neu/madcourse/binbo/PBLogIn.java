@@ -16,7 +16,7 @@ public class PBLogIn extends Activity implements OnClickListener {
 	private EditText mETAccountName;
 	private ArrayList<PBPlayerInfo> mPlayerInfoList;
 	private PlayerInfoAcquirer mAcquirer = null;
-	public static final String ACCOUNT_NAME = "account_name";
+	private static final String ACCOUNT_NAME = "account_name";
 	
 	private final Handler mHandler = new Handler(Looper.getMainLooper()) {
     	private static final int UPDATE_PLAYERS_INFO  = 0;   
@@ -91,6 +91,7 @@ public class PBLogIn extends Activity implements OnClickListener {
 	public void goToPBMain(String accName) {
 		Intent i = new Intent(this, PBMain.class);
 		i.putExtra(ACCOUNT_NAME, accName);
+		finish();
 		startActivity(i);
 	}
 }

@@ -18,9 +18,9 @@ import android.widget.Toast;
 
 public class PBSignUp extends Activity implements OnClickListener {
 	private EditText mETAccountName;
-	private ArrayList<PBPlayerInfo> mPlayerInfoList;
+	private ArrayList<PBPlayerInfo> mPlayerInfoList = new ArrayList<PBPlayerInfo>();
 	private PlayerInfoAcquirer mAcquirer = null;
-	public static final String ACCOUNT_NAME = "account_name";
+	private static final String ACCOUNT_NAME = "account_name";
 	
 	private final Handler mHandler = new Handler(Looper.getMainLooper()) {
     	private static final int UPDATE_PLAYERS_INFO  = 0;   
@@ -101,13 +101,12 @@ public class PBSignUp extends Activity implements OnClickListener {
 	public void doSignUp(String accName) {
 		//upload data
 		ServerDelegator d = new ServerDelegator();
-		ArrayList<PBPlayerInfo> playerList = new ArrayList();
 		PBPlayerInfo newPlayer = new PBPlayerInfo();
 		newPlayer.setName(accName);
 		Log.d("PBSignUp:doSignUp", "Acc name: " + accName);
-		playerList.add(newPlayer);
+		this.mPlayerInfoList.add(newPlayer);
 		try {
-			Log.d("PBSignUp:doSignUp", d.commitPlayersInfo(playerList) ? "true" : "false");
+			d.commitPlayersInfo(this.mPlayerInfoList);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -115,6 +114,7 @@ public class PBSignUp extends Activity implements OnClickListener {
 		
 		Intent i = new Intent(this, PBMain.class);
 		i.putExtra(ACCOUNT_NAME, accName);
+		finish();
 		startActivity(i);
 	}
 }
