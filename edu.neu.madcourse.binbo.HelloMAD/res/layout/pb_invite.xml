@@ -5,8 +5,9 @@
     android:orientation="vertical" >
     
     <TextView 
+        android:id="@+id/pbinvite_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:gravity="center"
         android:textSize="18sp"
         android:padding="6dp"
@@ -17,15 +18,17 @@
     <ListView
         android:id="@+id/pbinvite_user_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="40dp" >
+        android:layout_height="420dp" >
         
     </ListView>
     
     <Button
+        android:id="@+id/pbinvite_back_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="bottom"
+        android:padding="6dp"
+        android:gravity="center"
+        android:textSize="18sp"
         android:text="@string/pb_back_label" />
     
 </LinearLayout>
