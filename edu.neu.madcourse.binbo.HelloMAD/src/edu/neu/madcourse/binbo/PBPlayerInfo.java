@@ -1,15 +1,26 @@
 package edu.neu.madcourse.binbo;
 
-public class PBPlayerInfo {
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import edu.neu.mobileclass.apis.KeyValueAPI;
+
+public class PBPlayerInfo implements IRemoteData {
+	
+	private static final String TEAMNAME = "MAD_WB_TEAM";
+    private static final String PASSWORD = "111111";
+    private static final String PLAYER_INFO_KEY_PREFIX = "PBGAME_PLAYER_INFO_"; 
+    private static final int DATA_ID = 2;
 	
 	protected String mName = "";
 	protected String mStatus = "";	
 	protected int    mScore = 0;
 	protected int    mBestScore = 0;
 	protected long   mUpdateTime = 0;
-	protected int    mMessage = 0;
-	protected String mInvitor = "";	
-	protected long   mInviteTime = 0;
+	
+	public PBPlayerInfo(String name) {
+		mName = name;
+	}
 	
 	public void setName(String name) {  
         mName = name;  
@@ -31,18 +42,6 @@ public class PBPlayerInfo {
 		mUpdateTime = updateTime;  
 	} 
 	
-	public void setMessage(int message) {
-		mMessage = message; 
-	}
-	
-	public void setInvitor(String invitor) {
-		mInvitor = invitor;
-	}
-	
-	public void setInviteTime(long inviteTime) {
-		mInviteTime = inviteTime;
-	}
-	
 	public String getName() {  
         return mName;  
 	} 
@@ -63,15 +62,45 @@ public class PBPlayerInfo {
 		return mUpdateTime;  
 	} 
 	
-	public int getMessage() {
-		return mMessage;
+	public boolean acquire() throws JSONException {		
+
+		if (KeyValueAPI.isServerAvailable() == false) {
+	    	return false;
+	    }		
+		
+		String content = KeyValueAPI.get(TEAMNAME, PASSWORD, PLAYER_INFO_KEY_PREFIX + mName);		
+		JSONObject obj = new JSONObject(content);			
+					
+		setName(obj.getString("name"));
+		setScore(obj.getInt("score"));
+		setBestScore(obj.getInt("best_score"));
+		setStatus(obj.getString("status"));
+		setUpdateTime(obj.getLong("update_time"));			
+		
+		return true;
 	}
 	
-	public String getInvitor() {
-		return mInvitor;
-	}
+	public boolean commit() throws JSONException {
+
+		if (KeyValueAPI.isServerAvailable() == false) {
+	    	return false;
+	    }		
+		
+		JSONObject obj = new JSONObject();  	              
+
+        obj.put("name", getName());  
+        obj.put("score", getScore());  
+        obj.put("best_score", getBestScore());  
+        obj.put("status", getStatus());
+        obj.put("update_time", getUpdateTime()); 
+        
+        String content = obj.toString();
+       	KeyValueAPI.put(TEAMNAME, PASSWORD, PLAYER_INFO_KEY_PREFIX + getName(), content);
 	
-	public long getInviteTime() {
-		return mInviteTime;
+        return true;
+    } 
+    
+	public int getDataId() {
+		return DATA_ID;
 	}
 }
