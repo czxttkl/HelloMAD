@@ -14,7 +14,12 @@ public class ServerDelegator {
     private static final String PASSWORD = "111111";
     private static final String PLAYER_INFO_KEY = "PBGAME_PLAYER_INFOS";    
 	
-	public boolean commitPlayersInfo(ArrayList<PBPlayerInfo> infos) throws JSONException { 								
+	public boolean commitPlayersInfo(ArrayList<PBPlayerInfo> infos) throws JSONException {
+		
+		if (KeyValueAPI.isServerAvailable() == false) {
+			return false;
+		}
+		
 		JSONArray array = new JSONArray();  
 		
 	    for (PBPlayerInfo info:infos){   
@@ -33,14 +38,10 @@ public class ServerDelegator {
 	        	throw e;
 	        }  	              	         
 	    } 
-	 
-	    if (KeyValueAPI.isServerAvailable()) {
-	    	String result = array.toString();
-	    	result = KeyValueAPI.put(TEAMNAME, PASSWORD, PLAYER_INFO_KEY, array.toString());
-	    	return true;
-	    }
 	    
-	    return false;
+	   	String result = array.toString();
+	   	result = KeyValueAPI.put(TEAMNAME, PASSWORD, PLAYER_INFO_KEY, array.toString());
+	    return true;
 	}
 	
 	public ArrayList<PBPlayerInfo> pullPlayerInfos() throws JSONException {	
@@ -48,6 +49,7 @@ public class ServerDelegator {
 		if (KeyValueAPI.isServerAvailable() == false) {
 	    	return null;
 	    }		
+		
 		String retSrc = KeyValueAPI.get(TEAMNAME, PASSWORD, PLAYER_INFO_KEY);
 		
 		JSONArray array = null;

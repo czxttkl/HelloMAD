@@ -12,11 +12,12 @@ public class PlayerInfoAcquirer extends Thread {
 	 
     private Handler mHandler = null;
     private boolean mRun = false;
-    private boolean mEnd = false;
+    private boolean mEnd = true;
     private boolean mRunOnce = false;
  
-    private static final int UPDATE_PLAYERS_INFO  = 0;   
-    private static final int UPDATE_PLAYERS_ERROR = 1;
+    private static final int SERVER_UNAVAILABLE   = -1;
+	private static final int UPDATE_PLAYERS_INFO  = 0; // get info successfully
+    private static final int UPDATE_PLAYERS_ERROR = 1; // fail to get info             
     
     ArrayList<PBPlayerInfo> infos = null;
     ServerDelegator mDelegator = new ServerDelegator();
@@ -36,7 +37,7 @@ public class PlayerInfoAcquirer extends Thread {
             	infos = mDelegator.pullPlayerInfos();
         	
         		Message msg = mHandler.obtainMessage(); 
-                msg.arg1 = UPDATE_PLAYERS_INFO;
+                msg.arg1 = (infos == null) ? SERVER_UNAVAILABLE : UPDATE_PLAYERS_INFO;
                 msg.obj = infos;
                 mHandler.sendMessage(msg);            	                
                                 
@@ -76,7 +77,6 @@ public class PlayerInfoAcquirer extends Thread {
 	private void sendErrorMessage() {
 		Message msg = mHandler.obtainMessage(); 
         msg.arg1 = UPDATE_PLAYERS_ERROR;
-        msg.arg2 = KeyValueAPI.isServerAvailable() ? 1 : 0;
         msg.obj = null;
         mHandler.sendMessage(msg);
 	}

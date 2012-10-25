@@ -12,7 +12,9 @@ import android.os.Message;
 
 public class PlayerInfoCommitter extends AsyncTask<ArrayList<PBPlayerInfo>, Integer, Boolean> {
 	
-	private static final int COMMIT_PLAYERS_ERROR = 2;
+	private static final int SERVER_UNAVAILABLE   = -1;        
+    private static final int COMMIT_PLAYERS_INFO  = 2; // commit info successfully 
+    private static final int COMMIT_PLAYERS_ERROR = 3; // fail to commit info  
 	
 	Handler mHandler = null;
 	ServerDelegator mDelegator = new ServerDelegator();
@@ -25,7 +27,7 @@ public class PlayerInfoCommitter extends AsyncTask<ArrayList<PBPlayerInfo>, Inte
     	boolean result = false;
     	
 		try {
-			result = mDelegator.commitPlayersInfo(infos[0]);
+			result = mDelegator.commitPlayersInfo(infos[0]);			
 		} catch (JSONException e) {
 			sendErrorMessage();
 		}
@@ -34,14 +36,18 @@ public class PlayerInfoCommitter extends AsyncTask<ArrayList<PBPlayerInfo>, Inte
     }
   
     protected void onPostExecute(Boolean result) {
-        //showDialog("Downloaded " + result + " bytes");
+    	if (result == false) {
+    		sendErrorMessage();
+		} else {
+			Message msg = mHandler.obtainMessage(); 
+	        msg.arg1 = COMMIT_PLAYERS_INFO;		        
+	        mHandler.sendMessage(msg);
+		}
     }
     
     private void sendErrorMessage() {
 		Message msg = mHandler.obtainMessage(); 
         msg.arg1 = COMMIT_PLAYERS_ERROR;
-        msg.arg2 = KeyValueAPI.isServerAvailable() ? 1 : 0;
-        msg.obj = null;
         mHandler.sendMessage(msg);
 	}
 }
