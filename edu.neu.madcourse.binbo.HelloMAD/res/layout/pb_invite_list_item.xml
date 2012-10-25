@@ -3,10 +3,11 @@
     android:id="@+id/pbinvite_list_item"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:paddingLeft="12dip"
+    android:paddingLeft="24dip"
     android:paddingRight="12dip"
     android:paddingTop="6dip"
     android:paddingBottom="6dip"
+    android:background="@color/pb_white"
     android:gravity="center_vertical"
     android:orientation="horizontal" >
 
@@ -14,12 +15,16 @@
         android:id="@+id/pbinvite_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20dip" />
+        android:textColor="@color/pb_black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/pbinvite_status"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textColor="@color/pb_red"
+        android:textSize="14sp" />
     
     <LinearLayout
         android:layout_width="fill_parent"
@@ -27,8 +32,10 @@
         android:orientation="horizontal"
         android:gravity="right" >
         <Button
-	        android:layout_width="wrap_content"
+	        android:layout_width="80dp"
 	        android:layout_height="wrap_content"
+	        android:textSize="14sp"
+	        android:textStyle="bold"
 	        android:text="@string/pb_invite_label" />
     </LinearLayout>
 

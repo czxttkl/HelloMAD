@@ -12,5 +12,9 @@
     <color name="sudoku_puzzle_selected">#64ff8000</color>
     
     <color name="pb_white">#fff</color>
+    <color name="pb_black">#000</color>
+    <color name="pb_red">#ff0000</color>
+    <color name="pb_gray1">#ccc</color>
+    <color name="pb_gray2">#666</color>
     <color name="pb_blue">#005aff</color>
 </resources>

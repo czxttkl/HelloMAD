@@ -77,13 +77,16 @@
             android:screenOrientation="portrait" />
 		
 		<activity android:name=".PBSignUp" 
-            android:label="@string/pb_pb_label" />
+            android:label="@string/pb_pb_label"
+            android:screenOrientation="portrait" />
 		
 		<activity android:name=".PBMain" 
-            android:label="@string/pbmain_title" />
+            android:label="@string/pbmain_title"
+            android:screenOrientation="portrait" />
 		
 		<activity android:name=".PBInvite" 
-            android:label="@string/pbinvite_title" />
+            android:label="@string/pbinvite_title"
+            android:screenOrientation="portrait" />
 		
 		<activity android:name=".PBGame" 
             android:label="@string/pbgame_title"

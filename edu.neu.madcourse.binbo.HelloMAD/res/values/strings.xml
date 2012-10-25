@@ -103,5 +103,6 @@
     <string name="pb_back_label">Back</string>
     <string name="pb_invite_label">Invite</string>
     <string name="pb_playing_status_label">(Playing)</string>
+    <string name="pb_refresh_label">Refresh</string>
 	
 </resources>

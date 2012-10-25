@@ -12,7 +12,7 @@
 	   android:layout_width="wrap_content"
 	   android:layout_gravity="center"
 	   android:layout_marginBottom="20dip"
-	   android:textSize="20sp" />
+	   android:textSize="24.5sp" />
 	
 	<Button
 	   android:id="@+id/pbmain_new_game_button"
