@@ -51,11 +51,11 @@ public class PlayerInfoAcquirer extends Thread {
 					e.printStackTrace();
 				}
 			}
-        }    
-        
-        if (mRunOnce) {
-        	mRun = false;
-        }
+            
+            if (mRunOnce) {
+            	mRun = false;
+            }
+        }                    
         
         mEnd = true;
     }      
