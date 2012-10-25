@@ -38,7 +38,7 @@ public class AcquireTask extends Thread {
         while (mRun) {
             try {                    
         		Message msg = mHandler.obtainMessage(); 
-                msg.arg1 = mData.acquire() ? SERVER_UNAVAILABLE : UPDATE_DATA_DONE;
+                msg.arg1 = mData.acquire() ? UPDATE_DATA_DONE : SERVER_UNAVAILABLE;
                 msg.arg2 = mData.getDataId();
                 mHandler.sendMessage(msg);            	                                                
             } catch (NullPointerException e) { 

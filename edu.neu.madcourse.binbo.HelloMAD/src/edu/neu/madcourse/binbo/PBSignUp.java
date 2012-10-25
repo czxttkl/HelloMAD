@@ -129,8 +129,7 @@ public class PBSignUp extends Activity implements OnClickListener {
 			break;
 		}
 	}
-	
-	@SuppressWarnings("unchecked")
+
 	public void doSignUp(String newAccount) {
 		// upload new account
 		Log.d("PBSignUp:doSignUp", "Account name: " + newAccount);
