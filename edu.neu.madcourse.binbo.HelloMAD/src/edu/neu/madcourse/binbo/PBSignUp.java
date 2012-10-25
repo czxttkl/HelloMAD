@@ -24,13 +24,13 @@ public class PBSignUp extends Activity implements OnClickListener {
 	private static final String ACCOUNT_NAME = "account_name";
 	
 	private final Handler mHandler = new Handler(Looper.getMainLooper()) {
+		
 		private static final int SERVER_UNAVAILABLE = -1;
 		private static final int UPDATE_DATA_DONE   = 1;  
 		private static final int UPDATE_DATA_ERROR  = 2;
 		private static final int COMMIT_DATA_DONE   = 3; 
 	    private static final int COMMIT_DATA_ERROR  = 4;
  
-        @SuppressWarnings("unchecked")
 		public void handleMessage(Message msg) {        	
         	
         	switch (msg.arg1) { 
@@ -51,8 +51,7 @@ public class PBSignUp extends Activity implements OnClickListener {
             	break;
             default:
             	break;
-            }
-            
+            }            
         } 
     };
     
@@ -108,7 +107,7 @@ public class PBSignUp extends Activity implements OnClickListener {
 		View btn_signup = this.findViewById(R.id.pbsignup_signup_button);
 		btn_signup.setOnClickListener(this);
 		// create commit task
-		mCommit = new CommitTask(mHandler, mNames);
+		mCommit = new CommitTask(mHandler, mNames);				
 	}
 	
 	public void onClick(View v) {
@@ -117,10 +116,7 @@ public class PBSignUp extends Activity implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.pbsignup_signup_button:
 			if (account.compareTo("") != 0) {
-				if (mAcquire != null) {				
-					mAcquire.end();
-				}
-				mAcquire = new AcquireTask(mHandler, mNames, 100, true);
+				mAcquire = new AcquireTask(mHandler, mNames, 0, true);
 				mAcquire.start();
 			} else {
 				Toast.makeText(getApplicationContext(), 
