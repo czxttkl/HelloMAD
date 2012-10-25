@@ -25,6 +25,9 @@ public class ServerDelegator {
 	            obj.put("best_score", info.getBestScore());  
 	            obj.put("status", info.getStatus());
 	            obj.put("update_time", info.getUpdateTime());
+	            obj.put("message", info.getMessage());
+	            obj.put("invitor", info.getInvitor());
+	            obj.put("invite_time", info.getInviteTime());
 	            array.put(obj); 
 	        } catch (JSONException e) {
 	        	throw e;
@@ -62,6 +65,9 @@ public class ServerDelegator {
 				info.setBestScore(obj.getInt("best_score"));
 				info.setStatus(obj.getString("status"));
 				info.setUpdateTime(obj.getLong("update_time"));	
+				info.setMessage(obj.getInt("message"));
+				info.setInvitor(obj.getString("invitor"));
+				info.setInviteTime(obj.getLong("invite_time"));
 				infos.add(info); 
 			}
 		} catch (JSONException e1) {
