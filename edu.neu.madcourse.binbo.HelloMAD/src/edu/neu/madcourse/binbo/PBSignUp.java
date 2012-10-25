@@ -17,49 +17,37 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class PBSignUp extends Activity implements OnClickListener {
-	private EditText mETAccountName;
-	private ArrayList<PBPlayerInfo> mPlayerInfoList = new ArrayList<PBPlayerInfo>();
-	private PlayerInfoAcquirer mAcquirer = null;
+	private EditText mEditTextAccount = null;
+	private ArrayList<PBPlayerInfo> mInfos = new ArrayList<PBPlayerInfo>();
+	private PlayerInfoAcquirer  mAcquirer  = null;
+	private PlayerInfoCommitter mCommitter = null;
 	private static final String ACCOUNT_NAME = "account_name";
 	
 	private final Handler mHandler = new Handler(Looper.getMainLooper()) {
-    	private static final int UPDATE_PLAYERS_INFO  = 0;   
-        private static final int UPDATE_PLAYERS_ERROR = 1;
-        private static final int COMMIT_PLAYERS_ERROR = 2;
+		private static final int SERVER_UNAVAILABLE   = -1;
+    	private static final int UPDATE_PLAYERS_INFO  = 0; // get info successfully
+        private static final int UPDATE_PLAYERS_ERROR = 1; // fail to get info         
+        private static final int COMMIT_PLAYERS_INFO  = 2; // commit info successfully 
+        private static final int COMMIT_PLAYERS_ERROR = 3; // fail to commit info        
  
         @SuppressWarnings("unchecked")
-		public void handleMessage(Message msg) {
-        	if (mAcquirer != null) {
-    			mAcquirer.end();
-    			mAcquirer = null;
-    		}
-        	String strName = mETAccountName.getText().toString();
+		public void handleMessage(Message msg) {        	
+        	
         	switch (msg.arg1) { 
+        		case SERVER_UNAVAILABLE:
+        			onServerUnavailable();
+        			break;
 	            case UPDATE_PLAYERS_INFO:
-	            	mPlayerInfoList = (ArrayList<PBPlayerInfo>)msg.obj;
-	            	for (int i = 0; i < mPlayerInfoList.size(); i++) {
-	            		if (mPlayerInfoList.get(i).getName() == strName) {
-	            			Toast.makeText(getApplicationContext(), 
-	 		                       "Sorry, the account name has been used.",
-	 		                       Toast.LENGTH_LONG).show();
-	            			return;
-	            		}
-	            	}
-	            	doSignUp(strName);
+	            	onUpdatePlayersInfo((ArrayList<PBPlayerInfo>)msg.obj);	            	
 	                break;  
 	            case UPDATE_PLAYERS_ERROR:  
-	            	if (msg.arg2 == 1) {
-	            		doSignUp(strName);
-	            	} else {
-	            		Toast.makeText(getApplicationContext(), 
-			                       "Server connection lost during downloading data.",
-			                       Toast.LENGTH_LONG).show();
-	            	}
+	            	onUpdatePlayersInfoError();
 	                break;  
-	            case COMMIT_PLAYERS_ERROR:  
-	            	Toast.makeText(getApplicationContext(), 
-	                       "Server connection lost during committing data.",
-	                       Toast.LENGTH_LONG).show();                                                       
+	            case COMMIT_PLAYERS_INFO:
+	            	onCommitPlayersInfo();
+	            	break;
+	            case COMMIT_PLAYERS_ERROR:
+	            	onCommitPlayersInfoError();
 	            	break;
 	            default:
 	            	break;
@@ -67,54 +55,93 @@ public class PBSignUp extends Activity implements OnClickListener {
             
         } 
     };
+    
+    private void onServerUnavailable() {
+    	Toast.makeText(getApplicationContext(), 
+            "Sorry, server can not be connected. Please try again.",
+            Toast.LENGTH_LONG).show();
+    }
+    
+    private void onUpdatePlayersInfo(ArrayList<PBPlayerInfo> infos) {
+    	mInfos = infos;
+    	String newAccount = mEditTextAccount.getText().toString();
+    	
+    	for (int i = 0; i < mInfos.size(); i++) {
+    		String existAccount = mInfos.get(i).getName();
+    		if (existAccount.compareTo(newAccount) == 0) { // already exist
+    			Toast.makeText(getApplicationContext(), 
+                   "Sorry, the account name has been used.", Toast.LENGTH_LONG).show();
+    			return;
+    		}
+    	}
+    	
+    	doSignUp(newAccount);
+    }
+    
+    private void onUpdatePlayersInfoError() {
+    	// no user found, just do registration
+    	String newAccount = mEditTextAccount.getText().toString();
+    	doSignUp(newAccount);
+    }
+    
+    private void onCommitPlayersInfo() {
+    	String newAccount = mEditTextAccount.getText().toString();
+    	
+    	Intent i = new Intent(this, PBMain.class);
+		i.putExtra(ACCOUNT_NAME, newAccount);
+		finish();
+		startActivity(i);  
+    }
+    
+    private void onCommitPlayersInfoError() {
+    	Toast.makeText(getApplicationContext(), 
+    			"Sorry, unable to submit your info.",
+    			Toast.LENGTH_LONG).show(); 
+    }
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.pb_signup);
 		
-		this.mETAccountName = (EditText) this.findViewById(R.id.pbsignup_account_name_input);
+		mEditTextAccount = (EditText) this.findViewById(R.id.pbsignup_account_name_input);
 		
 		// Set up click listeners for all the buttons
 		View btn_signup = this.findViewById(R.id.pbsignup_signup_button);
 		btn_signup.setOnClickListener(this);
+		
+		// create acquirer and committer		
+		mCommitter = new PlayerInfoCommitter(mHandler); 
 	}
 	
 	public void onClick(View v) {
-		Intent i = null;
+		String account = mEditTextAccount.getText().toString();
 
 		switch (v.getId()) {
-			case R.id.pbsignup_signup_button:
-				if (mETAccountName.getText().toString() != "") {
-					if (mAcquirer == null) {
-						mAcquirer = new PlayerInfoAcquirer(mHandler, true);
-						mAcquirer.start();
-					}
-				} else {
-					Toast.makeText(getApplicationContext(), 
-		                       "Please enter an account name.",
-		                       Toast.LENGTH_LONG).show();
+		case R.id.pbsignup_signup_button:
+			if (account.compareTo("") != 0) {
+				if (mAcquirer != null) {				
+					mAcquirer.end();
 				}
-				break;
+				mAcquirer = new PlayerInfoAcquirer(mHandler, true);
+				mAcquirer.start();
+			} else {
+				Toast.makeText(getApplicationContext(), 
+						"Please enter an account name.", Toast.LENGTH_LONG).show();
+			}
+			break;
 		}
 	}
 	
-	public void doSignUp(String accName) {
-		//upload data
-		ServerDelegator d = new ServerDelegator();
+	@SuppressWarnings("unchecked")
+	public void doSignUp(String newAccount) {
+		// upload new account
 		PBPlayerInfo newPlayer = new PBPlayerInfo();
-		newPlayer.setName(accName);
-		Log.d("PBSignUp:doSignUp", "Acc name: " + accName);
-		this.mPlayerInfoList.add(newPlayer);
-		try {
-			d.commitPlayersInfo(this.mPlayerInfoList);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		newPlayer.setName(newAccount);
+		Log.d("PBSignUp:doSignUp", "Account name: " + newAccount);
+		mInfos.add(newPlayer);
 		
-		Intent i = new Intent(this, PBMain.class);
-		i.putExtra(ACCOUNT_NAME, accName);
-		finish();
-		startActivity(i);
+		if (mCommitter != null) { 
+			mCommitter.execute(mInfos);
+		}
 	}
 }
