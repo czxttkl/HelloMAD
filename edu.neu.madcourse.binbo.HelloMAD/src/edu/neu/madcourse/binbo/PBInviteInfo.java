@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 import edu.neu.mobileclass.apis.KeyValueAPI;
 
-public class PBInviteList implements IRemoteData {
+public class PBInviteInfo implements IRemoteData {
 	
 	private static final String TEAMNAME = "MAD_WB_TEAM";
     private static final String PASSWORD = "111111";
@@ -22,7 +22,7 @@ public class PBInviteList implements IRemoteData {
 	//whether the receiver has been informed with this invitation before it gets invalid
 	protected Boolean mHasNotified = false;
 	
-	public PBInviteList(String poster, String receiver, long postTime) {
+	public PBInviteInfo(String poster, String receiver, long postTime) {
 		this.mPoster = poster;
 		this.mReceiver = receiver;
 		this.mPostTime = postTime;
