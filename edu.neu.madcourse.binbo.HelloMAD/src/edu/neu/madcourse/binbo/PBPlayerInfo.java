@@ -13,7 +13,8 @@ public class PBPlayerInfo implements IRemoteData {
     private static final int DATA_ID = 2;
 	
 	protected String mName = "";
-	protected String mStatus = "";	
+	protected String mStatus = "";
+	protected String mSelLetters = "";
 	protected int    mScore = 0;
 	protected int    mBestScore = 0;
 	protected long   mUpdateTime = 0;
@@ -29,6 +30,10 @@ public class PBPlayerInfo implements IRemoteData {
 	public void setStatus(String status) {  
 		mStatus = status;  
 	} 
+	
+	public void setSelLetters(String letters) {
+		mSelLetters = letters;
+	}
 	
 	public void setScore(int score) {  
         mScore = score;  
@@ -49,6 +54,10 @@ public class PBPlayerInfo implements IRemoteData {
 	public String getStatus() {  
 		return mStatus;  
 	} 
+	
+	public String getSelLetters() {
+		return mSelLetters;
+	}
 	
 	public int getScore() {  
         return mScore;  
@@ -74,6 +83,7 @@ public class PBPlayerInfo implements IRemoteData {
 		setName(obj.getString("name"));
 		setScore(obj.getInt("score"));
 		setBestScore(obj.getInt("best_score"));
+		setSelLetters(obj.getString("selected_letters"));
 		setStatus(obj.getString("status"));
 		setUpdateTime(obj.getLong("update_time"));			
 		
@@ -88,11 +98,12 @@ public class PBPlayerInfo implements IRemoteData {
 		
 		JSONObject obj = new JSONObject();  	              
 
-        obj.put("name", getName());  
-        obj.put("score", getScore());  
-        obj.put("best_score", getBestScore());  
+        obj.put("name", getName());
+        obj.put("score", getScore());
+        obj.put("best_score", getBestScore()); 
+        obj.put("selected_letters", getSelLetters());
         obj.put("status", getStatus());
-        obj.put("update_time", getUpdateTime()); 
+        obj.put("update_time", getUpdateTime());
         
         String content = obj.toString();
        	KeyValueAPI.put(TEAMNAME, PASSWORD, PLAYER_INFO_KEY_PREFIX + getName(), content);
