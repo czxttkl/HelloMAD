@@ -1,9 +1,8 @@
 package edu.neu.madcourse.binbo;
 
+import java.util.ArrayList;
 import java.util.Date;
-
 import org.json.JSONException;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

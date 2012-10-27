@@ -3,7 +3,6 @@ package edu.neu.madcourse.binbo;
 import java.util.Date;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -23,7 +22,7 @@ public class PBMain extends Activity implements OnClickListener {
 	private AcquireTask  mAcquire = null;
 	private CommitTask   mCommit  = null;
 	private static final String ACCOUNT_NAME = "account_name";
-	private static final String HOST_INFO = "host_info";
+	public static final String HOST_INFO = "host_info";
 	
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
@@ -111,7 +110,17 @@ public class PBMain extends Activity implements OnClickListener {
 	    }
 	    
 	    private void onUpdateDataDone() {    	
-	    	Intent i = new Intent(getApplicationContext(), PBInvite.class);
+	    	//Intent i = new Intent(getApplicationContext(), PBGame.class);
+			Intent i = new Intent(getApplicationContext(), PBInvite.class);
+
+			//mPlayer.setStatus("online"); // update the status to online
+			//mPlayer.setUpdateTime(System.currentTimeMillis());
+			
+			//Bundle bundle = new Bundle();  
+		    //bundle.putBoolean("new game", true);		    
+		    //bundle.putSerializable(HOST_INFO, mPlayer); 
+		    //i.putExtras(bundle); 
+
 			try {
 				mPlayer.setStatus("online"); // update the status to online
 				mPlayer.setUpdateTime(System.currentTimeMillis());
@@ -120,6 +129,8 @@ public class PBMain extends Activity implements OnClickListener {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} 
+
+
 			finish();	
 			startActivity(i);
 	    }       
@@ -139,16 +150,16 @@ public class PBMain extends Activity implements OnClickListener {
 	    }
 
 	    private void onCommitDataDone() {
-			// Intent i = new Intent(getApplicationContext(), PBInvite.class);
-			// try {
-			// i.putExtra(HOST_INFO, mPlayer.obj2json());
-			// } catch (JSONException e) {
-			// // TODO Auto-generated catch block
-			// e.printStackTrace();
-			// }
-			// startActivity(i);
+	    	//Intent i = new Intent(getApplicationContext(), PBInvite.class);
 	    	
-	    	Intent i = new Intent(getApplicationContext(), HelloMAD.class);
+	    	//Bundle bundle = new Bundle();  
+		    //bundle.putBoolean("new game", true);		    
+		    //bundle.putSerializable(HOST_INFO, mPlayer); 
+		    //i.putExtras(bundle);
+		    
+			//startActivity(i);
+
+			Intent i = new Intent(getApplicationContext(), HelloMAD.class);
 	    	finish();
 	    	startActivity(i);
 	    }

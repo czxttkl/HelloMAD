@@ -141,7 +141,5 @@ public class PBSignUp extends Activity implements OnClickListener {
 		if (mCommit != null) { 
 			mCommit.execute();
 		}
-		
-
 	}
 }
