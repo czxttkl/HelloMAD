@@ -196,9 +196,10 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 	
 	public void onClick(View v) {
 		switch (v.getId()) {	
-		case R.id.pbgame_buttonQuit:	
-			showDialog(DIALOG_QUIT);
-			break;
+		//Miss pbgame_buttonQuit here. Not commit?
+//		case R.id.pbgame_buttonQuit:	
+//			showDialog(DIALOG_QUIT);
+//			break;
 		}
 	}
 	
@@ -237,7 +238,8 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 		mTextViewBest    = (TextView)findViewById(R.id.pbgame_textViewBest);		
 		mListViewWords   = (ListView)findViewById(R.id.pbgame_listViewWords);
 		mButtonShake     = (Button)findViewById(R.id.pbgame_buttonShake); 		
- 		mButtonQuit      = (Button)findViewById(R.id.pbgame_buttonQuit);
+		//Error! Not commit resource!
+ 		//mButtonQuit      = (Button)findViewById(R.id.pbgame_buttonQuit);
  		// register events handler
  		mButtonShake.setOnTouchListener(this);
  		mButtonQuit.setOnClickListener(this);
