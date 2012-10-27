@@ -1,5 +1,8 @@
 package edu.neu.madcourse.binbo;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 // There is little difference between the word lists I used for persistent boggle
 // and the normal boggle, so I haven't updated the statistics below.
 // However, this time I have not deleted any words over 16 letters.
@@ -59,6 +62,11 @@ public class BogglePuzzle {
 		mSize = (int)Math.sqrt(puzzle.length);
 	}
 	
+	public BogglePuzzle(IBoggleGame game, String jsonString) {
+		mGame = game;
+		fromJSONString(jsonString);
+	}
+	
 	public void makePuzzle(int size) {	
 		mSize = size;
 		
@@ -106,6 +114,31 @@ public class BogglePuzzle {
 	public String getTileString(int x, int y) {
 		char c = mPuzzle[mSize * y + x];
 		return String.valueOf(c);
+	}
+	
+	protected void fromJSONString(String jsonString) {		
+		try {
+			JSONObject obj = new JSONObject(jsonString);
+			mSize   = obj.getInt("size");
+			mPuzzle = obj.getString("boggle_puzzle").toCharArray();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}						
+	}
+	
+	public String toJSONString() {
+		JSONObject obj = new JSONObject();		
+
+        try {
+			obj.put("boggle_puzzle", String.valueOf(mPuzzle));
+			obj.put("size", mSize);	
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}        
+                
+        return obj.toString();
 	}
 
 	protected boolean isTooMuchRepeated(char[] letters, char letter) {
