@@ -28,6 +28,10 @@ public class PBInviteInfo implements IRemoteData {
 		this.mPostTime = postTime;
 	}
 	
+	public PBInviteInfo(String poster) {
+		this.mPoster = poster;
+	}
+	
 	public Boolean getHasNotified() {  
         return this.mHasNotified;
 	}
@@ -61,6 +65,10 @@ public class PBInviteInfo implements IRemoteData {
 		
 		String content = KeyValueAPI.get(TEAMNAME, PASSWORD,
 				INVITE_INFO_KEY_PREFIX + getPoster());
+		
+		if (content.equals("")) {
+	    	return false;
+	    }
 		JSONObject obj = new JSONObject(content);
 					
 		this.mPoster = obj.getString("poster");
@@ -90,6 +98,18 @@ public class PBInviteInfo implements IRemoteData {
         return true;
     } 
     
+	public String obj2json() throws JSONException {
+		
+		JSONObject obj = new JSONObject();  	              
+
+        obj.put("poster", getPoster());
+        obj.put("receiver", getReceiver());
+        obj.put("post_time", getPostTime()); 
+        obj.put("hasNotified", getHasNotified());
+        
+        return obj.toString();
+	}
+	
 	public int getDataId() {
 		return DATA_ID;
 	}

@@ -1,6 +1,9 @@
 package edu.neu.madcourse.binbo;
 
-import java.util.ArrayList;
+import java.util.Date;
+
+import org.json.JSONException;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -121,6 +124,18 @@ public class PBLogIn extends Activity implements OnClickListener {
 	}
 	
 	public void doLogin(String account) {
+		PBPlayerInfo pInfo = new PBPlayerInfo(account);
+		try {
+			pInfo.acquire();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		pInfo.setStatus("Online");
+		pInfo.setUpdateTime((new Date()).getTime());
+		CommitTask cmt = new CommitTask(this.mHandler, pInfo);
+		cmt.execute();
+		
 		Intent i = new Intent(this, PBMain.class);
 		i.putExtra(ACCOUNT_NAME, account);
 		finish();

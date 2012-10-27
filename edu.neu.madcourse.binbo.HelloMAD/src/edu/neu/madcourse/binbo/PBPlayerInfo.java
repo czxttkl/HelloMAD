@@ -109,8 +109,32 @@ public class PBPlayerInfo implements IRemoteData {
        	KeyValueAPI.put(TEAMNAME, PASSWORD, PLAYER_INFO_KEY_PREFIX + getName(), content);
 	
         return true;
-    } 
+    }
+	
+	public String obj2json () throws JSONException {
+		JSONObject obj = new JSONObject();  	              
+
+        obj.put("name", getName());
+        obj.put("score", getScore());
+        obj.put("best_score", getBestScore()); 
+        obj.put("selected_letters", getSelLetters());
+        obj.put("status", getStatus());
+        obj.put("update_time", getUpdateTime());
+        
+        return obj.toString();
+	}
     
+	public void json2obj (String strJson) throws JSONException {
+		JSONObject obj = new JSONObject(strJson);		
+		
+		setName(obj.getString("name"));
+		setScore(obj.getInt("score"));
+		setBestScore(obj.getInt("best_score"));
+		setSelLetters(obj.getString("selected_letters"));
+		setStatus(obj.getString("status"));
+		setUpdateTime(obj.getLong("update_time"));	
+	}
+	
 	public int getDataId() {
 		return DATA_ID;
 	}

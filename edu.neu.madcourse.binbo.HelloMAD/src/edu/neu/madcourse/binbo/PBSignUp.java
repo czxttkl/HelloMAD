@@ -1,6 +1,7 @@
 package edu.neu.madcourse.binbo;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.json.JSONException;
 
@@ -131,8 +132,16 @@ public class PBSignUp extends Activity implements OnClickListener {
 		Log.d("PBSignUp:doSignUp", "Account name: " + newAccount);
 		mNames.add(newAccount);
 		
+		PBPlayerInfo pInfo = new PBPlayerInfo(newAccount);
+		pInfo.setStatus("Online");
+		pInfo.setUpdateTime((new Date()).getTime());
+		CommitTask cmt = new CommitTask(new Handler(), pInfo);
+		cmt.execute();
+		
 		if (mCommit != null) { 
 			mCommit.execute();
 		}
+		
+
 	}
 }

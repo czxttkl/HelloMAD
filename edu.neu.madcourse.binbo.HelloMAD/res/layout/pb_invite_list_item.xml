@@ -18,13 +18,6 @@
         android:textColor="@color/pb_black"
         android:textSize="20sp"
         android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/pbinvite_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/pb_red"
-        android:textSize="14sp" />
     
     <LinearLayout
         android:layout_width="fill_parent"
@@ -32,11 +25,11 @@
         android:orientation="horizontal"
         android:gravity="right" >
         <Button
-	        android:layout_width="80dp"
+	        android:id="@+id/pbinvite_invite_button"
+	        android:layout_width="100dp"
 	        android:layout_height="wrap_content"
 	        android:textSize="14sp"
-	        android:textStyle="bold"
-	        android:text="@string/pb_invite_label" />
+	        android:textStyle="bold" />
     </LinearLayout>
 
 </LinearLayout>
