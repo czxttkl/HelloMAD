@@ -104,5 +104,10 @@
     <string name="pb_invite_label">Invite</string>
     <string name="pb_playing_status_label">(Playing)</string>
     <string name="pb_refresh_label">Refresh</string>
+    
+    <string name="pb_invite_msg">
+        has invited you to play this game together.
+        Would you like to accept this invitation?
+    </string>
 	
 </resources>

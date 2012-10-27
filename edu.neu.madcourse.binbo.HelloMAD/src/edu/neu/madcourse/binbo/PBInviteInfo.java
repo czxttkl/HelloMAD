@@ -21,6 +21,7 @@ public class PBInviteInfo implements IRemoteData {
 	protected long mPostTime = 0;
 	//whether the receiver has been informed with this invitation before it gets invalid
 	protected Boolean mHasNotified = false;
+	protected String mStatus = "unknown";
 	
 	public PBInviteInfo(String poster, String receiver, long postTime) {
 		this.mPoster = poster;
@@ -46,6 +47,18 @@ public class PBInviteInfo implements IRemoteData {
 	
 	public Long getPostTime() {
 		return this.mPostTime;
+	}
+	
+	public void setReceiver(String receiver) {
+		this.mReceiver = receiver;
+	}
+	
+	public void setPostTime(long time) {
+		this.mPostTime = time;
+	}
+	
+	public void setStatus(String status) {
+		this.mStatus = status;
 	}
 	
 	public void setHasNotified(Boolean hasNotified) {  

@@ -133,7 +133,7 @@ public class PBSignUp extends Activity implements OnClickListener {
 		mNames.add(newAccount);
 		
 		PBPlayerInfo pInfo = new PBPlayerInfo(newAccount);
-		pInfo.setStatus("Online");
+		pInfo.setStatus("Offline");
 		pInfo.setUpdateTime((new Date()).getTime());
 		CommitTask cmt = new CommitTask(new Handler(), pInfo);
 		cmt.execute();

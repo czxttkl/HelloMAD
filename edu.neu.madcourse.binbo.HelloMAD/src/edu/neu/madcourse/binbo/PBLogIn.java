@@ -130,7 +130,7 @@ public class PBLogIn extends Activity implements OnClickListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		pInfo.setStatus("Online");
+		pInfo.setStatus("Offline");
 		pInfo.setUpdateTime((new Date()).getTime());
 		CommitTask cmt = new CommitTask(this.mHandler, pInfo);
 		cmt.execute();

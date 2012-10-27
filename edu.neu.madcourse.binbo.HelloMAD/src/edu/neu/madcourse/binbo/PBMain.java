@@ -62,7 +62,7 @@ public class PBMain extends Activity implements OnClickListener {
 	
 	private void startNewGame() {			
 		mAcquire = new AcquireTask(mHandler, mPlayer, 0, true);
-		mAcquire.start();		
+		mAcquire.start();
 	}
 	
 	private void exitGame() {
@@ -124,7 +124,7 @@ public class PBMain extends Activity implements OnClickListener {
 			try {
 				mPlayer.setStatus("online"); // update the status to online
 				mPlayer.setUpdateTime(System.currentTimeMillis());
-				i.putExtra(HOST_INFO, mPlayer.obj2json());		
+				i.putExtra(HOST_INFO, mPlayer.obj2json());	
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
