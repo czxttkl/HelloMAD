@@ -1,15 +1,9 @@
 package edu.neu.madcourse.binbo;
 
-import java.util.Date;
-
 import org.json.JSONException;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
@@ -17,21 +11,24 @@ import android.widget.Toast;
 
 public class PBMain extends Activity implements OnClickListener {
 	private TextView mTextViewAccount;
-	private String mAccount = "";
-	private PBPlayerInfo mPlayer  = null;
-	private AcquireTask  mAcquire = null;
-	private CommitTask   mCommit  = null;
-	private static final String ACCOUNT_NAME = "account_name";
+	private PBPlayerInfo mPlayer  = new PBPlayerInfo("");
 	public static final String HOST_INFO = "host_info";
 	
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.pb_main);
 
-		Intent intent = getIntent();
-		mAccount = intent.getStringExtra(ACCOUNT_NAME);
+		Intent intent = getIntent();		
+		try {
+			mPlayer.json2obj(intent.getStringExtra(HOST_INFO));
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); 
+			// ignore this error
+		}
+		
 		mTextViewAccount = (TextView)findViewById(R.id.pbmain_account_name_label);
-		mTextViewAccount.setText("Hi, " + mAccount);
+		mTextViewAccount.setText("Hi, " + mPlayer.getName());
 		
 		// Set up click listeners for all the buttons
 		View btnNewGame = findViewById(R.id.pbmain_new_game_button);
@@ -44,9 +41,6 @@ public class PBMain extends Activity implements OnClickListener {
 		btnAbout.setOnClickListener(this);
 		View btnExit = findViewById(R.id.pbmain_exit_button);
 		btnExit.setOnClickListener(this);
-		
-		mPlayer = new PBPlayerInfo(mAccount);
-		mCommit = new CommitTask(mHandler, mPlayer);
 	}
 	
 	public void onClick(View v) {
@@ -61,47 +55,37 @@ public class PBMain extends Activity implements OnClickListener {
 	}
 	
 	private void startNewGame() {			
-		mAcquire = new AcquireTask(mHandler, mPlayer, 0, true);
-		mAcquire.start();
+
+		try {
+			mPlayer.setStatus("online"); // update the status to online
+			mPlayer.setUpdateTime(System.currentTimeMillis());		
+			
+			Intent i = new Intent(this, PBInvite.class);
+			i.putExtra(PBMain.HOST_INFO, mPlayer.obj2json());
+    		startActivity(i);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			Toast.makeText(this, 
+               "Sorry, can't start the new game.", Toast.LENGTH_LONG).show();	  
+	    	return;
+		} 
 	}
 	
 	private void exitGame() {
-		this.mPlayer.setStatus("Offline");
-		this.mPlayer.setUpdateTime((new Date()).getTime());
-		CommitTask cmt = new CommitTask(this.mHandler, this.mPlayer);
-		cmt.execute();
-	}
-	
-	private final Handler mHandler = new Handler(Looper.getMainLooper()) {
+		mPlayer.setStatus("offline");
+		mPlayer.setUpdateTime(System.currentTimeMillis());		
 		
-		private static final int SERVER_UNAVAILABLE = -1;
-		private static final int UPDATE_DATA_DONE   = 1;  
-		private static final int UPDATE_DATA_ERROR  = 2;
-		private static final int COMMIT_DATA_DONE   = 3; 
-	    private static final int COMMIT_DATA_ERROR  = 4;
- 
-		public void handleMessage(Message msg) {        	
-        	
-        	switch (msg.arg1) { 
-    		case SERVER_UNAVAILABLE:
-    			onServerUnavailable();
-    			break;
-            case UPDATE_DATA_DONE:
-            	onUpdateDataDone();	            	
-                break;   
-            case UPDATE_DATA_ERROR:
-            	onUpdateDataError();
-            	break;
-            case COMMIT_DATA_DONE:
-            	onCommitDataDone();
-            	break;
-            case COMMIT_DATA_ERROR:
-            	onCommitDataError();
-            	break;
-            default:
-            	break;
-            }            
-        } 
+		try {
+			if (mPlayer.commit() == false) {
+				// do nothing because you don't want to bother the user
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finish(); // just close the activity	
+	}	
 		
 		private void onServerUnavailable() {
 	    	Toast.makeText(getApplicationContext(), 
@@ -169,5 +153,4 @@ public class PBMain extends Activity implements OnClickListener {
 	            "Fail to start the game. Please try again.",
 	            Toast.LENGTH_LONG).show();
 	    }
-    };
-}
+}	

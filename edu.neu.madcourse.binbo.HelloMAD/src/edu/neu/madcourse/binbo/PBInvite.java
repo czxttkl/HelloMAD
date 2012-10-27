@@ -28,8 +28,9 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 public class PBInvite extends Activity implements OnClickListener {
-	private PBPlayerInfo mHostInfo;
-	private PBPlayerInfo mOpponentInfo;
+	private PBPlayerInfo mHostInfo = null;
+	private PBPlayerInfo mOpponentInfo = null;
+	private PBInviteInfo mInviteInfo = null;
 
 	private ListView mLVPlayerList;
 	private View mBtnBack;
