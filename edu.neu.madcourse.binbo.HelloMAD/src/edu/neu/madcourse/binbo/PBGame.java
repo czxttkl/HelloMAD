@@ -3,8 +3,14 @@ package edu.neu.madcourse.binbo;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -25,17 +31,30 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 	private static final int DEFAULT_GAME_TIME = 179;
 	private static final int ACCEL_ACCURACY = 13;
 	private static final float GOLDEN_DIVIDE = 0.618f;
+	private static final int DIALOG_QUIT = 0;
+	
+	private static final String SERVICE_COMMAND = "service_command";
+	private static final int SERVICE_START = 1;
+	private static final int SERVICE_END   = 2;
+	private static final String PLAYER_NAMES = "player_names";
 	
 	private NativeDictionary mDict = null;
 	private BogglePuzzle mPuzzle = null;
-	private BogglePuzzleView mPuzzleView = null;
-	private PlayerInfoAcquirer mAcquirer = null;
+	private BogglePuzzleView mPuzzleView = null;	
 	private SensorManager mSensorMgr = null;	
 	private ToneGenerator mToneGen = null;	
 	private List<String> mWordsFound = new ArrayList<String>();
-	private ArrayList<PBPlayerInfo> mInfos = null;
 	
-	private final String mHighPrequency[] = { 
+	private PBPlayerInfo mHost = null;
+	private PBPlayerInfo mOppo = null;
+	private AcquireTask  mAcquire = null;
+	private CommitTask   mCommit  = null;
+	private AutoCommitter mAutoCommitter = null;
+	
+	private boolean mNew  = true;
+	private boolean mQuit = false;
+
+	private final String mHighPrequency[] = {
 		"a", "e", "i", "l", "n", "o", "r", "s", "t"
 	};
 	
@@ -47,7 +66,7 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 	private TextView mTextViewStatus2 = null;
 	private TextView mTextViewTime    = null;
 	private TextView mTextViewBest    = null;
-	private Button   mButtonPause     = null;
+	private Button   mButtonQuit      = null;
 	private Button   mButtonShake     = null;
 	private ListView mListViewWords   = null;
 	
@@ -59,7 +78,16 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);				
+		super.onCreate(savedInstanceState);
+		// get useful data from intent
+		Bundle bundle = getIntent().getExtras();
+		if (bundle != null) {			
+			mNew = bundle.getBoolean("new game");
+		}
+
+		mHost = (PBPlayerInfo)getIntent().getSerializableExtra(PBMain.HOST_INFO);  
+		// get players information
+		mOppo = new PBPlayerInfo("bigbug");		
 		// do not show title bar and change to full screen mode
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(
@@ -72,8 +100,8 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 		// initialize views
 		initViews();
-		// make a new puzzle
-		mPuzzle = new BogglePuzzle(this, 6); // should get the size from the option
+		// load preferences
+		loadPreferences();
 		// adjust layouts according to the screen resolution
 		DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -88,6 +116,8 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 		mToneGen = new ToneGenerator(AudioManager.STREAM_MUSIC, 70);
 		// initialize sensors
 		initSensors();
+		// set quit flag to false
+		mQuit = false;
 	}
 
 	@Override
@@ -98,7 +128,7 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 
 	@Override
 	protected void onPause() {
-		// TODO Auto-generated method stub
+		savePreferences();
 		super.onPause();
 	}
 
@@ -111,7 +141,7 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
-		super.onResume();
+		super.onResume();				
 	}
 
 	@Override
@@ -119,16 +149,40 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 		// TODO Auto-generated method stub
 		super.onStart();
 		
-		if (mAcquirer == null) {
-			mAcquirer = new PlayerInfoAcquirer(mHandler, false);
-		}
-		mAcquirer.start();
+		Intent i = new Intent(this, MonitorService.class);
+		Bundle bundle = new Bundle();  
+	    bundle.putInt(SERVICE_COMMAND, SERVICE_END);	    
+	    i.putExtras(bundle); 
+		// it's ok to deal with this command for the first time
+		startService(i);
+		mAcquire = new AcquireTask(mHandler, mOppo, 300, false);
+		mAcquire.start();
+		mAutoCommitter = new AutoCommitter(mHandler, mHost, 300);
+		mAutoCommitter.start();
 	}
 
 	@Override
 	protected void onStop() {
-		if (mAcquirer != null) {
-			mAcquirer.end();
+		if (mAcquire != null) {
+			mAcquire.end();
+		}
+		if (mAutoCommitter != null) {
+			mAutoCommitter.end();
+		}
+
+		// start the service only when the user
+		// has been interrupted or press the home key
+		if (mQuit == false) { // game is not quit for these cases
+			Intent i = new Intent(this, MonitorService.class);		 
+		    Bundle bundle = new Bundle();  
+		    bundle.putInt(SERVICE_COMMAND, SERVICE_START);  
+		    ArrayList<String> players = new ArrayList<String>();
+		    players.add(mHost.getName());
+		    players.add(mOppo.getName());
+		    bundle.putStringArrayList(PLAYER_NAMES, players);
+		    i.putExtras(bundle); 
+		    
+			startService(i);
 		}
 		// TODO Auto-generated method stub
 		super.onStop();		
@@ -142,7 +196,8 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 	
 	public void onClick(View v) {
 		switch (v.getId()) {	
-		case R.id.pbgame_buttonPause:								
+		case R.id.pbgame_buttonQuit:	
+			showDialog(DIALOG_QUIT);
 			break;
 		}
 	}
@@ -182,10 +237,10 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 		mTextViewBest    = (TextView)findViewById(R.id.pbgame_textViewBest);		
 		mListViewWords   = (ListView)findViewById(R.id.pbgame_listViewWords);
 		mButtonShake     = (Button)findViewById(R.id.pbgame_buttonShake); 		
- 		mButtonPause     = (Button)findViewById(R.id.pbgame_buttonPause);
+ 		mButtonQuit      = (Button)findViewById(R.id.pbgame_buttonQuit);
  		// register events handler
  		mButtonShake.setOnTouchListener(this);
- 		mButtonPause.setOnClickListener(this);
+ 		mButtonQuit.setOnClickListener(this);
 	}	
 
 	protected void loadDictionaries() {
@@ -344,44 +399,122 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 		}
 		
 		return false;
+	}	
+
+	private final Handler mHandler = new Handler(Looper.getMainLooper()) {
+		
+		private static final int SERVER_UNAVAILABLE = -1;
+		private static final int UPDATE_DATA_DONE   = 1;  
+		private static final int UPDATE_DATA_ERROR  = 2;
+		private static final int COMMIT_DATA_DONE   = 3; 
+	    private static final int COMMIT_DATA_ERROR  = 4;
+ 
+		public void handleMessage(Message msg) {        	
+        	
+        	switch (msg.arg1) { 
+    		case SERVER_UNAVAILABLE:
+    			onServerUnavailable();
+    			break;
+            case UPDATE_DATA_DONE:
+            	onUpdateDataDone();	            	
+                break;   
+            case UPDATE_DATA_ERROR:
+            	onUpdateDataError();
+            	break;
+            case COMMIT_DATA_DONE:
+            	onCommitDataDone();
+            	break;
+            case COMMIT_DATA_ERROR:
+            	onCommitDataError();
+            	break;
+            default:
+            	break;
+            }            
+        } 
+		
+		private void onServerUnavailable() {
+	    	Toast.makeText(getApplicationContext(), 
+	            "Sorry, you have been disconnected from the server.",
+	            Toast.LENGTH_LONG).show();
+	    }
+	    
+	    private void onUpdateDataDone() {    	
+	    	mTextViewName2.setText(mOppo.getName());
+	    	mTextViewScore2.setText(String.valueOf(mOppo.getScore()));
+	    	mTextViewStatus2.setText(mOppo.getSelLetters());	
+	    }       
+	    
+	    private void onUpdateDataError() {    	
+//	    	mTextViewName2.setText(mOppo.getName());
+//	    	mTextViewScore2.setText(mOppo.getScore());
+//	    	mTextViewStatus2.setText(mOppo.getStatus());
+	    }
+
+	    private void onCommitDataDone() {
+	    	
+	    }
+	    
+	    private void onCommitDataError() {
+	    	
+	    }
+    };
+
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		Dialog dlg = null;
+				
+		switch (id) {
+		case DIALOG_QUIT:
+			dlg = buildDialogQuit(this);
+			break;
+		}
+		// TODO Auto-generated method stub
+		return dlg;
+	}
+	
+	private Dialog buildDialogQuit(Context context) {
+		// TODO Auto-generated method stub
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        //builder.setIcon(R.drawable.icon);
+        builder.setTitle("Are you sure you want to quit?");
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+            	mQuit = true;
+            	finish(); // end the game
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // do nothing now
+            }
+        });
+        return builder.create();
 	}
 
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		switch (keyCode) {
+		case KeyEvent.KEYCODE_BACK:
+			showDialog(DIALOG_QUIT);
+			break;
+		}
 		
-	// here we can even skip the configuration of looper, because the 
-	// handler uses the looper of the current thread as the default.
-    private final Handler mHandler = new Handler(Looper.getMainLooper()) {
-    	private static final int UPDATE_PLAYERS_INFO  = 0;   
-        private static final int UPDATE_PLAYERS_ERROR = 1;
-        private static final int COMMIT_PLAYERS_ERROR = 2;
+		return super.onKeyDown(keyCode, event);
+	}
+	
+	private static final String BOGGLE_PUZZLE = "boggle_puzzle";
  
-        @SuppressWarnings("unchecked")
-		public void handleMessage(Message msg) {
-             
-            switch (msg.arg1) { 
-            case UPDATE_PLAYERS_INFO:                 
-            	mInfos = (ArrayList<PBPlayerInfo>)msg.obj;
-            	if (mInfos == null) {
-            		Toast.makeText(getApplicationContext(),
-            				"update successfully", Toast.LENGTH_LONG).show();
-            	}
-                break;
-            case UPDATE_PLAYERS_ERROR:  
-            	Toast.makeText(getApplicationContext(), 
-                       "error in update", Toast.LENGTH_LONG).show();     
-            	if (msg.arg2 == 1) {
-            		// server available, but can't get data
-            	}
-                break;
-            case COMMIT_PLAYERS_ERROR:  
-            	Toast.makeText(getApplicationContext(), 
-                       "error in commit", Toast.LENGTH_LONG).show();   
-            	if (msg.arg2 == 1) {
-            		// server available, but can't commit data
-            	}
-                break;  
-        	default:  
-            } 
-        } 
-    };
- 
+	private void savePreferences() {
+		getPreferences(MODE_PRIVATE).edit().putString(BOGGLE_PUZZLE, mPuzzle.toJSONString()).commit();
+	}
+	
+	private void loadPreferences() {
+		String jsonString = getPreferences(MODE_PRIVATE).getString(BOGGLE_PUZZLE, "nothing");
+		if (jsonString.compareTo("nothing") != 0 && mNew == false) {
+			mPuzzle = new BogglePuzzle(this, jsonString);
+		} else {
+			// create a new boggle puzzle
+			mPuzzle = new BogglePuzzle(this, 6);
+		}
+	}
 }

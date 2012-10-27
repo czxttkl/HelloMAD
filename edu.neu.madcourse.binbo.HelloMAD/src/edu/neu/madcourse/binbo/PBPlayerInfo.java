@@ -1,12 +1,15 @@
 package edu.neu.madcourse.binbo;
 
+import java.io.Serializable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import edu.neu.mobileclass.apis.KeyValueAPI;
 
-public class PBPlayerInfo implements IRemoteData {
+public class PBPlayerInfo implements IRemoteData, Serializable {
 	
+	private static final long serialVersionUID = -7060210544600464481L; 
 	private static final String TEAMNAME = "MAD_WB_TEAM";
     private static final String PASSWORD = "111111";
     private static final String PLAYER_INFO_KEY_PREFIX = "PBGAME_PLAYER_INFO_"; 
@@ -23,51 +26,51 @@ public class PBPlayerInfo implements IRemoteData {
 		mName = name;
 	}
 	
-	public void setName(String name) {  
+	public synchronized void setName(String name) {  
         mName = name;  
 	} 
 	
-	public void setStatus(String status) {  
+	public synchronized void setStatus(String status) {  
 		mStatus = status;  
 	} 
 	
-	public void setSelLetters(String letters) {
+	public synchronized void setSelLetters(String letters) {
 		mSelLetters = letters;
 	}
 	
-	public void setScore(int score) {  
+	public synchronized void setScore(int score) {  
         mScore = score;  
 	} 
 	
-	public void setBestScore(int bestScore) {  
+	public synchronized void setBestScore(int bestScore) {  
 		mBestScore = bestScore;  
 	} 
 	
-	public void setUpdateTime(long updateTime) {  
+	public synchronized void setUpdateTime(long updateTime) {  
 		mUpdateTime = updateTime;  
 	} 
 	
-	public String getName() {  
+	public synchronized String getName() {  
         return mName;  
 	} 
 	
-	public String getStatus() {  
+	public synchronized String getStatus() {  
 		return mStatus;  
 	} 
 	
-	public String getSelLetters() {
+	public synchronized String getSelLetters() {
 		return mSelLetters;
 	}
 	
-	public int getScore() {  
+	public synchronized int getScore() {  
         return mScore;  
 	} 
 	
-	public int getBestScore() {  
+	public synchronized int getBestScore() {  
 		return mBestScore;  
 	} 
 	
-	public long getUpdateTime() {  
+	public synchronized long getUpdateTime() {  
 		return mUpdateTime;  
 	} 
 	
@@ -109,7 +112,7 @@ public class PBPlayerInfo implements IRemoteData {
        	KeyValueAPI.put(TEAMNAME, PASSWORD, PLAYER_INFO_KEY_PREFIX + getName(), content);
 	
         return true;
-    }
+    } 
 	
 	public String obj2json () throws JSONException {
 		JSONObject obj = new JSONObject();  	              
@@ -138,4 +141,11 @@ public class PBPlayerInfo implements IRemoteData {
 	public int getDataId() {
 		return DATA_ID;
 	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return super.toString();
+	}
+	
 }
