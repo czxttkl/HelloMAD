@@ -433,8 +433,15 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 			case 5: bonus = 4; break;
 			case 6: bonus = 6; break;
 			default: bonus = 10; break;
-			}						
-			mHost.setScore(mHost.getScore() + bonus);		
+			}					
+			
+			int curScore = mHost.getScore();
+			curScore += bonus;
+			mHost.setScore(curScore);
+			if (curScore > mHost.getBestScore()) {
+				mHost.setBestScore(curScore);
+			}
+			
 			String toastText = "";
 			if (bonus <= 1) {
 				toastText = "Good! +";
