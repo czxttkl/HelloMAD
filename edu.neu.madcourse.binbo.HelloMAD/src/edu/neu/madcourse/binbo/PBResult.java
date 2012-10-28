@@ -194,6 +194,10 @@ public class PBResult extends Activity implements OnClickListener {
 	    	// normally it won't happen, do nothing here now
 	    }
     };
+    
+    private void sortAccordingToBestScore(PBResultList results) {
+    	
+    }
 	
     protected class PBResultList extends ArrayList<PBPlayerInfo> implements IRemoteData {
         private static final int DATA_ID = 10;
