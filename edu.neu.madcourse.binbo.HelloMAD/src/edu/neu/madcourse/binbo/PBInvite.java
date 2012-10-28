@@ -38,22 +38,21 @@ public class PBInvite extends Activity implements OnClickListener {
 	private View mBtnBack;
 	private ProgressDialog mpDialog;
 
-	private GetInfoThread mAcquirer = null;
-	private PBNameList mNames = new PBNameList();
+	private GetInfoThread mAcquirer = null;	
 	private ArrayList<PBPlayerInfo> mPlayerInfoList = new ArrayList<PBPlayerInfo>();
 	private PBInviteHelper mPBInviteHelper = new PBInviteHelper();
 	private ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
 	private PBInviteSimpleAdapter listItemAdapter;
 	
 	private static final String ACCOUNT_NAME = "account_name";
-	private static final String HOST_INFO = "host_info";
-	private static final String OPPONENT_INFO = "opponent_info";
+	public  static final String HOST_INFO     = "host_info";
+	public  static final String OPPONENT_INFO = "opponent_info";
 	private static final int SERVER_UNAVAILABLE = 0;
-	private static final int UPDATE_LISTVIEW = 1;
-	private static final int INVITE_RECEIVE = 2;
-	private static final int INVITE_EXPIRE = 3;
-	private static final int INVITE_ACCEPT = 4;
-	private static final int INVITE_DECLINE = 5;
+	private static final int UPDATE_LISTVIEW    = 1;
+	private static final int INVITE_RECEIVE     = 2;
+	private static final int INVITE_EXPIRE      = 3;
+	private static final int INVITE_ACCEPT      = 4;
+	private static final int INVITE_DECLINE     = 5;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -192,7 +191,7 @@ public class PBInvite extends Activity implements OnClickListener {
 	}
 	
 	public void startGame() {
-		Intent intent = new Intent(getApplicationContext(), PBGame.class);
+		Intent intent = new Intent(this, PBGame.class);
 		Bundle bundle = new Bundle();  
 	    bundle.putBoolean("new game", true);		    
 	    bundle.putSerializable(HOST_INFO, mHostInfo);
