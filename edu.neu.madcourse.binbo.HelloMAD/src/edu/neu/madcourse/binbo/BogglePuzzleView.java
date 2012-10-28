@@ -31,7 +31,7 @@ public class BogglePuzzleView extends View {
 	private static final String SELY = "selY";
 	private static final String LIST_SIZE = "listSize";
 
-	protected int   mSize;   // could be 4?
+	protected int   mSize;   // could be 4Ñ6
 	protected float mWidth;  // width of one tile
 	protected float mHeight; // height of one tile	
 	protected RectF mOval = new RectF();	
@@ -281,8 +281,7 @@ public class BogglePuzzleView extends View {
 			mToneGen.startTone(ToneGenerator.TONE_DTMF_2, 100);
 		}
 
-		selectNextLetter((int)(event.getX() / mWidth), (int)(event.getY() / mHeight));
-		//game.showKeypadOrError(selX, selY);		
+		selectNextLetter((int)(event.getX() / mWidth), (int)(event.getY() / mHeight));				
 
 		return true;
 	}
@@ -334,7 +333,12 @@ public class BogglePuzzleView extends View {
 		}
 				
 		invalidate();
-		mHost.setSelLetters(listToString(mSelList));
+		if (mHost != null) {
+			mHost.setSelLetters(listToString(mSelList));
+		}
+		if (mGame != null) {
+			mGame.updateGameViews();
+		}
 	}
 	
 	private boolean isInvalidPoint(Point pt) {

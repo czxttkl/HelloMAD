@@ -373,6 +373,9 @@ public class BoggleGame extends Activity implements IBoggleGame, OnClickListener
         }
 	}
 	
+	public void updateGameViews() {
+		// do nothing
+	}	
 	
 	@Override
 	protected void onResume() {

@@ -61,7 +61,15 @@ public class PBMain extends Activity implements OnClickListener {
 			Intent i = new Intent(this, PBInvite.class);
 			i.putExtra(PBMain.HOST_INFO, mPlayer.obj2json());
     		startActivity(i);
-		} catch (JSONException e) {
+//			Intent intent = new Intent(this, PBGame.class);
+//			Bundle bundle = new Bundle();  
+//		    bundle.putBoolean("new game", true);		    
+//		    bundle.putSerializable(HOST_INFO, mPlayer);
+//		    bundle.putSerializable(HOST_INFO, mPlayer); 
+//		    intent.putExtras(bundle);
+//		    startActivity(intent);
+		} 
+		catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			Toast.makeText(this, 

@@ -31,7 +31,7 @@ import android.widget.*;
 
 public class PBGame extends Activity implements IBoggleGame, OnClickListener, OnTouchListener {
 	private static final String TAG = "Persistent Boggle";	
-	private static final int DEFAULT_GAME_TIME = 30;
+	private static final int DEFAULT_GAME_TIME = 300;
 	private static final int ACCEL_ACCURACY = 13;
 	private static final float GOLDEN_DIVIDE = 0.618f;
 	private static final int DIALOG_QUIT    = 0;
@@ -147,6 +147,7 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 
 	@Override
 	protected void onRestart() {
+		mNew = false;
 		// TODO Auto-generated method stub
 		super.onRestart();
 	}
@@ -167,7 +168,7 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 	    bundle.putInt(SERVICE_COMMAND, SERVICE_END);	    
 	    i.putExtras(bundle); 
 		// it's ok to deal with this command for the first time
-	    if (mDrop[0] == false) {
+	    if (!mDrop[0]) {
 	    	startService(i);
 	    }				
 	    // start data sessions
@@ -449,6 +450,10 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 		
 		return false;
 	}	
+	
+	public void updateGameViews() {
+		updateViews();
+	}
 
 	private Handler  mHandlerFlash  = new Handler();
 	private Runnable mRunnableFlash = new Runnable() {
@@ -482,12 +487,13 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 	    			mToneGen.startTone(ToneGenerator.TONE_DTMF_5, 100);
 	    		}	    		
 	    	}
-	    	// update UI
-	    	mTextViewTime.setText(minute + ":" + second);	    	
-	    	mTextViewTime.setTextColor(mDefTextColor);	    	    	
-	    	if (mCurTime == 0) {
+	    		    	    	
+	    	if (mCurTime <= 0) {
 	    		doGameOver();
 	    	} else {
+	    		// update UI
+		    	mTextViewTime.setText(minute + ":" + second);	    	
+		    	mTextViewTime.setTextColor(mDefTextColor);
 	    		mHandlerTimer.postDelayed(mRunnableTimer, 1000);
 	    	}	    	
 		}
@@ -553,8 +559,7 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 	    		mTextViewName2.setText(mOppo.getName());
 		    	mTextViewScore2.setText(String.valueOf(mOppo.getScore()));
 		    	mTextViewStatus2.setText(mOppo.getSelLetters());
-	    	}	    	
-	    	//quitGame();
+	    	}	    		    	
 	    }       
 	    
 	    private void onUpdateDataError() {    		    	
@@ -687,12 +692,10 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 			// create a new boggle puzzle
 			mPuzzle = new BogglePuzzle(this, 6);
 		}
-		// load the game start time in ms
+		// load the game start time and words found before
 		if (mNew) {
 			mStartTime = System.currentTimeMillis();
-		} else {
-			mStartTime = getPreferences(MODE_PRIVATE).getLong(
-					BOOGLE_START_TIME, System.currentTimeMillis());
+			mWordsFound.clear();
 		}
 	}
 }
