@@ -187,7 +187,7 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
     		second = "0" + second;
     	}
     	mTextViewTime.setText(minute + ":" + second);
-    	if (mCurTime < 20) mHandlerFlash.postDelayed(mRunnableFlash, 500);
+    	if (mCurTime < 20) mHandlerFlash.postDelayed(mRunnableFlash, 0);
 		mHandlerTimer.postDelayed(mRunnableTimer, 1000);
 		// update views
 		updateViews();
@@ -490,7 +490,7 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 	    	// generate flash effect when little time left
 	    	if (mCurTime <= 20) {
 	    		if (mCurTime == 20) {
-	    			mHandlerFlash.postDelayed(mRunnableFlash, 500);
+	    			mHandlerFlash.postDelayed(mRunnableFlash, 0);
 	    		}
 	    		// alert sound
 	    		if (mToneGen != null) {
@@ -498,7 +498,7 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 	    		}	    		
 	    	}
 	    		    	    	
-	    	if (mCurTime <= 0) {
+	    	if (mCurTime < 0) {
 	    		doGameOver();
 	    	} else {
 	    		// update UI
