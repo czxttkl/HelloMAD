@@ -32,12 +32,13 @@ import android.widget.*;
 public class PBGame extends Activity implements IBoggleGame, OnClickListener, OnTouchListener {
 	private static final String TAG = "Persistent Boggle";	
 	public  static final int DEFAULT_GAME_TIME = 30;
+	public static final String HOST_START_TIME = "host_start_time";
 	private static final int ACCEL_ACCURACY = 13;
 	private static final float GOLDEN_DIVIDE = 0.618f;
 	private static final int DIALOG_QUIT    = 0;
 	private static final int DIALOG_DROP_P1 = 1;
 	private static final int DIALOG_DROP_P2 = 2;
-	private static final int TIME_OUT_DROP = 15000;
+	private static final int TIME_OUT_DROP = 15000;	
 	private static final String BOGGLE_WORDS = "words";
 	private static final String BOGGLE_WORDS_SIZE = "words_size";
 	
@@ -208,6 +209,7 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 			Intent i = new Intent(this, MonitorService.class);		 
 		    Bundle bundle = new Bundle();  
 		    bundle.putInt(SERVICE_COMMAND, SERVICE_START);  
+		    bundle.putLong(HOST_START_TIME, mStartTime);
 		    ArrayList<String> players = new ArrayList<String>();
 		    players.add(mHost.getName());
 		    players.add(mOppo.getName());

@@ -29,6 +29,8 @@ public class MonitorService extends Service {
 	private static final int SERVICE_END   = 2;
 	private static final String PLAYER_NAMES = "player_names";
 	private boolean mRun = true;
+	private boolean mGameOver = false; 
+	private boolean mOppoQuit = false; 
 	private long mHostStartTime = 0;
 	
 	private final class ServiceHandler extends Handler {		
@@ -63,6 +65,9 @@ public class MonitorService extends Service {
 				}
 			}
 
+			mGameOver = false;
+			mOppoQuit = false;
+			
 			NotificationManager nm = 
 					(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 			nm.cancel(NOTIFICATION_ID);
@@ -77,10 +82,7 @@ public class MonitorService extends Service {
 				// update_time, which used by other players to determine whether
 				// you are online or dropped.
 			}
-		}
-		
-		private boolean mGameOver = false; 
-		private boolean mOppoQuit = false; 
+		}				
 		
 		private void acquireOpponentInfo(PBPlayerInfo opponent) throws JSONException {
 			if (opponent.acquire() == false) { // something wrong with the server
@@ -100,7 +102,7 @@ public class MonitorService extends Service {
 				} else if (opponent.getStatus().compareTo("playing") != 0) { 
 					// your opponent might quit the game, notify the host
 					if (!mOppoQuit) {
-						showOppoQuitNotification(1);
+						showOppoQuitNotification(0);
 						mOppoQuit = true;
 					}
 				} else { 
@@ -149,7 +151,6 @@ public class MonitorService extends Service {
 		HandlerThread thread = new HandlerThread("ServiceStartArguments", 0);
 		thread.start();
 		
-		mHostStartTime = System.currentTimeMillis();
 		// Get the HandlerThread's Looper and use it for our Handler
 		mServiceLooper = thread.getLooper();
 		mServiceHandler = new ServiceHandler(mServiceLooper);
@@ -160,6 +161,7 @@ public class MonitorService extends Service {
 		Toast.makeText(this, "service starting", Toast.LENGTH_SHORT).show();		
 		Bundle bundle = intent.getExtras();
 		int cmd = bundle.getInt(SERVICE_COMMAND);
+		mHostStartTime = bundle.getLong(PBGame.HOST_START_TIME);
 		
 		if (cmd == SERVICE_START) {
 			mRun = true;
