@@ -5,6 +5,8 @@ import java.util.Date;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.os.Handler;
+
 import edu.neu.mobileclass.apis.KeyValueAPI;
 
 public class PBInviteInfo implements IRemoteData {
@@ -47,6 +49,10 @@ public class PBInviteInfo implements IRemoteData {
 	
 	public Long getPostTime() {
 		return this.mPostTime;
+	}
+	
+	public String getStatus() {
+		return this.mStatus;
 	}
 	
 	public void setReceiver(String receiver) {
@@ -98,7 +104,7 @@ public class PBInviteInfo implements IRemoteData {
 	    	return false;
 	    }		
 		
-		JSONObject obj = new JSONObject();  	              
+		JSONObject obj = new JSONObject();
 
         obj.put("poster", getPoster());
         obj.put("receiver", getReceiver());
@@ -110,6 +116,15 @@ public class PBInviteInfo implements IRemoteData {
 	
         return true;
     } 
+	
+	public boolean delete() throws JSONException {
+		if (KeyValueAPI.isServerAvailable() == false) {
+	    	return false;
+	    }
+		
+		KeyValueAPI.clearKey(TEAMNAME, PASSWORD, INVITE_INFO_KEY_PREFIX + getPoster());
+		return true;
+	}
     
 	public String obj2json() throws JSONException {
 		

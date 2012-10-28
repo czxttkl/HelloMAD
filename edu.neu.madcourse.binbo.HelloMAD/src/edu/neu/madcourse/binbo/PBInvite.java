@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -31,9 +32,11 @@ public class PBInvite extends Activity implements OnClickListener {
 	private PBPlayerInfo mHostInfo = null;
 	private PBPlayerInfo mOpponentInfo = null;
 	private PBInviteInfo mInviteInfo = null;
+	private PBInviteInfo mComingInviteInfo = null;
 
 	private ListView mLVPlayerList;
 	private View mBtnBack;
+	private ProgressDialog mpDialog;
 
 	private GetInfoThread mAcquirer = null;
 	private PBNameList mNames = new PBNameList();
@@ -48,6 +51,9 @@ public class PBInvite extends Activity implements OnClickListener {
 	private static final int SERVER_UNAVAILABLE = 0;
 	private static final int UPDATE_LISTVIEW = 1;
 	private static final int INVITE_RECEIVE = 2;
+	private static final int INVITE_EXPIRE = 3;
+	private static final int INVITE_ACCEPT = 4;
+	private static final int INVITE_DECLINE = 5;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -109,10 +115,8 @@ public class PBInvite extends Activity implements OnClickListener {
 
 		switch (v.getId()) {
 		case R.id.pbinvite_back_button:
-			
-			this.mHostInfo.setStatus("offline");
-			this.mHostInfo.setUpdateTime((new Date()).getTime());
-			(new CommitTask(mHandler,this.mHostInfo)).execute();
+
+			updatePlayerStatus(mHostInfo, "offline");
 			
 			if (this.mAcquirer != null) {
 				this.mAcquirer.end();
@@ -125,6 +129,17 @@ public class PBInvite extends Activity implements OnClickListener {
 			startActivity(i);
 			break;
 		}
+	}
+	
+	public void updateInviteStatus(PBInviteInfo inviteInfo, String strStatus) {
+		inviteInfo.setStatus(strStatus);
+		(new CommitTask(mHandler, inviteInfo)).execute();
+	}
+	
+	public void updatePlayerStatus(PBPlayerInfo playerInfo, String strStatus) {
+		playerInfo.setStatus(strStatus);
+		playerInfo.setUpdateTime((new Date()).getTime());
+		(new CommitTask(mHandler, playerInfo)).execute();
 	}
 
 	public void updatePlayerList(ArrayList<PBPlayerInfo> playerInfoList) {
@@ -149,33 +164,20 @@ public class PBInvite extends Activity implements OnClickListener {
 		listItemAdapter.notifyDataSetChanged();
 	}
 	
-	public void showInviteDialog(PBInviteInfo inviteInfo) {
+	public void showInviteDialog() {
 		AlertDialog.Builder ad = new AlertDialog.Builder(this);
-		ad.setMessage(inviteInfo.getPoster() + " " + getString(R.string.pb_invite_msg));
+		ad.setMessage(mComingInviteInfo.getPoster() + " " + getString(R.string.pb_invite_msg));
 		ad.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int i) {
-				//accept
-				mHostInfo.setStatus("playing");
-				mHostInfo.setUpdateTime((new Date()).getTime());
-				(new CommitTask(mHandler, mHostInfo)).execute();
-				
-				Intent intent = new Intent(getApplicationContext(), PBGame.class);
-				Bundle bundle = new Bundle();  
-			    bundle.putBoolean("new game", true);		    
-			    bundle.putSerializable(HOST_INFO, mHostInfo);
-			    bundle.putSerializable(OPPONENT_INFO, mOpponentInfo); 
-			    intent.putExtras(bundle);
-			    
-				finish();	
-				startActivity(intent);
+				updatePlayerStatus(mHostInfo, "playing");
+				updateInviteStatus(mComingInviteInfo, "accepted");
+				startGame();
 			}
 		});
 		ad.setNegativeButton("Decline", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int i) {
-				//refuse
-				mHostInfo.setStatus("online");
-				mHostInfo.setUpdateTime((new Date()).getTime());
-				(new CommitTask(mHandler, mHostInfo)).execute();
+				updatePlayerStatus(mHostInfo, "online");
+				updateInviteStatus(mComingInviteInfo, "declined");
 			}
 		});
 		ad.setOnKeyListener(new android.content.DialogInterface.OnKeyListener() {
@@ -187,6 +189,42 @@ public class PBInvite extends Activity implements OnClickListener {
 			}
 		});
 		ad.show();
+	}
+	
+	public void startGame() {
+		Intent intent = new Intent(getApplicationContext(), PBGame.class);
+		Bundle bundle = new Bundle();  
+	    bundle.putBoolean("new game", true);		    
+	    bundle.putSerializable(HOST_INFO, mHostInfo);
+	    bundle.putSerializable(OPPONENT_INFO, mOpponentInfo); 
+	    intent.putExtras(bundle);
+	    
+		finish();	
+		startActivity(intent);
+	}
+	
+	public void onInviteAccept(PBInviteInfo inviteInfo) {
+		updatePlayerStatus(mHostInfo, "playing");
+		try {
+			inviteInfo.delete();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		this.startGame();
+	}
+	
+	public void onInviteDecline(PBInviteInfo inviteInfo) {
+		updatePlayerStatus(mHostInfo, "online");
+		try {
+			inviteInfo.delete();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		this.mpDialog.dismiss();
 	}
 	
 	private final Handler mHandler = new Handler(Looper.getMainLooper()) {
@@ -204,12 +242,26 @@ public class PBInvite extends Activity implements OnClickListener {
 					mPlayerInfoList = (ArrayList<PBPlayerInfo>)msg.obj;
 					break;
 				case INVITE_RECEIVE:
-					showInviteDialog((PBInviteInfo) msg.obj);
+					mComingInviteInfo = (PBInviteInfo) msg.obj;
+					showInviteDialog();
+					break;
+				case INVITE_EXPIRE:
+					//deal with invite expiring
+					break;
+				case INVITE_ACCEPT:
+					onInviteAccept((PBInviteInfo) msg.obj);
+					break;
+				case INVITE_DECLINE:
+					onInviteDecline((PBInviteInfo) msg.obj);
+					break;
+				default:
 					break;
 			}
 		}
 	};
 	
+	// Used to download all data to refresh player list
+	// and check whether someone invites me
 	public class GetInfoThread extends Thread {
 	    private boolean mRun = false;
 	    private boolean mEnd = true;
@@ -233,10 +285,9 @@ public class PBInvite extends Activity implements OnClickListener {
 						mHandler.sendMessage(msg);
 						
 						// commit new host player info with current status
-						if(!mHostInfo.getStatus().equals("inviting"))
-							mHostInfo.setStatus("online");
-						mHostInfo.setUpdateTime((new Date()).getTime());
-						(new CommitTask(mHandler,mHostInfo)).execute();
+						String strStatus = mHostInfo.getStatus();
+						if(!strStatus.equals("inviting")) strStatus = "online";
+						updatePlayerStatus(mHostInfo, strStatus);
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();
@@ -273,8 +324,7 @@ public class PBInvite extends Activity implements OnClickListener {
 				// check whether the current host user is invited
 				if (mPBInviteHelper.isInvited(mHostInfo.getName(), inviteInfo)) {
 					if(!inviteInfo.getHasNotified()){
-						mHostInfo.setStatus("inviting");
-						(new CommitTask(mHandler, mHostInfo)).execute();
+						updatePlayerStatus(mHostInfo, "inviting");
 						inviteInfo.setHasNotified(true);	
 						(new CommitTask(mHandler, inviteInfo)).execute();
 						mOpponentInfo = playerInfo;
@@ -303,8 +353,62 @@ public class PBInvite extends Activity implements OnClickListener {
 		}
 	}
 	
-	public 
+	// Used to check the status of the invitation I posted
+	public class CheckInviteThread extends Thread {
+		private boolean mRun = false;
+	    private boolean mEnd = true;
+	    private PBInviteInfo inviteInfo = new PBInviteInfo(mHostInfo.getName());
+	    
+	    public CheckInviteThread() {}
+	    
+	    public void run() {
+	    	mRun = true;
+	    	mEnd = false;
+	    	while (mRun){
+				try {
+					if (inviteInfo.acquire()) {
+						Message msg = new Message();
+						String strStatus = inviteInfo.getStatus();
+						if (strStatus.equals("unknown")) {
+							if (inviteInfo.isExpired()) {
+								msg.arg1 = INVITE_EXPIRE;
+							}
+						} else if (strStatus.equals("accepted")) {
+							msg.arg1 = INVITE_ACCEPT;
+						} else if (strStatus.equals("declined")) {
+							msg.arg1 = INVITE_DECLINE;
+						}
+						msg.obj = inviteInfo;
+						mHandler.sendMessage(msg);
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				finally {        	
+					try {
+						Thread.sleep(30);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+	    	mEnd = true;
+		}
+		
+		public synchronized void end() {
+			mRun = false;	
+			
+			try {
+				while (mEnd == false) {
+					sleep(30);
+				}
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	
+	// Adapter for player list item
 	class PBInviteSimpleAdapter extends SimpleAdapter{  
 		
 		private List<? extends Map<String, ?>> mPlayerList;
@@ -339,20 +443,26 @@ public class PBInvite extends Activity implements OnClickListener {
 	        
 	        itemButton.setOnClickListener(new OnClickListener() {  
 	        	public void onClick(View v) {
-	                // Send invitation
+	                // Add spinner
+	        		mpDialog = new ProgressDialog(context);   
+	                mpDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+	                mpDialog.setMessage(context.getResources().getString(R.string.pb_invite_wait_msg));   
+	                mpDialog.setIndeterminate(false);
+	                mpDialog.setCancelable(false); 
+	                mpDialog.show();
+	        		
+	        		// Send invitation
 	        		PBInviteInfo inviteInfo = new PBInviteInfo(mHostInfo.getName());
 	        		int pos = Integer.parseInt(v.getTag().toString());
 	        		String strReceiver = mPlayerList.get(pos).get("ItemName").toString();
 	        		inviteInfo.setReceiver(strReceiver);
 	        		inviteInfo.setPostTime((new Date()).getTime());
 	        		(new CommitTask(mHandler, inviteInfo)).execute();
-	        		mHostInfo.setStatus("inviting");
-	        		(new CommitTask(mHandler, mHostInfo)).execute();
+	        		updatePlayerStatus(mHostInfo, "inviting");
 	            }  
 	        });  
 
 	        return view;  
-	    }  
-
+	    }
 	}
 }

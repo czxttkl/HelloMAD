@@ -106,8 +106,13 @@
     <string name="pb_refresh_label">Refresh</string>
     
     <string name="pb_invite_msg">
-        has invited you to play this game together.
+        has invited you to play this game together. 
         Would you like to accept this invitation?
+    </string>
+    
+    <string name="pb_invite_wait_msg">
+        You invitation has been sent. 
+        Please wait for the response ...
     </string>
 	
 </resources>
