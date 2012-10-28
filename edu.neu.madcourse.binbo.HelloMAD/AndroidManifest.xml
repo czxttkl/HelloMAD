@@ -97,6 +97,7 @@
 		
 		<activity android:name=".PBGame" 
             android:label="@string/pbgame_title"
+            android:launchMode="singleTop"
             android:configChanges="orientation|keyboardHidden" />
 		
 		<activity android:name=".PBResult" 
@@ -115,6 +116,10 @@
 			android:label="@string/pbacknowledge_title"
             android:theme="@android:style/Theme.Dialog">
 		</activity>
+		
+		<service
+		    android:name="edu.neu.madcourse.binbo.MonitorService">
+		</service>
 		
 		<service
 		    android:name="edu.neu.madcourse.binbo.InviteService">

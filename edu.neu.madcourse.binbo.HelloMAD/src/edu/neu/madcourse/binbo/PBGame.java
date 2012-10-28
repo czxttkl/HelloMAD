@@ -31,7 +31,7 @@ import android.widget.*;
 
 public class PBGame extends Activity implements IBoggleGame, OnClickListener, OnTouchListener {
 	private static final String TAG = "Persistent Boggle";	
-	private static final int DEFAULT_GAME_TIME = 300;
+	public  static final int DEFAULT_GAME_TIME = 30;
 	private static final int ACCEL_ACCURACY = 13;
 	private static final float GOLDEN_DIVIDE = 0.618f;
 	private static final int DIALOG_QUIT    = 0;
@@ -529,10 +529,9 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
             	break;
             }            
         } 
-		
+				
 		private void onServerUnavailable() {
-	    	// host has dropped
-			mDrop[0] = true;    		
+	    	// host has dropped		    		
 	    	if (mAcquire != null) {
 				mAcquire.end();
 				mAcquire = null;
@@ -541,7 +540,11 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 				mAutoCommitter.end();
 				mAutoCommitter = null;
 			}
-			showDialog(DIALOG_DROP_P1);
+						
+			if (!mDrop[0]) {
+				showDialog(DIALOG_DROP_P1);
+				mDrop[0] = true;
+			}
 	    }
 	    
 		private long mOppoStartTime = -1;
@@ -553,14 +556,16 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 	    	long elapsedOppo = mOppo.getUpdateTime() - mOppoStartTime;
 	    	long elapsedHost = System.currentTimeMillis() - mStartTime;
 	    	if (elapsedHost - elapsedOppo > TIME_OUT_DROP) {
-	    		// opponent has dropped
-	    		mDrop[1] = true;
+	    		// opponent has dropped	    		
 	    		mTextViewStatus2.setText("dropped");
 	    		if (mAcquire != null) {
 	    			mAcquire.end();
 	    			mAcquire = null;
 	    		}
-	    		showDialog(DIALOG_DROP_P2);
+	    		if (!mDrop[1]) {
+	    			showDialog(DIALOG_DROP_P2);
+	    			mDrop[1] = true;
+	    		}
 	    	} else {
 	    		// everything is ok
 	    		mTextViewName2.setText(mOppo.getName());

@@ -29,8 +29,11 @@ public class MonitorService extends Service {
 	private static final int SERVICE_END   = 2;
 	private static final String PLAYER_NAMES = "player_names";
 	private boolean mRun = true;
+	private long mHostStartTime = 0;
 	
 	private final class ServiceHandler extends Handler {		
+		
+		Message mMsg = null;
 		
 		public ServiceHandler(Looper looper) {
 			super(looper);
@@ -42,13 +45,14 @@ public class MonitorService extends Service {
 
 			PBPlayerInfo mHost = new PBPlayerInfo(mPlayers.get(0));
 			PBPlayerInfo mOppo = new PBPlayerInfo(mPlayers.get(1));			
+			mMsg = msg;
 			
 			while (mRun) {				
 				try {
 					commitHostInfo(mHost);
 					acquireOpponentInfo(mOppo);
 					Thread.sleep(2000);
-					showNotification(msg, 0);
+//					showNotification(msg, 0);
 				} catch (JSONException e) {
 					// do nothing in the service here, handle it
 					// when the user returns to the activity
@@ -75,6 +79,9 @@ public class MonitorService extends Service {
 			}
 		}
 		
+		private boolean mGameOver = false; 
+		private boolean mOppoQuit = false; 
+		
 		private void acquireOpponentInfo(PBPlayerInfo opponent) throws JSONException {
 			if (opponent.acquire() == false) { // something wrong with the server
 				// we do nothing but still try to acquire, because we don't
@@ -83,32 +90,54 @@ public class MonitorService extends Service {
 			} else {
 				// here we get the opponent information successfully, we just check its status
 				// to figure out whether we should notify the user about the game information.
-				if (opponent.getStatus().compareTo("playing") == 0) { 
-					// 
-				} else {
-					// the user has quit the game, or the time for the game is over
-					// we should send the user a notification.
-					Message msg = new Message();
-					showNotification(msg, NOTIFICATION_ID);
+				long elapsed = (System.currentTimeMillis() - mHostStartTime) / 1000;
+				if (elapsed >= PBGame.DEFAULT_GAME_TIME) {
+					// notify the host that the game is over
+					if (!mGameOver) { // send only one notification
+						showGameOverNotification(0);
+						mGameOver = true;
+					}
+				} else if (opponent.getStatus().compareTo("playing") != 0) { 
+					// your opponent might quit the game, notify the host
+					if (!mOppoQuit) {
+						showOppoQuitNotification(1);
+						mOppoQuit = true;
+					}
+				} else { 
+					// everything is fine, do nothing
 				}
 			}
 		}
 		
-		private void showNotification(Message msg, int id) {
+		// if a notification has been sent, it should not be sent again to bother the user
+		private void showGameOverNotification(int id) {
 			NotificationManager nm = 
 					(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 			Notification notification = 
 					new Notification(R.drawable.ic_launcher, "Persistent Boggle", System.currentTimeMillis());
 			notification.flags = Notification.FLAG_AUTO_CANCEL;
 			Intent intent = new Intent(getApplicationContext(), PBGame.class);
-			Bundle bundle = new Bundle();
-			bundle.putString("info", "what the fuck?");
-			intent.putExtras(bundle);
-			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			PendingIntent contentIntent = PendingIntent.getActivity(
 					getApplicationContext(), id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-			notification.setLatestEventInfo(getApplicationContext(), "Persistent Boggle", "Game Over",
+			notification.setLatestEventInfo(getApplicationContext(), "Persistent Boggle", "Time for the game is over",
+					contentIntent);
+			nm.notify(id, notification);
+		}
+		
+		private void showOppoQuitNotification(int id) {
+			NotificationManager nm = 
+					(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+			Notification notification = 
+					new Notification(R.drawable.ic_launcher, "Persistent Boggle", System.currentTimeMillis());
+			notification.flags = Notification.FLAG_AUTO_CANCEL;
+			Intent intent = new Intent(getApplicationContext(), PBGame.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			PendingIntent contentIntent = PendingIntent.getActivity(
+					getApplicationContext(), id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+			notification.setLatestEventInfo(getApplicationContext(), "Persistent Boggle", "Your opponent has quit the game",
 					contentIntent);
 			nm.notify(id, notification);
 		}
@@ -120,6 +149,7 @@ public class MonitorService extends Service {
 		HandlerThread thread = new HandlerThread("ServiceStartArguments", 0);
 		thread.start();
 		
+		mHostStartTime = System.currentTimeMillis();
 		// Get the HandlerThread's Looper and use it for our Handler
 		mServiceLooper = thread.getLooper();
 		mServiceHandler = new ServiceHandler(mServiceLooper);
