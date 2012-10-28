@@ -58,30 +58,30 @@ public class PBMain extends Activity implements OnClickListener {
 	
 	private void startNewGame() {			
 
-//		try {
-//			mPlayer.setStatus("online"); // update the status to online
-//			mPlayer.setUpdateTime(System.currentTimeMillis());		
-//			
-//			Intent i = new Intent(this, PBInvite.class);
-//			i.putExtra(PBMain.HOST_INFO, mPlayer.obj2json());
-//    		startActivity(i);
-//		} 
-//		catch (JSONException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			Toast.makeText(this, 
-//               "Sorry, can't start the new game.", Toast.LENGTH_LONG).show();	  	    
-//		} 
+		try {
+			mPlayer.setStatus("online"); // update the status to online
+			mPlayer.setUpdateTime(System.currentTimeMillis());		
+			
+			Intent i = new Intent(this, PBInvite.class);
+			i.putExtra(PBMain.HOST_INFO, mPlayer.obj2json());
+    		startActivity(i);
+		} 
+		catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			Toast.makeText(this, 
+               "Sorry, can't start the new game.", Toast.LENGTH_LONG).show();	  	    
+		} 
 		
-		Intent intent = new Intent(this, PBGame.class);
-		Bundle bundle = new Bundle();  
-	    bundle.putBoolean("new game", true);		    
-	    bundle.putSerializable(HOST_INFO, mPlayer);
-	    PBPlayerInfo oppo = new PBPlayerInfo("bigbug");
-	    bundle.putSerializable(PBInvite.OPPONENT_INFO, oppo); 
-	    intent.putExtras(bundle);
-	    finish();
-	    startActivity(intent);
+//		Intent intent = new Intent(this, PBGame.class);
+//		Bundle bundle = new Bundle();  
+//	    bundle.putBoolean("new game", true);		    
+//	    bundle.putSerializable(HOST_INFO, mPlayer);
+//	    PBPlayerInfo oppo = new PBPlayerInfo("bigbug");
+//	    bundle.putSerializable(PBInvite.OPPONENT_INFO, oppo); 
+//	    intent.putExtras(bundle);
+//	    finish();
+//	    startActivity(intent);
 	}
 	
 	private void exitGame() {
