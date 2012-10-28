@@ -94,6 +94,7 @@ public class PBInviteInfo implements IRemoteData {
 		this.mReceiver = obj.getString("receiver");
 		this.mPostTime = obj.getLong("post_time");
 		this.mHasNotified = obj.getBoolean("hasNotified");
+		this.mStatus = obj.getString("status");
 		
 		return true;
 	}
@@ -110,6 +111,7 @@ public class PBInviteInfo implements IRemoteData {
         obj.put("receiver", getReceiver());
         obj.put("post_time", getPostTime()); 
         obj.put("hasNotified", getHasNotified());
+        obj.put("status", getStatus());
         
         String content = obj.toString();
        	KeyValueAPI.put(TEAMNAME, PASSWORD, INVITE_INFO_KEY_PREFIX + getPoster(), content);
@@ -134,6 +136,7 @@ public class PBInviteInfo implements IRemoteData {
         obj.put("receiver", getReceiver());
         obj.put("post_time", getPostTime()); 
         obj.put("hasNotified", getHasNotified());
+        obj.put("status", getStatus());
         
         return obj.toString();
 	}

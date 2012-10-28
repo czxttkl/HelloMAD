@@ -39,6 +39,7 @@ public class PBInvite extends Activity implements OnClickListener {
 	private ProgressDialog mpDialog;
 
 	private GetInfoThread mAcquirer = null;
+	private CheckInviteThread mInviteAcquirer = null;
 	private PBNameList mNames = new PBNameList();
 	private ArrayList<PBPlayerInfo> mPlayerInfoList = new ArrayList<PBPlayerInfo>();
 	private PBInviteHelper mPBInviteHelper = new PBInviteHelper();
@@ -211,6 +212,11 @@ public class PBInvite extends Activity implements OnClickListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		if (mInviteAcquirer != null) {
+        	mInviteAcquirer.end();
+		}
+        mInviteAcquirer = null;
 
 		this.startGame();
 	}
@@ -223,6 +229,11 @@ public class PBInvite extends Activity implements OnClickListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		if (mInviteAcquirer != null) {
+        	mInviteAcquirer.end();
+		}
+        mInviteAcquirer = null;
 
 		this.mpDialog.dismiss();
 	}
@@ -450,6 +461,12 @@ public class PBInvite extends Activity implements OnClickListener {
 	                mpDialog.setIndeterminate(false);
 	                mpDialog.setCancelable(false); 
 	                mpDialog.show();
+	                
+	                // Start thread to check whether the invitation is handled
+	                if (mInviteAcquirer == null) {
+	                	mInviteAcquirer = new CheckInviteThread();
+	        		}
+	                mInviteAcquirer.start();
 	        		
 	        		// Send invitation
 	        		PBInviteInfo inviteInfo = new PBInviteInfo(mHostInfo.getName());
