@@ -161,13 +161,13 @@ public class PBInvite extends Activity implements OnClickListener {
 
 		switch (v.getId()) {
 		case R.id.pbinvite_back_button:
-
-			updatePlayerStatus(mHostInfo, "offline");
 			
 			if (this.mAcquirer != null) {
 				this.mAcquirer.end();
 				this.mAcquirer = null;
 			}
+			
+			updatePlayerStatus(mHostInfo, "offline");
 			
 			try {
 				i = new Intent(this, PBMain.class);
@@ -252,7 +252,7 @@ public class PBInvite extends Activity implements OnClickListener {
 	public Boolean checkInviteExpire () {
 		try {
 			if (mComingInviteInfo.acquire()) {
-				return mComingInviteInfo.isExpired();
+				return mComingInviteInfo.isReceiverExpired();
 			} else {
 				return true;
 			}
@@ -412,6 +412,7 @@ public class PBInvite extends Activity implements OnClickListener {
 					if(!inviteInfo.getHasNotified()){
 						updatePlayerStatus(mHostInfo, "inviting");
 						inviteInfo.setHasNotified(true);	
+						inviteInfo.setReceiveTime((new Date()).getTime());
 						(new CommitTask(mHandler, inviteInfo)).execute();
 						mOpponentInfo = playerInfo;
 						

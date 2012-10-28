@@ -22,6 +22,7 @@ public class PBInviteInfo implements IRemoteData {
 	protected String mPoster = "";
 	protected String mReceiver = "";
 	protected long mPostTime = 0;
+	protected long mReceiveTime = 0;
 	protected Boolean mHasNotified = false;
 	protected String mStatus = "unknown";
 	
@@ -51,12 +52,20 @@ public class PBInviteInfo implements IRemoteData {
 		return this.mPostTime;
 	}
 	
+	public Long getReceiveTime() {
+		return this.mReceiveTime;
+	}
+	
 	public String getStatus() {
 		return this.mStatus;
 	}
 	
 	public void setReceiver(String receiver) {
 		this.mReceiver = receiver;
+	}
+	
+	public void setReceiveTime(long time) {
+		this.mReceiveTime = time;
 	}
 	
 	public void setPostTime(long time) {
@@ -73,6 +82,11 @@ public class PBInviteInfo implements IRemoteData {
 	
 	public Boolean isExpired() {  
 		Date expireTime = new Date(this.mPostTime + this.mValidPeriod);
+		return (new Date()).after(expireTime);
+	}
+	
+	public Boolean isReceiverExpired() {  
+		Date expireTime = new Date(this.mReceiveTime + this.mValidPeriod);
 		return (new Date()).after(expireTime);
 	}
 	
@@ -95,6 +109,7 @@ public class PBInviteInfo implements IRemoteData {
 		this.mPostTime = obj.getLong("post_time");
 		this.mHasNotified = obj.getBoolean("hasNotified");
 		this.mStatus = obj.getString("status");
+		this.mPostTime = obj.getLong("receive_time");
 		
 		return true;
 	}
@@ -112,6 +127,7 @@ public class PBInviteInfo implements IRemoteData {
         obj.put("post_time", getPostTime()); 
         obj.put("hasNotified", getHasNotified());
         obj.put("status", getStatus());
+        obj.put("receive_time", getReceiveTime());
         
         String content = obj.toString();
        	KeyValueAPI.put(TEAMNAME, PASSWORD, INVITE_INFO_KEY_PREFIX + getPoster(), content);
@@ -137,6 +153,7 @@ public class PBInviteInfo implements IRemoteData {
         obj.put("post_time", getPostTime()); 
         obj.put("hasNotified", getHasNotified());
         obj.put("status", getStatus());
+        obj.put("receive_time", getReceiveTime());
         
         return obj.toString();
 	}

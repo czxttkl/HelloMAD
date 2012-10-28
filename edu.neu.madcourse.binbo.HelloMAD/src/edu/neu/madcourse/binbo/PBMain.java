@@ -1,6 +1,8 @@
 package edu.neu.madcourse.binbo;
 
 import org.json.JSONException;
+
+import edu.neu.mobileclass.apis.KeyValueAPI;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +19,8 @@ public class PBMain extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.pb_main);
+		
+		//KeyValueAPI.clear("MAD_WB_TEAM", "111111");
 
 		Intent intent = getIntent();		
 		try {
