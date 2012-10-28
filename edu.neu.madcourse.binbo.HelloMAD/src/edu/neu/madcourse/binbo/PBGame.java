@@ -167,7 +167,7 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 	    bundle.putInt(SERVICE_COMMAND, SERVICE_END);	    
 	    i.putExtras(bundle); 
 		// it's ok to deal with this command for the first time
-	    if (mDrop[0] == false) {
+	    if (!mDrop[0]) {
 	    	startService(i);
 	    }				
 	    // start data sessions
@@ -449,6 +449,10 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 		
 		return false;
 	}	
+	
+	public void updateGameViews() {
+		updateViews();
+	}
 
 	private Handler  mHandlerFlash  = new Handler();
 	private Runnable mRunnableFlash = new Runnable() {
@@ -553,8 +557,7 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 	    		mTextViewName2.setText(mOppo.getName());
 		    	mTextViewScore2.setText(String.valueOf(mOppo.getScore()));
 		    	mTextViewStatus2.setText(mOppo.getSelLetters());
-	    	}	    	
-	    	//quitGame();
+	    	}	    		    	
 	    }       
 	    
 	    private void onUpdateDataError() {    		    	
@@ -687,12 +690,18 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 			// create a new boggle puzzle
 			mPuzzle = new BogglePuzzle(this, 6);
 		}
-		// load the game start time in ms
+		// load the game start time and words found before
 		if (mNew) {
 			mStartTime = System.currentTimeMillis();
+			mWordsFound.clear();
 		} else {
 			mStartTime = getPreferences(MODE_PRIVATE).getLong(
 					BOOGLE_START_TIME, System.currentTimeMillis());
+			int size = getPreferences(MODE_PRIVATE).getInt(BOGGLE_WORDS_SIZE, 0);
+			for (int i = 0; i < size; ++i) {								
+				String word = getPreferences(MODE_PRIVATE).getString(BOGGLE_WORDS + i, "");
+				mWordsFound.add(word);
+			}
 		}
 	}
 }

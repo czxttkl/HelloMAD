@@ -29,6 +29,7 @@
 			    
 		        <TextView
 		            android:id="@+id/pbgame_textViewName1"
+		            android:textSize="20sp"
 		            android:layout_width="fill_parent"
 		            android:layout_height="wrap_content"
 		            android:layout_weight="1"		    
@@ -38,6 +39,7 @@
 		 
 		        <TextView
 		            android:id="@+id/pbgame_textViewScore1"
+		            android:textSize="20sp"
 		            android:layout_width="fill_parent"
 		            android:layout_height="wrap_content"
 		            android:layout_weight="1"
@@ -47,6 +49,7 @@
 		        
 		        <TextView
 		            android:id="@+id/pbgame_textViewStatus1"
+		            android:textSize="20sp"
 		            android:layout_width="fill_parent"
 		            android:layout_height="wrap_content"
 		            android:layout_weight="1"
@@ -67,6 +70,7 @@
 			    
 		        <TextView
 		            android:id="@+id/pbgame_textViewTime"
+		            android:textSize="30sp"
 		            android:layout_width="fill_parent"
 		            android:layout_height="wrap_content"
 		            android:layout_weight="3"		    
@@ -76,6 +80,7 @@
 		 
 		        <TextView
 		            android:id="@+id/pbgame_textViewBest"
+		            android:textSize="20sp"
 		            android:layout_width="fill_parent"
 		            android:layout_height="wrap_content"
 		            android:layout_weight="1"
@@ -96,6 +101,7 @@
 			    
 		        <TextView
 		            android:id="@+id/pbgame_textViewName2"
+		            android:textSize="20sp"
 		            android:layout_width="fill_parent"
 		            android:layout_height="wrap_content"
 		            android:layout_weight="1"		    
@@ -105,6 +111,7 @@
 		 
 		        <TextView
 		            android:id="@+id/pbgame_textViewScore2"
+		            android:textSize="20sp"
 		            android:layout_width="fill_parent"
 		            android:layout_height="wrap_content"
 		            android:layout_weight="1"
@@ -114,6 +121,7 @@
 		        
 		        <TextView
 		            android:id="@+id/pbgame_textViewStatus2"
+		            android:textSize="20sp"
 		            android:layout_width="fill_parent"
 		            android:layout_height="wrap_content"
 		            android:layout_weight="1"

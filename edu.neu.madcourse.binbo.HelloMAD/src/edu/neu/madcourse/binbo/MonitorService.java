@@ -37,16 +37,16 @@ public class MonitorService extends Service {
 		}
 		@Override
 		public void handleMessage(Message msg) {
-			ArrayList<String> players = (ArrayList<String>)msg.obj;
+			@SuppressWarnings("unchecked")
+			ArrayList<String> mPlayers = (ArrayList<String>)msg.obj;
 
-			PBPlayerInfo host     = new PBPlayerInfo(players.get(0));
-			PBPlayerInfo opponent = new PBPlayerInfo(players.get(1));			
+			PBPlayerInfo mHost = new PBPlayerInfo(mPlayers.get(0));
+			PBPlayerInfo mOppo = new PBPlayerInfo(mPlayers.get(1));			
 			
-			while (mRun) {
-				
+			while (mRun) {				
 				try {
-					submitHostInfo(host);
-					updateOpponentInfo(opponent);
+					commitHostInfo(mHost);
+					acquireOpponentInfo(mOppo);
 					Thread.sleep(2000);
 					showNotification(msg, 0);
 				} catch (JSONException e) {
@@ -65,7 +65,7 @@ public class MonitorService extends Service {
 			stopSelf(msg.arg1);
 		}
 		
-		private void submitHostInfo(PBPlayerInfo host) throws JSONException {
+		private void commitHostInfo(PBPlayerInfo host) throws JSONException {
 			if (host.commit() == false) { // something wrong with the server
 				// deal with it after we return to the PBGame activity
 			} else {
@@ -75,7 +75,7 @@ public class MonitorService extends Service {
 			}
 		}
 		
-		private void updateOpponentInfo(PBPlayerInfo opponent) throws JSONException {
+		private void acquireOpponentInfo(PBPlayerInfo opponent) throws JSONException {
 			if (opponent.acquire() == false) { // something wrong with the server
 				// we do nothing but still try to acquire, because we don't
 				// want to interrupt the user from doing other things, and the 

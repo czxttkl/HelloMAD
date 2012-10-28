@@ -281,8 +281,7 @@ public class BogglePuzzleView extends View {
 			mToneGen.startTone(ToneGenerator.TONE_DTMF_2, 100);
 		}
 
-		selectNextLetter((int)(event.getX() / mWidth), (int)(event.getY() / mHeight));
-		//game.showKeypadOrError(selX, selY);		
+		selectNextLetter((int)(event.getX() / mWidth), (int)(event.getY() / mHeight));				
 
 		return true;
 	}
@@ -336,6 +335,9 @@ public class BogglePuzzleView extends View {
 		invalidate();
 		if (mHost != null) {
 			mHost.setSelLetters(listToString(mSelList));
+		}
+		if (mGame != null) {
+			mGame.updateGameViews();
 		}
 	}
 	
