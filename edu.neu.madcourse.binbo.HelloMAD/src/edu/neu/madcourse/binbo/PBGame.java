@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -171,7 +172,7 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 		// it's ok to deal with this command for the first time
 	    if (!mDrop[0]) {
 	    	startService(i);
-	    }				
+	    }					   
 	    // start data sessions
 		mAcquire = new AcquireTask(mHandler, mOppo, 300, false);
 		mAcquire.start();			

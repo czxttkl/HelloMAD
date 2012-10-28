@@ -22,7 +22,7 @@ public class MonitorService extends Service {
 	  
 	private Looper mServiceLooper;
 	private ServiceHandler mServiceHandler;
-	private static final int NOTIFICATION_ID = 1000; // seems ok
+	public static final int NOTIFICATION_ID = 1000; // seems ok
 	
 	private static final String SERVICE_COMMAND = "service_command";
 	private static final int SERVICE_START = 1;
@@ -70,7 +70,7 @@ public class MonitorService extends Service {
 			
 			NotificationManager nm = 
 					(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-			nm.cancel(NOTIFICATION_ID);
+			nm.cancel(0);
 			stopSelf(msg.arg1);
 		}
 		
