@@ -7,27 +7,25 @@
     android:orientation="vertical" >
 
 	<TextView
-	   android:text="@string/pb_account_name_label"
+	   android:text="Result"
 	   android:layout_height="wrap_content"
 	   android:layout_width="wrap_content"
 	   android:layout_gravity="center"
 	   android:layout_marginBottom="20dip"
 	   android:textSize="18sp" />
     
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:hint="@string/pblogin_name_hint"
-        android:layout_marginBottom="40dip" >
-        
-    </EditText>
-	
 	<Button
-	   android:id="@+id/pblogin_login_button"
+	   android:id="@+id/pbresult_buttonContinue"
 	   android:layout_width="fill_parent"
 	   android:layout_height="wrap_content"
-	   android:text="@string/pb_login_label"
+	   android:text="@string/pb_result_continue"
+	   android:layout_marginBottom="6dip" />
+	
+	<Button
+	   android:id="@+id/pbresult_buttonQuit"
+	   android:layout_width="fill_parent"
+	   android:layout_height="wrap_content"
+	   android:text="@string/pb_result_quit"
 	   android:layout_marginBottom="6dip" />
 
 </LinearLayout>

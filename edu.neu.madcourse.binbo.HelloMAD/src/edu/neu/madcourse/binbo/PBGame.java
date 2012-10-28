@@ -593,11 +593,26 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
     
     protected void quitGame() {
     	mQuit = true;
-    	finish();
+    	mHost.setStatus("game_over");    
     	
-    	//Intent i = new Intent(this, PBResult.class);
-		//i.putExtra(PBMain.HOST_INFO, mPlayer.obj2json());
-		//startActivity(i);
+    	if (!mDrop[0]) {
+    		try {
+				mHost.commit();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}    	
+		
+		Intent intent = new Intent(this, PBResult.class);
+		Bundle bundle = new Bundle();
+	    bundle.putBoolean("new game", true);
+	    bundle.putSerializable(PBInvite.HOST_INFO, mHost);
+	    bundle.putSerializable(PBInvite.OPPONENT_INFO, mOppo); 
+	    intent.putExtras(bundle);
+	    
+		finish();	
+		startActivity(intent);
     }
 
 	@Override

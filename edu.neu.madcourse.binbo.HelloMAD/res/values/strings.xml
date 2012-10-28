@@ -116,5 +116,8 @@
         You invitation has been sent. 
         Please wait for the response ...
     </string>
+    
+    <string name="pb_result_continue">Continue</string>
+    <string name="pb_result_quit">Quit</string>
 	
 </resources>
