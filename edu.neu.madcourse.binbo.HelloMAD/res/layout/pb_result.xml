@@ -11,21 +11,31 @@
 	   android:layout_height="wrap_content"
 	   android:layout_width="wrap_content"
 	   android:layout_gravity="center"
-	   android:layout_marginBottom="20dip"
-	   android:textSize="18sp" />
+	   android:layout_margin="18dip"
+	   android:textSize="30sp" />
     
-	<Button
-	   android:id="@+id/pbresult_buttonContinue"
-	   android:layout_width="fill_parent"
-	   android:layout_height="wrap_content"
-	   android:text="@string/pb_result_continue"
-	   android:layout_marginBottom="6dip" />
-	
-	<Button
-	   android:id="@+id/pbresult_buttonQuit"
-	   android:layout_width="fill_parent"
-	   android:layout_height="wrap_content"
-	   android:text="@string/pb_result_quit"
-	   android:layout_marginBottom="6dip" />
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:id="@+id/linearLayoutControls"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:gravity="center"					        	   
+	    android:orientation="horizontal" >
+
+	    <Button
+			android:id="@+id/pbresult_buttonContinue"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="@string/pb_result_continue"
+			android:layout_marginBottom="10dip" />	
+		<Button
+			android:id="@+id/pbresult_buttonQuit"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="@string/pb_result_quit"
+			android:layout_marginBottom="10dip" />			    
+		        
+	</LinearLayout> 	
 
 </LinearLayout>
