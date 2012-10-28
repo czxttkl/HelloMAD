@@ -109,7 +109,7 @@ public class PBInviteInfo implements IRemoteData {
 		this.mPostTime = obj.getLong("post_time");
 		this.mHasNotified = obj.getBoolean("hasNotified");
 		this.mStatus = obj.getString("status");
-		this.mPostTime = obj.getLong("receive_time");
+		this.mReceiveTime = obj.getLong("receive_time");
 		
 		return true;
 	}
