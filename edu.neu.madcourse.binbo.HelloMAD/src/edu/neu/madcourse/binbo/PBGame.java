@@ -37,7 +37,7 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 	private static final int DIALOG_QUIT    = 0;
 	private static final int DIALOG_DROP_P1 = 1;
 	private static final int DIALOG_DROP_P2 = 2;
-	private static final int TIME_OUT_DROP = 10000;
+	private static final int TIME_OUT_DROP = 15000;
 	private static final String BOGGLE_WORDS = "words";
 	private static final String BOGGLE_WORDS_SIZE = "words_size";
 	
@@ -544,8 +544,15 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 			showDialog(DIALOG_DROP_P1);
 	    }
 	    
-	    private void onUpdateDataDone() {    		    			    	
-	    	if (System.currentTimeMillis() - mOppo.getUpdateTime() > TIME_OUT_DROP) {
+		private long mOppoStartTime = -1;
+		
+	    private void onUpdateDataDone() {
+	    	if (mOppoStartTime == -1) {
+	    		mOppoStartTime = mOppo.getUpdateTime();
+	    	}
+	    	long elapsedOppo = mOppo.getUpdateTime() - mOppoStartTime;
+	    	long elapsedHost = System.currentTimeMillis() - mStartTime;
+	    	if (elapsedHost - elapsedOppo > TIME_OUT_DROP) {
 	    		// opponent has dropped
 	    		mDrop[1] = true;
 	    		mTextViewStatus2.setText("dropped");
