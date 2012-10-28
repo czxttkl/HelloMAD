@@ -25,20 +25,9 @@ public class HelloMAD extends Activity implements OnClickListener {
 		errorButton.setOnClickListener(this);
 		View quitButton = this.findViewById(R.id.quit_button);
 		quitButton.setOnClickListener(this);
-		
-		// temporary use
-		View pbgameButton = this.findViewById(R.id.pbgame_button);
+		View pbgameButton = this.findViewById(R.id.persistent_boggle_button);
 		pbgameButton.setOnClickListener(this);		
 		
-//		Timestamp tt = new Timestamp(Calendar.getInstance().get( 
-//				Calendar.YEAR) - 1900, Calendar.getInstance().get( 
-//				Calendar.MONTH), Calendar.getInstance().get( 
-//				Calendar.DATE), Calendar.getInstance().get( 
-//				Calendar.HOUR), Calendar.getInstance().get( 
-//				Calendar.MINUTE), Calendar.getInstance().get( 
-//				Calendar.SECOND), 0); 
-//				System.out.println(tt); 
-
 //		PhoneCheckAPI.doAuthorization(this);
 	}
 
@@ -64,7 +53,7 @@ public class HelloMAD extends Activity implements OnClickListener {
 		case R.id.quit_button:
 			finish();
 			break;
-		case R.id.pbgame_button:
+		case R.id.persistent_boggle_button:
 			i = new Intent(this, PBWelcome.class);
 			startActivity(i);
 		// More buttons go here (if any) ...

@@ -45,6 +45,9 @@
 				<Button
 					android:id="@+id/boggle_button"
 					android:text="@string/boggle_label" />
+				<Button
+				   android:id="@+id/persistent_boggle_button"
+				   android:text="Persistent Boggle" />
 			</TableRow>
 		</TableLayout>
 	</LinearLayout>
