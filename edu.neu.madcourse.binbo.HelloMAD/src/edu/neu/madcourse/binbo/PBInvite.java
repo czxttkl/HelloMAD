@@ -102,6 +102,11 @@ public class PBInvite extends Activity implements OnClickListener {
 			this.mAcquirer.end();
 			this.mAcquirer = null;
 		}
+		
+		if (this.mInviteAcquirer != null) {
+			this.mInviteAcquirer.end();
+			this.mInviteAcquirer = null;
+		}
 	}
 	
 	protected void onResume(Bundle savedInstanceState) {
@@ -109,6 +114,11 @@ public class PBInvite extends Activity implements OnClickListener {
 			this.mAcquirer = new GetInfoThread();
 		}
 		this.mAcquirer.start();
+		
+		if (this.mInviteAcquirer == null) {
+			this.mInviteAcquirer = new CheckInviteThread();
+		}
+		this.mInviteAcquirer.start();
 	}
 
 	public void onClick(View v) {

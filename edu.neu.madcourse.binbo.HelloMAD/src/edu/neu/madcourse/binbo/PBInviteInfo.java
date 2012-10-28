@@ -18,10 +18,10 @@ public class PBInviteInfo implements IRemoteData {
     
     //after this period of time, the invitation should be invalid
     private int mValidPeriod = 10000;
+    
 	protected String mPoster = "";
 	protected String mReceiver = "";
 	protected long mPostTime = 0;
-	//whether the receiver has been informed with this invitation before it gets invalid
 	protected Boolean mHasNotified = false;
 	protected String mStatus = "unknown";
 	
