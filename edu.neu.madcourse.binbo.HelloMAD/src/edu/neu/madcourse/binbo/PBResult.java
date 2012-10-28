@@ -53,9 +53,7 @@ public class PBResult extends Activity implements OnClickListener {
 		
 		continueButton.setOnClickListener(this);
 		quitButton.setOnClickListener(this);
-		
-		addWeight();
-		
+
 		try {
 			mNames.acquire();
 		} catch (JSONException e) {
@@ -137,11 +135,6 @@ public class PBResult extends Activity implements OnClickListener {
 		}
 	}
 
-	private void addWeight() {  
-          
-        mTable.setStretchAllColumns(true);  
-    } 
-	
 	private final Handler mHandler = new Handler(Looper.getMainLooper()) {
 		
 		private static final int SERVER_UNAVAILABLE = -1;
