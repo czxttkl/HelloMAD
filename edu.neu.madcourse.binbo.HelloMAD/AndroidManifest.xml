@@ -101,21 +101,16 @@
             android:configChanges="orientation|keyboardHidden" />
 		
 		<activity android:name=".PBResult" 
-            android:label="@string/pbresult_title" />
-		
-		<activity android:name=".PBRank"
-			android:label="@string/pbrank_title" />
+            android:label="@string/pbresult_title"
+            android:screenOrientation="portrait" />
 		
 		<activity android:name=".PBOption"
-			android:label="@string/pboption_title" />
+			android:label="@string/pboption_title"
+			android:screenOrientation="portrait" />
 		
 		<activity android:name=".PBAbout"
-			android:label="@string/pbabout_title" />
-		
-		<activity android:name=".PBAcknowledge"
-			android:label="@string/pbacknowledge_title"
-            android:theme="@android:style/Theme.Dialog">
-		</activity>
+			android:label="@string/pbabout_title"
+			android:screenOrientation="portrait" />
 		
 		<service
 		    android:name="edu.neu.madcourse.binbo.MonitorService">

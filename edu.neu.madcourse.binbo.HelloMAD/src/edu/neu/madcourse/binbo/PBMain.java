@@ -50,6 +50,9 @@ public class PBMain extends Activity implements OnClickListener {
 			case R.id.pbmain_new_game_button:				
 				startNewGame();
 				break;
+			case R.id.pbmain_about_button:
+				startActivity(new Intent(this, PBAbout.class));
+				break;
 			case R.id.pbmain_exit_button:
 				exitGame();
 				break;
