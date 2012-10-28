@@ -59,8 +59,8 @@ public class InviteService extends Service {
 			while (mRun) {		
 				try {
 					if (nameList.acquire()) {
-					getPlayerInfo();
-					Thread.sleep(500);
+						getPlayerInfo();
+						Thread.sleep(1000);
 					}
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
