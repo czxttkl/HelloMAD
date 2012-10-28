@@ -35,19 +35,19 @@
 			</TableRow>
 			<TableRow>
 				<Button
+					android:id="@+id/boggle_button"
+					android:text="@string/boggle_label" />
+				<Button
+				   android:id="@+id/persistent_boggle_button"
+				   android:text="@string/pb_pb_label" />
+			</TableRow>
+			<TableRow>
+				<Button
 					android:id="@+id/error_button"
 					android:text="@string/error_label" />
 				<Button
 					android:id="@+id/quit_button"
 					android:text="@string/quit_lable" />
-			</TableRow>
-			<TableRow>
-				<Button
-					android:id="@+id/boggle_button"
-					android:text="@string/boggle_label" />
-				<Button
-				   android:id="@+id/persistent_boggle_button"
-				   android:text="Persistent Boggle" />
 			</TableRow>
 		</TableLayout>
 	</LinearLayout>

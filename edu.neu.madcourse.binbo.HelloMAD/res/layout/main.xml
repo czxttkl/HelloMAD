@@ -32,7 +32,7 @@
 	   android:id="@+id/persistent_boggle_button"
 	   android:layout_width="fill_parent"
 	   android:layout_height="wrap_content"
-	   android:text="Persistent Boggle" />
+	   android:text="@string/pb_pb_label" />
 	<Button
 	   android:id="@+id/error_button"
 	   android:layout_width="fill_parent"
