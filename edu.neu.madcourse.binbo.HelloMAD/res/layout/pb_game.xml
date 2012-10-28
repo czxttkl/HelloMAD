@@ -34,7 +34,8 @@
 		            android:layout_height="wrap_content"
 		            android:layout_weight="1"		    
 		            android:layout_gravity="center"       
-		            android:gravity="center"		            
+		            android:gravity="center"	
+		            android:textStyle="bold"	            
 		            android:text="player1" />
 		 
 		        <TextView
@@ -75,18 +76,9 @@
 		            android:layout_height="wrap_content"
 		            android:layout_weight="3"		    
 		            android:layout_gravity="center"       
-		            android:gravity="center"		            
-		            android:text="time" />
-		 
-		        <TextView
-		            android:id="@+id/pbgame_textViewBest"
-		            android:textSize="20sp"
-		            android:layout_width="fill_parent"
-		            android:layout_height="wrap_content"
-		            android:layout_weight="1"
-		            android:layout_gravity="center"
-		            android:gravity="center"
-		            android:text="best" />	        	     
+		            android:gravity="center"	
+		            android:textStyle="bold"	            
+		            android:text="time" />		 		              	     
 		        
 	        </LinearLayout> 
 	        <!-- end of time and best -->
@@ -106,7 +98,8 @@
 		            android:layout_height="wrap_content"
 		            android:layout_weight="1"		    
 		            android:layout_gravity="center"       
-		            android:gravity="center"		            
+		            android:gravity="center"	
+		            android:textStyle="bold"	            
 		            android:text="player2" />
 		 
 		        <TextView

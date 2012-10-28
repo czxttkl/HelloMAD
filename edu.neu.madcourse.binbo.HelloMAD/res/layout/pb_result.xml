@@ -3,7 +3,7 @@
     android:background="@color/background"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:padding="20dip"
+    android:padding="10dip"
     android:orientation="vertical" >
 
 	<TextView
@@ -18,7 +18,8 @@
 	    android:id="@+id/linearLayoutControls"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
-	    android:gravity="center"					        	   
+	    android:gravity="center"	
+	    android:padding="10dip"				        	   
 	    android:orientation="horizontal" >
 
 	    <Button
@@ -36,6 +37,77 @@
 			android:text="@string/pb_result_quit"
 			android:layout_marginBottom="10dip" />			    
 		        
-	</LinearLayout> 	
+	</LinearLayout> 
+	
+	<TableLayout  
+        android:layout_width="wrap_content"  
+        android:layout_height="wrap_content"  
+        android:background="#dedcd2"  
+        android:stretchColumns="*" >  
+  
+        <TableRow  
+            android:layout_margin="0.5dip"  
+            android:gravity="center"
+            android:background="#dedcd2" >  
+            <TextView  
+                android:background="#ffffff"  
+                android:gravity="center"                  
+                android:text="Rank"                                 	
+                android:textSize="15dip"  
+                android:textStyle="bold" />  
+  
+            <TextView              
+                android:background="#ffffff"                  
+                android:text="Player"                  	
+                android:textSize="15dip"  
+                android:textStyle="bold" />  
+  
+            <TextView    
+                android:background="#ffffff"                  
+                android:text="Best Score"     	
+                android:textSize="15dip"  
+                android:textStyle="bold" />  
+        </TableRow>  
+    </TableLayout>  
+  
+    <TableLayout  
+        android:id="@+id/tableLayoutResult"  
+        android:layout_width="wrap_content"  
+        android:layout_height="wrap_content"  
+        android:background="#dedcd2"  
+        android:stretchColumns="*" >  
+  
+        <TableRow  
+            android:layout_margin="0.5dip"  
+            android:background="#dedcd2" >  
+  
+            <TextView  
+                android:layout_margin="2dip"  
+                android:background="#ffffff"
+                android:layout_weight="1"  
+                android:gravity="center" 
+                android:text=""  
+                android:textSize="15dip"  
+                android:textStyle="bold" />  
+  
+            <TextView  
+                android:layout_margin="2dip"  
+                android:background="#ffffff"  
+                android:layout_weight="2"
+                android:gravity="center" 
+                android:text=""  
+                android:textSize="15dip"  
+                android:textStyle="bold" />  
+  
+            <TextView  
+                android:layout_margin="2dip"  
+                android:background="#ffffff"  
+                android:layout_weight="2"
+                android:gravity="center" 
+                android:text=""  
+                android:textSize="15dip"  
+                android:textStyle="bold" />  
+        </TableRow>  
+    </TableLayout>  	
 
 </LinearLayout>

@@ -64,6 +64,7 @@ public class PBLogIn extends Activity implements OnClickListener {
 	    	
 	    	if (found) {		    		
 	    		// not necessary to do this commit, but we do it now to prevent error 
+	    		newPlayer.acquire();
 	    		newPlayer.setStatus("offline");
 	    		newPlayer.setUpdateTime((new Date()).getTime());
 	    		if (newPlayer.commit() == false) {

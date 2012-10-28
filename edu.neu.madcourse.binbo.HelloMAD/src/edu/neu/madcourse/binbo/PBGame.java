@@ -78,7 +78,6 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 	private TextView mTextViewStatus1 = null;	
 	private TextView mTextViewStatus2 = null;
 	private TextView mTextViewTime    = null;
-	private TextView mTextViewBest    = null;
 	private Button   mButtonQuit      = null;
 	private Button   mButtonShake     = null;
 	private ListView mListViewWords   = null;
@@ -275,8 +274,7 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 		mTextViewScore2  = (TextView)findViewById(R.id.pbgame_textViewScore2);
 		mTextViewStatus1 = (TextView)findViewById(R.id.pbgame_textViewStatus1);
 		mTextViewStatus2 = (TextView)findViewById(R.id.pbgame_textViewStatus2);
-		mTextViewTime    = (TextView)findViewById(R.id.pbgame_textViewTime);
-		mTextViewBest    = (TextView)findViewById(R.id.pbgame_textViewBest);		
+		mTextViewTime    = (TextView)findViewById(R.id.pbgame_textViewTime);				
 		mListViewWords   = (ListView)findViewById(R.id.pbgame_listViewWords);
 		mButtonShake     = (Button)findViewById(R.id.pbgame_buttonShake); 		
  		mButtonQuit      = (Button)findViewById(R.id.pbgame_buttonQuit);
