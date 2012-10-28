@@ -108,7 +108,7 @@ public class PBPlayerInfo implements IRemoteData, Serializable {
         obj.put("best_score", getBestScore()); 
         obj.put("selected_letters", getSelLetters());
         obj.put("status", getStatus());
-        obj.put("update_time", getUpdateTime());
+        obj.put("update_time", System.currentTimeMillis());
         
         String content = obj.toString();
        	KeyValueAPI.put(TEAMNAME, PASSWORD, PLAYER_INFO_KEY_PREFIX + getName(), content);
