@@ -276,8 +276,12 @@ public class PBInvite extends Activity implements OnClickListener {
 	
 	public void onInviteAccept(PBInviteInfo inviteInfo) {
 		updatePlayerStatus(mHostInfo, "playing");
+		String strOppName = inviteInfo.getReceiver();
+		mOpponentInfo = new PBPlayerInfo(strOppName);
+		
 		try {
 			inviteInfo.delete();
+			mOpponentInfo.acquire();
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -287,7 +291,7 @@ public class PBInvite extends Activity implements OnClickListener {
         	mInviteAcquirer.end();
 		}
         mInviteAcquirer = null;
-
+        
         this.mpDialog.dismiss();
         this.startGame();
 	}
