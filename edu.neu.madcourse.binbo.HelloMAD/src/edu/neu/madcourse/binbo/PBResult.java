@@ -1,8 +1,14 @@
 package edu.neu.madcourse.binbo;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
+
+import edu.neu.mobileclass.apis.KeyValueAPI;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -32,8 +38,8 @@ public class PBResult extends Activity implements OnClickListener {
 	
 	private PBPlayerInfo mHost = null;
 	private PBPlayerInfo mOppo = null;
-	private PBPlayerInfo mPlayer = null;
-	private PBNameList mNames = new PBNameList();	
+	private PBResultList mResults = new PBResultList();
+	
 	private int mNext = 0;
 	private AcquireTask mAcquire = null;
 
@@ -53,17 +59,9 @@ public class PBResult extends Activity implements OnClickListener {
 		
 		continueButton.setOnClickListener(this);
 		quitButton.setOnClickListener(this);
-
-		try {
-			mNames.acquire();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-				
-		mPlayer  = new PBPlayerInfo(mNames.get(mNext++)); 
-		mAcquire = new AcquireTask(mHandler, mPlayer, 0, true);
-		mAcquire.start();
+						
+		mAcquire = new AcquireTask(mHandler, mResults, 0, true);
+		mAcquire.start();		
 	}		
 	
 	@Override
@@ -154,56 +152,88 @@ public class PBResult extends Activity implements OnClickListener {
                 break;   
             case UPDATE_DATA_ERROR:
             	onUpdateDataError();
-            	break;
-            case COMMIT_DATA_DONE:
-            	onCommitDataDone();
-            	break;
-            case COMMIT_DATA_ERROR:
-            	onCommitDataError();
-            	break;            
+            	break;                 
             default:
             	break;
             }            
         } 
 				
 		private void onServerUnavailable() {	
+			Toast.makeText(getApplicationContext(), 
+				"Sorry, can't get results because the server can not work.",
+				Toast.LENGTH_LONG).show();
+			return;
 	    }
 
 	    private void onUpdateDataDone() {
-	    	TableRow tablerow = new TableRow(getApplicationContext());  
-            tablerow.setBackgroundColor(Color.rgb(222, 220, 210));  
-                              
-                TextView textViewRank = new TextView(getApplicationContext());  
-                textViewRank.setText(String.valueOf(mNext));                
-                tablerow.addView(textViewRank);   
-                
-                TextView textViewName = new TextView(getApplicationContext());  
-                textViewName.setText(mPlayer.getName());                
-                tablerow.addView(textViewName);
-                
-                TextView textViewBest = new TextView(getApplicationContext());  
-                textViewBest.setText("" + mPlayer.getBestScore());                
-                tablerow.addView(textViewBest);
-              
-            mTable.addView(tablerow, new TableLayout.LayoutParams(  
-                    LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-            
-            if (mNext < mNames.size()) {            	            
-	            // get next
-	            mPlayer.setName(mNames.get(mNext++));
-	            mAcquire = new AcquireTask(this, mPlayer, 0, true);
-	    		mAcquire.start();
-            }
+	    	Collections.sort(mResults, Collections.reverseOrder());
+	    	
+	    	for (int i = 0; i < mResults.size(); ++i) {
+	    		PBPlayerInfo player = mResults.get(i);
+		    	TableRow tablerow = new TableRow(getApplicationContext());  
+	            tablerow.setBackgroundColor(Color.rgb(222, 220, 210));  
+	                              
+	                TextView textViewRank = new TextView(getApplicationContext());  
+	                textViewRank.setText(String.valueOf(mNext));                
+	                tablerow.addView(textViewRank);   
+	                
+	                TextView textViewName = new TextView(getApplicationContext());  
+	                textViewName.setText(player.getName());                
+	                tablerow.addView(textViewName);
+	                
+	                TextView textViewBest = new TextView(getApplicationContext());  
+	                textViewBest.setText(String.valueOf(player.getBestScore()));                
+	                tablerow.addView(textViewBest);
+	              
+	            mTable.addView(tablerow, new TableLayout.LayoutParams(  
+	                    LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+	    	}            
 	    }       
 	    
-	    private void onUpdateDataError() {    		    	
-	    }
-
-	    private void onCommitDataDone() {	    	
-	    }
-	    
-	    private void onCommitDataError() {	    	
+	    private void onUpdateDataError() {   
+	    	// normally it won't happen, do nothing here now
 	    }
     };
 	
+    protected class PBResultList extends ArrayList<PBPlayerInfo> implements IRemoteData {
+        private static final int DATA_ID = 10;
+        
+        public PBResultList() {
+    	}
+    		
+    	public boolean commit() throws JSONException {	
+
+    	    for (PBPlayerInfo player:this) {   
+    	        if (!player.commit()) {
+    	        	return false;
+    	        }
+    	    } 	    	
+  
+    	    return true;
+    	}
+    	
+    	public boolean acquire() throws JSONException {
+    		// get name list 
+    		PBNameList names = new PBNameList();
+    		if (!names.acquire()) {
+    			return false;
+    		}
+    		// build player list
+    		for (String name:names) {
+    			this.add(new PBPlayerInfo(name));
+    		}
+    		// acquire data in the player list
+    		for (PBPlayerInfo player:this) {
+    			if (!player.acquire()) {
+    				return false;
+    			}
+    		}
+    			
+    		return true;
+    	}			
+    	
+    	public int getDataId() {
+    		return DATA_ID;
+    	}
+    }
 }

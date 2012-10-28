@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import android.os.Handler;
 import edu.neu.mobileclass.apis.KeyValueAPI;
 
-public class PBPlayerInfo implements IRemoteData, Serializable {
+public class PBPlayerInfo implements IRemoteData, Serializable, Comparable<PBPlayerInfo> {
 	
 	private static final long serialVersionUID = -7060210544600464481L; 
 	private static final String TEAMNAME = "MAD_WB_TEAM";
@@ -148,6 +148,10 @@ public class PBPlayerInfo implements IRemoteData, Serializable {
 	public String toString() {
 		// TODO Auto-generated method stub
 		return super.toString();
+	}
+
+	public int compareTo(PBPlayerInfo another) {		
+		return mBestScore - another.getBestScore();
 	}
 	
 }
