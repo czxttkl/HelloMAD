@@ -228,7 +228,8 @@ public class PBInvite extends Activity implements OnClickListener {
 		}
         mInviteAcquirer = null;
 
-		this.startGame();
+        this.mpDialog.dismiss();
+        this.startGame();
 	}
 	
 	public void onInviteDecline(PBInviteInfo inviteInfo) {
