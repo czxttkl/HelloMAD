@@ -31,7 +31,7 @@ import android.widget.*;
 
 public class PBGame extends Activity implements IBoggleGame, OnClickListener, OnTouchListener {
 	private static final String TAG = "Persistent Boggle";	
-	private static final int DEFAULT_GAME_TIME = 30;
+	private static final int DEFAULT_GAME_TIME = 300;
 	private static final int ACCEL_ACCURACY = 13;
 	private static final float GOLDEN_DIVIDE = 0.618f;
 	private static final int DIALOG_QUIT    = 0;
@@ -147,6 +147,7 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 
 	@Override
 	protected void onRestart() {
+		mNew = false;
 		// TODO Auto-generated method stub
 		super.onRestart();
 	}
@@ -486,12 +487,13 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 	    			mToneGen.startTone(ToneGenerator.TONE_DTMF_5, 100);
 	    		}	    		
 	    	}
-	    	// update UI
-	    	mTextViewTime.setText(minute + ":" + second);	    	
-	    	mTextViewTime.setTextColor(mDefTextColor);	    	    	
-	    	if (mCurTime == 0) {
+	    		    	    	
+	    	if (mCurTime <= 0) {
 	    		doGameOver();
 	    	} else {
+	    		// update UI
+		    	mTextViewTime.setText(minute + ":" + second);	    	
+		    	mTextViewTime.setTextColor(mDefTextColor);
 	    		mHandlerTimer.postDelayed(mRunnableTimer, 1000);
 	    	}	    	
 		}
@@ -694,14 +696,6 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 		if (mNew) {
 			mStartTime = System.currentTimeMillis();
 			mWordsFound.clear();
-		} else {
-			mStartTime = getPreferences(MODE_PRIVATE).getLong(
-					BOOGLE_START_TIME, System.currentTimeMillis());
-			int size = getPreferences(MODE_PRIVATE).getInt(BOGGLE_WORDS_SIZE, 0);
-			for (int i = 0; i < size; ++i) {								
-				String word = getPreferences(MODE_PRIVATE).getString(BOGGLE_WORDS + i, "");
-				mWordsFound.add(word);
-			}
 		}
 	}
 }
