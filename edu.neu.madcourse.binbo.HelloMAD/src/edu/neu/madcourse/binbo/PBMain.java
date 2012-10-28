@@ -33,8 +33,6 @@ public class PBMain extends Activity implements OnClickListener {
 		// Set up click listeners for all the buttons
 		View btnNewGame = findViewById(R.id.pbmain_new_game_button);
 		btnNewGame.setOnClickListener(this);
-		View btnRank = findViewById(R.id.pbmain_rank_button);
-		btnRank.setOnClickListener(this);
 		View btnOptions = findViewById(R.id.pbmain_options_button);
 		btnOptions.setOnClickListener(this);
 		View btnAbout = findViewById(R.id.pbmain_about_button);

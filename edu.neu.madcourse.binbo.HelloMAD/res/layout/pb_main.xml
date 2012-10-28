@@ -22,13 +22,6 @@
 	   android:layout_marginBottom="6dip" />
 	
 	<Button
-	   android:id="@+id/pbmain_rank_button"
-	   android:layout_width="fill_parent"
-	   android:layout_height="wrap_content"
-	   android:text="@string/pb_rank_label"
-	   android:layout_marginBottom="6dip" />
-	
-	<Button
 	   android:id="@+id/pbmain_options_button"
 	   android:layout_width="fill_parent"
 	   android:layout_height="wrap_content"

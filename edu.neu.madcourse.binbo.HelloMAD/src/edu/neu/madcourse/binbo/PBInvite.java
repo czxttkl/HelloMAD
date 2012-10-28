@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -31,7 +32,6 @@ import android.widget.Toast;
 public class PBInvite extends Activity implements OnClickListener {
 	private PBPlayerInfo mHostInfo = null;
 	private PBPlayerInfo mOpponentInfo = null;
-	private PBInviteInfo mInviteInfo = null;
 	private PBInviteInfo mComingInviteInfo = null;
 
 	private ListView mLVPlayerList;
@@ -49,12 +49,15 @@ public class PBInvite extends Activity implements OnClickListener {
 	private static final String ACCOUNT_NAME = "account_name";
 	public  static final String HOST_INFO     = "host_info";
 	public  static final String OPPONENT_INFO = "opponent_info";
+	private static final String SERVICE_COMMAND = "service_command";
+	private static final int SERVICE_START = 1;
+	private static final int SERVICE_END   = 2;
 	private static final int SERVER_UNAVAILABLE = 0;
-	private static final int UPDATE_LISTVIEW    = 1;
-	private static final int INVITE_RECEIVE     = 2;
-	private static final int INVITE_EXPIRE      = 3;
-	private static final int INVITE_ACCEPT      = 4;
-	private static final int INVITE_DECLINE     = 5;
+	private static final int UPDATE_LISTVIEW    = 10;
+	private static final int INVITE_RECEIVE     = 11;
+	private static final int INVITE_EXPIRE      = 12;
+	private static final int INVITE_ACCEPT      = 13;
+	private static final int INVITE_DECLINE     = 14;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -76,12 +79,6 @@ public class PBInvite extends Activity implements OnClickListener {
 		
 		// mark the current user as online in invite screen
 		(new CommitTask(mHandler,this.mHostInfo)).execute();
-		
-		// create a thread to fetch all three types of data
-		if (this.mAcquirer == null) {
-			this.mAcquirer = new GetInfoThread();
-		}
-		this.mAcquirer.start();
 
 		// Set up click listeners for all the buttons
 		this.mBtnBack = this.findViewById(R.id.pbinvite_back_button);
@@ -98,6 +95,39 @@ public class PBInvite extends Activity implements OnClickListener {
 	}
 	
 	protected void onPause(Bundle savedInstanceState) {
+	}
+	
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+		
+		if (this.mAcquirer == null) {
+			this.mAcquirer = new GetInfoThread();
+		}
+		this.mAcquirer.start();
+		
+		if (this.mInviteAcquirer != null&&mHostInfo.getStatus().equals("inviting")) {
+			this.mInviteAcquirer.start();
+		}
+		
+		
+		Intent i = new Intent(this, InviteService.class);
+		Bundle bundle = new Bundle();  
+	    bundle.putInt(SERVICE_COMMAND, SERVICE_END);	    
+	    i.putExtras(bundle); 
+		// it's ok to deal with this command for the first time
+		startService(i);
+	}
+
+	@Override
+	protected void onStop() {
+
+	// start the service only when the user
+	// has been interrupted or press the home key
+		Intent i = new Intent(this, InviteService.class);		 
+	    Bundle bundle = new Bundle();  
+	    
 		if (this.mAcquirer != null) {
 			this.mAcquirer.end();
 			this.mAcquirer = null;
@@ -105,20 +135,25 @@ public class PBInvite extends Activity implements OnClickListener {
 		
 		if (this.mInviteAcquirer != null) {
 			this.mInviteAcquirer.end();
-			this.mInviteAcquirer = null;
 		}
-	}
+		
+	    bundle.putInt(SERVICE_COMMAND, SERVICE_START);  
+	    if(mHostInfo!=null)
+			try {
+				bundle.putString(HOST_INFO, mHostInfo.obj2json());
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    i.putExtras(bundle); 
+	    
+		startService(i);
+		// TODO Auto-generated method stub
+		super.onStop();		
+	}	
 	
 	protected void onResume(Bundle savedInstanceState) {
-		if (this.mAcquirer == null) {
-			this.mAcquirer = new GetInfoThread();
-		}
-		this.mAcquirer.start();
-		
-		if (this.mInviteAcquirer == null) {
-			this.mInviteAcquirer = new CheckInviteThread();
-		}
-		this.mInviteAcquirer.start();
+
 	}
 
 	public void onClick(View v) {
@@ -134,10 +169,16 @@ public class PBInvite extends Activity implements OnClickListener {
 				this.mAcquirer = null;
 			}
 			
-			i = new Intent(this, PBMain.class);
-			i.putExtra(ACCOUNT_NAME, this.mHostInfo.getName());
-			finish();
-			startActivity(i);
+			try {
+				i = new Intent(this, PBMain.class);
+				i.putExtra(HOST_INFO, mHostInfo.obj2json());
+				finish();
+				startActivity(i);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			break;
 		}
 	}
@@ -177,29 +218,48 @@ public class PBInvite extends Activity implements OnClickListener {
 	
 	public void showInviteDialog() {
 		AlertDialog.Builder ad = new AlertDialog.Builder(this);
+		
 		ad.setMessage(mComingInviteInfo.getPoster() + " " + getString(R.string.pb_invite_msg));
+		ad.setCancelable(false);
 		ad.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int i) {
-				updatePlayerStatus(mHostInfo, "playing");
-				updateInviteStatus(mComingInviteInfo, "accepted");
-				startGame();
+				if (!checkInviteExpire()) {
+					updatePlayerStatus(mHostInfo, "playing");
+					updateInviteStatus(mComingInviteInfo, "accepted");
+					startGame();
+				} else {
+					updatePlayerStatus(mHostInfo, "online");
+					Toast.makeText(getApplicationContext(),
+						"Oops.. The invitation has been expired", Toast.LENGTH_LONG).show();
+				}
 			}
 		});
 		ad.setNegativeButton("Decline", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int i) {
-				updatePlayerStatus(mHostInfo, "online");
-				updateInviteStatus(mComingInviteInfo, "declined");
-			}
-		});
-		ad.setOnKeyListener(new android.content.DialogInterface.OnKeyListener() {
-			public boolean onKey(DialogInterface dialog, int keyCode,
-					KeyEvent event) {
-				if (keyCode == KeyEvent.KEYCODE_BACK)
-					return true;
-				return false;
+				if (!checkInviteExpire()) {
+					updatePlayerStatus(mHostInfo, "online");
+					updateInviteStatus(mComingInviteInfo, "declined");
+				} else {
+					updatePlayerStatus(mHostInfo, "online");
+					Toast.makeText(getApplicationContext(),
+						"Oops.. The invitation has been expired", Toast.LENGTH_LONG).show();
+				}
 			}
 		});
 		ad.show();
+	}
+	
+	public Boolean checkInviteExpire () {
+		try {
+			if (mComingInviteInfo.acquire()) {
+				return mComingInviteInfo.isExpired();
+			} else {
+				return true;
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return true;
+		}
 	}
 	
 	public void startGame() {
@@ -249,6 +309,10 @@ public class PBInvite extends Activity implements OnClickListener {
 		this.mpDialog.dismiss();
 	}
 	
+	public void onInviteExpire(PBInviteInfo inviteInfo) {
+		this.onInviteDecline(inviteInfo);
+	}
+	
 	private final Handler mHandler = new Handler(Looper.getMainLooper()) {
 
 		public void handleMessage(Message msg) {
@@ -268,7 +332,7 @@ public class PBInvite extends Activity implements OnClickListener {
 					showInviteDialog();
 					break;
 				case INVITE_EXPIRE:
-					//deal with invite expiring
+					onInviteExpire((PBInviteInfo) msg.obj);
 					break;
 				case INVITE_ACCEPT:
 					onInviteAccept((PBInviteInfo) msg.obj);
