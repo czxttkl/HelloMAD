@@ -60,7 +60,7 @@ public class InviteService extends Service {
 				try {
 					if (nameList.acquire()) {
 					getPlayerInfo();
-					Thread.sleep(50);
+					Thread.sleep(500);
 					}
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
@@ -78,7 +78,6 @@ public class InviteService extends Service {
 		}
 		
 		private void showNotification(String message) {
-			int id = 2;
 			NotificationManager nm = 
 					(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 			Notification notification = 
