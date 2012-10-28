@@ -38,6 +38,8 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 	private static final int DIALOG_DROP_P1 = 1;
 	private static final int DIALOG_DROP_P2 = 2;
 	private static final int TIME_OUT_DROP = 10000;
+	private static final String BOGGLE_WORDS = "words";
+	private static final String BOGGLE_WORDS_SIZE = "words_size";
 	
 	private static final String SERVICE_COMMAND = "service_command";
 	private static final int SERVICE_START = 1;
@@ -123,19 +125,23 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 		mToneGen = new ToneGenerator(AudioManager.STREAM_MUSIC, 70);
 		// initialize sensors
 		initSensors();
+		// create music player
+		BoggleMusic.create(this, R.raw.boggle_game);
+		if (mNew) BoggleMusic.reset();
 		// set quit flag to false
 		mQuit = false;
 	}
 
 	@Override
 	protected void onDestroy() {
-		// TODO Auto-generated method stub
+		BoggleMusic.stop(this);
 		super.onDestroy();
 	}
 
 	@Override
 	protected void onPause() {
 		savePreferences();
+		BoggleMusic.pause();
 		super.onPause();
 	}
 
@@ -147,7 +153,7 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 
 	@Override
 	protected void onResume() {
-		// TODO Auto-generated method stub
+		BoggleMusic.play();
 		super.onResume();				
 	}
 
@@ -281,6 +287,9 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 		mTextViewName1.setText(mHost.getName());
     	mTextViewScore1.setText(String.valueOf(mHost.getScore()));
     	mTextViewStatus1.setText(mHost.getSelLetters());
+    	mListViewWords.setAdapter(
+        	new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, mWordsFound)
+        );
 	}
 
 	protected void loadDictionaries() {
@@ -661,6 +670,12 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 	private void savePreferences() {
 		getPreferences(MODE_PRIVATE).edit().putString(BOGGLE_PUZZLE, mPuzzle.toJSONString()).commit();
 		getPreferences(MODE_PRIVATE).edit().putLong(BOOGLE_START_TIME, mStartTime);
+		// Save the words list BOGGLE_WORDS_SIZE
+		getPreferences(MODE_PRIVATE).edit().putInt(BOGGLE_WORDS_SIZE, mWordsFound.size()).commit();
+		for (int i = 0; i < mWordsFound.size(); ++i) {
+			String word = mWordsFound.get(i);
+			getPreferences(MODE_PRIVATE).edit().putString(BOGGLE_WORDS + i, word).commit();
+		}	
 	}
 	
 	private void loadPreferences() {

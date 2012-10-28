@@ -31,7 +31,7 @@ public class BogglePuzzleView extends View {
 	private static final String SELY = "selY";
 	private static final String LIST_SIZE = "listSize";
 
-	protected int   mSize;   // could be 4Ñ6
+	protected int   mSize;   // could be 4?
 	protected float mWidth;  // width of one tile
 	protected float mHeight; // height of one tile	
 	protected RectF mOval = new RectF();	
