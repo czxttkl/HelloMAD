@@ -67,8 +67,7 @@ public class PBMain extends Activity implements OnClickListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			Toast.makeText(this, 
-               "Sorry, can't start the new game.", Toast.LENGTH_LONG).show();	  
-	    	return;
+               "Sorry, can't start the new game.", Toast.LENGTH_LONG).show();	  	    
 		} 
 	}
 	
@@ -85,72 +84,5 @@ public class PBMain extends Activity implements OnClickListener {
 			e.printStackTrace();
 		}
 		finish(); // just close the activity	
-	}	
-		
-		private void onServerUnavailable() {
-	    	Toast.makeText(getApplicationContext(), 
-	            "Sorry, server can not be connected. Please try again.",
-	            Toast.LENGTH_LONG).show();
-	    }
-	    
-	    private void onUpdateDataDone() {    	
-	    	//Intent i = new Intent(getApplicationContext(), PBGame.class);
-			Intent i = new Intent(getApplicationContext(), PBInvite.class);
-
-			//mPlayer.setStatus("online"); // update the status to online
-			//mPlayer.setUpdateTime(System.currentTimeMillis());
-			
-			//Bundle bundle = new Bundle();  
-		    //bundle.putBoolean("new game", true);		    
-		    //bundle.putSerializable(HOST_INFO, mPlayer); 
-		    //i.putExtras(bundle); 
-
-			try {
-				mPlayer.setStatus("online"); // update the status to online
-				mPlayer.setUpdateTime(System.currentTimeMillis());
-				i.putExtra(HOST_INFO, mPlayer.obj2json());	
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
-
-
-			finish();	
-			startActivity(i);
-	    }       
-	    
-	    private void onUpdateDataError() {    	
-	    	// not necessary, already create player info when sign up and log in
-	    	
-	    	// no player info found, just commit a new one
-	    	//mPlayer.setScore(0);
-	    	//mPlayer.setBestScore(0);
-	    	//mPlayer.setSelLetters("");
-	    	//mPlayer.setStatus("online");
-	    	//mPlayer.setUpdateTime(System.currentTimeMillis());
-	    	
-	    	// create commit task
-			//mCommit.execute();
-	    }
-
-	    private void onCommitDataDone() {
-	    	//Intent i = new Intent(getApplicationContext(), PBInvite.class);
-	    	
-	    	//Bundle bundle = new Bundle();  
-		    //bundle.putBoolean("new game", true);		    
-		    //bundle.putSerializable(HOST_INFO, mPlayer); 
-		    //i.putExtras(bundle);
-		    
-			//startActivity(i);
-
-			Intent i = new Intent(getApplicationContext(), HelloMAD.class);
-	    	finish();
-	    	startActivity(i);
-	    }
-	    
-	    private void onCommitDataError() {
-	    	Toast.makeText(getApplicationContext(), 
-	            "Fail to start the game. Please try again.",
-	            Toast.LENGTH_LONG).show();
-	    }
+	}					
 }	

@@ -36,9 +36,28 @@ public class PBSignUp extends Activity implements OnClickListener {
 			break;
 		}
 	}
+	
+	protected PBPlayerInfo addAccount(String account) throws JSONException {
+		// add the account 
+		// first we add the player info first
+		PBPlayerInfo newPlayer = new PBPlayerInfo(account);
+		newPlayer.setStatus("offline");
+		newPlayer.setUpdateTime((new Date()).getTime());
+		if (newPlayer.commit() == false) {
+			return null;
+		}
+		// then we add the account name to the account name list
+		mNames.add(account);
+		if (mNames.commit() == false) {			
+			return null;
+		}
+		
+		return newPlayer;
+	}
 
 	public void doSignUp() {
 		String account = mEditTextAccount.getText().toString().trim();
+		PBPlayerInfo newPlayer = null;
 
 		if (account.compareTo("") == 0) {
 			Toast.makeText(this, 
@@ -63,35 +82,40 @@ public class PBSignUp extends Activity implements OnClickListener {
 		    			return;
 		    		}
 		    	}
-				// add the account 
-				// first we add the player info first
-				PBPlayerInfo newPlayer = new PBPlayerInfo(account);
-				newPlayer.setStatus("offline");
-				newPlayer.setUpdateTime((new Date()).getTime());
-	    		if (newPlayer.commit() == false) {
-	    			Toast.makeText(this, 
-    		            "Sorry, server can not be connected. Please try again.",
-    		            Toast.LENGTH_LONG).show();
-	    			return;
-	    		}
-	    		// then we add the account name to the account name list
-	    		mNames.add(account);
-	    		if (mNames.commit() == false) {
-	    			Toast.makeText(this, 
-    		            "Sorry, server can not be connected. Please try again.",
-    		            Toast.LENGTH_LONG).show();
-	    			return;
-	    		}
-	    		// switch to next activity
-    			Intent i = new Intent(this, PBMain.class);
-    			i.putExtra(PBMain.HOST_INFO, newPlayer.obj2json());
-	    		finish();
-	    		startActivity(i);	    				    								
+				
+				if ((newPlayer = addAccount(account)) == null) {
+					Toast.makeText(this, 
+				            "Sorry, server can not be connected. Please try again.",
+				            Toast.LENGTH_LONG).show();					
+				}
+					    		    				    								
 			}
 		} catch (JSONException e) {
-			Toast.makeText(getApplicationContext(), 
-                "Sorry, the account name doesn't exist. Please login first.",
-                Toast.LENGTH_LONG).show();				
+			try {
+				if ((newPlayer = addAccount(account)) == null) {
+					Toast.makeText(this, 
+				            "Sorry, server can not be connected. Please try again.",
+				            Toast.LENGTH_LONG).show();				
+				}
+			} catch (JSONException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}		
 		}
+		
+		if (newPlayer == null) {
+			return;
+		}
+		
+		// switch to next activity
+		Intent i = new Intent(this, PBMain.class);
+		try {
+			i.putExtra(PBMain.HOST_INFO, newPlayer.obj2json());
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finish();
+		startActivity(i);	
 	}
 }

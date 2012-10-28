@@ -39,6 +39,8 @@ public class BogglePuzzleView extends View {
 	protected IBoggleGame mGame = null;
 	protected BogglePuzzle mPuzzle = null;
 	private ToneGenerator mToneGen = null;
+	
+	private PBPlayerInfo mHost = null;
 
 	public BogglePuzzleView(Context context, BogglePuzzle puzzle) {
 		super(context);
@@ -285,6 +287,10 @@ public class BogglePuzzleView extends View {
 		return true;
 	}
 	
+	public void bindHost(PBPlayerInfo host) {
+		mHost = host;
+	}
+	
 	public void rotatePuzzle() {
 		for (int i = 0; i < mSelList.size(); ++i) {
 			Point ptInList = mSelList.get(i);
@@ -326,8 +332,9 @@ public class BogglePuzzleView extends View {
 				removeSelectionsFrom(selPt);
 			}
 		}
-		
+				
 		invalidate();
+		mHost.setSelLetters(listToString(mSelList));
 	}
 	
 	private boolean isInvalidPoint(Point pt) {
