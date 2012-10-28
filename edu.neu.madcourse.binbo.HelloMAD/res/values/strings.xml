@@ -10,10 +10,12 @@
     <string name="about_title">Team Member</string>
     <string name="about_lable">About</string>
     <string name="about_text">\
-		Name: Bin Bo\n
+		Name: Bin Bo / Wenjing Wang\n
 		Email: bigbugbb@gmail.com\n
-		Version: 1.0.0\n
-		Phone ID: none\n
+		       wwwjdan@hotmail.com\n
+		Version: 1.3.5\n
+		Phone ID: 353091054025160 ／
+		          61afdac87a61361e\n
 	</string>
     <string name="sudoku_continue_label">Continue</string>
     <string name="sudoku_new_game_label">New Game</string>
