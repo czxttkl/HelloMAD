@@ -389,6 +389,7 @@ public class PBInvite extends Activity implements OnClickListener {
 				try {
 					if (inviteInfo.acquire()) {
 						Message msg = new Message();
+						msg.arg1 = 100;
 						String strStatus = inviteInfo.getStatus();
 						if (strStatus.equals("unknown")) {
 							if (inviteInfo.isExpired()) {
@@ -407,7 +408,7 @@ public class PBInvite extends Activity implements OnClickListener {
 				}
 				finally {        	
 					try {
-						Thread.sleep(30);
+						Thread.sleep(300);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
