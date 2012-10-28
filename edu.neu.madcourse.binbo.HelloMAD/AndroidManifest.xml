@@ -93,6 +93,7 @@
 		
 		<activity android:name=".PBInvite" 
             android:label="@string/pbinvite_title"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 		
 		<activity android:name=".PBGame" 
