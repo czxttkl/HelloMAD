@@ -217,6 +217,8 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 		    i.putExtras(bundle); 		    
 			startService(i);
 		}
+		mDrop[0] = false; 
+		mDrop[1] = false; 
 		// TODO Auto-generated method stub
 		super.onStop();		
 	}

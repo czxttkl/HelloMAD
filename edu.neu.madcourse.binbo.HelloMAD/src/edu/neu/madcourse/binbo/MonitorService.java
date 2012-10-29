@@ -158,7 +158,7 @@ public class MonitorService extends Service {
 	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		Toast.makeText(this, "service starting", Toast.LENGTH_SHORT).show();		
+		//Toast.makeText(this, "service starting", Toast.LENGTH_SHORT).show();		
 		Bundle bundle = intent.getExtras();
 		int cmd = bundle.getInt(SERVICE_COMMAND);
 		mHostStartTime = bundle.getLong(PBGame.HOST_START_TIME);
