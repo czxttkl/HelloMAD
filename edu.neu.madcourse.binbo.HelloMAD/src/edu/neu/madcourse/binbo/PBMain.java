@@ -70,6 +70,7 @@ public class PBMain extends Activity implements OnClickListener {
 			
 			Intent i = new Intent(this, PBInvite.class);
 			i.putExtra(PBMain.HOST_INFO, mPlayer.obj2json());
+			finish();
     		startActivity(i);
 		} 
 		catch (JSONException e) {

@@ -76,5 +76,4 @@ public class AcquireTask extends Thread {
 			e.printStackTrace();
 		}
 	}    
-
 }
