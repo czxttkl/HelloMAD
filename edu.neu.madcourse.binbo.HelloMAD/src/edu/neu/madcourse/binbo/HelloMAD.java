@@ -28,7 +28,7 @@ public class HelloMAD extends Activity implements OnClickListener {
 		View pbgameButton = this.findViewById(R.id.persistent_boggle_button);
 		pbgameButton.setOnClickListener(this);		
 		
-//		PhoneCheckAPI.doAuthorization(this);
+		PhoneCheckAPI.doAuthorization(this);
 	}
 
 	public void onClick(View v) {
