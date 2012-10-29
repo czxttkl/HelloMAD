@@ -130,5 +130,10 @@
        BO BIN \n
        WANG WENJING
    </string>
+   
+   <string name="sound_title">Sound</string>
+   <string name="sound_summary">Enable sound effects</string>
+   <string name="vibrate_title">Vibrate</string>
+   <string name="vibrate_summary">Enable vibration</string>
 	
 </resources>

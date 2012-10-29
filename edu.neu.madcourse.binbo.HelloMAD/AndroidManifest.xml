@@ -88,27 +88,31 @@
             android:screenOrientation="portrait" />
 		
 		<activity android:name=".PBMain" 
-            android:label="@string/pbmain_title"
+            android:label="@string/pb_pb_label"
             android:screenOrientation="portrait" />
 		
 		<activity android:name=".PBInvite" 
-            android:label="@string/pbinvite_title"
+            android:label="@string/pb_pb_label"
             android:screenOrientation="portrait" />
 		
 		<activity android:name=".PBGame" 
-            android:label="@string/pbgame_title"
+            android:label="@string/pb_pb_label"
             android:launchMode="singleTop"
             android:configChanges="orientation|keyboardHidden" />
 		
 		<activity android:name=".PBResult" 
-            android:label="@string/pbresult_title"
+            android:label="@string/pb_pb_label"
             android:screenOrientation="portrait" />
 		
 		<activity android:name=".PBOption"
-			android:label="@string/pboption_title"
+			android:label="@string/pb_pb_label"
 			android:screenOrientation="portrait" />
 		
 		<activity android:name=".PBAbout"
+			android:label="@string/pb_pb_label"
+			android:screenOrientation="portrait" />
+		
+		<activity android:name=".PBPrefs"
 			android:label="@string/pbabout_title"
 			android:screenOrientation="portrait" />
 		
