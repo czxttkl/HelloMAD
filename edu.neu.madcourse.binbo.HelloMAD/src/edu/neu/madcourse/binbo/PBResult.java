@@ -174,7 +174,7 @@ public class PBResult extends Activity implements OnClickListener {
 	            tablerow.setBackgroundColor(Color.rgb(222, 220, 210));  
 	                              
 	                TextView textViewRank = new TextView(getApplicationContext());  
-	                textViewRank.setText(String.valueOf(mNext));                
+	                textViewRank.setText(String.valueOf(i + 1));                
 	                tablerow.addView(textViewRank);   
 	                
 	                TextView textViewName = new TextView(getApplicationContext());  
