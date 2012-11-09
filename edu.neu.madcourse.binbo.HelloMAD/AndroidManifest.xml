@@ -39,92 +39,88 @@
 		
 		<!-- sudoku activities -->
 		
-		<activity android:name=".Sudoku" 
+		<activity android:name=".sudoku.Sudoku" 
             android:label="@string/sudoku_title" />
 		
-		<activity android:name=".SudokuGame" 
+		<activity android:name=".sudoku.SudokuGame" 
             android:label="@string/sudoku_title" />
         
-		<activity android:name=".SudokuAbout"
+		<activity android:name=".sudoku.SudokuAbout"
 			android:label="@string/sudoku_about_title"
             android:theme="@android:style/Theme.Dialog">
 		</activity>
 		
-		<activity android:name=".SudokuPrefs" 
+		<activity android:name=".sudoku.SudokuPrefs" 
 		    android:label="@string/sudoku_settings_title" >
 		</activity>
 		
 		<!-- boggle activities -->
 		
-		<activity android:name=".Boggle" 
+		<activity android:name=".boggle.Boggle" 
             android:label="@string/boggle_title" />
 		
-		<activity android:name=".BoggleGame" 
+		<activity android:name=".boggle.BoggleGame" 
             android:label="@string/boggle_title"
             android:configChanges="orientation|keyboardHidden" />
 		
-		<activity android:name=".BoggleAbout"
+		<activity android:name=".boggle.BoggleAbout"
 			android:label="@string/boggle_about_title"
             android:theme="@android:style/Theme.Dialog">
 		</activity>
 		
-		<activity android:name=".BoggleAcknowledge"
+		<activity android:name=".boggle.BoggleAcknowledge"
 			android:label="@string/boggle_acknowledge_title"
             android:theme="@android:style/Theme.Dialog">
 		</activity>
 		
 		<!-- persist boggle activities -->
 		
-		<activity android:name=".PBWelcome" 
+		<activity android:name=".persistentboggle.PBWelcome" 
             android:label="@string/pb_pb_label"
             android:screenOrientation="portrait" />
 		
-		<activity android:name=".PBLogIn" 
+		<activity android:name=".persistentboggle.PBLogIn" 
             android:label="@string/pb_pb_label"
             android:screenOrientation="portrait" />
 		
-		<activity android:name=".PBSignUp" 
+		<activity android:name=".persistentboggle.PBSignUp" 
             android:label="@string/pb_pb_label"
             android:screenOrientation="portrait" />
 		
-		<activity android:name=".PBMain" 
+		<activity android:name=".persistentboggle.PBMain" 
             android:label="@string/pb_pb_label"
             android:screenOrientation="portrait" />
 		
-		<activity android:name=".PBInvite" 
+		<activity android:name=".persistentboggle.PBInvite" 
             android:label="@string/pb_pb_label"
             android:screenOrientation="portrait" />
 		
-		<activity android:name=".PBGame" 
+		<activity android:name=".persistentboggle.PBGame" 
             android:label="@string/pb_pb_label"
             android:launchMode="singleTop"
             android:configChanges="orientation|keyboardHidden" />
 		
-		<activity android:name=".PBResult" 
+		<activity android:name=".persistentboggle.PBResult" 
             android:label="@string/pb_pb_label"
             android:screenOrientation="portrait" />
 		
-		<activity android:name=".PBOption"
+		<activity android:name=".persistentboggle.PBOption"
 			android:label="@string/pb_pb_label"
 			android:screenOrientation="portrait" />
-		
-		<activity android:name=".PBAbout"
+		<activity android:name=".persistentboggle.PBAbout"
 			android:label="@string/pb_pb_label"
 			android:screenOrientation="portrait" />
-		
-		<activity android:name=".PBPrefs"
+		<activity android:name=".persistentboggle.PBPrefs"
 			android:label="@string/pbabout_title"
 			android:screenOrientation="portrait" />
-		
 		<service
-		    android:name="edu.neu.madcourse.binbo.MonitorService">
+		    android:name="edu.neu.madcourse.binbo.persistentboggle.MonitorService">
 		</service>
 		
 		<service
-		    android:name="edu.neu.madcourse.binbo.InviteService">
+		    android:name="edu.neu.madcourse.binbo.persistentboggle.InviteService">
 		</service>
-		
-		
+				
     </application>
 
 </manifest>

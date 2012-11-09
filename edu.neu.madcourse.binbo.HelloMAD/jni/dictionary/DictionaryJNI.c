@@ -29,7 +29,7 @@
 	#define D(...)  do {} while (0)
 #endif
 
-const char* CLASS_NAME = "edu/neu/madcourse/binbo/NativeDictionary";
+const char* CLASS_NAME = "edu/neu/madcourse/binbo/boggle/NativeDictionary";
 
 
 static jint create(JNIEnv *env, jobject thiz)
