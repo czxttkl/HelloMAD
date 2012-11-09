@@ -3,9 +3,19 @@
     android:background="@color/background"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:padding="30dip"
     android:orientation="vertical" >
-
+    <ScrollView 
+        android:id="@+id/ScrlView" 
+        android:gravity="center"
+        android:layout_width="fill_parent" 
+        android:layout_height="fill_parent" >
+        
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"	    
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:padding="30dip"
+	    android:orientation="vertical" >
+        
 	<TextView
 	   android:text="@string/main_title"
 	   android:layout_height="wrap_content"
@@ -34,6 +44,11 @@
 	   android:layout_height="wrap_content"
 	   android:text="@string/pb_pb_label" />
 	<Button
+	   android:id="@+id/trickiest_button"
+	   android:layout_width="fill_parent"
+	   android:layout_height="wrap_content"
+	   android:text="@string/trickiest_label" />
+	<Button
 	   android:id="@+id/error_button"
 	   android:layout_width="fill_parent"
 	   android:layout_height="wrap_content"
@@ -44,4 +59,6 @@
 	   android:layout_height="wrap_content"
 	   android:text="@string/quit_lable" />
 
+	</LinearLayout>
+	</ScrollView>	
 </LinearLayout>

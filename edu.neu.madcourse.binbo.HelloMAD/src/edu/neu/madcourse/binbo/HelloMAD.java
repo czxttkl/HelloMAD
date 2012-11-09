@@ -30,6 +30,8 @@ public class HelloMAD extends Activity implements OnClickListener {
 		quitButton.setOnClickListener(this);
 		View pbgameButton = this.findViewById(R.id.persistent_boggle_button);
 		pbgameButton.setOnClickListener(this);		
+		View trickiestButton = this.findViewById(R.id.trickiest_button);
+		trickiestButton.setOnClickListener(this);
 		
 		//PhoneCheckAPI.doAuthorization(this);
 	}
@@ -59,6 +61,11 @@ public class HelloMAD extends Activity implements OnClickListener {
 		case R.id.persistent_boggle_button:
 			i = new Intent(this, PBWelcome.class);
 			startActivity(i);
+			break;
+		case R.id.trickiest_button:
+			i = new Intent(this, RocketRush.class);
+			startActivity(i);
+			break;
 		// More buttons go here (if any) ...
 		}
 	}

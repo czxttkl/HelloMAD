@@ -5,6 +5,7 @@
     <string name="main_title">Bin Bo</string>
     <string name="sudoku_lable">Sudoku</string>
     <string name="boggle_label">Boggle</string>
+    <string name="trickiest_label">Trickiest Part.</string>
     <string name="error_label">Generate Error</string>
     <string name="quit_lable">Quit</string>
     <string name="about_title">Team Member</string>
@@ -71,21 +72,19 @@
 		The background music was download from a Chinese
 		web site a long time ago. The huffman code is from an old project.
 	</string>
-	
     <!-- Persistent Boggle -->
     <string name="pbwelcome_title">""</string>
     <string name="pblogin_title">""</string>
-	<string name="pbsignup_title">""</string>
-	<string name="pbmain_title">""</string>
-	<string name="pbinvite_title">""</string>
-	<string name="pbgame_title">""</string>
-	<string name="pbrank_title">""</string>
-	<string name="pbresult_title">""</string>
-	<string name="pboption_title">""</string>
-	<string name="pbacknowledge_title">""</string>
-	<string name="pbabout_title">""</string>
-	
-	<string name="pb_pb_label">"Persistent Boggle"</string>
+    <string name="pbsignup_title">""</string>
+    <string name="pbmain_title">""</string>
+    <string name="pbinvite_title">""</string>
+    <string name="pbgame_title">""</string>
+    <string name="pbrank_title">""</string>
+    <string name="pbresult_title">""</string>
+    <string name="pboption_title">""</string>
+    <string name="pbacknowledge_title">""</string>
+    <string name="pbabout_title">""</string>
+    <string name="pb_pb_label">"Persistent Boggle"</string>
     <string name="pb_welcome_label">"Welcome"</string>
     <string name="pb_login_label">"Login In"</string>
     <string name="pb_signup_label">"Sign Up"</string>
@@ -94,46 +93,37 @@
     <string name="pb_account_name_label">Account Name</string>
     <string name="pblogin_name_hint">Please enter your account name</string>
     <string name="pbsignup_name_hint">Please enter a new account name</string>
-    
     <string name="pb_new_game_label">New Game</string>
     <string name="pb_rank_label">Rank</string>
     <string name="pb_options_label">Options</string>
     <string name="pb_about_label">About</string>
     <string name="pb_exit_label">Exit</string>
-    
     <string name="pbinvite_user_list_title">Player List</string>
     <string name="pb_back_label">Back</string>
     <string name="pb_invite_label">Invite</string>
     <string name="pb_playing_status_label">(Playing)</string>
     <string name="pb_refresh_label">Refresh</string>
-    
     <string name="pb_invite_msg">
         has invited you to play this game together. 
         Would you like to accept this invitation?
     </string>
-    
     <string name="pb_invite_wait_msg">
         You invitation has been sent. 
         Please wait for the response ...
     </string>
-    
     <string name="pb_result_continue">Continue</string>
     <string name="pb_result_quit">Quit</string>
-    
     <string name="pb_ac_title">Acknowledgement</string>
-   <string name="pb_ac_text">
+    <string name="pb_ac_text">
        Thanks SUN WEI for great help in this game project!
    </string>
-   
-   <string name="pb_team_title">Team Member</string>
-   <string name="pb_team_text">
+    <string name="pb_team_title">Team Member</string>
+    <string name="pb_team_text">
        BO BIN \n
        WANG WENJING
    </string>
-   
-   <string name="sound_title">Sound</string>
-   <string name="sound_summary">Enable sound effects</string>
-   <string name="vibrate_title">Vibrate</string>
-   <string name="vibrate_summary">Enable vibration</string>
-	
+    <string name="sound_title">Sound</string>
+    <string name="sound_summary">Enable sound effects</string>
+    <string name="vibrate_title">Vibrate</string>
+    <string name="vibrate_summary">Enable vibration</string>
 </resources>
