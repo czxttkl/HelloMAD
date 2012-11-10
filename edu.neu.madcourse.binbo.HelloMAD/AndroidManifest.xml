@@ -122,7 +122,7 @@
 		</service>
 		
 		<!-- rocket_rush activities -->
-		<activity android:name=".RocketRush"
+		<activity android:name=".rocketrush.RocketRush"
 		    android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar">
 		</activity>	

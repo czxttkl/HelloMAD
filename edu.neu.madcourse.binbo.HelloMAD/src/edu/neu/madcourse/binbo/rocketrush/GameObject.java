@@ -1,4 +1,4 @@
-package edu.neu.madcourse.binbo;
+package edu.neu.madcourse.binbo.rocketrush;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,27 +35,38 @@ public class GameObject {
 	
 	public boolean getVisible() { return mVisible; }
 	
-	public String toJSONString() throws JSONException {
+	public String toJSONString() {
 		JSONObject obj = new JSONObject();  	              
 
-        obj.put("x", getX());
-        obj.put("y", getY());
-        obj.put("width", getWidth()); 
-        obj.put("height", getHeight());
-        obj.put("speed", getSpeed());
-        obj.put("visible", getVisible());
+        try {
+			obj.put("x", getX());
+			obj.put("y", getY());
+	        obj.put("width", getWidth()); 
+	        obj.put("height", getHeight());
+	        obj.put("speed", getSpeed());
+	        obj.put("visible", getVisible());
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}        
         
         return obj.toString();
 	}
     
-	public void fromJSONString(String strJSON) throws JSONException {
-		JSONObject obj = new JSONObject(strJSON);		
+	public void fromJSONString(String strJSON) {
+		JSONObject obj;
 		
-		setX(obj.getInt("x"));
-		setY(obj.getInt("y"));
-		setWidth(obj.getInt("width"));
-		setHeight(obj.getInt("height"));
-		setSpeed(obj.getInt("speed"));
-		setVisible(obj.getBoolean("visible"));	
+		try {
+			obj = new JSONObject(strJSON);
+			setX(obj.getInt("x"));
+			setY(obj.getInt("y"));
+			setWidth(obj.getInt("width"));
+			setHeight(obj.getInt("height"));
+			setSpeed(obj.getInt("speed"));
+			setVisible(obj.getBoolean("visible"));
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}							
 	}
 }

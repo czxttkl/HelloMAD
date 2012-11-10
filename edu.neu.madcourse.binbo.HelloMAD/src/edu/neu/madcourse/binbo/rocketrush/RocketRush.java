@@ -1,5 +1,7 @@
-package edu.neu.madcourse.binbo;
+package edu.neu.madcourse.binbo.rocketrush;
 
+import edu.neu.madcourse.binbo.R;
+import edu.neu.madcourse.binbo.R.*;
 import android.app.Activity;
 import android.content.Context;
 import android.hardware.Sensor;
@@ -10,14 +12,16 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.*;
 
-public class RocketRush extends Activity {
+public class RocketRush extends Activity implements OnClickListener {
 	private static final String TAG = "RocketRush";
 	
 	protected SplashView mSplashView = null;
-	protected RocketRushView mGameView = null;
+	protected GameView mGameView = null;
 	protected TextView mTimeView = null;
 	protected ImageButton mRushModeButton = null;
 	protected ImageButton mVSModeButton = null;
@@ -86,6 +90,16 @@ public class RocketRush extends Activity {
 		super.onStop();
 	}
 	
+	public void onClick(View v) {
+		// here we switch from waiting mode to other modes
+		switch (v.getId()) {
+		case R.id.rushModeButton:		
+			break;		
+		case R.id.vsModeButton:					
+			break;
+		}
+	}
+	
 	private void createSensor() {
 		// get system sensor manager to deal with sensor issues  
         mSensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
@@ -99,7 +113,7 @@ public class RocketRush extends Activity {
 	}
 
 	private void setupViews() {
-		mGameView = (RocketRushView)findViewById(R.id.rocketRushView);
+		mGameView = (GameView)findViewById(R.id.rocketRushView);
 		mTimeView = (TextView)findViewById(R.id.timerView);
 		mRushModeButton = (ImageButton)findViewById(R.id.rushModeButton);
 		mVSModeButton = (ImageButton)findViewById(R.id.vsModeButton);
@@ -139,4 +153,5 @@ public class RocketRush extends Activity {
             Log.i(TAG, "onAccuracyChanged");  
         }  
     };
+	
 }

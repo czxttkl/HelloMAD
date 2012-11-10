@@ -1,4 +1,4 @@
-package edu.neu.madcourse.binbo;
+package edu.neu.madcourse.binbo.rocketrush;
 
 import android.content.Context;
 import android.graphics.Canvas;

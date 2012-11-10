@@ -1,4 +1,4 @@
-package edu.neu.madcourse.binbo;
+package edu.neu.madcourse.binbo.rocketrush;
 
 /**
  * Base class for any external event passed to the RocketRushThread. This can

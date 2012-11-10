@@ -3,7 +3,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
-	<edu.neu.madcourse.binbo.RocketRushView
+	<edu.neu.madcourse.binbo.rocketrush.GameView
 	    android:id="@+id/rocketRushView"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent" />

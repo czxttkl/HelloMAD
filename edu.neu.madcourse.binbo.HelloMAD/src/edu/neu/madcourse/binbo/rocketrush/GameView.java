@@ -1,4 +1,4 @@
-package edu.neu.madcourse.binbo;
+package edu.neu.madcourse.binbo.rocketrush;
 
 import android.content.Context;
 import android.os.Handler;
@@ -6,13 +6,13 @@ import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-public class RocketRushView extends SurfaceView implements SurfaceHolder.Callback {
+public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
 	protected SurfaceHolder mHolder = null;
 	protected Handler mHandler = null;
 	
 	// constructor must have attrs to create from xml
-	public RocketRushView(Context context, AttributeSet attrs) {
+	public GameView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		
 		mHolder = getHolder();
