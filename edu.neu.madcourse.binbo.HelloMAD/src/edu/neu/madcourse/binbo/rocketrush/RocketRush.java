@@ -74,6 +74,7 @@ public class RocketRush extends Activity implements OnClickListener {
 		mCurMode = mModes.get(modeTo);
 		// set the scene of the new mode to game drawer
 		mGameView.getDrawer().setGameScene(mCurMode.getScene());
+		// finally start the new game mode
 		mCurMode.start();
 	}
 
