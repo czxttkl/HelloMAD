@@ -17,7 +17,8 @@ public class Background extends GameObject {
 
 	@Override
 	public int doDraw(Canvas c) {
-		// TODO Auto-generated method stub
+		c.drawBitmap(mImage, 0, 0, null);
+		
 		return super.doDraw(c);
 	}
 }

@@ -51,8 +51,8 @@ public class WaitingScene extends GameScene {
 	
 	@Override
 	public int doDraw(Canvas c) {
-		c.drawBitmap(mBkFarImage, 0, 0, null);
-		c.drawBitmap(mBkNearImage, 0, 0, null);
+		mBackgroundFar.doDraw(c);
+		mBackgroundNear.doDraw(c);
 		
 		return super.doDraw(c);
 	}
@@ -61,9 +61,14 @@ public class WaitingScene extends GameScene {
 	protected void updateSceneSize(int width, int height) {
 		// TODO Auto-generated method stub
 		super.updateSceneSize(width, height);
-		
-		mBkFarImage  = Bitmap.createScaledBitmap(mBkFarImage,  mWidth, mHeight << 1, true);
-		mBkNearImage = Bitmap.createScaledBitmap(mBkNearImage, mWidth, mHeight << 1, true);
+		// scale the background according to the surface size
+		float radio = mBkFarImage.getHeight() / (float)mBkFarImage.getWidth();
+		mBkFarImage  = Bitmap.createScaledBitmap(mBkFarImage,  mWidth, (int)(mWidth * radio), true);
+		radio = mBkNearImage.getHeight() / (float)mBkNearImage.getWidth();
+		mBkNearImage = Bitmap.createScaledBitmap(mBkNearImage, mWidth, (int)(mWidth * radio), true);
+		// need to update to the new scaled image because it's a different reference
+		mBackgroundFar.setImage(mBkFarImage);
+		mBackgroundNear.setImage(mBkNearImage);
 	}
 
 }
