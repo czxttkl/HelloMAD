@@ -7,7 +7,6 @@ import edu.neu.madcourse.binbo.R;
 import edu.neu.madcourse.binbo.R.*;
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Point;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;

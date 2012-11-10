@@ -46,8 +46,8 @@ public class RushMode extends BaseMode {
 			while (mRun) {
 				handleEvent(mEventQueue.poll());			
 				
-				// update the game context with the engine
-				// ...
+				// update the game scene with the engine
+				mEngine.updateGameScene(mScene);
 				
 				try {
 					sleep(30); // draw 33 times per second, it's more than enough

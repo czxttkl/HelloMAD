@@ -35,4 +35,7 @@ public class GameEngine {
     	mInitialized = true;
     }
 
+    public void updateGameScene(GameScene scene) {
+    	// do the real job here
+    }
 }
