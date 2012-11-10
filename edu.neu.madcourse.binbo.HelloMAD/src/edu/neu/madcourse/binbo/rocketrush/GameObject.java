@@ -1,5 +1,7 @@
 package edu.neu.madcourse.binbo.rocketrush;
 
+import java.util.Vector;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -10,8 +12,12 @@ public class GameObject implements IDrawer {
 	protected int mY = 0;
 	protected int mWidth = 0;
 	protected int mHeight = 0;
-	protected int mSpeed = 0;
-	protected boolean mVisible = true;	
+	protected int mSpeedX = 0;
+	protected int mSpeedY = 0;
+	protected boolean mVisible = true;
+	
+	protected GameObject() {		
+	}
 	
 	public void setX(int x) { mX = x; }
 	
@@ -29,9 +35,15 @@ public class GameObject implements IDrawer {
 	
 	public int getHeight() { return mHeight; }
 	
-	public void setSpeed(int speed) { mSpeed = speed; }
+	public void setSpeed(int x, int y) { setSpeedX(x); setSpeedY(y); }
 	
-	public int getSpeed() { return mSpeed; }
+	public void setSpeedX(int x) { mSpeedX = x; }
+	
+	public void setSpeedY(int y) { mSpeedY = y; }
+	
+	public int getSpeedX() { return mSpeedX; }
+	
+	public int getSpeedY() { return mSpeedY; }
 	
 	public void setVisible(boolean visible) { mVisible = visible; }
 	
@@ -45,7 +57,8 @@ public class GameObject implements IDrawer {
 			obj.put("y", getY());
 	        obj.put("width", getWidth()); 
 	        obj.put("height", getHeight());
-	        obj.put("speed", getSpeed());
+	        obj.put("speed_x", getSpeedX());
+	        obj.put("spped_y", getSpeedY());
 	        obj.put("visible", getVisible());
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -64,7 +77,7 @@ public class GameObject implements IDrawer {
 			setY(obj.getInt("y"));
 			setWidth(obj.getInt("width"));
 			setHeight(obj.getInt("height"));
-			setSpeed(obj.getInt("speed"));
+			setSpeed(obj.getInt("speed_x"), obj.getInt("speed_y"));
 			setVisible(obj.getBoolean("visible"));
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block

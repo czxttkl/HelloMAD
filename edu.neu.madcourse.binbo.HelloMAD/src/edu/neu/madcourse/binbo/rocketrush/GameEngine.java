@@ -1,5 +1,7 @@
 package edu.neu.madcourse.binbo.rocketrush;
 
+import java.util.Random;
+
 
 public class GameEngine {
 	// singleton game engine 
@@ -14,7 +16,9 @@ public class GameEngine {
     public static final int STATE_LOSE    = 5;
     // flag to specify whether the initialization is done
     protected boolean mInitialized = false;
-    
+    // generate game elements according to the scene configuration
+    private Random mRandom = new Random();
+
     protected GameEngine() {}
     
     public static GameEngine getInstance() {

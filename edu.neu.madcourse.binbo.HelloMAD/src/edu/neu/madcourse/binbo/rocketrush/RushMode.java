@@ -1,16 +1,17 @@
 package edu.neu.madcourse.binbo.rocketrush;
 
+import android.content.Context;
 import android.os.Handler;
 
-public class RushMode extends BaseMode {
+public class RushMode extends BaseMode implements BaseMode.Callback {
 	
 	protected RushScene mScene = null; 
 	protected RushModeThread mThread = null;
 	
-	public RushMode(GameEngine engine, Handler handler) {
+	public RushMode(Context context, GameEngine engine, Handler handler) {
 		setEngine(engine);
 		setHandler(handler);
-		mScene = new RushScene();
+		mScene = new RushScene(context.getResources());
 	}
 	
 	@Override
@@ -56,6 +57,10 @@ public class RushMode extends BaseMode {
 				}
 			}
 		} // end of run
+	}
+
+	public void onSurfaceChanged(int width, int height) {
+		mScene.updateSceneSize(width, height);
 	}
 		
 }

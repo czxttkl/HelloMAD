@@ -3,12 +3,11 @@ package edu.neu.madcourse.binbo.rocketrush.gameobjects;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import edu.neu.madcourse.binbo.rocketrush.GameObject;
-import edu.neu.madcourse.binbo.rocketrush.IDrawer;
 
-public class SpeedBar extends GameObject implements IDrawer {
+public class Background extends GameObject {
 	private Bitmap mImage = null;
 
-	public SpeedBar(Bitmap image) {
+	public Background(Bitmap image) {
 		setImage(image);
 	}
 	

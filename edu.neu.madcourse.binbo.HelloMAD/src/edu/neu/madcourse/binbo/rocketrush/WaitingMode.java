@@ -1,16 +1,17 @@
 package edu.neu.madcourse.binbo.rocketrush;
 
+import android.content.Context;
 import android.os.Handler;
 
-public class WaitingMode extends BaseMode {
+public class WaitingMode extends BaseMode implements BaseMode.Callback {
 
 	protected WaitingScene mScene = null; 
 	protected WaitingModeThread mThread = null;
 	
-	public WaitingMode(GameEngine engine, Handler handler) {
+	public WaitingMode(Context context, GameEngine engine, Handler handler) {
 		setEngine(engine);
 		setHandler(handler);
-		mScene = new WaitingScene();
+		mScene = new WaitingScene(context.getResources());
 	}
 	
 	@Override
@@ -57,5 +58,9 @@ public class WaitingMode extends BaseMode {
 			}
 		} // end of run
 	}
-		
+
+	public void onSurfaceChanged(int width, int height) {
+		mScene.updateSceneSize(width, height);
+	}
+
 }

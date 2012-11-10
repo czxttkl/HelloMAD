@@ -1,16 +1,17 @@
 package edu.neu.madcourse.binbo.rocketrush;
 
+import android.content.Context;
 import android.os.Handler;
 
-public class VersusMode extends BaseMode {
+public class VersusMode extends BaseMode implements BaseMode.Callback {
 	
 	protected VersusScene mScene = null; 
 	protected VersusModeThread mThread = null;
 	
-	public VersusMode(GameEngine engine, Handler handler) {
+	public VersusMode(Context context, GameEngine engine, Handler handler) {
 		setEngine(engine);
-		setHandler(handler);
-		mScene = new VersusScene();
+		setHandler(handler);		
+		mScene = new VersusScene(context.getResources());
 	}
 	
 	@Override
@@ -56,6 +57,10 @@ public class VersusMode extends BaseMode {
 				}
 			}
 		} // end of run
+	}
+
+	public void onSurfaceChanged(int width, int height) {
+		mScene.updateSceneSize(width, height);
 	}
 		
 }

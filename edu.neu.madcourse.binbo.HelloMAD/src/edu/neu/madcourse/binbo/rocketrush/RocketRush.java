@@ -5,6 +5,7 @@ import java.util.List;
 
 import edu.neu.madcourse.binbo.R;
 import edu.neu.madcourse.binbo.R.*;
+import edu.neu.madcourse.binbo.rocketrush.BaseMode.Callback;
 import android.app.Activity;
 import android.content.Context;
 import android.hardware.Sensor;
@@ -56,11 +57,13 @@ public class RocketRush extends Activity implements OnClickListener {
 	private void createGame() {
 		GameEngine engine = GameEngine.getInstance();
 		engine.initialize();
-		// only three modes now
-		mModes.add(new WaitingMode(engine, mHandler));
-		mModes.add(new RushMode(engine, mHandler));
-		mModes.add(new VersusMode(engine, mHandler));
+		// only three modes now		
+		mModes.add(new WaitingMode(this, engine, mHandler));
+		mModes.add(new RushMode(this, engine, mHandler));
+		mModes.add(new VersusMode(this, engine, mHandler));
 		mCurMode = mModes.get(MODE_WAITING);
+		// set the callback of the current game mode to game view
+		mGameView.setModeCallback((BaseMode.Callback) mCurMode);
 	}
 	
 	private void switchGameMode(int modeTo) {
@@ -71,8 +74,10 @@ public class RocketRush extends Activity implements OnClickListener {
 		mCurMode.stop();	
 		// get the new game mode
 		mCurMode = mModes.get(modeTo);
+		// set the callback of the current game mode to game view
+		mGameView.setModeCallback((Callback) mCurMode);
 		// set the scene of the new mode to game drawer
-		mGameView.getDrawer().setGameScene(mCurMode.getScene());
+		mGameView.getDrawer().setGameScene(mCurMode.getScene());		
 		// finally start the new game mode
 		mCurMode.start();
 	}

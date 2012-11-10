@@ -6,7 +6,7 @@ public class BaseMode {
 	// engine of the game
 	protected GameEngine mEngine = null;
 	// message handler
-	protected Handler mHandler = null;
+	protected Handler mHandler = null;	
 	
 	protected BaseMode() {
 		
@@ -36,4 +36,7 @@ public class BaseMode {
 		return mEngine;
 	}
 	
+	public interface Callback {
+		void onSurfaceChanged(int width, int height);
+	}
 }
