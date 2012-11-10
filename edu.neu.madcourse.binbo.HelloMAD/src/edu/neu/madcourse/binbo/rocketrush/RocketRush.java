@@ -25,8 +25,9 @@ public class RocketRush extends Activity implements OnClickListener {
 	protected TextView mTimeView = null;
 	protected ImageButton mRushModeButton = null;
 	protected ImageButton mVSModeButton = null;
-	
 	protected SensorManager mSensorManager = null;
+	// all of the game modes
+	protected BaseMode[] mModes = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,22 @@ public class RocketRush extends Activity implements OnClickListener {
 
 		// create accelerometer
 		createSensor();
+		
+		// create game modes
+		createGameModes();
 	}	
+
+	public static final int MODE_WAITING = 0;
+	public static final int MODE_RUSH    = 1;
+	public static final int MODE_VERSUS  = 2;
+	private void createGameModes() {
+		GameEngine engine = GameEngine.getInstance();
+		engine.initialize();
+		// only three modes now
+		mModes[0] = new WaitingMode(engine, mHandler);
+		mModes[1] = new RushMode(engine, mHandler);
+		mModes[2] = new VersusMode(engine, mHandler);
+	}
 
 	@Override
 	protected void onDestroy() {
