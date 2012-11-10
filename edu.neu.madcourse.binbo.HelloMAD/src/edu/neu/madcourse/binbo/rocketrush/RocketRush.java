@@ -1,9 +1,13 @@
 package edu.neu.madcourse.binbo.rocketrush;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.neu.madcourse.binbo.R;
 import edu.neu.madcourse.binbo.R.*;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Point;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -27,7 +31,8 @@ public class RocketRush extends Activity implements OnClickListener {
 	protected ImageButton mVSModeButton = null;
 	protected SensorManager mSensorManager = null;
 	// all of the game modes
-	protected BaseMode[] mModes = null;
+	protected BaseMode mCurMode = null;
+	protected List<BaseMode> mModes = new ArrayList<BaseMode>();	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,30 +41,40 @@ public class RocketRush extends Activity implements OnClickListener {
 		setContentView(R.layout.rocket_rush);					
 	    
 		//loadPreferences(command);
-		
 		// get views and set listeners
 		setupViews();
-		
 		// adjust layouts according to the screen resolution
 		adjustLayout();
-
 		// create accelerometer
 		createSensor();
-		
-		// create game modes
-		createGameModes();
+		// create game, including game engine and all the modes and scenes
+		createGame();
 	}	
 
 	public static final int MODE_WAITING = 0;
 	public static final int MODE_RUSH    = 1;
 	public static final int MODE_VERSUS  = 2;
-	private void createGameModes() {
+	private void createGame() {
 		GameEngine engine = GameEngine.getInstance();
 		engine.initialize();
 		// only three modes now
-		mModes[0] = new WaitingMode(engine, mHandler);
-		mModes[1] = new RushMode(engine, mHandler);
-		mModes[2] = new VersusMode(engine, mHandler);
+		mModes.add(new WaitingMode(engine, mHandler));
+		mModes.add(new RushMode(engine, mHandler));
+		mModes.add(new VersusMode(engine, mHandler));
+		mCurMode = mModes.get(MODE_WAITING);
+	}
+	
+	private void switchGameMode(int modeTo) {
+		if (mCurMode == mModes.get(modeTo)) {
+			return;
+		}
+		// first stop to update the scene using game engine
+		mCurMode.stop();	
+		// get the new game mode
+		mCurMode = mModes.get(modeTo);
+		// set the scene of the new mode to game drawer
+		mGameView.getDrawer().setGameScene(mCurMode.getScene());
+		mCurMode.start();
 	}
 
 	@Override
@@ -70,7 +85,9 @@ public class RocketRush extends Activity implements OnClickListener {
 
 	@Override
 	protected void onPause() {
+		// the sequence here is important
 		mGameView.onPause();
+		mCurMode.stop();
  
         if (mSensorManager != null) {
         	mSensorManager.unregisterListener(mAccListener);                
@@ -91,7 +108,8 @@ public class RocketRush extends Activity implements OnClickListener {
         	);                 	
         }        
 		
-		mGameView.onResume();
+        mCurMode.start();
+		mGameView.onResume(mCurMode.getScene());
 	}
 
 	@Override
@@ -109,9 +127,11 @@ public class RocketRush extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		// here we switch from waiting mode to other modes
 		switch (v.getId()) {
-		case R.id.rushModeButton:		
+		case R.id.rushModeButton:	
+			switchGameMode(MODE_RUSH);
 			break;		
-		case R.id.vsModeButton:					
+		case R.id.vsModeButton:			
+			switchGameMode(MODE_VERSUS);
 			break;
 		}
 	}
@@ -134,6 +154,8 @@ public class RocketRush extends Activity implements OnClickListener {
 		mRushModeButton = (ImageButton)findViewById(R.id.rushModeButton);
 		mVSModeButton = (ImageButton)findViewById(R.id.vsModeButton);
 		
+		mRushModeButton.setOnClickListener(this);
+		mVSModeButton.setOnClickListener(this);
 		mGameView.setHandler(mHandler);
 	}
 	
@@ -151,17 +173,19 @@ public class RocketRush extends Activity implements OnClickListener {
     
     // SensorEventListener implement  
     final SensorEventListener mAccListener = new SensorEventListener() {  
-           
+        int count = 0;
         public void onSensorChanged(SensorEvent sensorEvent){  
             if(sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER){  
                 Log.i(TAG, "onSensorChanged");  
- 
+                               
                 float x = sensorEvent.values[0];  
                 float y = sensorEvent.values[1];  
                 float z = sensorEvent.values[2];                
                 Log.i(TAG,"\n heading " + x);  
                 Log.i(TAG,"\n pitch " + y);  
-                Log.i(TAG,"\n roll " + z);             
+                Log.i(TAG,"\n roll " + z); 
+                Log.i(TAG,"\n count " + count);
+                count++;
             }  
         }  
  

@@ -10,11 +10,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
 	protected SurfaceHolder mHolder = null;
 	protected Handler mHandler = null;
+	protected GameDrawer mDrawer = null;
 	
 	// constructor must have attrs to create from xml
 	public GameView(Context context, AttributeSet attrs) {
-		super(context, attrs);
-		
+		super(context, attrs);	
 		mHolder = getHolder();
 	}
 
@@ -24,25 +24,28 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 		
 	}
 
-	public void surfaceCreated(SurfaceHolder holder) {
-		// TODO Auto-generated method stub
+	public void surfaceCreated(SurfaceHolder holder) {		
 		
 	}
 
 	public void surfaceDestroyed(SurfaceHolder holder) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub		
 	}
 
 	public void onPause() {
-		
+		mDrawer.end();
 	}
 	
-	public void onResume() {
-		
+	public void onResume(GameScene scene) {
+		mDrawer = new GameDrawer(scene, mHolder, mHandler);
+		mDrawer.start();		
 	}
 	
 	public void setHandler(Handler handler) {
 		mHandler = handler;
+	}
+	
+	public GameDrawer getDrawer() {
+		return mDrawer;
 	}
 }

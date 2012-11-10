@@ -3,7 +3,9 @@ package edu.neu.madcourse.binbo.rocketrush;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class GameObject {
+import android.graphics.Canvas;
+
+public class GameObject implements IDrawer {
 	protected int mX = 0;
 	protected int mY = 0;
 	protected int mWidth = 0;
@@ -68,5 +70,10 @@ public class GameObject {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}							
+	}
+
+	public int doDraw(Canvas c) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

@@ -1,8 +1,9 @@
 package edu.neu.madcourse.binbo.rocketrush;
 
+
 public class GameEngine {
 	// singleton game engine 
-    protected static GameEngine sEngine = null;  
+    protected static GameEngine sEngine = null;
 	// game states, only one state is available at the exactly time
 	protected int mState = STATE_STOP;
 	public static final int STATE_STOP    = 0;
@@ -11,12 +12,10 @@ public class GameEngine {
     public static final int STATE_PAUSE   = 3;
     public static final int STATE_WIN     = 4;
     public static final int STATE_LOSE    = 5;
-    
+    // flag to specify whether the initialization is done
     protected boolean mInitialized = false;
     
-    protected GameEngine() {
-    	
-    } 
+    protected GameEngine() {}
     
     public static GameEngine getInstance() {
     	if (sEngine == null) {
@@ -35,4 +34,5 @@ public class GameEngine {
     	// update the flag to avoid re-initialize
     	mInitialized = true;
     }
+
 }

@@ -7,14 +7,22 @@ import android.view.SurfaceHolder;
 public class GameDrawer extends BaseThread {
 	// the holder of the SurfaceView
 	protected SurfaceHolder mHolder = null;
-	// implementation of IDrawer
-	protected IDrawer mDrawer = null;	
+	// the game scene to draw
+	protected GameScene mScene = null;	
 	
-	public GameDrawer(IDrawer drawer, SurfaceHolder holder, Handler handler) {
-		mDrawer = drawer;
+	public GameDrawer(GameScene scene, SurfaceHolder holder, Handler handler) {
+		mScene  = scene;
 		mHolder = holder;
 		setHandler(handler);				
-	}		
+	}	
+	
+	public synchronized void setGameScene(GameScene scene) {
+		mScene = scene;
+	}
+	
+	public synchronized GameScene getGameScene() {
+		return mScene;
+	}
 	
 	@Override
 	public void run() {			
@@ -25,8 +33,10 @@ public class GameDrawer extends BaseThread {
 			
 			try {
                 c = mHolder.lockCanvas(null);
-                mDrawer.doDraw(c);
-            } finally {
+                getGameScene().doDraw(c);
+            } catch (Exception e) {
+            	e.printStackTrace();
+			} finally {
                 // do this in a finally so that if an exception is thrown
                 // during the above, we don't leave the Surface in an
                 // inconsistent state
@@ -42,4 +52,5 @@ public class GameDrawer extends BaseThread {
 			}
 		}
 	} // end of run
+	
 }

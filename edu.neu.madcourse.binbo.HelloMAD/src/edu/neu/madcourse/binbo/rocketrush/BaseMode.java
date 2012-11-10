@@ -1,18 +1,39 @@
 package edu.neu.madcourse.binbo.rocketrush;
 
-public class BaseMode extends BaseThread {
+import android.os.Handler;
+
+public class BaseMode {
 	// engine of the game
 	protected GameEngine mEngine = null;
+	// message handler
+	protected Handler mHandler = null;
 	
 	protected BaseMode() {
 		
+	}
+	
+	public void start() {
+		
+	}
+	
+	public void stop() {
+		
+	}
+	
+	public GameScene getScene() {
+		return null;
 	}
 	
 	protected void setEngine(GameEngine engine) {
 		mEngine = engine;
 	}
 	
+	protected void setHandler(Handler handler) {
+		mHandler = handler;
+	}
+	
 	protected GameEngine getEngine() {
 		return mEngine;
 	}
+	
 }

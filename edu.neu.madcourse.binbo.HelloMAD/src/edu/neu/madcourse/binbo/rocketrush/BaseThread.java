@@ -14,6 +14,11 @@ public class BaseThread extends Thread {
 		mEventQueue = new ConcurrentLinkedQueue<GameEvent>();
 	}
 	
+	protected BaseThread(Handler handler) {
+		mEventQueue = new ConcurrentLinkedQueue<GameEvent>();
+		setHandler(handler);
+	}
+	
 	public void setHandler(Handler handler) {
 		mHandler = handler;
 	}

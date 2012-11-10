@@ -9,8 +9,10 @@ public class SpeedBar extends GameObject implements IDrawer {
 		
 	}
 
+	@Override
 	public int doDraw(Canvas c) {
 		// TODO Auto-generated method stub
-		return 0;
+		return super.doDraw(c);
 	}
+	
 }
