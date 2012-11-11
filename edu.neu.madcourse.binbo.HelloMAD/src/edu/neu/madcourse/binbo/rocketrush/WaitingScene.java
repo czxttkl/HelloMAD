@@ -25,7 +25,7 @@ public class WaitingScene extends GameScene {
 	}	
 
 	public void loadResources(Resources resources) {
-		// load iamges of all backgrounds
+		// load images of all backgrounds
 		mBkFarImage  = BitmapFactory.decodeResource(resources, R.drawable.background_a);
 		mBkNearImage = BitmapFactory.decodeResource(resources, R.drawable.background_b);
 		// load images of all asteroids 
