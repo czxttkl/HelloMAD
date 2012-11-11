@@ -47,7 +47,7 @@ public class WaitingScene extends GameScene {
 		mBackgroundFar  = new Background(mBkFarImage);
 		mBackgroundNear = new Background(mBkNearImage);
 		mBackgroundFar.setSpeed(0, 1);
-		mBackgroundNear.setSpeed(0, 3);
+		mBackgroundNear.setSpeed(0, 2);
 		mObjects.add(mBackgroundFar);
 		mObjects.add(mBackgroundNear);
 	}	
