@@ -20,6 +20,10 @@ public class BaseMode {
 		
 	}
 	
+	public void release() {
+		
+	}
+	
 	public GameScene getScene() {
 		return null;
 	}

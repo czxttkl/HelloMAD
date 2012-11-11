@@ -45,8 +45,8 @@ public class GameDrawer extends BaseThread {
                 }
             } // end finally block
 			
-			try {
-				sleep(30); // draw 33 times per second, it's more than enough
+			try {				
+				sleep(25); // 40fps
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

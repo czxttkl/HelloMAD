@@ -63,4 +63,10 @@ public class WaitingMode extends BaseMode implements BaseMode.Callback {
 		mScene.updateSceneSize(width, height);
 	}
 
+	@Override
+	public void release() {
+		mScene.releaseResources();
+		super.release();
+	}
+
 }

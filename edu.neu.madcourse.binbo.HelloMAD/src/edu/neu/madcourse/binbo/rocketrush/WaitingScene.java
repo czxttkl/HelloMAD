@@ -42,6 +42,14 @@ public class WaitingScene extends GameScene {
 		mAsterImages.add(BitmapFactory.decodeResource(resources, R.drawable.asteroid11));
 		mAsterImages.add(BitmapFactory.decodeResource(resources, R.drawable.asteroid12));				
 	}
+	
+	public void releaseResources() {
+		mBkFarImage.recycle();
+		mBkNearImage.recycle();
+		for (int i = 0; i < mAsterImages.size(); ++i) {
+			mAsterImages.get(i).recycle();
+		}
+	}
 
 	private void createGameObjects() {
 		mBackgroundFar  = new Background(mBkFarImage);

@@ -84,7 +84,9 @@ public class RocketRush extends Activity implements OnClickListener {
 
 	@Override
 	protected void onDestroy() {
-		// TODO Auto-generated method stub
+		mModes.get(0).release();
+		mModes.get(1).release();
+		mModes.get(2).release();
 		super.onDestroy();
 	}
 
