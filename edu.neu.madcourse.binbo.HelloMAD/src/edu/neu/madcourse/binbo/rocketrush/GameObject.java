@@ -84,6 +84,8 @@ public class GameObject implements IDrawer {
 			e.printStackTrace();
 		}							
 	}
+	
+	public void update() {}
 
 	public int doDraw(Canvas c) {
 		// TODO Auto-generated method stub

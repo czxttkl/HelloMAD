@@ -51,7 +51,7 @@ public class WaitingMode extends BaseMode implements BaseMode.Callback {
 				mEngine.updateGameScene(mScene);
 				
 				try {
-					sleep(30); // draw 33 times per second, it's more than enough
+					sleep(GameEngine.ENGINE_SPEED);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}

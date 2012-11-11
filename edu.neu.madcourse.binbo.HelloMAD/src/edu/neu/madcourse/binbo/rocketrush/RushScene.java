@@ -2,9 +2,13 @@ package edu.neu.madcourse.binbo.rocketrush;
 
 import java.util.Vector;
 
+import edu.neu.madcourse.binbo.R;
 import edu.neu.madcourse.binbo.rocketrush.gameobjects.Asteroid;
 import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
 
 public class RushScene extends GameScene {
 
@@ -16,8 +20,8 @@ public class RushScene extends GameScene {
 	}
 	
 	@Override
-	public int doDraw(Canvas c) {
-		// TODO Auto-generated method stub
+	public int doDraw(Canvas c) {		
+		c.drawColor(Color.LTGRAY);
 		return super.doDraw(c);
 	}
 

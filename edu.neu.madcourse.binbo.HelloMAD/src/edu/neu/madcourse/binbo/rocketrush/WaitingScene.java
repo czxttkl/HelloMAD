@@ -16,8 +16,7 @@ public class WaitingScene extends GameScene {
 	private Bitmap mBkNearImage = null;
 	private Background mBackgroundFar;
 	private Background mBackgroundNear;
-	private List<Bitmap> mAsteroidImages = new ArrayList<Bitmap>();
-	private Vector<Asteroid> mAsteroids = null;
+	private List<Bitmap> mAsterImages = new ArrayList<Bitmap>();	
 	
 	public WaitingScene(Resources resources) {
 		mResources = resources;
@@ -30,29 +29,34 @@ public class WaitingScene extends GameScene {
 		mBkFarImage  = BitmapFactory.decodeResource(resources, R.drawable.background_a);
 		mBkNearImage = BitmapFactory.decodeResource(resources, R.drawable.background_b);
 		// load images of all asteroids 
-		mAsteroidImages.add(BitmapFactory.decodeResource(resources, R.drawable.asteroid01));
-		mAsteroidImages.add(BitmapFactory.decodeResource(resources, R.drawable.asteroid02));
-		mAsteroidImages.add(BitmapFactory.decodeResource(resources, R.drawable.asteroid03));
-		mAsteroidImages.add(BitmapFactory.decodeResource(resources, R.drawable.asteroid04));
-		mAsteroidImages.add(BitmapFactory.decodeResource(resources, R.drawable.asteroid05));
-		mAsteroidImages.add(BitmapFactory.decodeResource(resources, R.drawable.asteroid06));
-		mAsteroidImages.add(BitmapFactory.decodeResource(resources, R.drawable.asteroid07));
-		mAsteroidImages.add(BitmapFactory.decodeResource(resources, R.drawable.asteroid08));
-		mAsteroidImages.add(BitmapFactory.decodeResource(resources, R.drawable.asteroid09));
-		mAsteroidImages.add(BitmapFactory.decodeResource(resources, R.drawable.asteroid10));
-		mAsteroidImages.add(BitmapFactory.decodeResource(resources, R.drawable.asteroid11));
-		mAsteroidImages.add(BitmapFactory.decodeResource(resources, R.drawable.asteroid12));				
+		mAsterImages.add(BitmapFactory.decodeResource(resources, R.drawable.asteroid01));
+		mAsterImages.add(BitmapFactory.decodeResource(resources, R.drawable.asteroid02));
+		mAsterImages.add(BitmapFactory.decodeResource(resources, R.drawable.asteroid03));
+		mAsterImages.add(BitmapFactory.decodeResource(resources, R.drawable.asteroid04));
+		mAsterImages.add(BitmapFactory.decodeResource(resources, R.drawable.asteroid05));
+		mAsterImages.add(BitmapFactory.decodeResource(resources, R.drawable.asteroid06));
+		mAsterImages.add(BitmapFactory.decodeResource(resources, R.drawable.asteroid07));
+		mAsterImages.add(BitmapFactory.decodeResource(resources, R.drawable.asteroid08));
+		mAsterImages.add(BitmapFactory.decodeResource(resources, R.drawable.asteroid09));
+		mAsterImages.add(BitmapFactory.decodeResource(resources, R.drawable.asteroid10));
+		mAsterImages.add(BitmapFactory.decodeResource(resources, R.drawable.asteroid11));
+		mAsterImages.add(BitmapFactory.decodeResource(resources, R.drawable.asteroid12));				
 	}
 
 	private void createGameObjects() {
 		mBackgroundFar  = new Background(mBkFarImage);
 		mBackgroundNear = new Background(mBkNearImage);
+//		mBackgroundFar.setSpeed(0, 1);
+//		mBackgroundNear.setSpeed(0, 3);
+		mObjects.add(mBackgroundFar);
+		mObjects.add(mBackgroundNear);
 	}	
 	
 	@Override
 	public int doDraw(Canvas c) {
-		mBackgroundFar.doDraw(c);
-		mBackgroundNear.doDraw(c);
+		for (int i = 0; i < mObjects.size(); ++i) {
+			mObjects.get(i).doDraw(c);
+		}
 		
 		return super.doDraw(c);
 	}

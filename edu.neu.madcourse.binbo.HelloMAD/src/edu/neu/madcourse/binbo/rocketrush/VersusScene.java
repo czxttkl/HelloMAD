@@ -5,6 +5,9 @@ import java.util.Vector;
 import edu.neu.madcourse.binbo.rocketrush.gameobjects.Asteroid;
 import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
 
 public class VersusScene extends GameScene {
 
@@ -16,8 +19,8 @@ public class VersusScene extends GameScene {
 	}
 	
 	@Override
-	public int doDraw(Canvas c) {
-		// TODO Auto-generated method stub
+	public int doDraw(Canvas c) {		
+		c.drawColor(Color.GRAY);		
 		return super.doDraw(c);
 	}
 

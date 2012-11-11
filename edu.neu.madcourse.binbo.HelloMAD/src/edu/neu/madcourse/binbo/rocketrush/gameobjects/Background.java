@@ -17,8 +17,14 @@ public class Background extends GameObject {
 
 	@Override
 	public int doDraw(Canvas c) {
-		c.drawBitmap(mImage, 0, 0, null);
+		c.drawBitmap(mImage, mX, mY, null);
 		
 		return super.doDraw(c);
+	}
+
+	@Override
+	public void update() {
+		mX += mSpeedX;
+		mY += mSpeedY;
 	}
 }
