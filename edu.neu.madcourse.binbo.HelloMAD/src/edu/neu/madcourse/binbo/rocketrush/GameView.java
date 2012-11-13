@@ -1,7 +1,6 @@
 package edu.neu.madcourse.binbo.rocketrush;
 
 import android.content.Context;
-import android.graphics.Rect;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
@@ -12,9 +11,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 	protected SurfaceHolder mHolder = null;
 	protected Handler mHandler = null;
 	protected GameDrawer mDrawer = null;
-	protected BaseMode.Callback mModeCallback = null;
 	
-	// constructor must have attrs to create from xml
+	// constructor must have AttributeSet to create from XML
 	public GameView(Context context, AttributeSet attrs) {
 		super(context, attrs);	
 		mHolder = getHolder();
@@ -34,17 +32,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 		mHandler = handler;
 	}
 	
-	public void setModeCallback(BaseMode.Callback callback) {
-		mModeCallback = callback;
-	}
-	
 	public GameDrawer getDrawer() {
 		return mDrawer;
 	}
 
 	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-		// TODO Auto-generated method stub
-		mModeCallback.onSurfaceChanged(width, height);
+		GameScene scene = mDrawer.getGameScene();
+		if (scene != null) {
+			scene.onSizeChanged(width, height);
+		}
 	}
 
 	public void surfaceCreated(SurfaceHolder holder) {		

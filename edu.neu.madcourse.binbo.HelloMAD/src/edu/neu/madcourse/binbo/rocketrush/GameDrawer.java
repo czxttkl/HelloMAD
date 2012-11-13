@@ -18,6 +18,12 @@ public class GameDrawer extends BaseThread {
 	
 	public synchronized void setGameScene(GameScene scene) {
 		mScene = scene;
+		// notify the surface size to the scene
+		if (mScene != null) {
+			int width  = mHolder.getSurfaceFrame().width();
+			int height = mHolder.getSurfaceFrame().height();
+			mScene.onSizeChanged(width, height);
+		}
 	}
 	
 	public synchronized GameScene getGameScene() {
@@ -44,13 +50,11 @@ public class GameDrawer extends BaseThread {
                 	mHolder.unlockCanvasAndPost(c);
                 }
             } // end finally block
-			
-			try {				
-				sleep(25); // 40fps
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+
+			// no sleep, draw as fast as possible
 		}
+		
+		super.run();
 	} // end of run
 	
 }

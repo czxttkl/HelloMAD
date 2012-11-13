@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.neu.madcourse.binbo.R;
-import edu.neu.madcourse.binbo.R.*;
-import edu.neu.madcourse.binbo.rocketrush.BaseMode.Callback;
 import android.app.Activity;
 import android.content.Context;
 import android.hardware.Sensor;
@@ -16,6 +14,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
@@ -31,8 +30,8 @@ public class RocketRush extends Activity implements OnClickListener {
 	protected ImageButton mVSModeButton = null;
 	protected SensorManager mSensorManager = null;
 	// all of the game modes
-	protected BaseMode mCurMode = null;
-	protected List<BaseMode> mModes = new ArrayList<BaseMode>();	
+	protected GameMode mCurMode = null;
+	protected List<GameMode> mModes = new ArrayList<GameMode>();	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +53,7 @@ public class RocketRush extends Activity implements OnClickListener {
 	public static final int MODE_WAITING = 0;
 	public static final int MODE_RUSH    = 1;
 	public static final int MODE_VERSUS  = 2;
+	
 	private void createGame() {
 		GameEngine engine = GameEngine.getInstance();
 		engine.initialize();
@@ -62,24 +62,24 @@ public class RocketRush extends Activity implements OnClickListener {
 		mModes.add(new RushMode(this, engine, mHandler));
 		mModes.add(new VersusMode(this, engine, mHandler));
 		mCurMode = mModes.get(MODE_WAITING);
-		// set the callback of the current game mode to game view
-		mGameView.setModeCallback((BaseMode.Callback) mCurMode);
 	}
 	
 	private void switchGameMode(int modeTo) {
 		if (mCurMode == mModes.get(modeTo)) {
 			return;
-		}
+		}		
 		// first stop to update the scene using game engine
 		mCurMode.stop();	
 		// get the new game mode
 		mCurMode = mModes.get(modeTo);
-		// set the callback of the current game mode to game view
-		mGameView.setModeCallback((Callback) mCurMode);
 		// set the scene of the new mode to game drawer
 		mGameView.getDrawer().setGameScene(mCurMode.getScene());		
 		// finally start the new game mode
 		mCurMode.start();
+		
+		// ...
+		mRushModeButton.setVisibility(View.INVISIBLE);
+		mVSModeButton.setVisibility(View.INVISIBLE);
 	}
 
 	@Override
@@ -92,7 +92,6 @@ public class RocketRush extends Activity implements OnClickListener {
 
 	@Override
 	protected void onPause() {
-		// the sequence here is important
 		mGameView.onPause();
 		mCurMode.stop();
  
@@ -141,6 +140,17 @@ public class RocketRush extends Activity implements OnClickListener {
 			switchGameMode(MODE_VERSUS);
 			break;
 		}
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		switch (keyCode) {
+		case KeyEvent.KEYCODE_BACK:
+			//showDialog(DIALOG_QUIT);			
+			break;
+		}
+		
+		return super.onKeyDown(keyCode, event);
 	}
 	
 	private void createSensor() {

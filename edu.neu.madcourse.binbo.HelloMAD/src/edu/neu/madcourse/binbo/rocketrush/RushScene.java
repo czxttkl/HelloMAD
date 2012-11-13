@@ -1,34 +1,50 @@
 package edu.neu.madcourse.binbo.rocketrush;
 
-import java.util.Vector;
-
-import edu.neu.madcourse.binbo.R;
-import edu.neu.madcourse.binbo.rocketrush.gameobjects.Asteroid;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.BackgroundFar;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.BackgroundNear;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.Rocket;
 import android.content.res.Resources;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Paint.Style;
 
-public class RushScene extends GameScene {
 
-	private Resources mResources;
-	private Vector<Asteroid> mAsteroids = null;
+public class RushScene extends GameScene {	
+
+	private Rocket mRocket = null;
+	private BackgroundFar  mBackgroundFar  = null;
+	private BackgroundNear mBackgroundNear = null;
 	
-	public RushScene(Resources resources) {
-		mResources = resources;
+	public RushScene(Resources res) {
+		super(res);
+	}	
+
+	public void load() {		
+		if (mBackgroundFar == null) {
+			mBackgroundFar  = new BackgroundFar(mRes);
+			mObjects.add(mBackgroundFar);
+		}
+		if (mBackgroundNear == null) {
+			mBackgroundNear = new BackgroundNear(mRes);			
+			mObjects.add(mBackgroundNear);
+		}
+		if (mRocket == null) {
+			mRocket = new Rocket(mRes);
+			mObjects.add(mRocket);
+		}
+	}
+	
+	public void release() {
+		super.release();
 	}
 	
 	@Override
-	public int doDraw(Canvas c) {		
-		c.drawColor(Color.LTGRAY);
-		return super.doDraw(c);
+	public void doDraw(Canvas c) {
+		for (GameObject obj : mObjects) {
+			obj.doDraw(c);
+		}
 	}
 
 	@Override
-	protected void updateSceneSize(int width, int height) {
-		// TODO Auto-generated method stub
-		super.updateSceneSize(width, height);
+	protected void onSizeChanged(int width, int height) {		
+		super.onSizeChanged(width, height);		
 	}
-
 }

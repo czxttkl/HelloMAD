@@ -2,13 +2,13 @@ package edu.neu.madcourse.binbo.rocketrush;
 
 import android.os.Handler;
 
-public class BaseMode {
+public class GameMode {
 	// engine of the game
 	protected GameEngine mEngine = null;
 	// message handler
 	protected Handler mHandler = null;	
 	
-	protected BaseMode() {
+	protected GameMode() {
 		
 	}
 	
@@ -39,8 +39,5 @@ public class BaseMode {
 	protected GameEngine getEngine() {
 		return mEngine;
 	}
-	
-	public interface Callback {
-		void onSurfaceChanged(int width, int height);
-	}
+
 }

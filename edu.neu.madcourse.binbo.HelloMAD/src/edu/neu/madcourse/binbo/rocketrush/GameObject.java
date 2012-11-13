@@ -1,22 +1,29 @@
 package edu.neu.madcourse.binbo.rocketrush;
 
-import java.util.Vector;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.res.Resources;
 import android.graphics.Canvas;
 
-public class GameObject implements IDrawer {
+public class GameObject {
+	
 	protected int mX = 0;
 	protected int mY = 0;
 	protected int mWidth = 0;
 	protected int mHeight = 0;
 	protected int mSpeedX = 0;
-	protected int mSpeedY = 0;
+	protected int mSpeedY = 0;	
 	protected boolean mVisible = true;
 	
-	protected GameObject() {		
+	protected Resources mRes = null;
+	
+	protected GameObject(Resources res) {	
+		setResources(res);
+	}
+	
+	public void release() {
+		// release resources here
 	}
 	
 	public void setX(int x) { mX = x; }
@@ -48,6 +55,8 @@ public class GameObject implements IDrawer {
 	public void setVisible(boolean visible) { mVisible = visible; }
 	
 	public boolean getVisible() { return mVisible; }
+	
+	public void setResources(Resources res) { mRes = res; }
 	
 	public String toJSONString() {
 		JSONObject obj = new JSONObject();  	              
@@ -87,8 +96,15 @@ public class GameObject implements IDrawer {
 	
 	public void update() {}
 
-	public int doDraw(Canvas c) {
+	public void doDraw(Canvas c) {
 		// TODO Auto-generated method stub
-		return 0;
+	}
+	
+	public void onSizeChanged(int width, int height) {
+		// invoked when the surface size is changed
+	}
+	
+	public interface IDrawer {
+		void doDraw(Canvas c);
 	}
 }

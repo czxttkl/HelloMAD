@@ -1,14 +1,19 @@
 package edu.neu.madcourse.binbo.rocketrush.gameobjects;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import edu.neu.madcourse.binbo.rocketrush.GameObject;
-import edu.neu.madcourse.binbo.rocketrush.IDrawer;
 
-public class SpeedBar extends GameObject implements IDrawer {
-	private Bitmap mImage = null;
+public class SpeedBar extends GameObject implements GameObject.IDrawer {
+	protected Bitmap mImage = null;
 
-	public SpeedBar(Bitmap image) {
+	public SpeedBar(Resources res) {
+		super(res);
+	}
+	
+	public SpeedBar(Resources res, Bitmap image) {
+		super(res);
 		setImage(image);
 	}
 	
@@ -17,8 +22,7 @@ public class SpeedBar extends GameObject implements IDrawer {
 	}
 
 	@Override
-	public int doDraw(Canvas c) {
+	public void doDraw(Canvas c) {
 		// TODO Auto-generated method stub
-		return super.doDraw(c);
 	}
 }

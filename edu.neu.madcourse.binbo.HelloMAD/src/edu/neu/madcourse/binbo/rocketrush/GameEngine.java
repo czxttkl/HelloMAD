@@ -45,8 +45,8 @@ public class GameEngine {
     public void updateGameScene(GameScene scene) {
     	// do the real job here
     	List<GameObject> objects = scene.getGameObjects();
-    	for (int i = 0; i < objects.size(); ++i) {
-    		objects.get(i).update();
+    	for (GameObject obj : objects) {
+    		obj.update();
     	}
     }
 }

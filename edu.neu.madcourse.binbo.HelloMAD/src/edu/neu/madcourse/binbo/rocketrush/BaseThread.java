@@ -6,7 +6,7 @@ import android.os.Handler;
 
 public class BaseThread extends Thread {
 	
-	protected boolean mRun = false;		
+	protected boolean mRun = false;	
 	protected Handler mHandler = null;	
 	protected ConcurrentLinkedQueue<GameEvent> mEventQueue;
 	
@@ -27,7 +27,9 @@ public class BaseThread extends Thread {
 		return mHandler;
 	}
 	
-	public synchronized void end() {
+	// don't write "synchronized void end()", it may block the drawer thread
+	// since both start and end are invoked by ui thread, it's fine just like this.
+	public void end() { 
 		mRun = false;		
 		try {
 			join();
@@ -38,7 +40,7 @@ public class BaseThread extends Thread {
 	}
 
 	@Override
-	public synchronized void start() {
+	public void start() {
 		mRun = true;
 		super.start();
 	}
@@ -60,4 +62,5 @@ public class BaseThread extends Thread {
 		// this method to deal with specified events
 		return;
 	}
+
 }
