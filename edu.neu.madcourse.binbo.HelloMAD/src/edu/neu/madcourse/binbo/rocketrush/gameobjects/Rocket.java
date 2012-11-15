@@ -93,16 +93,18 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 	}
 
 	@Override
-	public void execute(GameCtrl c) {
-		if (c.mCommand == GameCtrl.MOVE_LEFT) {
+	public void execute(GameCtrl ctrl) {
+		int command = ctrl.getCommand();
+		
+		if (command == GameCtrl.MOVE_LEFT) {
 			mLeftDuration = 240;
 			mRightDuration = 0;
-		} else if (c.mCommand == GameCtrl.MOVE_RIGHT) {
+		} else if (command == GameCtrl.MOVE_RIGHT) {
 			mRightDuration = 240; 
 			mLeftDuration = 0;
-		} else if (c.mCommand == GameCtrl.MOVE_UP) {
-			mUpDuration = 1000;			
-		} else if (c.mCommand == GameCtrl.MOVE_DOWN) {
+		} else if (command == GameCtrl.MOVE_UP) {
+			mUpDuration = 1000;
+		} else if (command == GameCtrl.MOVE_DOWN) {
 			
 		}
 	}

@@ -3,6 +3,7 @@ package edu.neu.madcourse.binbo.rocketrush;
 import edu.neu.madcourse.binbo.rocketrush.gameobjects.BackgroundFar;
 import edu.neu.madcourse.binbo.rocketrush.gameobjects.BackgroundNear;
 import edu.neu.madcourse.binbo.rocketrush.gameobjects.Rocket;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.SpeedBar;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 
@@ -10,6 +11,7 @@ import android.graphics.Canvas;
 public class RushScene extends GameScene {	
 
 	private Rocket mRocket = null;
+	private SpeedBar mSpeedBar = null;
 	private BackgroundFar  mBackgroundFar  = null;
 	private BackgroundNear mBackgroundNear = null;
 	
@@ -25,6 +27,10 @@ public class RushScene extends GameScene {
 		if (mBackgroundNear == null) {
 			mBackgroundNear = new BackgroundNear(mRes);			
 			mObjects.add(mBackgroundNear);
+		}
+		if (mSpeedBar == null) {
+			mSpeedBar = new SpeedBar(mRes);
+			mObjects.add(mSpeedBar);
 		}
 		if (mRocket == null) {
 			mRocket = new Rocket(mRes);

@@ -105,7 +105,7 @@ public class GameObject {
 	
 	public boolean isMovable() { return mMovable; }
 	
-	public void execute(GameCtrl c) {}
+	public void execute(GameCtrl ctrl) {}
 	
 	public void update() {}
 

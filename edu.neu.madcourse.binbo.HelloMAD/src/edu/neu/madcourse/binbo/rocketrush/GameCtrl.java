@@ -7,7 +7,7 @@ public class GameCtrl {
 	public final static int MOVE_UP    = 3;
 	public final static int MOVE_DOWN  = 4;
 	
-	public int mCommand = MOVE_NONE;
+	protected int mCommand = MOVE_NONE;
 	
 	public GameCtrl(int command) {
 		setCommand(command);
@@ -16,4 +16,6 @@ public class GameCtrl {
 	public void setCommand(int command) {
 		mCommand = command;
 	}
+	
+	public int getCommand() { return mCommand; }
 }
