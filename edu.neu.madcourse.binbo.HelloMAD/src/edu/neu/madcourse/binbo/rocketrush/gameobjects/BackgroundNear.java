@@ -28,7 +28,7 @@ public class BackgroundNear extends Background {
 		float radio = mImageHeight / mImageWidth;	
 		int scaledWidth  = width;
 		int scaledHeight = (int)(width * radio);
-		scaledHeight += 3 - scaledHeight % 3; 
+		scaledHeight += 3 - scaledHeight % 3; // 3 is the same as mSpeedY
 		
 		Bitmap newImage = 
 			Bitmap.createScaledBitmap(mImage, scaledWidth, scaledHeight, true);	
