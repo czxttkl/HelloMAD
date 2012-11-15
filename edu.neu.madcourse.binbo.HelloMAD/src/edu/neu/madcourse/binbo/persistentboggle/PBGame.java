@@ -297,13 +297,15 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
  	 	mDefTextColor = mTextViewTime.getCurrentTextColor(); 	 	
 	}	
 	
-	protected void updateViews() {
-		mTextViewName1.setText(mHost.getName());
-    	mTextViewScore1.setText(String.valueOf(mHost.getScore()));
-    	mTextViewStatus1.setText(mHost.getSelLetters());
-    	mListViewWords.setAdapter(
-        	new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, mWordsFound)
-        );
+	protected void updateViews() {	
+		if (mHost != null) {
+			mTextViewName1.setText(mHost.getName());
+	    	mTextViewScore1.setText(String.valueOf(mHost.getScore()));
+	    	mTextViewStatus1.setText(mHost.getSelLetters());
+	    	mListViewWords.setAdapter(
+	        	new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, mWordsFound)
+	        );
+		}
 	}
 
 	protected void loadDictionaries() {

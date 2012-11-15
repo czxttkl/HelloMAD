@@ -1,6 +1,8 @@
 package edu.neu.madcourse.binbo.rocketrush;
 
+import android.hardware.SensorEventListener;
 import android.os.Handler;
+
 
 public class GameMode {
 	// engine of the game
@@ -8,8 +10,9 @@ public class GameMode {
 	// message handler
 	protected Handler mHandler = null;	
 	
-	protected GameMode() {
-		
+	protected GameMode(GameEngine engine) {
+		assert(engine != null);
+		setEngine(engine);
 	}
 	
 	public void start() {
@@ -17,7 +20,7 @@ public class GameMode {
 	}
 	
 	public void stop() {
-		
+		mEngine.reset();
 	}
 	
 	public void release() {
@@ -28,6 +31,10 @@ public class GameMode {
 		return null;
 	}
 	
+	public SensorEventListener getSensorListener() {
+		return mEngine.getSensorEventListener();
+	}
+
 	protected void setEngine(GameEngine engine) {
 		mEngine = engine;
 	}
@@ -39,5 +46,4 @@ public class GameMode {
 	protected GameEngine getEngine() {
 		return mEngine;
 	}
-
 }

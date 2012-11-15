@@ -15,6 +15,7 @@ public class GameObject {
 	protected int mSpeedX = 0;
 	protected int mSpeedY = 0;	
 	protected boolean mVisible = true;
+	protected boolean mMovable = false;
 	
 	protected Resources mRes = null;
 	
@@ -56,6 +57,10 @@ public class GameObject {
 	
 	public boolean getVisible() { return mVisible; }
 	
+	public void setMovable(boolean movable) { mMovable = movable; }
+	
+	public boolean getMovable() { return mMovable; }
+	
 	public void setResources(Resources res) { mRes = res; }
 	
 	public String toJSONString() {
@@ -69,6 +74,7 @@ public class GameObject {
 	        obj.put("speed_x", getSpeedX());
 	        obj.put("spped_y", getSpeedY());
 	        obj.put("visible", getVisible());
+	        obj.put("movable", getMovable());
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -88,11 +94,18 @@ public class GameObject {
 			setHeight(obj.getInt("height"));
 			setSpeed(obj.getInt("speed_x"), obj.getInt("speed_y"));
 			setVisible(obj.getBoolean("visible"));
+			setMovable(obj.getBoolean("movable"));
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}							
 	}
+	
+	public boolean isVisible() { return mVisible; }
+	
+	public boolean isMovable() { return mMovable; }
+	
+	public void execute(GameCtrl c) {}
 	
 	public void update() {}
 

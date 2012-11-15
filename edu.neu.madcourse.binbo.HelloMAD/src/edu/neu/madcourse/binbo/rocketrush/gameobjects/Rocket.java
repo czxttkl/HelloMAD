@@ -8,15 +8,24 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import edu.neu.madcourse.binbo.R;
+import edu.neu.madcourse.binbo.rocketrush.GameCtrl;
+import edu.neu.madcourse.binbo.rocketrush.GameEngine;
 import edu.neu.madcourse.binbo.rocketrush.GameObject;
 
 public class Rocket extends GameObject implements GameObject.IDrawer  {
 	protected List<Bitmap> mImages = new ArrayList<Bitmap>();
 	protected int mImageWidth  = 0;
 	protected int mImageHeight = 0;	
+	protected int mCanvasWidth  = 0;
+	protected int mCanvasHeight = 0;
+	protected int mLeftDuration  = 0;
+	protected int mRightDuration = 0;
+	protected int mUpDuration    = 0;
 
 	public Rocket(Resources res) {
 		super(res);
+		setMovable(true);
+		setSpeed(10, 5);
 		addImage(BitmapFactory.decodeResource(res, R.drawable.ship2_1));
 		addImage(BitmapFactory.decodeResource(res, R.drawable.ship2_2));
 		addImage(BitmapFactory.decodeResource(res, R.drawable.ship2_3));
@@ -27,6 +36,7 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 	
 	public Rocket(Resources res, List<Bitmap> images) {
 		super(res);
+		setMovable(true);
 		for (Bitmap image : images) {
 			addImage(image);
 		}
@@ -49,6 +59,21 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 
 	@Override
 	public void update() {		
+		if (mLeftDuration > 0) {
+			mX = Math.max(mX - mSpeedX, 0);
+			mLeftDuration -= GameEngine.ENGINE_SPEED;
+		} else if (mRightDuration > 0) {
+			mX = Math.min(mX + mSpeedX, mCanvasWidth - mImageWidth); 
+			mRightDuration -= GameEngine.ENGINE_SPEED;
+		}
+		
+		if (mUpDuration > 0) {
+			mY = Math.max(mY - mSpeedY, mCanvasHeight / 4);
+			mUpDuration -= GameEngine.ENGINE_SPEED;
+		} else {
+			mY = Math.min(mY + mSpeedY / 2, 
+					(mCanvasHeight - mImageHeight) / 2 + mCanvasHeight / 4);
+		}
 	}
 
 	@Override
@@ -61,7 +86,24 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 	
 	@Override
 	public void onSizeChanged(int width, int height) {
+		mCanvasWidth  = width;
+		mCanvasHeight = height;
 		mX = (width - mImageWidth) / 2;
 		mY = (height - mImageHeight) / 2 + height / 4;
+	}
+
+	@Override
+	public void execute(GameCtrl c) {
+		if (c.mCommand == GameCtrl.MOVE_LEFT) {
+			mLeftDuration = 240;
+			mRightDuration = 0;
+		} else if (c.mCommand == GameCtrl.MOVE_RIGHT) {
+			mRightDuration = 240; 
+			mLeftDuration = 0;
+		} else if (c.mCommand == GameCtrl.MOVE_UP) {
+			mUpDuration = 1000;			
+		} else if (c.mCommand == GameCtrl.MOVE_DOWN) {
+			
+		}
 	}
 }

@@ -34,7 +34,7 @@ public class HelloMAD extends Activity implements OnClickListener {
 		View trickiestButton = this.findViewById(R.id.trickiest_button);
 		trickiestButton.setOnClickListener(this);
 		
-		//PhoneCheckAPI.doAuthorization(this);
+		PhoneCheckAPI.doAuthorization(this);
 	}
 
 	public void onClick(View v) {

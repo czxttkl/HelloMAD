@@ -15,13 +15,14 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.widget.*;
 
-public class RocketRush extends Activity implements OnClickListener {
-	private static final String TAG = "RocketRush";
+public class RocketRush extends Activity implements OnClickListener, OnTouchListener {	
 	
 	protected SplashView mSplashView = null;
 	protected GameView mGameView = null;
@@ -96,7 +97,9 @@ public class RocketRush extends Activity implements OnClickListener {
 		mCurMode.stop();
  
         if (mSensorManager != null) {
-        	mSensorManager.unregisterListener(mAccListener);                
+        	mSensorManager.unregisterListener(
+        		mCurMode == null ? null : mCurMode.getSensorListener()
+        	);                
         }        
 		
 		super.onPause();		
@@ -108,9 +111,9 @@ public class RocketRush extends Activity implements OnClickListener {
 		
         if (mSensorManager != null) {
         	mSensorManager.registerListener(
-        		mAccListener,
+        		mCurMode == null ? null : mCurMode.getSensorListener(),
         		mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-        		SensorManager.SENSOR_DELAY_GAME
+        		SensorManager.SENSOR_DELAY_GAME // 20ms on my s3
         	);                 	
         }        
 		
@@ -142,6 +145,10 @@ public class RocketRush extends Activity implements OnClickListener {
 		}
 	}
 	
+	public boolean onTouch(View v, MotionEvent event) {
+        return false;
+    }
+	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		switch (keyCode) {
@@ -151,7 +158,7 @@ public class RocketRush extends Activity implements OnClickListener {
 		}
 		
 		return super.onKeyDown(keyCode, event);
-	}
+	}		
 	
 	private void createSensor() {
 		// get system sensor manager to deal with sensor issues  
@@ -186,29 +193,6 @@ public class RocketRush extends Activity implements OnClickListener {
             	break;
             }            
         } 		
-    };
-    
-    // SensorEventListener implement  
-    final SensorEventListener mAccListener = new SensorEventListener() {  
-        int count = 0;
-        public void onSensorChanged(SensorEvent sensorEvent){  
-            if(sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER){  
-                Log.i(TAG, "onSensorChanged");  
-                               
-                float x = sensorEvent.values[0];  
-                float y = sensorEvent.values[1];  
-                float z = sensorEvent.values[2];                
-                Log.i(TAG,"\n heading " + x);  
-                Log.i(TAG,"\n pitch " + y);  
-                Log.i(TAG,"\n roll " + z); 
-                Log.i(TAG,"\n count " + count);
-                count++;
-            }  
-        }  
- 
-        public void onAccuracyChanged(Sensor sensor, int accuracy){  
-            Log.i(TAG, "onAccuracyChanged");  
-        }  
-    };
+    };        
 	
 }

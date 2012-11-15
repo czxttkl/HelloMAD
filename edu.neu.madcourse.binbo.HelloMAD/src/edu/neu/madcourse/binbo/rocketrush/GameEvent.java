@@ -1,14 +1,27 @@
 package edu.neu.madcourse.binbo.rocketrush;
 
-/**
- * Base class for any external event passed to the RocketRushThread. This can
- * include user input, system events, network input, etc.
- */
-
 public class GameEvent {
-	protected long mEventTime;
+	public static final int EVENT_NORMAL  = 0;
+	public static final int EVENT_CONTROL = 1;	
+	protected int  mEventType;
+	public static final int SENSOR_ACCELEROMETER = 1;
+	protected int  mWhat = 0;
+	protected long mEventTime;	
 	
-    public GameEvent() {        
+    public GameEvent(int eventType) {   
+    	setEventType(eventType);
     	mEventTime = System.currentTimeMillis();        
+    }
+    
+    public void setEventType(int eventType) {
+    	mEventType = eventType;
+    }
+    
+    public int getEventType() {
+    	return mEventType;
+    }
+    
+    public long getEventTime() {
+    	return mEventTime;
     }
 }

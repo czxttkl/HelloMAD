@@ -1,6 +1,7 @@
 package edu.neu.madcourse.binbo.rocketrush;
 
 import android.content.Context;
+import android.hardware.SensorEventListener;
 import android.os.Handler;
 
 public class WaitingMode extends GameMode {
@@ -9,7 +10,7 @@ public class WaitingMode extends GameMode {
 	protected WaitingModeThread mThread = null;
 	
 	public WaitingMode(Context context, GameEngine engine, Handler handler) {
-		setEngine(engine);
+		super(engine);
 		setHandler(handler);
 		mScene = new WaitingScene(context.getResources());
 		mScene.load();
@@ -68,6 +69,12 @@ public class WaitingMode extends GameMode {
 			mScene = null;
 		}
 		super.release();
+	}
+
+	@Override
+	public SensorEventListener getSensorListener() {
+		// TODO Auto-generated method stub
+		return super.getSensorListener();
 	}
 
 }
