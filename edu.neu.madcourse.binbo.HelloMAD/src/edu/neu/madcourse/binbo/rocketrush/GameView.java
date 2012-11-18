@@ -46,7 +46,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 		GameScene scene = mDrawer.getGameScene();
 		if (scene != null) {
-			scene.onSizeChanged(width, height);
+			synchronized (scene) {
+				scene.onSizeChanged(width, height);
+			}
 		}
 	}
 

@@ -43,7 +43,7 @@ public class WaitingScene extends GameScene {
 	}
 
 	@Override
-	protected void onSizeChanged(int width, int height) {		
+	protected void onSizeChanged(int width, int height) {	
 		super.onSizeChanged(width, height);		
 	}
 
