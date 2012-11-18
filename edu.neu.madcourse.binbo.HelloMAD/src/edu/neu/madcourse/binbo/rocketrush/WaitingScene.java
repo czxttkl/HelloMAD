@@ -48,7 +48,7 @@ public class WaitingScene extends GameScene {
 	}
 
 	@Override
-	public synchronized List<GameObject> updateBarriers() {
+	public List<GameObject> updateBarriers() {
 		// remove invisible barriers
 		List<GameObject> invisibles = new ArrayList<GameObject>();
 		int edgeLeft  = -mWidth;

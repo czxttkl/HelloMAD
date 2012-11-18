@@ -50,7 +50,10 @@ public class GameDrawer extends BaseThread {
                 synchronized (mHolder) {
                 	if (c != null) {
                 		//Log.d("draw scene", "in doDraw");
-               			getGameScene().doDraw(c);
+                		GameScene scene = getGameScene();
+                		synchronized (scene) {
+                			scene.doDraw(c);
+                		}
                 		//Log.d("draw scene", "out doDraw");
                 	}
                 }
@@ -73,6 +76,8 @@ public class GameDrawer extends BaseThread {
 	
 	protected void blockIfSurfaceNotCreated() {
 		while (!mView.isSurfaceCreated()) {
+			if (!mRun) break;
+			
 			try {
 				synchronized (this) {
 					wait(2000);
@@ -80,7 +85,7 @@ public class GameDrawer extends BaseThread {
 			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-			}
+			}			
 		}
 	}
 }

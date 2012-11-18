@@ -40,11 +40,11 @@ public class GameScene implements GameObject.IDrawer {
 	
 	// we may get game objects and generate barriers in different thread,
 	// so a little synchronization is necessary here
-	public synchronized List<GameObject> getGameObjects() { 
+	public List<GameObject> getGameObjects() { 
 		return mObjects; 
 	}
 	
-	public synchronized List<GameObject> updateBarriers() {
+	public List<GameObject> updateBarriers() {
 		return null;
 	}
 }

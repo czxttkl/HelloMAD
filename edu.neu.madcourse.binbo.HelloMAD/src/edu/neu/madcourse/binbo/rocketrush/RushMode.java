@@ -50,7 +50,9 @@ public class RushMode extends GameMode {
 				handleEvent(mEventQueue.poll());			
 				
 				// update the game scene with the engine
-				mEngine.updateGameScene(mScene);
+				synchronized (mScene) {
+					mEngine.updateGameScene(mScene);
+				}
 				
 				try {
 					sleep(GameEngine.ENGINE_SPEED);

@@ -100,7 +100,6 @@ public class Asteroid extends GameObject implements GameObject.IDrawer {
 	@Override
 	public void onSizeChanged(int width, int height) {
 		mCanvasWidth  = width;
-		mCanvasHeight = height;
-		
+		mCanvasHeight = height;		
 	}
 }
