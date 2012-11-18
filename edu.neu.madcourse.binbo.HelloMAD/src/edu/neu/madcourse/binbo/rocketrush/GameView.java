@@ -3,6 +3,7 @@ package edu.neu.madcourse.binbo.rocketrush;
 import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -25,7 +26,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 	
 	public void onResume(GameScene scene) {
 		mDrawer = new GameDrawer(scene, mHolder, mHandler);
-		mDrawer.start();		
+		mDrawer.start();
 	}	
 	
 	public void setHandler(Handler handler) {
@@ -44,7 +45,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 	}
 
 	public void surfaceCreated(SurfaceHolder holder) {		
-		
+		Log.d("gameview", "surfaceCreated");
 	}
 
 	public void surfaceDestroyed(SurfaceHolder holder) {

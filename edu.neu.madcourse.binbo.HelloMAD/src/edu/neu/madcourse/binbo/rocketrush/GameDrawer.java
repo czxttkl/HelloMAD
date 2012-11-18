@@ -35,11 +35,17 @@ public class GameDrawer extends BaseThread {
 		Canvas c = null;
 		
 		while (mRun) {
-			handleEvent(mEventQueue.poll());			
+			handleEvent(mEventQueue.poll());	
+			
+			blockUntilSurfaceCreated();
 			
 			try {
                 c = mHolder.lockCanvas(null);
-                getGameScene().doDraw(c);
+                synchronized (mHolder) {
+                	if (c != null) {
+                		getGameScene().doDraw(c);
+                	}
+                }
             } catch (Exception e) {
             	e.printStackTrace();
 			} finally {
@@ -57,4 +63,14 @@ public class GameDrawer extends BaseThread {
 		super.run();
 	} // end of run
 	
+	protected void blockUntilSurfaceCreated() {
+		while (mHolder.isCreating() && mRun) {
+			try {
+				sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 }

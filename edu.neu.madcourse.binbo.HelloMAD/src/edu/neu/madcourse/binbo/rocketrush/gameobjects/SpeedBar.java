@@ -99,7 +99,7 @@ public class SpeedBar extends GameObject implements GameObject.IDrawer {
 	}
 
 	@Override
-	public void execute(GameCtrl ctrl) {
+	public void operate(GameCtrl ctrl) {
 		int command = ctrl.getCommand();
 
 		if (command == GameCtrl.MOVE_UP) {
