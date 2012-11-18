@@ -102,4 +102,13 @@ public class Asteroid extends GameObject implements GameObject.IDrawer {
 		mCanvasWidth  = width;
 		mCanvasHeight = height;		
 	}
+	
+	@Override
+	public void release() {
+		if (mImage != null) {
+			mImage.recycle();
+			mImage = null;
+		}
+		super.release();
+	}
 }

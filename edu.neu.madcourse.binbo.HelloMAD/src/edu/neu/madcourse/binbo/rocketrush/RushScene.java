@@ -70,6 +70,7 @@ public class RushScene extends GameScene {
 			int x = b.getX(), y = b.getY();
 			if (x < edgeLeft || x > edgeRight || y > mHeight) {
 				invisibles.add(b);
+				b.release();
 			}
 		}
 		mBarriers.removeAll(invisibles);

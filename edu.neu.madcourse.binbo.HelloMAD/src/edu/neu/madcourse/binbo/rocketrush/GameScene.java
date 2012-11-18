@@ -23,6 +23,9 @@ public class GameScene implements GameObject.IDrawer {
 		for (GameObject obj : mObjects) {
 			obj.release();
 		}
+		for (GameObject obj : mBarriers) {
+			obj.release();
+		}
 	}
 	
 	protected void onSizeChanged(int width, int height) {
