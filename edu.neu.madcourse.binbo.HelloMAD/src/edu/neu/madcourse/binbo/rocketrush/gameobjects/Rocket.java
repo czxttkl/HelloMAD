@@ -111,4 +111,10 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 			
 		}
 	}
+
+	@Override
+	public void detectCollision(List<GameObject> objects) {
+		// TODO Auto-generated method stub
+		super.detectCollision(objects);
+	}
 }

@@ -49,6 +49,10 @@ public class WaitingScene extends GameScene {
 
 	@Override
 	public List<GameObject> updateBarriers() {
+		// surface has not been created
+		if (mWidth == 0 || mHeight == 0) {
+			return null;
+		}
 		// remove invisible barriers
 		List<GameObject> invisibles = new ArrayList<GameObject>();
 		int edgeLeft  = -mWidth;

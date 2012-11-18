@@ -1,5 +1,7 @@
 package edu.neu.madcourse.binbo.rocketrush;
 
+import java.util.List;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -113,6 +115,8 @@ public class GameObject {
 	public boolean isMovable() { return mMovable; }
 	
 	public void operate(GameCtrl ctrl) {}
+	
+	public void detectCollision(List<GameObject> objects) {}
 	
 	public void update() {}
 

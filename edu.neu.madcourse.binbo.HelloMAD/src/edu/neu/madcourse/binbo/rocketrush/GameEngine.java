@@ -71,6 +71,7 @@ public class GameEngine {
     		for (GameCtrl ctrl : mCtrls) {
     			obj.operate(ctrl);
     		}
+    		obj.detectCollision(objects);
     		obj.update();
     	}
     	mCtrls.clear();
