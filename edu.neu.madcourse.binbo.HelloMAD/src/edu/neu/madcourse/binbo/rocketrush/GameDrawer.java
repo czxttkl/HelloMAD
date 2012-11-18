@@ -80,7 +80,7 @@ public class GameDrawer extends BaseThread {
 			
 			try {
 				synchronized (this) {
-					wait(2000);
+					wait(1000);
 				}
 			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block

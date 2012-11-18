@@ -105,7 +105,7 @@ public class GameEngine {
         //long last_time = System.currentTimeMillis();
         public void onSensorChanged(SensorEvent sensorEvent){  
             if(sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER){  
-                Log.i(TAG, "onSensorChanged");  
+//                Log.i(TAG, "onSensorChanged");  
                                                
 //                if (System.currentTimeMillis() - last_time > 1000) {
 //                	last_time = System.currentTimeMillis();
