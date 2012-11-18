@@ -71,7 +71,7 @@ public class GameEngine {
     	List<GameObject> objects = scene.getGameObjects();
     	for (GameObject obj : objects) {    
     		for (GameCtrl ctrl : mCtrls) {
-    			obj.execute(ctrl);
+    			obj.operate(ctrl);
     		}
     		obj.update();
     	}
