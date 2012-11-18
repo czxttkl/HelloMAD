@@ -12,6 +12,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 	protected SurfaceHolder mHolder = null;
 	protected Handler mHandler = null;
 	protected GameDrawer mDrawer = null;
+	protected boolean mCreated = false;
 	
 	// constructor must have AttributeSet to create from XML
 	public GameView(Context context, AttributeSet attrs) {
@@ -22,10 +23,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 	
 	public void onPause() {
 		mDrawer.end();
+		mDrawer = null;
 	}
 	
 	public void onResume(GameScene scene) {
-		mDrawer = new GameDrawer(scene, mHolder, mHandler);
+		mDrawer = new GameDrawer(this, scene, mHandler);
 		mDrawer.start();
 	}	
 	
@@ -36,6 +38,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 	public GameDrawer getDrawer() {
 		return mDrawer;
 	}
+	
+	public boolean isSurfaceCreated() {
+		return mCreated;
+	}
 
 	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 		GameScene scene = mDrawer.getGameScene();
@@ -44,12 +50,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 		}
 	}
 
-	public void surfaceCreated(SurfaceHolder holder) {		
-		Log.d("gameview", "surfaceCreated");
+	public void surfaceCreated(SurfaceHolder holder) {
+		mCreated = true;
+		synchronized (mDrawer) {
+			mDrawer.notify();
+		}		
 	}
 
 	public void surfaceDestroyed(SurfaceHolder holder) {
-		// TODO Auto-generated method stub		
+		mCreated = false;	
 	}
 	
 }

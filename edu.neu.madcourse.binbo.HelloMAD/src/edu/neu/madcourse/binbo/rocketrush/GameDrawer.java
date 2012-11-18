@@ -2,17 +2,21 @@ package edu.neu.madcourse.binbo.rocketrush;
 
 import android.graphics.Canvas;
 import android.os.Handler;
+import android.util.Log;
 import android.view.SurfaceHolder;
 
 public class GameDrawer extends BaseThread {
 	// the holder of the SurfaceView
 	protected SurfaceHolder mHolder = null;
+	// the game surface view
+	protected GameView mView = null;
 	// the game scene to draw
 	protected GameScene mScene = null;	
 	
-	public GameDrawer(GameScene scene, SurfaceHolder holder, Handler handler) {
-		mScene  = scene;
-		mHolder = holder;
+	public GameDrawer(GameView view, GameScene scene, Handler handler) {
+		mView   = view;
+		mScene  = scene;		
+		mHolder = view.getHolder(); 
 		setHandler(handler);				
 	}	
 	
@@ -22,7 +26,9 @@ public class GameDrawer extends BaseThread {
 		if (mScene != null) {
 			int width  = mHolder.getSurfaceFrame().width();
 			int height = mHolder.getSurfaceFrame().height();
-			mScene.onSizeChanged(width, height);
+			if (width != 0 && height != 0) {
+				mScene.onSizeChanged(width, height);
+			}
 		}
 	}
 	
@@ -34,16 +40,18 @@ public class GameDrawer extends BaseThread {
 	public void run() {			
 		Canvas c = null;
 		
+		blockIfSurfaceNotCreated();
+		
 		while (mRun) {
 			handleEvent(mEventQueue.poll());	
-			
-			blockUntilSurfaceCreated();
 			
 			try {
                 c = mHolder.lockCanvas(null);
                 synchronized (mHolder) {
                 	if (c != null) {
-                		getGameScene().doDraw(c);
+                		Log.d("draw scene", "in doDraw");
+               			getGameScene().doDraw(c);
+                		Log.d("draw scene", "out doDraw");
                 	}
                 }
             } catch (Exception e) {
@@ -63,13 +71,15 @@ public class GameDrawer extends BaseThread {
 		super.run();
 	} // end of run
 	
-	protected void blockUntilSurfaceCreated() {
-		while (mHolder.isCreating() && mRun) {
+	protected void blockIfSurfaceNotCreated() {
+		while (!mView.isSurfaceCreated()) {
 			try {
-				sleep(10);
-			} catch (InterruptedException e) {
+				synchronized (this) {
+					wait(2000);
+				}
+			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				e1.printStackTrace();
 			}
 		}
 	}

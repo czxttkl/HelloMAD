@@ -64,9 +64,8 @@ public class GameEngine {
     public void updateGameScene(GameScene scene) {
     	// get events
     	GameEvent e = mEventQueue.poll();    	
-    	if (e != null) {
-    		handleEvent(e);
-    	}
+    	handleEvent(e);
+
     	// do the real job here
     	List<GameObject> objects = scene.getGameObjects();
     	for (GameObject obj : objects) {    
@@ -79,15 +78,17 @@ public class GameEngine {
     }        
     
     private void handleEvent(GameEvent e) {
+    	if (e == null) return;
+    	
 		if (e.mEventType == GameEvent.EVENT_CONTROL) {
 			if (e.mWhat == GameEvent.SENSOR_ACCELEROMETER) {
 				ControlEvent ce = (ControlEvent)e;				
-				if (ce.mAccX >= 14) {
+				if (ce.mAccX >= 2) {
 					mCtrls.add(new GameCtrl(GameCtrl.MOVE_LEFT));
-				} else if (ce.mAccX <= -14) {
+				} else if (ce.mAccX <= -2) {
 					mCtrls.add(new GameCtrl(GameCtrl.MOVE_RIGHT));
 				}
-				if (Math.abs(ce.mAccY) >= 15) {
+				if (Math.abs(ce.mAccY) >= 13) {
 					mCtrls.add(new GameCtrl(GameCtrl.MOVE_UP));
 				}
 			}
@@ -111,7 +112,6 @@ public class GameEngine {
 //                	last_time = System.currentTimeMillis();
 //                	count = 0;
 //                }
-                float threshold = 13;
                 float x = sensorEvent.values[0];  
                 float y = sensorEvent.values[1];  
                 float z = sensorEvent.values[2];                
@@ -120,7 +120,7 @@ public class GameEngine {
 //                Log.i(TAG,"\n roll " + z); 
 //                Log.i(TAG,"\n count " + count);
 //                count++;
-                if (Math.abs(x) > threshold || Math.abs(y) > threshold || Math.abs(z) > threshold) {
+                if (Math.abs(x) >= 2 || Math.abs(y) >= 13) {
                 	ControlEvent e = new ControlEvent((int)x, (int)y, (int)z);
                 	mEventQueue.add(e);
                 }

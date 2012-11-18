@@ -25,7 +25,7 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 	public Rocket(Resources res) {
 		super(res);
 		setMovable(true);
-		setSpeed(10, 5);
+		setSpeed(7, 5);
 		addImage(BitmapFactory.decodeResource(res, R.drawable.ship2_1));
 		addImage(BitmapFactory.decodeResource(res, R.drawable.ship2_2));
 		addImage(BitmapFactory.decodeResource(res, R.drawable.ship2_3));
@@ -97,10 +97,10 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 		int command = ctrl.getCommand();
 		
 		if (command == GameCtrl.MOVE_LEFT) {
-			mLeftDuration = 240;
+			mLeftDuration = 20;
 			mRightDuration = 0;
 		} else if (command == GameCtrl.MOVE_RIGHT) {
-			mRightDuration = 240; 
+			mRightDuration = 20; 
 			mLeftDuration = 0;
 		} else if (command == GameCtrl.MOVE_UP) {
 			mUpDuration = 1000;
