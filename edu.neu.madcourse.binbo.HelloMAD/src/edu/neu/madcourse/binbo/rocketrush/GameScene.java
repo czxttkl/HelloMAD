@@ -55,7 +55,7 @@ public class GameScene implements GameObject.IDrawer {
 		Collections.sort(objects, new ZOrderComparator());
 	}
 	
-	public class ZOrderComparator implements Comparator<GameObject> {
+	protected class ZOrderComparator implements Comparator<GameObject> {
 		public int compare(GameObject obj1, GameObject obj2) {
 			return obj1.getZOrder() - obj2.getZOrder(); 
 		}
