@@ -31,6 +31,7 @@ public class SpeedBar extends GameObject implements GameObject.IDrawer {
 
 	public SpeedBar(Resources res) {
 		super(res);		
+		setKind(SPEEDBAR);
 		setSpeed(0, 1);
 		setZOrder(ZOrders.SPEEDBAR);
 		
@@ -50,6 +51,7 @@ public class SpeedBar extends GameObject implements GameObject.IDrawer {
 	
 	public SpeedBar(Resources res, Bitmap image) {
 		super(res);
+		setKind(SPEEDBAR);
 		setZOrder(ZOrders.SPEEDBAR);
 		setImage(image);
 	}

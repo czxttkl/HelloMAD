@@ -7,6 +7,8 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Rect;
+import android.util.Log;
 import edu.neu.madcourse.binbo.R;
 import edu.neu.madcourse.binbo.rocketrush.GameCtrl;
 import edu.neu.madcourse.binbo.rocketrush.GameEngine;
@@ -19,9 +21,11 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 	protected int mLeftDuration  = 0;
 	protected int mRightDuration = 0;
 	protected int mUpDuration    = 0;
+	protected Rect mRect = new Rect();
 
 	public Rocket(Resources res) {
 		super(res);
+		setKind(ROCKET);
 		setSpeed(7, 5);
 		setMovable(true);		
 		setZOrder(ZOrders.ROCKET);
@@ -30,11 +34,12 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 		addImage(BitmapFactory.decodeResource(res, R.drawable.ship2_3));
 		addImage(BitmapFactory.decodeResource(res, R.drawable.ship2_4));
 		setWidth(mImages.get(0).getWidth());
-		setHeight(mImages.get(0).getHeight());
+		setHeight(mImages.get(0).getHeight());				
 	}
 	
 	public Rocket(Resources res, List<Bitmap> images) {
 		super(res);
+		setKind(ROCKET);
 		setSpeed(7, 5);
 		setMovable(true);		
 		setZOrder(ZOrders.ROCKET);
@@ -77,6 +82,11 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 			mY = Math.min(mY + mSpeedY / 2, 
 					(mCanvasHeight - mHeight) / 2 + mCanvasHeight / 4);
 		}
+		
+		mRect.left   = mX;
+		mRect.top    = mY;
+		mRect.right  = mX + mWidth;
+		mRect.bottom = mY + mHeight;
 	}
 
 	@Override
@@ -93,6 +103,10 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 		mCanvasHeight = height;
 		mX = (width - mWidth) / 2;
 		mY = (height - mHeight) / 2 + height / 4;
+		mRect.left   = mX;
+		mRect.top    = mY;
+		mRect.right  = mX + mWidth;
+		mRect.bottom = mY + mHeight;
 	}
 
 	@Override
@@ -114,7 +128,22 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 
 	@Override
 	public void detectCollision(List<GameObject> objects) {
-		// TODO Auto-generated method stub
-		super.detectCollision(objects);
+		
+		for (GameObject obj : objects) {
+			// won't collide to itself
+			if (obj == this) {
+				continue;
+			}
+			// skip the speed bar and backgrounds because they are also in the list
+			if (obj.getKind() == SPEEDBAR || obj.getKind() == BACKGROUND) {
+				continue;
+			}
+			
+			boolean intersects = mRect.intersects(obj.getX(), obj.getY(), 
+				obj.getX() + obj.getWidth(), obj.getY() + obj.getHeight());
+			if (intersects) {
+				Log.d("danger", "danger, collide!");
+			}
+		}
 	}
 }

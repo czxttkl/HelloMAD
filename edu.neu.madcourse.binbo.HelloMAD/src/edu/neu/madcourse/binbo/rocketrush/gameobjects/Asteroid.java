@@ -19,14 +19,16 @@ public class Asteroid extends GameObject implements GameObject.IDrawer {
 	
 	public Asteroid(Resources res) {
 		super(res);
+		setKind(ASTEROID);
 		setMovable(true);
 		setSpeed(0, 3);
-		setZOrder(ZOrders.ASTEROID);
+		setZOrder(ZOrders.ASTEROID);		
 		setImage(loadImage());
 	}
 
 	public Asteroid(Resources res, Bitmap image) {
 		super(res);
+		setKind(ASTEROID);
 		setMovable(true);
 		setSpeed(0, 3);
 		setZOrder(ZOrders.ASTEROID);

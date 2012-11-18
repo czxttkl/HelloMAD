@@ -10,11 +10,13 @@ public class Background extends GameObject {
 	
 	public Background(Resources res) {
 		super(res);		
+		setKind(BACKGROUND);
 		setMovable(false);
 	}
 
 	public Background(Resources res, Bitmap image) {
 		super(res);
+		setKind(BACKGROUND);
 		setImage(image);
 		setMovable(false);
 	}

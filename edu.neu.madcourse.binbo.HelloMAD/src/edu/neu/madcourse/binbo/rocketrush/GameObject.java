@@ -9,13 +9,19 @@ import android.content.res.Resources;
 import android.graphics.Canvas;
 
 public class GameObject {
+	public final static int UNKNOWN    = 0;
+	public final static int ASTEROID   = 1;
+	public final static int BACKGROUND = 2;
+	public final static int ROCKET	   = 3;
+	public final static int SPEEDBAR   = 4;
 	
 	protected int mX = 0;
 	protected int mY = 0;
 	protected int mWidth = 0;
 	protected int mHeight = 0;
 	protected int mSpeedX = 0;
-	protected int mSpeedY = 0;	
+	protected int mSpeedY = 0;
+	protected int mKind   = UNKNOWN;
 	protected int mZOrder = 0;
 	protected boolean mVisible = true;
 	protected boolean mMovable = false;
@@ -56,7 +62,11 @@ public class GameObject {
 	
 	public int getSpeedY() { return mSpeedY; }
 	
-	public int setZOrder(int order) { return mZOrder = order; }
+	public void setKind(int kind) { mKind = kind; }
+	
+	public int getKind() { return mKind; }
+	
+	public void setZOrder(int order) { mZOrder = order; }
 	
 	public int getZOrder() { return mZOrder; }
 	
