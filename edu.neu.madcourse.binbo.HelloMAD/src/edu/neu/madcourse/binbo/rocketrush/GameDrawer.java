@@ -2,6 +2,7 @@ package edu.neu.madcourse.binbo.rocketrush;
 
 import android.graphics.Canvas;
 import android.os.Handler;
+import android.util.Log;
 import android.view.SurfaceHolder;
 
 public class GameDrawer extends BaseThread {
@@ -10,9 +11,9 @@ public class GameDrawer extends BaseThread {
 	// the game scene to draw
 	protected GameScene mScene = null;	
 	
-	public GameDrawer(GameScene scene, SurfaceHolder holder, Handler handler) {
-		mScene  = scene;
-		mHolder = holder;
+	public GameDrawer(GameScene scene, SurfaceHolder holder, Handler handler) {		
+		mScene  = scene;		
+		mHolder = holder; 
 		setHandler(handler);				
 	}	
 	
@@ -22,7 +23,9 @@ public class GameDrawer extends BaseThread {
 		if (mScene != null) {
 			int width  = mHolder.getSurfaceFrame().width();
 			int height = mHolder.getSurfaceFrame().height();
-			mScene.onSizeChanged(width, height);
+			if (width != 0 && height != 0) {
+				mScene.onSizeChanged(width, height);
+			}
 		}
 	}
 	
@@ -34,16 +37,25 @@ public class GameDrawer extends BaseThread {
 	public void run() {			
 		Canvas c = null;
 		
+		try {
+			synchronized (this) {
+				wait(10000);
+			}
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		while (mRun) {
 			handleEvent(mEventQueue.poll());	
-			
-			blockUntilSurfaceCreated();
 			
 			try {
                 c = mHolder.lockCanvas(null);
                 synchronized (mHolder) {
                 	if (c != null) {
-                		getGameScene().doDraw(c);
+                		Log.d("draw scene", "in doDraw");
+               			getGameScene().doDraw(c);
+                		Log.d("draw scene", "out doDraw");
                 	}
                 }
             } catch (Exception e) {
@@ -63,14 +75,4 @@ public class GameDrawer extends BaseThread {
 		super.run();
 	} // end of run
 	
-	protected void blockUntilSurfaceCreated() {
-		while (mHolder.isCreating() && mRun) {
-			try {
-				sleep(10);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
 }

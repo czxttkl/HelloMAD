@@ -22,6 +22,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 	
 	public void onPause() {
 		mDrawer.end();
+		mDrawer = null;
 	}
 	
 	public void onResume(GameScene scene) {
@@ -45,7 +46,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 	}
 
 	public void surfaceCreated(SurfaceHolder holder) {		
-		Log.d("gameview", "surfaceCreated");
+		synchronized (mDrawer) {
+			mDrawer.notify();
+		}
 	}
 
 	public void surfaceDestroyed(SurfaceHolder holder) {
