@@ -12,6 +12,8 @@ public class GameDrawer extends BaseThread {
 	protected GameView mView = null;
 	// the game scene to draw
 	protected GameScene mScene = null;	
+	// flag to indicate whether the drawer should be paused
+	protected boolean mPause = false;
 	
 	public GameDrawer(GameView view, GameScene scene, Handler handler) {
 		mView   = view;
@@ -34,6 +36,10 @@ public class GameDrawer extends BaseThread {
 	
 	public synchronized GameScene getGameScene() {
 		return mScene;
+	}
+	
+	public void pause(boolean pause) {
+		mPause = pause;
 	}
 	
 	@Override
@@ -68,7 +74,14 @@ public class GameDrawer extends BaseThread {
                 }
             } // end finally block
 
-			// no sleep, draw as fast as possible
+			while (mPause) {
+				try {
+					sleep(200);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 		
 		super.run();

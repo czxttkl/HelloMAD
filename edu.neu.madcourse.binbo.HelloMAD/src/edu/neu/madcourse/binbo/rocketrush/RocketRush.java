@@ -67,6 +67,8 @@ public class RocketRush extends Activity implements OnClickListener, OnTouchList
 		if (mCurMode == mModes.get(modeTo)) {
 			return;
 		}		
+		// pause the drawer
+		mGameView.getDrawer().pause(true);
 		// first stop to update the scene using game engine
 		mCurMode.stop();	
 		// get the new game mode
@@ -75,6 +77,7 @@ public class RocketRush extends Activity implements OnClickListener, OnTouchList
 		mGameView.getDrawer().setGameScene(mCurMode.getScene());		
 		// finally start the new game mode
 		mCurMode.start();
+		mGameView.getDrawer().pause(false);
 		
 		// ...
 		mRushModeButton.setVisibility(View.INVISIBLE);
