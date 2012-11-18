@@ -9,10 +9,9 @@ import android.graphics.Color;
 public class GameScene implements GameObject.IDrawer {	
 	protected int mWidth  = 0;
 	protected int mHeight = 0;
-	protected Resources mRes = null;
-	protected List<GameObject> mObjects = new ArrayList<GameObject>();
-		
-	public List<GameObject> getGameObjects() { return mObjects; }
+	protected Resources mRes = null;	
+	protected List<GameObject> mObjects  = new ArrayList<GameObject>();
+	protected List<GameObject> mBarriers = new ArrayList<GameObject>();
 	
 	public GameScene(Resources res) {
 		mRes = res;
@@ -37,5 +36,15 @@ public class GameScene implements GameObject.IDrawer {
 	
 	public void doDraw(Canvas c) {
 		c.drawColor(Color.BLUE);
+	}
+	
+	// we may get game objects and generate barriers in different thread,
+	// so a little synchronization is necessary here
+	public synchronized List<GameObject> getGameObjects() { 
+		return mObjects; 
+	}
+	
+	public synchronized List<GameObject> updateBarriers() {
+		return null;
 	}
 }

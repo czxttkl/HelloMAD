@@ -7,11 +7,9 @@ import edu.neu.madcourse.binbo.rocketrush.GameObject;
 
 public class Background extends GameObject {
 	protected Bitmap mImage = null;
-	protected int mImageWidth  = 0;
-	protected int mImageHeight = 0;
 	
 	public Background(Resources res) {
-		super(res);
+		super(res);		
 		setMovable(false);
 	}
 
@@ -23,17 +21,17 @@ public class Background extends GameObject {
 	
 	public void setImage(Bitmap image) {
 		mImage = image;
-		mImageWidth  = mImage.getWidth();
-		mImageHeight = mImage.getHeight();
+		setWidth(mImage.getWidth());
+		setHeight(mImage.getHeight());
 	}
 
 	@Override
 	public void doDraw(Canvas c) {
-		if (mY >= mImageHeight) {
+		if (mY >= mHeight) {
 			mY = 0;
 			c.drawBitmap(mImage, mX, mY, null);
 		} else {
-			c.drawBitmap(mImage, mX, mY - mImageHeight, null);
+			c.drawBitmap(mImage, mX, mY - mHeight, null);
 			c.drawBitmap(mImage, mX, mY, null);
 		}
 	}

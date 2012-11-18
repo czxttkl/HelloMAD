@@ -9,15 +9,15 @@ public class BackgroundFar extends Background {
 	
 	public BackgroundFar(Resources res) {
 		super(res);
-		mSpeedX = 0;
-		mSpeedY = 1;
+		setSpeed(0, 1);
+		setZOrder(ZOrders.BACKGROUND_FAR);
 		setImage(BitmapFactory.decodeResource(res, R.drawable.background_a));
 	}
 	
 	public BackgroundFar(Resources res, Bitmap image) {
 		super(res);
-		mSpeedX = 0;
-		mSpeedY = 1;
+		setSpeed(0, 1);
+		setZOrder(ZOrders.BACKGROUND_FAR);
 		setImage(image);
 	}
 	
@@ -25,7 +25,7 @@ public class BackgroundFar extends Background {
 	public void onSizeChanged(int width, int height) {
 		if (mImage == null) return;
 		// scale the background according to the surface size
-		float radio = mImageHeight / mImageWidth;	
+		float radio = mHeight / mWidth;	
 		int scaledWidth  = width;
 		int scaledHeight = (int)(width * radio);
 		

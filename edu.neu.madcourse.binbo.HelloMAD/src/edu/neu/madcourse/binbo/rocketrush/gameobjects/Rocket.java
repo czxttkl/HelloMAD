@@ -14,8 +14,6 @@ import edu.neu.madcourse.binbo.rocketrush.GameObject;
 
 public class Rocket extends GameObject implements GameObject.IDrawer  {
 	protected List<Bitmap> mImages = new ArrayList<Bitmap>();
-	protected int mImageWidth  = 0;
-	protected int mImageHeight = 0;	
 	protected int mCanvasWidth  = 0;
 	protected int mCanvasHeight = 0;
 	protected int mLeftDuration  = 0;
@@ -24,22 +22,27 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 
 	public Rocket(Resources res) {
 		super(res);
-		setMovable(true);
 		setSpeed(7, 5);
+		setMovable(true);		
+		setZOrder(ZOrders.ROCKET);
 		addImage(BitmapFactory.decodeResource(res, R.drawable.ship2_1));
 		addImage(BitmapFactory.decodeResource(res, R.drawable.ship2_2));
 		addImage(BitmapFactory.decodeResource(res, R.drawable.ship2_3));
 		addImage(BitmapFactory.decodeResource(res, R.drawable.ship2_4));
-		mImageWidth  = mImages.get(0).getWidth();
-		mImageHeight = mImages.get(0).getHeight();
+		setWidth(mImages.get(0).getWidth());
+		setHeight(mImages.get(0).getHeight());
 	}
 	
 	public Rocket(Resources res, List<Bitmap> images) {
 		super(res);
-		setMovable(true);
+		setSpeed(7, 5);
+		setMovable(true);		
+		setZOrder(ZOrders.ROCKET);
 		for (Bitmap image : images) {
 			addImage(image);
 		}
+		setWidth(mImages.get(0).getWidth());
+		setHeight(mImages.get(0).getHeight());
 	}
 
 	public void addImage(Bitmap image) {
@@ -63,7 +66,7 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 			mX = Math.max(mX - mSpeedX, 0);
 			mLeftDuration -= GameEngine.ENGINE_SPEED;
 		} else if (mRightDuration > 0) {
-			mX = Math.min(mX + mSpeedX, mCanvasWidth - mImageWidth); 
+			mX = Math.min(mX + mSpeedX, mCanvasWidth - mWidth); 
 			mRightDuration -= GameEngine.ENGINE_SPEED;
 		}
 		
@@ -72,7 +75,7 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 			mUpDuration -= GameEngine.ENGINE_SPEED;
 		} else {
 			mY = Math.min(mY + mSpeedY / 2, 
-					(mCanvasHeight - mImageHeight) / 2 + mCanvasHeight / 4);
+					(mCanvasHeight - mHeight) / 2 + mCanvasHeight / 4);
 		}
 	}
 
@@ -88,8 +91,8 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 	public void onSizeChanged(int width, int height) {
 		mCanvasWidth  = width;
 		mCanvasHeight = height;
-		mX = (width - mImageWidth) / 2;
-		mY = (height - mImageHeight) / 2 + height / 4;
+		mX = (width - mWidth) / 2;
+		mY = (height - mHeight) / 2 + height / 4;
 	}
 
 	@Override

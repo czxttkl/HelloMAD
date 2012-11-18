@@ -32,6 +32,7 @@ public class SpeedBar extends GameObject implements GameObject.IDrawer {
 	public SpeedBar(Resources res) {
 		super(res);		
 		setSpeed(0, 1);
+		setZOrder(ZOrders.SPEEDBAR);
 		
 		mPaint1.setAntiAlias(true);
 		mPaint1.setColor(Color.BLACK);                   
@@ -49,6 +50,7 @@ public class SpeedBar extends GameObject implements GameObject.IDrawer {
 	
 	public SpeedBar(Resources res, Bitmap image) {
 		super(res);
+		setZOrder(ZOrders.SPEEDBAR);
 		setImage(image);
 	}
 	

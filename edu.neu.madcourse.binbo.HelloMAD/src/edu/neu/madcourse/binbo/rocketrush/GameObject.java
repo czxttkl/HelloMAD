@@ -14,6 +14,7 @@ public class GameObject {
 	protected int mHeight = 0;
 	protected int mSpeedX = 0;
 	protected int mSpeedY = 0;	
+	protected int mZOrder = 0;
 	protected boolean mVisible = true;
 	protected boolean mMovable = false;
 	
@@ -53,6 +54,10 @@ public class GameObject {
 	
 	public int getSpeedY() { return mSpeedY; }
 	
+	public int setZOrder(int order) { return mZOrder = order; }
+	
+	public int getZOrder() { return mZOrder; }
+	
 	public void setVisible(boolean visible) { mVisible = visible; }
 	
 	public boolean getVisible() { return mVisible; }
@@ -73,6 +78,7 @@ public class GameObject {
 	        obj.put("height", getHeight());
 	        obj.put("speed_x", getSpeedX());
 	        obj.put("spped_y", getSpeedY());
+	        obj.put("z_order", getZOrder());
 	        obj.put("visible", getVisible());
 	        obj.put("movable", getMovable());
 		} catch (JSONException e) {
@@ -93,6 +99,7 @@ public class GameObject {
 			setWidth(obj.getInt("width"));
 			setHeight(obj.getInt("height"));
 			setSpeed(obj.getInt("speed_x"), obj.getInt("speed_y"));
+			setZOrder(obj.getInt("z_order"));
 			setVisible(obj.getBoolean("visible"));
 			setMovable(obj.getBoolean("movable"));
 		} catch (JSONException e) {

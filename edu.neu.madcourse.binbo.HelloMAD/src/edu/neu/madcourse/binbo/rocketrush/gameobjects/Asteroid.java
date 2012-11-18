@@ -14,31 +14,37 @@ import edu.neu.madcourse.binbo.rocketrush.GameObject;
 public class Asteroid extends GameObject implements GameObject.IDrawer {
 	final static int IMAGE_COUNT = 12; // the same size of the total number of bitmaps
 	protected Bitmap mImage = null;
-	protected int mImageWidth  = 0;
-	protected int mImageHeight = 0;	
+	protected int mCanvasWidth  = 0;
+	protected int mCanvasHeight = 0;
 	
 	public Asteroid(Resources res) {
 		super(res);
-		setImage(generateAsteroidImage());
+		setMovable(true);
+		setSpeed(0, 3);
+		setZOrder(ZOrders.ASTEROID);
+		setImage(loadImage());
 	}
 
 	public Asteroid(Resources res, Bitmap image) {
 		super(res);
+		setMovable(true);
+		setSpeed(0, 3);
+		setZOrder(ZOrders.ASTEROID);
 		setImage(image);		
 	}
 	
 	public void setImage(Bitmap image) {
 		mImage = image;
-		mImageWidth  = mImage.getWidth();
-		mImageHeight = mImage.getHeight();
+		setWidth(image.getWidth());
+		setHeight(image.getHeight());
 	}
 
 	@Override
 	public void doDraw(Canvas c) {
-		// TODO Auto-generated method stub
+		c.drawBitmap(mImage, mX, mY, null);
 	}
 
-	protected Bitmap generateAsteroidImage() {
+	protected Bitmap loadImage() {
 		Bitmap image = null;
 		Random rand = new Random();
 		
@@ -83,5 +89,18 @@ public class Asteroid extends GameObject implements GameObject.IDrawer {
 		}
 		
 		return image;
+	}
+
+	@Override
+	public void update() {
+		mX += mSpeedX;
+		mY += mSpeedY;
+	}
+
+	@Override
+	public void onSizeChanged(int width, int height) {
+		mCanvasWidth  = width;
+		mCanvasHeight = height;
+		
 	}
 }

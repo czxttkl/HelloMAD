@@ -31,9 +31,7 @@ public class GameEngine {
     // concurrent event queue used to receive all kinds of game events
     protected ConcurrentLinkedQueue<GameEvent> mEventQueue;
     // the list of GameCtrl which mostly generated from the user input, or sensors
-    protected List<GameCtrl> mCtrls = new ArrayList<GameCtrl>();
-    // generate game elements according to the scene configuration
-    private Random mRandom = new Random();    
+    protected List<GameCtrl> mCtrls = new ArrayList<GameCtrl>();       
 
     protected GameEngine() {
     	mEventQueue = new ConcurrentLinkedQueue<GameEvent>();
@@ -67,6 +65,7 @@ public class GameEngine {
     	handleEvent(e);
 
     	// do the real job here
+    	scene.updateBarriers();
     	List<GameObject> objects = scene.getGameObjects();
     	for (GameObject obj : objects) {    
     		for (GameCtrl ctrl : mCtrls) {

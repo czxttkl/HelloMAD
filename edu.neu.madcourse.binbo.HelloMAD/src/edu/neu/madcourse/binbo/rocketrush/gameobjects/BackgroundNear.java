@@ -9,15 +9,15 @@ public class BackgroundNear extends Background {
 
 	public BackgroundNear(Resources res) {
 		super(res);
-		mSpeedX = 0;
-		mSpeedY = 3;
+		setSpeed(0, 2);
+		setZOrder(ZOrders.BACKGROUND_NEAR);
 		setImage(BitmapFactory.decodeResource(res, R.drawable.background_b));
 	}
 	
 	public BackgroundNear(Resources res, Bitmap image) {
 		super(res);
-		mSpeedX = 0;
-		mSpeedY = 3;
+		setSpeed(0, 2);
+		setZOrder(ZOrders.BACKGROUND_NEAR);
 		setImage(image);
 	}
 
@@ -25,10 +25,10 @@ public class BackgroundNear extends Background {
 	public void onSizeChanged(int width, int height) {
 		if (mImage == null) return;
 		// scale the background according to the surface size
-		float radio = mImageHeight / mImageWidth;	
+		float radio = mHeight / mWidth;	
 		int scaledWidth  = width;
 		int scaledHeight = (int)(width * radio);
-		scaledHeight += 3 - scaledHeight % 3; // 3 is the same as mSpeedY
+		scaledHeight += mSpeedY - scaledHeight % mSpeedY;
 		
 		Bitmap newImage = 
 			Bitmap.createScaledBitmap(mImage, scaledWidth, scaledHeight, true);	

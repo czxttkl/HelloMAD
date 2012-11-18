@@ -49,9 +49,9 @@ public class GameDrawer extends BaseThread {
                 c = mHolder.lockCanvas(null);
                 synchronized (mHolder) {
                 	if (c != null) {
-                		Log.d("draw scene", "in doDraw");
+                		//Log.d("draw scene", "in doDraw");
                			getGameScene().doDraw(c);
-                		Log.d("draw scene", "out doDraw");
+                		//Log.d("draw scene", "out doDraw");
                 	}
                 }
             } catch (Exception e) {
