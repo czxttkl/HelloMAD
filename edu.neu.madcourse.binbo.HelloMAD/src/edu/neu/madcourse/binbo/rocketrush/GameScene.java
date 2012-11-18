@@ -50,4 +50,14 @@ public class GameScene implements GameObject.IDrawer {
 	public List<GameObject> updateBarriers() {
 		return null;
 	}
+	
+	protected void orderByZ(List<GameObject> objects) {		
+		Collections.sort(objects, new ZOrderComparator());
+	}
+	
+	public class ZOrderComparator implements Comparator<GameObject> {
+		public int compare(GameObject obj1, GameObject obj2) {
+			return obj1.getZOrder() - obj2.getZOrder(); 
+		}
+	}
 }

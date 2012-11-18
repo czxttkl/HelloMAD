@@ -65,7 +65,7 @@ public class GameEngine {
     	handleEvent(e);
 
     	// do the real job here
-    	scene.updateBarriers();
+    	scene.updateBarriers();    	
     	List<GameObject> objects = scene.getGameObjects();
     	for (GameObject obj : objects) {    
     		for (GameCtrl ctrl : mCtrls) {

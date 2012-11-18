@@ -85,6 +85,8 @@ public class WaitingScene extends GameScene {
 			mBarriers.add(ast);
 			mObjects.add(ast);
 		}
+		// order by Z
+		orderByZ(mObjects);
 		
 		return mBarriers;
 	}
