@@ -8,12 +8,15 @@ import android.view.SurfaceHolder;
 public class GameDrawer extends BaseThread {
 	// the holder of the SurfaceView
 	protected SurfaceHolder mHolder = null;
+	// the game surface view
+	protected GameView mView = null;
 	// the game scene to draw
 	protected GameScene mScene = null;	
 	
-	public GameDrawer(GameScene scene, SurfaceHolder holder, Handler handler) {		
+	public GameDrawer(GameView view, GameScene scene, Handler handler) {
+		mView   = view;
 		mScene  = scene;		
-		mHolder = holder; 
+		mHolder = view.getHolder(); 
 		setHandler(handler);				
 	}	
 	
@@ -37,14 +40,7 @@ public class GameDrawer extends BaseThread {
 	public void run() {			
 		Canvas c = null;
 		
-		try {
-			synchronized (this) {
-				wait(10000);
-			}
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		blockIfSurfaceNotCreated();
 		
 		while (mRun) {
 			handleEvent(mEventQueue.poll());	
@@ -75,4 +71,16 @@ public class GameDrawer extends BaseThread {
 		super.run();
 	} // end of run
 	
+	protected void blockIfSurfaceNotCreated() {
+		while (!mView.isSurfaceCreated()) {
+			try {
+				synchronized (this) {
+					wait(2000);
+				}
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+	}
 }

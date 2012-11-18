@@ -10,18 +10,18 @@
 	
 	<ImageButton
     	android:id="@+id/rushModeButton"
-		android:layout_width="100dip"
+		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:text="Rush Mode"
 		android:layout_gravity="center"
-		android:layout_marginBottom="65dip" />
+		android:layout_marginBottom="65dip"
+		android:background="@drawable/btn_rush_mode" />
 	
 	<ImageButton
 	    android:id="@+id/vsModeButton"
-	    android:layout_width="100dip"
+	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:layout_gravity="center"
-	    android:text="VS Mode" />
+	    android:background="@drawable/btn_vs_mode" />
 	
 	<TextView 
 	    android:id="@+id/timerView" 
