@@ -12,8 +12,8 @@ import android.view.View;
 
 public class TutorialView extends View {
 	private Bitmap mImage = null;
-	private Paint  mPaint = null;
-	private String mText  = ""; // used for testing only
+	private Paint  mPaint = null;  // used for testing only
+	private String mText  = "";    // used for testing only
 	
 	public TutorialView(Context context, AttributeSet attrs) {
 		super(context, attrs);

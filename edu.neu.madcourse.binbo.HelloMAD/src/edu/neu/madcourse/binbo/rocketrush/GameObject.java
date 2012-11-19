@@ -27,9 +27,18 @@ public class GameObject {
 	protected boolean mMovable = false;
 	
 	protected Resources mRes = null;
+	protected OnCollideListener mOnCollideListener = null;
 	
 	protected GameObject(Resources res) {	
 		setResources(res);
+	}
+	
+	public void setOnCollideListener(OnCollideListener listener) {
+		mOnCollideListener = listener;
+	}
+	
+	public OnCollideListener getOnCollideListener() {
+		return mOnCollideListener;
 	}
 	
 	public void release() {
@@ -140,5 +149,9 @@ public class GameObject {
 	
 	public interface IDrawer {
 		void doDraw(Canvas c);
+	}
+	
+	public interface OnCollideListener {
+		void onCollide(GameObject obj, List<GameObject> collideWith);
 	}
 }

@@ -1,5 +1,7 @@
 package edu.neu.madcourse.binbo.rocketrush;
 
+import java.util.List;
+
 import android.content.Context;
 import android.hardware.SensorEventListener;
 import android.os.Handler;
@@ -12,7 +14,7 @@ public class RushMode extends GameMode {
 	public RushMode(Context context, GameEngine engine, Handler handler) {
 		super(engine);
 		setHandler(handler);
-		mScene = new RushScene(context.getResources());
+		mScene = new RushScene(context);
 		mScene.load();
 	}
 	
@@ -68,6 +70,11 @@ public class RushMode extends GameMode {
 	public SensorEventListener getSensorListener() {
 		// TODO Auto-generated method stub
 		return super.getSensorListener();
+	}
+
+	public void onCollide(GameObject obj, List<GameObject> collideWith) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

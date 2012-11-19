@@ -6,7 +6,7 @@ import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 
-public class GameScene implements GameObject.IDrawer {	
+public class GameScene implements GameObject.IDrawer, GameObject.OnCollideListener {	
 	protected int mWidth  = 0;
 	protected int mHeight = 0;
 	protected Resources mRes = null;	
@@ -17,7 +17,7 @@ public class GameScene implements GameObject.IDrawer {
 		mRes = res;
 	}
 	
-	public void load() {}
+	public List<GameObject> load() { return mObjects; }
 	
 	public void release() {
 		for (GameObject obj : mObjects) {
@@ -59,5 +59,9 @@ public class GameScene implements GameObject.IDrawer {
 		public int compare(GameObject obj1, GameObject obj2) {
 			return obj1.getZOrder() - obj2.getZOrder(); 
 		}
+	}
+
+	public void onCollide(GameObject obj, List<GameObject> collideWith) {
+		// TODO Auto-generated method stub
 	}
 }

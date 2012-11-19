@@ -1,15 +1,19 @@
 package edu.neu.madcourse.binbo.rocketrush;
 
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 
 
 public class VersusScene extends GameScene {
+
+	private Context mContext = null;
 	
-	public VersusScene(Resources res) {
-		super(res);
+	public VersusScene(Context context) {
+		super(context.getResources());
+		mContext = context;
 	}
 	
 	@Override

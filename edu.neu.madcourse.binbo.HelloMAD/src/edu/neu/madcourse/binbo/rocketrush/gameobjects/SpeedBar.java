@@ -77,7 +77,7 @@ public class SpeedBar extends GameObject implements GameObject.IDrawer {
 	    r3.top    = mY;
 	    r3.right  = 51;
 	    r3.bottom = mBarBottom;
-	    c.drawRoundRect(r3, 9, 9, mPaint3);	    	    
+	    c.drawRoundRect(r3, 9, 9, mPaint3);	    
 	}
 
 	// too many magic numbers in the class, I will modify later. :P
@@ -86,10 +86,10 @@ public class SpeedBar extends GameObject implements GameObject.IDrawer {
 		mCanvasWidth  = width;
 		mCanvasHeight = height;
 		
-		r1.left   = 30; 
+		r1.left   = 30;
 	    r1.top    = mCanvasHeight * 3 / 5;
 	    r1.right  = 54;
-	    r1.bottom = mCanvasHeight - 50;  
+	    r1.bottom = mCanvasHeight - 50;
 	    
 	    r2.left   = 33;
 	    r2.top    = mCanvasHeight * 3 / 5 + 3;

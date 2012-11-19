@@ -24,13 +24,13 @@ public class MenuBackgroundNear extends Background {
 	public void onSizeChanged(int width, int height) {
 		if (mImage == null) return;
 		// scale the background according to the surface size
-		float radio = mHeight / (float) mWidth;	
+		float radio = mHeight / (float) mWidth;
 		int scaledWidth  = width;
 		int scaledHeight = (int)(width * radio);
 		scaledWidth += mSpeedX - scaledWidth % mSpeedX;
 		
 		Bitmap newImage = 
-			Bitmap.createScaledBitmap(mImage, scaledWidth, scaledHeight, true);	
+			Bitmap.createScaledBitmap(mImage, scaledWidth, scaledHeight, true);
 		mImage.recycle(); // explicit call to avoid out of memory
 		setImage(newImage);
 	}

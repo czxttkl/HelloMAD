@@ -12,7 +12,7 @@ public class WaitingMode extends GameMode {
 	public WaitingMode(Context context, GameEngine engine, Handler handler) {
 		super(engine);
 		setHandler(handler);
-		mScene = new WaitingScene(context.getResources());
+		mScene = new WaitingScene(context);
 		mScene.load();
 	}
 	

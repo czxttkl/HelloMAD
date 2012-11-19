@@ -1,5 +1,7 @@
 package edu.neu.madcourse.binbo.rocketrush;
 
+import java.util.List;
+
 import android.content.Context;
 import android.hardware.SensorEventListener;
 import android.os.Handler;
@@ -12,7 +14,7 @@ public class VersusMode extends GameMode {
 	public VersusMode(Context context, GameEngine engine, Handler handler) {
 		super(engine);
 		setHandler(handler);		
-		mScene = new VersusScene(context.getResources());
+		mScene = new VersusScene(context);
 		mScene.load();
 	}
 	
@@ -69,5 +71,5 @@ public class VersusMode extends GameMode {
 		// TODO Auto-generated method stub
 		return super.getSensorListener();
 	}
-	
+
 }

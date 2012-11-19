@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" /> 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
         android:icon="@drawable/ic_launcher"
@@ -129,6 +130,13 @@
 		</activity>	
 		
 		<activity android:name=".rocketrush.tutorial.TutorialActivity"
+			android:screenOrientation="portrait"
+		    android:launchMode="singleTop"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.NoTitleBar">
+		</activity>	
+		
+		<activity android:name=".rocketrush.splash.SplashActivity"
 			android:screenOrientation="portrait"
 		    android:launchMode="singleTop"
             android:configChanges="orientation|keyboardHidden"

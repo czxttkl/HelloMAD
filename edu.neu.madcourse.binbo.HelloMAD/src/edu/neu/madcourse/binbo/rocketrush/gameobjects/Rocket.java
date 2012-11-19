@@ -23,6 +23,7 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 	protected int mUpDuration    = 0;
 	// rocket's area used to detect collision
 	protected Rect mRect = new Rect();
+	protected List<GameObject> mCollideWith = new ArrayList<GameObject>();
 
 	public Rocket(Resources res) {
 		super(res);
@@ -84,10 +85,10 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 					(mCanvasHeight - mHeight) / 2 + mCanvasHeight / 4);
 		}
 		
-		mRect.left   = mX + mWidth / 6;
-		mRect.top    = mY - mHeight / 8;
-		mRect.right  = mX + mWidth * 5 / 6;
-		mRect.bottom = mY + mHeight * 3 / 5;
+		mRect.left   = mX + mWidth * 2 / 5;
+		mRect.top    = mY + mHeight / 3;
+		mRect.right  = mX + mWidth * 3 / 5;
+		mRect.bottom = mY + mHeight * 11 / 20;
 	}
 
 	@Override
@@ -97,17 +98,17 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 		}
 		super.release();
 	}
-	
+
 	@Override
 	public void onSizeChanged(int width, int height) {
 		mCanvasWidth  = width;
 		mCanvasHeight = height;
 		mX = (width - mWidth) / 2;
 		mY = (height - mHeight) / 2 + height / 4;
-		mRect.left   = mX + mWidth / 6;
-		mRect.top    = mY - mHeight / 8;
-		mRect.right  = mX + mWidth * 5 / 6;
-		mRect.bottom = mY + mHeight * 3 / 5;
+		mRect.left   = mX + mWidth * 2 / 5;
+		mRect.top    = mY + mHeight / 3;
+		mRect.right  = mX + mWidth * 3 / 5;
+		mRect.bottom = mY + mHeight * 11 / 20;
 	}
 
 	@Override
@@ -143,7 +144,15 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 			boolean intersects = mRect.intersects(obj.getX(), obj.getY(), 
 				obj.getX() + obj.getWidth(), obj.getY() + obj.getHeight());
 			if (intersects) {
-				Log.d("danger", "danger, collide!");
+				Log.d("danger", "danger, collide!");		
+				mCollideWith.add(obj);
+			}
+		}
+		
+		if (mCollideWith.size() > 0) {
+			if (mOnCollideListener != null) {
+				mOnCollideListener.onCollide(this, mCollideWith);
+				mCollideWith.clear();
 			}
 		}
 	}

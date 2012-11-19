@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.neu.madcourse.binbo.R;
+import edu.neu.madcourse.binbo.rocketrush.splash.SplashView;
 import android.app.Activity;
 import android.content.Context;
 import android.hardware.Sensor;

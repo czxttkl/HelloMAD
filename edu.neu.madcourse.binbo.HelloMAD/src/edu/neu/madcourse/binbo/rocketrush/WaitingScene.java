@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import edu.neu.madcourse.binbo.rocketrush.gameobjects.Asteroid;
@@ -12,17 +13,19 @@ import edu.neu.madcourse.binbo.rocketrush.gameobjects.MenuBackgroundFar;
 import edu.neu.madcourse.binbo.rocketrush.gameobjects.MenuBackgroundNear;
 
 public class WaitingScene extends GameScene {
-	
+
 	private MenuBackgroundFar  mBackgroundFar  = null;
 	private MenuBackgroundNear mBackgroundNear = null;
 	// generate game elements according to the scene configuration
     private Random mRandom = new Random();
+    private Context mContext = null;
 	
-	public WaitingScene(Resources res) {
-		super(res);		
+	public WaitingScene(Context context) {
+		super(context.getResources());
+		mContext = context;
 	}	
 
-	public void load() {
+	public List<GameObject> load() {
 		if (mBackgroundFar == null) {
 			mBackgroundFar  = new MenuBackgroundFar(mRes);
 			mObjects.add(mBackgroundFar);
@@ -31,6 +34,8 @@ public class WaitingScene extends GameScene {
 			mBackgroundNear = new MenuBackgroundNear(mRes);			
 			mObjects.add(mBackgroundNear);
 		}
+		
+		return mObjects;
 	}
 	
 	public void release() {

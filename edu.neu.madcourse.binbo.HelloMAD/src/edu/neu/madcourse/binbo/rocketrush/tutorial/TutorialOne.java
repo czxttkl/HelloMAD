@@ -36,7 +36,7 @@ public class TutorialOne extends Fragment implements OnClickListener {
 		mView   = (TutorialView)root.findViewById(R.id.tutorialView1);
 		mButton = (ImageButton)root.findViewById(R.id.skipButton);
 		mView.setText("Tutorial 1");
-		mButton.setOnClickListener(this);		
+		mButton.setOnClickListener(this);	
 		return root;
 	}
 	
