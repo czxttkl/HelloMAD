@@ -25,7 +25,7 @@ public class BackgroundNear extends Background {
 	public void onSizeChanged(int width, int height) {
 		if (mImage == null) return;
 		// scale the background according to the surface size
-		float radio = (float) mHeight / (float) mWidth;	
+		float radio = mHeight / (float) mWidth;	
 		int scaledWidth  = width;
 		int scaledHeight = (int)(width * radio);
 		scaledHeight += mSpeedY - scaledHeight % mSpeedY;
