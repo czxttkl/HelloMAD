@@ -20,7 +20,7 @@ import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.widget.*;
 
-public class RocketRush extends Activity implements OnClickListener, OnTouchListener {	
+public class RocketRushActivity extends Activity implements OnClickListener, OnTouchListener {	
 	
 	protected SplashView mSplashView = null;
 	protected GameView mGameView = null;

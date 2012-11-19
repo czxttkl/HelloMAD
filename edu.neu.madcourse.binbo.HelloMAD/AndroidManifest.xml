@@ -121,7 +121,7 @@
 		</service>
 		
 		<!-- rocket_rush activities -->
-		<activity android:name=".rocketrush.RocketRush"
+		<activity android:name=".rocketrush.RocketRushActivity"
 		    android:screenOrientation="portrait"
 		    android:launchMode="singleTop"
             android:configChanges="orientation|keyboardHidden"
