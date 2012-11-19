@@ -80,7 +80,7 @@ public class RushScene extends GameScene {
 		mBarriers.removeAll(invisibles);
 		mObjects.removeAll(invisibles);
 		// generate static barrier
-		int pstatic = 1000 / GameEngine.ENGINE_SPEED + 1;
+		int pstatic = 1000 / GameEngine.ENGINE_SPEED * 3 / 2;
 		if (mRandom.nextInt(pstatic) == 1) {
 			Asteroid ast = new Asteroid(mRes);
 			ast.setX(mRandom.nextInt(mWidth - ast.getWidth() + 1));

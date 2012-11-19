@@ -21,6 +21,7 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 	protected int mLeftDuration  = 0;
 	protected int mRightDuration = 0;
 	protected int mUpDuration    = 0;
+	// rocket's area used to detect collision
 	protected Rect mRect = new Rect();
 
 	public Rocket(Resources res) {
@@ -83,10 +84,10 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 					(mCanvasHeight - mHeight) / 2 + mCanvasHeight / 4);
 		}
 		
-		mRect.left   = mX;
-		mRect.top    = mY;
-		mRect.right  = mX + mWidth;
-		mRect.bottom = mY + mHeight;
+		mRect.left   = mX + mWidth / 6;
+		mRect.top    = mY - mHeight / 8;
+		mRect.right  = mX + mWidth * 5 / 6;
+		mRect.bottom = mY + mHeight * 3 / 5;
 	}
 
 	@Override
@@ -103,10 +104,10 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 		mCanvasHeight = height;
 		mX = (width - mWidth) / 2;
 		mY = (height - mHeight) / 2 + height / 4;
-		mRect.left   = mX;
-		mRect.top    = mY;
-		mRect.right  = mX + mWidth;
-		mRect.bottom = mY + mHeight;
+		mRect.left   = mX + mWidth / 6;
+		mRect.top    = mY - mHeight / 8;
+		mRect.right  = mX + mWidth * 5 / 6;
+		mRect.bottom = mY + mHeight * 3 / 5;
 	}
 
 	@Override
@@ -114,11 +115,11 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 		int command = ctrl.getCommand();
 		
 		if (command == GameCtrl.MOVE_LEFT) {
-			mLeftDuration = 20;
+			mLeftDuration  = GameEngine.ENGINE_SPEED;
 			mRightDuration = 0;
 		} else if (command == GameCtrl.MOVE_RIGHT) {
-			mRightDuration = 20; 
-			mLeftDuration = 0;
+			mRightDuration = GameEngine.ENGINE_SPEED; 
+			mLeftDuration  = 0;
 		} else if (command == GameCtrl.MOVE_UP) {
 			mUpDuration = 1000;
 		} else if (command == GameCtrl.MOVE_DOWN) {
@@ -127,7 +128,7 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 	}
 
 	@Override
-	public void detectCollision(List<GameObject> objects) {
+	public void detectCollision(List<GameObject> objects) {		
 		
 		for (GameObject obj : objects) {
 			// won't collide to itself

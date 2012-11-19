@@ -8,14 +8,12 @@ import edu.neu.madcourse.binbo.R;
 public class MenuBackgroundFar extends Background {
 	public MenuBackgroundFar(Resources res) {
 		super(res);
-		setSpeed(0, 0);
 		setZOrder(ZOrders.BACKGROUND_FAR);
 		setImage(BitmapFactory.decodeResource(res, R.drawable.bg_menu));
 	}
 	
 	public MenuBackgroundFar(Resources res, Bitmap image) {
 		super(res);
-		setSpeed(0, 0);
 		setZOrder(ZOrders.BACKGROUND_FAR);
 		setImage(image);
 	}

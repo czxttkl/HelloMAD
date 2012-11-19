@@ -104,6 +104,9 @@ public class GameEngine {
     protected SensorEventListener mSensorListener = new SensorEventListener() {
         //int count = 0;
         //long last_time = System.currentTimeMillis();
+    	private float mLastX = 0;
+    	private float mLastY = 0;
+    	
         public void onSensorChanged(SensorEvent sensorEvent){  
             if(sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER){  
 //                Log.i(TAG, "onSensorChanged");  
@@ -120,10 +123,17 @@ public class GameEngine {
 //                Log.i(TAG,"\n roll " + z); 
 //                Log.i(TAG,"\n count " + count);
 //                count++;
-                if (Math.abs(x) >= 2 || Math.abs(y) >= 13) {
+                if (mLastX <= -2 && x > -2 && x < 2) {                
+                	mEventQueue.clear();
+                } else if (mLastX >= 2 && x > -2 && x < 2) {
+                	mEventQueue.clear();
+                } else if (Math.abs(x) >= 2 || Math.abs(y) >= 13) {
                 	ControlEvent e = new ControlEvent((int)x, (int)y, (int)z);
                 	mEventQueue.add(e);
                 }
+                
+                mLastX = x;
+                mLastY = y;
             }  
         }
  
