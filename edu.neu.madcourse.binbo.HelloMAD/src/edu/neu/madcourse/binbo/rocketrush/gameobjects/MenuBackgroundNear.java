@@ -8,14 +8,14 @@ import edu.neu.madcourse.binbo.R;
 public class MenuBackgroundNear extends Background {
 	public MenuBackgroundNear(Resources res) {
 		super(res);
-		setSpeed(1, 0);
+		setSpeed(2, 0);
 		setZOrder(ZOrders.BACKGROUND_NEAR);
 		setImage(BitmapFactory.decodeResource(res, R.drawable.bg_near_menu));
 	}
 	
 	public MenuBackgroundNear(Resources res, Bitmap image) {
 		super(res);
-		setSpeed(1, 0);
+		setSpeed(2, 0);
 		setZOrder(ZOrders.BACKGROUND_NEAR);
 		setImage(image);
 	}
