@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent">
+	android:layout_height="match_parent"
+	android:background="#b3ddff" >"
 
 	<edu.neu.madcourse.binbo.rocketrush.GameView
 	    android:id="@+id/rocketRushView"
@@ -13,15 +14,18 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_gravity="center"
-		android:layout_marginBottom="65dip"
-		android:src="@drawable/btn_rush_mode" />
+		android:layout_marginBottom="50dp"
+		android:src="@drawable/btn_rush_mode"
+		android:background="#00000000" />
 	
 	<ImageButton
 	    android:id="@+id/vsModeButton"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:layout_gravity="center"
-	    android:src="@drawable/btn_vs_mode" />
+	    android:layout_marginTop="10dip"
+	    android:src="@drawable/btn_vs_mode"
+	    android:background="#00000000" />
 	
 	<TextView 
 	    android:id="@+id/timerView" 

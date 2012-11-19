@@ -4,15 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import edu.neu.madcourse.binbo.rocketrush.gameobjects.*;
-
 import android.content.res.Resources;
 import android.graphics.Canvas;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.Asteroid;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.BackgroundNear;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.MenuBackgroundFar;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.MenuBackgroundNear;
 
 public class WaitingScene extends GameScene {
 	
-	private BackgroundFar  mBackgroundFar  = null;
-	private BackgroundNear mBackgroundNear = null;
+	private MenuBackgroundFar  mBackgroundFar  = null;
+	private MenuBackgroundNear mBackgroundNear = null;
 	// generate game elements according to the scene configuration
     private Random mRandom = new Random();
 	
@@ -22,11 +24,11 @@ public class WaitingScene extends GameScene {
 
 	public void load() {
 		if (mBackgroundFar == null) {
-			mBackgroundFar  = new BackgroundFar(mRes);
+			mBackgroundFar  = new MenuBackgroundFar(mRes);
 			mObjects.add(mBackgroundFar);
 		}
 		if (mBackgroundNear == null) {
-			mBackgroundNear = new BackgroundNear(mRes);			
+			mBackgroundNear = new MenuBackgroundNear(mRes);			
 			mObjects.add(mBackgroundNear);
 		}
 	}
@@ -49,7 +51,7 @@ public class WaitingScene extends GameScene {
 
 	@Override
 	public List<GameObject> updateBarriers() {
-		// surface has not been created
+		/*// surface has not been created
 		if (mWidth == 0 || mHeight == 0) {
 			return null;
 		}
@@ -90,8 +92,8 @@ public class WaitingScene extends GameScene {
 			mObjects.add(ast);
 		}
 		// order by Z
-		orderByZ(mObjects);
+		orderByZ(mObjects);*/
 		
-		return mBarriers;
+		return new ArrayList<GameObject>();
 	}
 }

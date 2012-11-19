@@ -36,6 +36,14 @@ public class Background extends GameObject {
 			c.drawBitmap(mImage, mX, mY - mHeight, null);
 			c.drawBitmap(mImage, mX, mY, null);
 		}
+		
+		if (mX >= mWidth) {
+			mX = 0;
+			c.drawBitmap(mImage, mX, mY, null);
+		} else {
+			c.drawBitmap(mImage, mX - mWidth, mY, null);
+			c.drawBitmap(mImage, mX, mY, null);
+		}
 	}
 
 	@Override
