@@ -39,6 +39,7 @@ public class TutorialView extends View {
 		int height = getHeight();
 		
 		canvas.drawText(mText, width / 2, height / 2, mPaint);
+		
 	}
 
 }

@@ -19,12 +19,14 @@ public class TutorialActivity extends FragmentActivity {
         setupView();
         setTab();
     }
+    
     private void setupView(){    	
     	mViewPager = (ViewPager)findViewById(R.id.viewPager);
-    	mAdapter = new ViewPagerAdapter(getApplicationContext(), getSupportFragmentManager());
+    	mAdapter = new ViewPagerAdapter(this, getSupportFragmentManager());
 	    mViewPager.setAdapter(mAdapter);
 	    mViewPager.setCurrentItem(0);
     }
+    
     private void setTab() {
     	mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
 				    		
