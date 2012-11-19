@@ -25,6 +25,13 @@
 		        android:visibility="invisible" >
 	        </LinearLayout>
 	        
+	        <!-- Third Tab indicator -->
+	        <LinearLayout
+		        style="@style/indicator_style"
+		        android:id="@+id/third_tab"
+		        android:visibility="invisible" >
+	        </LinearLayout>
+	        
         </TableRow>
     </TableLayout>
     

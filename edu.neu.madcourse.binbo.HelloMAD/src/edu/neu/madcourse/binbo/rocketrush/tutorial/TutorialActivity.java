@@ -15,12 +15,12 @@ public class TutorialActivity extends FragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.tutorial);
         setupView();
         setTab();
     }
     private void setupView(){    	
-    	//mViewPager = (ViewPager) findViewById(R.id.viewPager);
+    	mViewPager = (ViewPager)findViewById(R.id.viewPager);
     	mAdapter = new ViewPagerAdapter(getApplicationContext(), getSupportFragmentManager());
 	    mViewPager.setAdapter(mAdapter);
 	    mViewPager.setCurrentItem(0);
@@ -38,11 +38,17 @@ public class TutorialActivity extends FragmentActivity {
 				case 0:
 					findViewById(R.id.first_tab).setVisibility(View.VISIBLE);
 					findViewById(R.id.second_tab).setVisibility(View.INVISIBLE);
-					break;
-					
+					findViewById(R.id.third_tab).setVisibility(View.INVISIBLE);
+					break;					
 				case 1:
 					findViewById(R.id.first_tab).setVisibility(View.INVISIBLE);
 					findViewById(R.id.second_tab).setVisibility(View.VISIBLE);
+					findViewById(R.id.third_tab).setVisibility(View.INVISIBLE);
+					break;
+				case 2:
+					findViewById(R.id.first_tab).setVisibility(View.INVISIBLE);
+					findViewById(R.id.second_tab).setVisibility(View.INVISIBLE);
+					findViewById(R.id.third_tab).setVisibility(View.VISIBLE);
 					break;
 				}
 			}

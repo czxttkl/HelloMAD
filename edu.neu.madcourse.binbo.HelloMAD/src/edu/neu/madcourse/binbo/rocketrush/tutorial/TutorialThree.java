@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 
 public class TutorialThree extends Fragment {
 
+	private TutorialView mView = null;
+	
 	public static Fragment newInstance(Context context) {
 		TutorialThree f = new TutorialThree();	
 		
@@ -18,7 +20,9 @@ public class TutorialThree extends Fragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-		ViewGroup root = (ViewGroup) inflater.inflate(R.layout.tutorial_3, null);		
+		ViewGroup root = (ViewGroup) inflater.inflate(R.layout.tutorial_3, null);
+		mView = (TutorialView)root.findViewById(R.id.tutorialView3);
+		mView.setText("Tutorial 3");
 		return root;
 	}
 	

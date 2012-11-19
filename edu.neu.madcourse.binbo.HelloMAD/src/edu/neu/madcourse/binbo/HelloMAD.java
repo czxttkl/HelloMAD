@@ -8,6 +8,7 @@ import android.view.View.OnClickListener;
 import edu.neu.madcourse.binbo.boggle.Boggle;
 import edu.neu.madcourse.binbo.persistentboggle.PBWelcome;
 import edu.neu.madcourse.binbo.rocketrush.RocketRushActivity;
+import edu.neu.madcourse.binbo.rocketrush.tutorial.TutorialActivity;
 import edu.neu.madcourse.binbo.sudoku.Sudoku;
 import edu.neu.mobileClass.*;
 
@@ -64,7 +65,8 @@ public class HelloMAD extends Activity implements OnClickListener {
 			startActivity(i);
 			break;
 		case R.id.trickiest_button:
-			i = new Intent(this, RocketRushActivity.class);
+			//i = new Intent(this, RocketRushActivity.class);
+			i = new Intent(this, TutorialActivity.class);
 			startActivity(i);
 			break;
 		// More buttons go here (if any) ...

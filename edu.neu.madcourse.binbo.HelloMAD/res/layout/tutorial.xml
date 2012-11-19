@@ -5,7 +5,7 @@
     android:background="@color/white"
     android:orientation="vertical" >
 
-    <TableLayout
+   <!--  <TableLayout
         style="@style/layout_f_w"
         android:stretchColumns="*" >
         <TableRow
@@ -13,7 +13,7 @@
             android:background="#dddddd"
             style="@style/layout_wrap">            
             
-            <!-- First Tab -->
+            First Tab
 	        <LinearLayout
 		        style="@style/layout_f_w"
 		        android:id="@+id/first_text"
@@ -24,19 +24,30 @@
 	                android:text="Tab1" />                           
 	        </LinearLayout>
 	           
-	        <!-- Second Tab -->
+	        Second Tab
 	        <LinearLayout
 		        style="@style/layout_f_w"
 		        android:id="@+id/second_text"
 		        android:orientation="vertical" >
                 <TextView
-                    android:id="@+id/textView1"
+                    android:id="@+id/textView2"
                     style="@style/text_title"
                     android:text="Tab2" />
 	        </LinearLayout>
+	        
+	        Second Tab
+	        <LinearLayout
+		        style="@style/layout_f_w"
+		        android:id="@+id/third_text"
+		        android:orientation="vertical" >
+                <TextView
+                    android:id="@+id/textView3"
+                    style="@style/text_title"
+                    android:text="Tab3" />
+	        </LinearLayout>
 	     
         </TableRow>
-    </TableLayout>
+    </TableLayout> -->
     
     <!-- Include Tab Indicator  -->
  	<include 
