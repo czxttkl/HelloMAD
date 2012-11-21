@@ -61,23 +61,26 @@ public class SpeedBar extends GameObject implements GameObject.IDrawer {
 	}
 
 	@Override
-	public void doDraw(Canvas c) {		             	    
-	    c.drawRoundRect(r1, 12, 12, mPaint1);	    	    
-	    c.drawRoundRect(r2, 9, 9, mPaint2);
-	    
-	    if (mUpDuration > 0) {
+	public void update() {
+		if (mUpDuration > 0) {
 			mY = Math.max(mY - mSpeedY, mBarTop);
 			mUpDuration -= GameEngine.ENGINE_SPEED;
 		} else {
-			mY = Math.min(mY + mSpeedY / 2, mBarBottom);
+			mY = Math.min(mY + mSpeedY, mBarBottom);
 			mUpDuration = 0;
-		}
-	    
+		} 
+	}
+	
+	@Override
+	public void doDraw(Canvas c) {		             	    
+	    c.drawRoundRect(r1, 12, 12, mPaint1);	    	    
+	    c.drawRoundRect(r2, 9, 9, mPaint2);
+	    	    
 	    r3.left   = 33;
 	    r3.top    = mY;
 	    r3.right  = 51;
 	    r3.bottom = mBarBottom;
-	    c.drawRoundRect(r3, 9, 9, mPaint3);	    
+	    c.drawRoundRect(r3, 9, 9, mPaint3);
 	}
 
 	// too many magic numbers in the class, I will modify later. :P
@@ -99,14 +102,14 @@ public class SpeedBar extends GameObject implements GameObject.IDrawer {
 	    mBarTop    = mCanvasHeight * 3 / 5 + 3;
 	    mBarBottom = mCanvasHeight - 53;   
 	    mY = mBarBottom;	   
-	    setSpeed(0, (mBarBottom - mBarTop) / (2000 / GameEngine.ENGINE_SPEED));
+	    setSpeed(0, (mBarBottom - mBarTop) / (float)(3000 / GameEngine.ENGINE_SPEED));
 	}
 
 	@Override
 	public void operate(GameCtrl ctrl) {
 		int command = ctrl.getCommand();
 
-		if (command == GameCtrl.MOVE_UP) {
+		if (command == GameCtrl.MOVE_VERT) {
 			mUpDuration = 1000;
 		}
 	}

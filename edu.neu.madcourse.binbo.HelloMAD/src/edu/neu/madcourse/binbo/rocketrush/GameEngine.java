@@ -89,7 +89,7 @@ public class GameEngine {
 					mCtrls.add(new GameCtrl(GameCtrl.MOVE_RIGHT));
 				}
 				if (Math.abs(ce.mAccY) >= 13) {
-					mCtrls.add(new GameCtrl(GameCtrl.MOVE_UP));
+					mCtrls.add(new GameCtrl(GameCtrl.MOVE_VERT));
 				}
 			}
 		}

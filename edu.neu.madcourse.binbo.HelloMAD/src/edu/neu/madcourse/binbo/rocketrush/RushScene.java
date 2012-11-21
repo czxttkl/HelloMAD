@@ -78,7 +78,7 @@ public class RushScene extends GameScene {
 		int edgeLeft  = -mWidth;
 		int edgeRight = mWidth << 1;
 		for (GameObject b : mBarriers) {
-			int x = b.getX(), y = b.getY();
+			float x = b.getX(), y = b.getY();
 			if (x < edgeLeft || x > edgeRight || y > mHeight) {
 				invisibles.add(b);
 				b.release();
@@ -86,12 +86,16 @@ public class RushScene extends GameScene {
 		}
 		mBarriers.removeAll(invisibles);
 		mObjects.removeAll(invisibles);
+		// get the acceleration time 
+		int accTime = mRocket.getAccTime();
 		// generate static barrier
 		int pstatic = 1000 / GameEngine.ENGINE_SPEED * 3 / 2;
 		if (mRandom.nextInt(pstatic) == 1) {
 			Asteroid ast = new Asteroid(mRes);
 			ast.setX(mRandom.nextInt(mWidth - ast.getWidth() + 1));
 			ast.setY(0 - ast.getHeight() << 1);
+			ast.initSpeeds(0, mRandom.nextInt(4) + 3, accTime);
+			ast.onSizeChanged(mWidth, mHeight);
 			ast.setOnCollideListener(this);
 			mBarriers.add(ast);
 			mObjects.add(ast);
@@ -103,10 +107,12 @@ public class RushScene extends GameScene {
 			boolean left2Right = mRandom.nextBoolean();
 			ast.setX(left2Right ? -ast.getWidth() : mWidth + ast.getWidth());
 			ast.setY(mRandom.nextInt(mHeight >> 2));
-			ast.setSpeed(
+			ast.initSpeeds(
 				left2Right ? mRandom.nextInt(3) + 3 : -3 - mRandom.nextInt(3),   
-				mRandom.nextInt(5) + 3
+				mRandom.nextInt(4) + 3,
+				accTime
 			);
+			ast.onSizeChanged(mWidth, mHeight);
 			ast.setOnCollideListener(this);
 			mBarriers.add(ast);
 			mObjects.add(ast);

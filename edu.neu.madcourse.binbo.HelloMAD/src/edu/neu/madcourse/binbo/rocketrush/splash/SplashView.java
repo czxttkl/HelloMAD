@@ -11,7 +11,7 @@ import android.view.View;
 public class SplashView extends View {
 
 	private int mProgress = 0;
-	private Paint  mPaint = null;  // used for testing only
+	private Paint mPaint = null;  // used for testing only
 	
 	public SplashView(Context context, AttributeSet attrs) {
 		super(context, attrs);

@@ -8,7 +8,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 
 public class SplashActivity extends Activity {
@@ -18,14 +17,18 @@ public class SplashActivity extends Activity {
 	private boolean mActive = true;
 	private int mSplashTime = 2000;	
 	private Intent mIntent = null;
+	private boolean mFirst = true;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
         
+        // get flag which indicate whether the app is opened for the first time
+        mFirst = getPreferences(MODE_PRIVATE).getBoolean("first", true);
+        
         setupView();    
-        createIntent();
+        createIntent();        
         // thread for displaying the SplashScreen
         mThread = new SplashThread(mHandler);
         mThread.start();
@@ -37,26 +40,25 @@ public class SplashActivity extends Activity {
 
 	@Override
 	protected void onPause() {
-		// TODO Auto-generated method stub
+		getPreferences(MODE_PRIVATE).edit().putBoolean("first", false).commit();
 		super.onPause();
 	}
 
 	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
+	protected void onResume() {		
 		super.onResume();
 	}
 
 	protected void createIntent() {
-		if (isOpenedFirstTime()) {
+		if (isFirstOpened()) {
 			mIntent = new Intent(this, TutorialActivity.class);
 		} else {
 			mIntent = new Intent(this, RocketRushActivity.class);
 		}
 	}
 	
-	protected boolean isOpenedFirstTime() {
-		return true;
+	protected boolean isFirstOpened() {
+		return mFirst;
 	}		
 	
 	private final static int MSG_THREAD_JOIN = 1;

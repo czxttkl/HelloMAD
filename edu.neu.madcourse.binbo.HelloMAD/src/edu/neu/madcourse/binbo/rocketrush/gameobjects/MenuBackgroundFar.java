@@ -4,8 +4,11 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import edu.neu.madcourse.binbo.R;
+import edu.neu.madcourse.binbo.rocketrush.GameCtrl;
+import edu.neu.madcourse.binbo.rocketrush.GameEngine;
 
 public class MenuBackgroundFar extends Background {
+
 	public MenuBackgroundFar(Resources res) {
 		super(res);
 		setZOrder(ZOrders.BACKGROUND_FAR);
@@ -31,4 +34,5 @@ public class MenuBackgroundFar extends Background {
 		mImage.recycle(); // explicit call to avoid out of memory
 		setImage(newImage);	
 	}
+	
 }

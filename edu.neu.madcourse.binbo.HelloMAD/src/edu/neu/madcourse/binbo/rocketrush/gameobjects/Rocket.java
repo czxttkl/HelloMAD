@@ -21,6 +21,10 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 	protected int mLeftDuration  = 0;
 	protected int mRightDuration = 0;
 	protected int mUpDuration    = 0;
+	protected int mUpper  = 0;
+	protected int mBottom = 0;
+	public final static float DEFAULT_SPEED_X = 8;
+	public final static float DEFAULT_SPEED_Y = 4;
 	// rocket's area used to detect collision
 	protected Rect mRect = new Rect();
 	protected List<GameObject> mCollideWith = new ArrayList<GameObject>();
@@ -28,8 +32,9 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 	public Rocket(Resources res) {
 		super(res);
 		setKind(ROCKET);
-		setSpeed(7, 5);
-		setMovable(true);		
+		setMovable(true);	
+		setSpeed(DEFAULT_SPEED_X, DEFAULT_SPEED_Y);
+		setMaxSpeed(DEFAULT_SPEED_X, DEFAULT_SPEED_Y);			
 		setZOrder(ZOrders.ROCKET);
 		addImage(BitmapFactory.decodeResource(res, R.drawable.ship2_1));
 		addImage(BitmapFactory.decodeResource(res, R.drawable.ship2_2));
@@ -40,10 +45,11 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 	}
 	
 	public Rocket(Resources res, List<Bitmap> images) {
-		super(res);
+		super(res);		
 		setKind(ROCKET);
-		setSpeed(7, 5);
-		setMovable(true);		
+		setMovable(true);
+		setSpeed(DEFAULT_SPEED_X, DEFAULT_SPEED_Y);
+		setMaxSpeed(DEFAULT_SPEED_X, DEFAULT_SPEED_Y);			
 		setZOrder(ZOrders.ROCKET);
 		for (Bitmap image : images) {
 			addImage(image);
@@ -54,6 +60,10 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 
 	public void addImage(Bitmap image) {
 		mImages.add(image);
+	}
+	
+	public int getAccTime() {
+		return (int)((mBottom - mY) / mSpeedY);
 	}
 
 	protected int mCurIndex = 0;
@@ -78,17 +88,16 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 		}
 		
 		if (mUpDuration > 0) {
-			mY = Math.max(mY - mSpeedY, mCanvasHeight / 4);
+			mY = Math.max(mY - mSpeedY, mUpper);
 			mUpDuration -= GameEngine.ENGINE_SPEED;
 		} else {
-			mY = Math.min(mY + mSpeedY / 2, 
-					(mCanvasHeight - mHeight) / 2 + mCanvasHeight / 4);
+			mY = Math.min(mY + mSpeedY, mBottom);
 		}
 		
-		mRect.left   = mX + mWidth * 2 / 5;
-		mRect.top    = mY + mHeight / 3;
-		mRect.right  = mX + mWidth * 3 / 5;
-		mRect.bottom = mY + mHeight * 11 / 20;
+		mRect.left   = (int)mX + mWidth * 2 / 5;
+		mRect.top    = (int)mY + mHeight / 3;
+		mRect.right  = (int)mX + mWidth * 3 / 5;
+		mRect.bottom = (int)mY + mHeight / 2;
 	}
 
 	@Override
@@ -105,10 +114,16 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 		mCanvasHeight = height;
 		mX = (width - mWidth) / 2;
 		mY = (height - mHeight) / 2 + height / 4;
-		mRect.left   = mX + mWidth * 2 / 5;
-		mRect.top    = mY + mHeight / 3;
-		mRect.right  = mX + mWidth * 3 / 5;
-		mRect.bottom = mY + mHeight * 11 / 20;
+		
+		mRect.left   = (int)mX + mWidth * 2 / 5;
+		mRect.top    = (int)mY + mHeight / 3;
+		mRect.right  = (int)mX + mWidth * 3 / 5;
+		mRect.bottom = (int)mY + mHeight / 2;
+	
+		mUpper  = (mCanvasHeight - mHeight) * 9 / 20;
+		mBottom = (mCanvasHeight - mHeight) / 2 + mCanvasHeight / 4;
+		setSpeed(DEFAULT_SPEED_X, (mBottom - mUpper) / (float)(3000 / GameEngine.ENGINE_SPEED));
+		setMaxSpeed(DEFAULT_SPEED_X, (mBottom - mUpper) / (float)(3000 / GameEngine.ENGINE_SPEED));
 	}
 
 	@Override
@@ -121,11 +136,9 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 		} else if (command == GameCtrl.MOVE_RIGHT) {
 			mRightDuration = GameEngine.ENGINE_SPEED; 
 			mLeftDuration  = 0;
-		} else if (command == GameCtrl.MOVE_UP) {
+		} else if (command == GameCtrl.MOVE_VERT) {
 			mUpDuration = 1000;
-		} else if (command == GameCtrl.MOVE_DOWN) {
-			
-		}
+		} 
 	}
 
 	@Override
@@ -141,8 +154,9 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 				continue;
 			}
 			
-			boolean intersects = mRect.intersects(obj.getX(), obj.getY(), 
-				obj.getX() + obj.getWidth(), obj.getY() + obj.getHeight());
+			boolean intersects = mRect.intersects(
+				(int)obj.getX(), (int)obj.getY(), 
+				(int)obj.getX() + obj.getWidth(), (int)obj.getY() + obj.getHeight());
 			if (intersects) {
 				Log.d("danger", "danger, collide!");		
 				mCollideWith.add(obj);
