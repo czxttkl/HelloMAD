@@ -54,10 +54,13 @@ public class WaitingMode extends GameMode {
 					mEngine.updateGameScene(mScene);
 				}
 				
-				try {
-					sleep(GameEngine.ENGINE_SPEED);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+				synchronized (this) {
+					try {
+						wait(GameEngine.ENGINE_SPEED);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 
