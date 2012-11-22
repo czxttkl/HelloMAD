@@ -41,6 +41,7 @@ public class SplashActivity extends Activity {
 	@Override
 	protected void onPause() {
 		getPreferences(MODE_PRIVATE).edit().putBoolean("first", false).commit();
+		mView.release();
 		super.onPause();
 	}
 
