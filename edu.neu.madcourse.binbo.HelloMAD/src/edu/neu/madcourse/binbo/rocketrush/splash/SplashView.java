@@ -1,17 +1,21 @@
 package edu.neu.madcourse.binbo.rocketrush.splash;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.view.View;
+import edu.neu.madcourse.binbo.R;
 
 public class SplashView extends View {
 
 	private int mProgress = 0;
 	private Paint mPaint = null;  // used for testing only
+	private Bitmap mImage = null;
 	
 	public SplashView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -21,20 +25,24 @@ public class SplashView extends View {
 		mPaint.setStyle(Style.FILL);
 		mPaint.setTextSize(40);
 		mPaint.setTextAlign(Paint.Align.CENTER);
+		
+		mImage = BitmapFactory.decodeResource(
+				context.getResources(), R.drawable.splash);
 	}
 
 	@Override
 	protected void onDraw(Canvas canvas) {
 		// Draw the background with bitmap
+		canvas.drawBitmap(mImage, 0, 0, null);
 		
 		// Draw the rocket
 		
 		// Draw the progress dots
-		canvas.drawColor(Color.DKGRAY);
+		/*canvas.drawColor(Color.DKGRAY);
 
 		int width  = getWidth();
 		int height = getHeight();		
-		canvas.drawText("Splash Screen", width / 2, height / 2, mPaint);
+		canvas.drawText("Splash Screen", width / 2, height / 2, mPaint);*/
 	}
 
 	public void updateProgress(int progress) {
