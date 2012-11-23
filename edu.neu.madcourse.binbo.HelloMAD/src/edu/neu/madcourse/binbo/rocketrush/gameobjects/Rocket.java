@@ -150,14 +150,18 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 				continue;
 			}
 			// skip the speed bar and backgrounds because they are also in the list
-			if (obj.getKind() == SPEEDBAR || obj.getKind() == BACKGROUND) {
+			if (obj.getKind() == SPEEDBAR || obj.getKind() == BACKGROUND || 
+				obj.getKind() == LEVEL || obj.getKind() == ODOMETER) {
 				continue;
-			}
+			}						
 			
 			boolean intersects = mRect.intersects(
 				(int)obj.getX(), (int)obj.getY(), 
 				(int)(obj.getX() + obj.getWidth()), (int)(obj.getY() + obj.getHeight()));
 			if (intersects) {
+				if (!obj.getCollidable()) {
+					continue;
+				}
 				Log.d("danger", "danger, collide!");		
 				mCollideWith.add(obj);
 			}
@@ -166,6 +170,9 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 		if (mCollideWith.size() > 0) {
 			if (mOnCollideListener != null) {
 				mOnCollideListener.onCollide(this, mCollideWith);
+				for (GameObject obj : mCollideWith) {
+					obj.setCollidable(false);
+				}
 				mCollideWith.clear();
 			}
 		}

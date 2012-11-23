@@ -28,9 +28,9 @@ public class SplashView extends View {
 		super(context, attrs);
 		
 		mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		mPaint.setColor(Color.GRAY);
+		mPaint.setColor(0xff404040);
 		mPaint.setStyle(Style.FILL);
-		mPaint.setTextSize(30);
+		mPaint.setTextSize(35);
 		mPaint.setTextAlign(Paint.Align.CENTER);
 		
 		Resources res = context.getResources();

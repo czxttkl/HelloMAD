@@ -4,23 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import edu.neu.madcourse.binbo.rocketrush.gameobjects.Asteroid;
-import edu.neu.madcourse.binbo.rocketrush.gameobjects.BackgroundFar;
-import edu.neu.madcourse.binbo.rocketrush.gameobjects.BackgroundNear;
-import edu.neu.madcourse.binbo.rocketrush.gameobjects.Rocket;
-import edu.neu.madcourse.binbo.rocketrush.gameobjects.SpeedBar;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.*;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.Odometer.OnOdometerUpdateListener;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.os.Vibrator;
 
 
-public class RushScene extends GameScene {	
+public class RushScene extends GameScene implements OnOdometerUpdateListener {	
 
 	private Rocket mRocket = null;
+	private LifeBar mLifeBar = null;
 	private SpeedBar mSpeedBar = null;
 	private BackgroundFar  mBackgroundFar  = null;
 	private BackgroundNear mBackgroundNear = null;
+	private Level mLevel = null;
+	private Odometer mOdometer = null;
 	private Random mRandom = new Random();
 	private Context mContext = null;
 	
@@ -47,6 +46,21 @@ public class RushScene extends GameScene {
 			mRocket.setOnCollideListener(this);
 			mObjects.add(mRocket);
 		}
+		if (mLevel == null) {
+			mLevel = new Level(mRes);
+			mObjects.add(mLevel);
+		}
+		if (mOdometer == null) {
+			mOdometer = new Odometer(mRes);
+			mOdometer.setOdometerUpdateListener(this);
+			mObjects.add(mOdometer);
+		}
+		if (mLifeBar == null) {
+			mLifeBar = new LifeBar(mRes);	
+			mObjects.add(mLifeBar);
+		}
+		// order by Z
+		orderByZ(mObjects);
 		
 		return mObjects;
 	}
@@ -89,7 +103,7 @@ public class RushScene extends GameScene {
 		// get the acceleration time 
 		int accTime = mRocket.getAccTime();
 		// generate static barrier
-		int pstatic = 1000 / GameEngine.ENGINE_SPEED * 3 / 2;
+		int pstatic = 1000 / GameEngine.ENGINE_SPEED;
 		if (mRandom.nextInt(pstatic) == 1) {
 			Asteroid ast = new Asteroid(mRes);
 			ast.setX(mRandom.nextInt((int)(mWidth - ast.getWidth() + 1)));
@@ -126,6 +140,15 @@ public class RushScene extends GameScene {
 	@Override
 	public void onCollide(GameObject obj, List<GameObject> collideWith) {
 		Vibrator vibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
-		vibrator.vibrate(50);
+		vibrator.vibrate(30);
+		mLifeBar.lifeDown(1 / 3f);
+	}
+
+	public void onReachTarget(int odometer) {
+		mLifeBar.lifeUp(0.01f);
+	}
+
+	public void onReachMilestone(int odometer) {			
+		mLevel.levelUp();
 	}
 }

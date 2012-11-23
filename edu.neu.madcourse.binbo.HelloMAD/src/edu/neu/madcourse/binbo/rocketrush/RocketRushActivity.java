@@ -36,7 +36,7 @@ public class RocketRushActivity extends Activity implements OnClickListener, OnT
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		super.onCreate(savedInstanceState);						
+		super.onCreate(savedInstanceState);			
 		setContentView(R.layout.rocket_rush);					
 	    
 		//loadPreferences(command);
@@ -68,8 +68,7 @@ public class RocketRushActivity extends Activity implements OnClickListener, OnT
 		if (mCurMode == mModes.get(modeTo)) {
 			return;
 		}		
-		// pause the drawer
-		mGameView.getDrawer().pause(true);
+
 		// first stop to update the scene using game engine
 		mCurMode.stop();	
 		// get the new game mode
@@ -78,8 +77,7 @@ public class RocketRushActivity extends Activity implements OnClickListener, OnT
 		mGameView.getDrawer().setGameScene(mCurMode.getScene());		
 		// finally start the new game mode
 		mCurMode.start();
-		mGameView.getDrawer().pause(false);
-		
+
 		// ...
 		mRushModeButton.setVisibility(View.INVISIBLE);
 		mVSModeButton.setVisibility(View.INVISIBLE);
@@ -118,9 +116,9 @@ public class RocketRushActivity extends Activity implements OnClickListener, OnT
         		SensorManager.SENSOR_DELAY_GAME // 20ms on my s3
         	);                 	
         }        
-		
-        mCurMode.start();
+		                
 		mGameView.onResume(mCurMode.getScene());
+		mCurMode.start();
 	}
 
 	@Override
@@ -168,6 +166,10 @@ public class RocketRushActivity extends Activity implements OnClickListener, OnT
 	}
 
 	private void adjustLayout() {
+		getWindow().setFlags(
+			WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, 
+			WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+		);  
 		getWindow().setFlags(
 			WindowManager.LayoutParams.FLAG_FULLSCREEN, 
 			WindowManager.LayoutParams.FLAG_FULLSCREEN

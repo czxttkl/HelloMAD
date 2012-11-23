@@ -73,6 +73,15 @@ public class GameDrawer extends BaseThread {
                 	mHolder.unlockCanvasAndPost(c);
                 }
             } // end finally block
+			
+			synchronized (this) {
+				try {
+					wait(5);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 
 			while (mPause) {
 				try {

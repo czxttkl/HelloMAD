@@ -17,8 +17,8 @@ public class SpeedBar extends GameObject implements GameObject.IDrawer {
 	protected int mCanvasWidth  = 0;
 	protected int mCanvasHeight = 0;
 	// bottom
-	protected int mBarTop    = 0;
-	protected int mBarBottom = 0;
+	protected float mBarTop    = 0;
+	protected float mBarBottom = 0;
 	// bad name, but short : P
 	protected Paint mPaint1 = new Paint();
 	protected Paint mPaint2 = new Paint(); 
@@ -75,11 +75,8 @@ public class SpeedBar extends GameObject implements GameObject.IDrawer {
 	public void doDraw(Canvas c) {		             	    
 	    c.drawRoundRect(r1, 12, 12, mPaint1);	    	    
 	    c.drawRoundRect(r2, 9, 9, mPaint2);
-	    	    
-	    r3.left   = 33;
-	    r3.top    = mY;
-	    r3.right  = 51;
-	    r3.bottom = mBarBottom;
+
+	    r3.top = mY;
 	    c.drawRoundRect(r3, 9, 9, mPaint3);
 	}
 
@@ -90,19 +87,24 @@ public class SpeedBar extends GameObject implements GameObject.IDrawer {
 		mCanvasHeight = height;
 		
 		r1.left   = 30;
-	    r1.top    = mCanvasHeight * 3 / 5;
+	    r1.top    = mCanvasHeight * 0.65f;
 	    r1.right  = 54;
-	    r1.bottom = mCanvasHeight - 50;
+	    r1.bottom = mCanvasHeight * 0.9f;
 	    
-	    r2.left   = 33;
-	    r2.top    = mCanvasHeight * 3 / 5 + 3;
-	    r2.right  = 51;
-	    r2.bottom = mCanvasHeight - 53;
+	    r2.left   = 32;
+	    r2.top    = mCanvasHeight * 0.65f + 2;
+	    r2.right  = 52;
+	    r2.bottom = mCanvasHeight * 0.9f - 2;
 	    
-	    mBarTop    = mCanvasHeight * 3 / 5 + 3;
-	    mBarBottom = mCanvasHeight - 53;   
+	    r3.left   = 32;
+	    r3.top    = 0;
+	    r3.right  = 52;
+	    r3.bottom = mCanvasHeight * 0.9f - 2;;
+	    
+	    mBarTop    = mCanvasHeight * 0.65f + 2;
+	    mBarBottom = mCanvasHeight * 0.9f - 2;   
 	    mY = mBarBottom;	   
-	    setSpeed(0, (mBarBottom - mBarTop) / (float)(3000 / GameEngine.ENGINE_SPEED));
+	    setSpeed(0, (mBarBottom - mBarTop) / (3000f / GameEngine.ENGINE_SPEED));
 	}
 
 	@Override

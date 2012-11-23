@@ -66,4 +66,5 @@ public class BackgroundNear extends Background {
 			mY += mSpeedY;
 		}
 	}
+
 }

@@ -14,6 +14,9 @@ public class GameObject {
 	public final static int BACKGROUND = 2;
 	public final static int ROCKET	   = 3;
 	public final static int SPEEDBAR   = 4;
+	public final static int LIFEBAR	   = 5;
+	public final static int LEVEL	   = 6;
+	public final static int ODOMETER   = 7;
 	
 	protected float mX = 0;
 	protected float mY = 0;
@@ -29,6 +32,7 @@ public class GameObject {
 	protected int mZOrder = 0;
 	protected boolean mVisible = true;
 	protected boolean mMovable = false;
+	protected boolean mCollidable = true;
 	
 	protected Resources mRes = null;
 	protected OnCollideListener mOnCollideListener = null;
@@ -110,6 +114,10 @@ public class GameObject {
 	public void setMovable(boolean movable) { mMovable = movable; }
 	
 	public boolean getMovable() { return mMovable; }
+	
+	public void setCollidable(boolean collidable) { mCollidable = collidable; }
+	
+	public boolean getCollidable() { return mCollidable; }
 	
 	public void setResources(Resources res) { mRes = res; }
 	
