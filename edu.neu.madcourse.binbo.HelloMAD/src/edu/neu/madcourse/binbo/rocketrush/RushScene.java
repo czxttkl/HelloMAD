@@ -92,8 +92,8 @@ public class RushScene extends GameScene {
 		int pstatic = 1000 / GameEngine.ENGINE_SPEED * 3 / 2;
 		if (mRandom.nextInt(pstatic) == 1) {
 			Asteroid ast = new Asteroid(mRes);
-			ast.setX(mRandom.nextInt(mWidth - ast.getWidth() + 1));
-			ast.setY(0 - ast.getHeight() << 1);
+			ast.setX(mRandom.nextInt((int)(mWidth - ast.getWidth() + 1)));
+			ast.setY(0 - ast.getHeight() / 2);
 			ast.initSpeeds(0, mRandom.nextInt(4) + 3, accTime);
 			ast.onSizeChanged(mWidth, mHeight);
 			ast.setOnCollideListener(this);

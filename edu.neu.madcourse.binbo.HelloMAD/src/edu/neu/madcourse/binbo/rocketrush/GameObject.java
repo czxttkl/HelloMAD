@@ -17,8 +17,8 @@ public class GameObject {
 	
 	protected float mX = 0;
 	protected float mY = 0;
-	protected int mWidth = 0;
-	protected int mHeight = 0;
+	protected float mWidth = 0;
+	protected float mHeight = 0;
 	protected float mSpeedX = 0;
 	protected float mSpeedY = 0;
 	protected float mMaxSpeedX = 0;
@@ -57,13 +57,13 @@ public class GameObject {
 	
 	public float getY() { return mY; }
 	
-	public void setWidth(int width) { mWidth = width; }
+	public void setWidth(float width) { mWidth = width; }
 	
-	public int getWidth() { return mWidth; }
+	public float getWidth() { return mWidth; }
 	
-	public void setHeight(int height) { mHeight = height; }
+	public void setHeight(float height) { mHeight = height; }
 	
-	public int getHeight() { return mHeight; }
+	public float getHeight() { return mHeight; }
 	
 	public void setSpeed(float x, float y) { setSpeedX(x); setSpeedY(y); }
 	
@@ -145,8 +145,8 @@ public class GameObject {
 			obj = new JSONObject(strJSON);
 			mX = (float)obj.getDouble("x");
 			mY = (float)obj.getDouble("y");
-			mWidth  = obj.getInt("width");
-			mHeight = obj.getInt("height");
+			mWidth  = (float)obj.getDouble("width");
+			mHeight = (float)obj.getDouble("height");
 			mSpeedX = (float)obj.getDouble("speed_x");
 			mSpeedY = (float)obj.getDouble("speed_y");
 			mMaxSpeedX = (float)obj.getDouble("max_speed_x");

@@ -21,8 +21,8 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 	protected int mLeftDuration  = 0;
 	protected int mRightDuration = 0;
 	protected int mUpDuration    = 0;
-	protected int mUpper  = 0;
-	protected int mBottom = 0;
+	protected float mUpper  = 0;
+	protected float mBottom = 0;
 	public final static float DEFAULT_SPEED_X = 8;
 	public final static float DEFAULT_SPEED_Y = 4;
 	// rocket's area used to detect collision
@@ -94,10 +94,10 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 			mY = Math.min(mY + mSpeedY, mBottom);
 		}
 		
-		mRect.left   = (int)mX + mWidth * 2 / 5;
-		mRect.top    = (int)mY + mHeight / 3;
-		mRect.right  = (int)mX + mWidth * 3 / 5;
-		mRect.bottom = (int)mY + mHeight / 2;
+		mRect.left   = (int)(mX + mWidth * 2 / 5);
+		mRect.top    = (int)(mY + mHeight / 3);
+		mRect.right  = (int)(mX + mWidth * 3 / 5);
+		mRect.bottom = (int)(mY + mHeight / 2);
 	}
 
 	@Override
@@ -115,10 +115,10 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 		mX = (width - mWidth) / 2;
 		mY = (height - mHeight) / 2 + height / 4;
 		
-		mRect.left   = (int)mX + mWidth * 2 / 5;
-		mRect.top    = (int)mY + mHeight / 3;
-		mRect.right  = (int)mX + mWidth * 3 / 5;
-		mRect.bottom = (int)mY + mHeight / 2;
+		mRect.left   = (int)(mX + mWidth * 2 / 5);
+		mRect.top    = (int)(mY + mHeight / 3);
+		mRect.right  = (int)(mX + mWidth * 3 / 5);
+		mRect.bottom = (int)(mY + mHeight / 2);
 	
 		mUpper  = (mCanvasHeight - mHeight) * 9 / 20;
 		mBottom = (mCanvasHeight - mHeight) / 2 + mCanvasHeight / 4;
@@ -156,7 +156,7 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 			
 			boolean intersects = mRect.intersects(
 				(int)obj.getX(), (int)obj.getY(), 
-				(int)obj.getX() + obj.getWidth(), (int)obj.getY() + obj.getHeight());
+				(int)(obj.getX() + obj.getWidth()), (int)(obj.getY() + obj.getHeight()));
 			if (intersects) {
 				Log.d("danger", "danger, collide!");		
 				mCollideWith.add(obj);
