@@ -58,7 +58,7 @@ public class SplashView extends View {
 		
 		// Draw the loading text	
 		String progress = "" + mProgress + "%";
-		if (progress.length() < 3) {
+		while (progress.length() < 4) {
 			progress = " " + progress;
 		}
 		canvas.drawText("Loading..." + progress, width / 2, height / 2, mPaint);
