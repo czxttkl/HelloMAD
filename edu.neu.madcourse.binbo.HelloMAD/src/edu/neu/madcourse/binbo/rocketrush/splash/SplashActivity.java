@@ -39,9 +39,7 @@ public class SplashActivity extends Activity {
 	}
 
 	@Override
-	protected void onPause() {
-		getPreferences(MODE_PRIVATE).edit().putBoolean("first", false).commit();
-		mView.release();
+	protected void onPause() {		
 		super.onPause();
 	}
 
@@ -50,6 +48,14 @@ public class SplashActivity extends Activity {
 		super.onResume();
 	}
 
+
+	@Override
+	protected void onDestroy() {
+		getPreferences(MODE_PRIVATE).edit().putBoolean("first", false).commit();
+		mView.release();
+		super.onDestroy();
+	}
+	
 	protected void createIntent() {
 		if (isFirstOpened()) {
 			mIntent = new Intent(this, TutorialActivity.class);
@@ -62,10 +68,11 @@ public class SplashActivity extends Activity {
 		return mFirst;
 	}		
 	
-	private final static int MSG_THREAD_JOIN = 1;
+	private final static int MSG_THREAD_JOIN     = 1;
+	private final static int MSG_UPDATE_PROGRESS = 2;
 	
     // create handler for splash thread
-    private Handler mHandler = new Handler() {
+    private Handler mHandler = new Handler() {    	
 		@Override
 		public void handleMessage(Message msg) {
 			if (msg.what == MSG_THREAD_JOIN) {
@@ -77,6 +84,9 @@ public class SplashActivity extends Activity {
 				}
 				startActivity(mIntent);
 				finish();
+			} else if (msg.what == MSG_UPDATE_PROGRESS) {		
+				int progress = mView.getProgress();
+				mView.updateProgress(progress + 1);
 			}
 		}    		
 	};
@@ -92,10 +102,15 @@ public class SplashActivity extends Activity {
 			try {				
                 int waited = 0;
                 while (mActive && (waited < mSplashTime)) {
-                    sleep(100);
-                    if (mActive) {
-                        waited += 100;
-                    }
+                	synchronized (this) {
+                		wait(20);
+	                    if (mActive) {
+	                        waited += 20;
+	                    }
+                	}
+                	Message msg = mHandler.obtainMessage();     	
+                    msg.what = MSG_UPDATE_PROGRESS;
+                    mHandler.sendMessage(msg); 
                 }
             } catch(InterruptedException e) {
                 // do nothing
@@ -107,4 +122,5 @@ public class SplashActivity extends Activity {
 		}
 		
 	}
+
 }
