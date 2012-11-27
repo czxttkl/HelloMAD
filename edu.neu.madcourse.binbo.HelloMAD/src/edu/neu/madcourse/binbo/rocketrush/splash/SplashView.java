@@ -8,7 +8,6 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.util.AttributeSet;
@@ -30,12 +29,12 @@ public class SplashView extends View {
 		mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		mPaint.setColor(0xff404040);
 		mPaint.setStyle(Style.FILL);
-		mPaint.setTextSize(35);
+		mPaint.setTextSize(24);
 		mPaint.setTextAlign(Paint.Align.CENTER);
 		
 		Resources res = context.getResources();
-		mBackground = BitmapFactory.decodeResource(
-				res, R.drawable.splash);
+		mBackground = BitmapFactory.decodeResource(res, R.drawable.splash);
+		
 		mRocketHori.add(BitmapFactory.decodeResource(res, R.drawable.ship2_1_hori));
 		mRocketHori.add(BitmapFactory.decodeResource(res, R.drawable.ship2_2_hori));
 		mRocketHori.add(BitmapFactory.decodeResource(res, R.drawable.ship2_3_hori));
@@ -53,7 +52,7 @@ public class SplashView extends View {
 				
 		// Draw the rocket
 		float left = (width - mRocketWidth) * (mProgress / 100f);
-		float top  = height / 20 * 11;		
+		float top  = height / 20 * 12;		
 		canvas.drawBitmap(mRocketHori.get(mNext++ % 4), left, top, null);
 		
 		// Draw the loading text	
@@ -61,7 +60,8 @@ public class SplashView extends View {
 		while (progress.length() < 4) {
 			progress = " " + progress;
 		}
-		canvas.drawText("Loading..." + progress, width / 2, height / 2, mPaint);
+		
+		canvas.drawText("Loading..." + progress, width / 2, height / 20 * 11, mPaint);
 	}
 
 	public void updateProgress(int progress) {
@@ -89,9 +89,16 @@ public class SplashView extends View {
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		if (mBackground == null) return;
+		
 		// scale the background according to the view size
+		int bgWidth = mBackground.getWidth();
+		int bgHeight = mBackground.getHeight();
+		float radio = bgHeight / (float) bgWidth;	
+		int scaledWidth  = w;
+		int scaledHeight = (int)(w * radio);
 		Bitmap newImage = 
-			Bitmap.createScaledBitmap(mBackground, w, h, true);	
+			Bitmap.createScaledBitmap(mBackground, scaledWidth, scaledHeight, true);
+		
 		mBackground.recycle(); // explicit call to avoid out of memory
 		mBackground = newImage;
 	}
