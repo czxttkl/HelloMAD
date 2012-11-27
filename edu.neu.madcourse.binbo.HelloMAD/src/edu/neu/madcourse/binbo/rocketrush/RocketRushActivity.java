@@ -28,6 +28,10 @@ public class RocketRushActivity extends Activity implements OnClickListener, OnT
 	protected TextView mTimeView = null;
 	protected ImageButton mRushModeButton = null;
 	protected ImageButton mVSModeButton = null;
+	protected ImageButton mSettingsButton = null;
+	protected ImageButton mTutorialButton = null;
+	protected ImageButton mRankButton = null;
+	protected ImageButton mAboutButton = null;
 	protected SensorManager mSensorManager = null;
 	// all of the game modes
 	protected GameMode mCurMode = null;
@@ -81,6 +85,10 @@ public class RocketRushActivity extends Activity implements OnClickListener, OnT
 		// ...
 		mRushModeButton.setVisibility(View.INVISIBLE);
 		mVSModeButton.setVisibility(View.INVISIBLE);
+		mSettingsButton.setVisibility(View.INVISIBLE);
+		mTutorialButton.setVisibility(View.INVISIBLE);
+		mRankButton.setVisibility(View.INVISIBLE);
+		mAboutButton.setVisibility(View.INVISIBLE);
 	}
 
 	@Override
@@ -181,9 +189,18 @@ public class RocketRushActivity extends Activity implements OnClickListener, OnT
 		mTimeView = (TextView)findViewById(R.id.timerView);
 		mRushModeButton = (ImageButton)findViewById(R.id.rushModeButton);
 		mVSModeButton = (ImageButton)findViewById(R.id.vsModeButton);
+		mSettingsButton = (ImageButton)findViewById(R.id.settingsButton);
+		mTutorialButton = (ImageButton)findViewById(R.id.helpButton);
+		mRankButton = (ImageButton)findViewById(R.id.rankButton);
+		mAboutButton = (ImageButton)findViewById(R.id.aboutButton);
 		
 		mRushModeButton.setOnClickListener(this);
 		mVSModeButton.setOnClickListener(this);
+		mSettingsButton.setOnClickListener(this);
+		mTutorialButton.setOnClickListener(this);
+		mRankButton.setOnClickListener(this);
+		mAboutButton.setOnClickListener(this);
+		
 		mGameView.setHandler(mHandler);
 	}
 	
