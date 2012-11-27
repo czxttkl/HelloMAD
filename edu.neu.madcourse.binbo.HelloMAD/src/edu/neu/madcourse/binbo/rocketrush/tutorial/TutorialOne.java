@@ -1,10 +1,11 @@
 package edu.neu.madcourse.binbo.rocketrush.tutorial;
 
-import edu.neu.madcourse.binbo.About;
-import edu.neu.madcourse.binbo.R;
-import edu.neu.madcourse.binbo.rocketrush.RocketRushActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,12 +13,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import edu.neu.madcourse.binbo.R;
+import edu.neu.madcourse.binbo.rocketrush.RocketRushActivity;
 
 public class TutorialOne extends Fragment implements OnClickListener {
 	
 	private Context mContext = null;
 	private TutorialView mView   = null;
 	private ImageButton  mButton = null;
+	private Bitmap mTutorialImg = null;
 	
 	public static Fragment newInstance(Context context) {
 		TutorialOne f = new TutorialOne(context);	
@@ -28,15 +32,18 @@ public class TutorialOne extends Fragment implements OnClickListener {
 	public TutorialOne(Context context) {
 		super();
 		mContext = context;
+		
+		Resources res = context.getResources();
+		mTutorialImg = BitmapFactory.decodeResource(res, R.drawable.tutorial_1);
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-		ViewGroup root = (ViewGroup) inflater.inflate(R.layout.tutorial_1, null);		
+		ViewGroup root = (ViewGroup) inflater.inflate(R.layout.tutorial_1, null);
 		mView   = (TutorialView)root.findViewById(R.id.tutorialView1);
 		mButton = (ImageButton)root.findViewById(R.id.skipButton);
 		mView.setText("Tutorial 1");
-		mButton.setOnClickListener(this);	
+		mButton.setOnClickListener(this);
 		return root;
 	}
 	
@@ -52,5 +59,4 @@ public class TutorialOne extends Fragment implements OnClickListener {
 			break;		
 		}
 	}
-	
 }
