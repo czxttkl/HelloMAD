@@ -9,7 +9,7 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 
 public class TutorialActivity extends FragmentActivity {
-	private ViewPager mViewPager;
+	private ViewPager mViewPager; // container for all tab views
 	private ViewPagerAdapter mAdapter;
     /** Called when the activity is first created. */
     @Override

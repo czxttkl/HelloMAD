@@ -21,7 +21,6 @@ public class TutorialOne extends Fragment implements OnClickListener {
 	private Context mContext = null;
 	private TutorialView mView   = null;
 	private ImageButton  mButton = null;
-	private Bitmap mTutorialImg = null;
 	
 	public static Fragment newInstance(Context context) {
 		TutorialOne f = new TutorialOne(context);	
@@ -31,10 +30,7 @@ public class TutorialOne extends Fragment implements OnClickListener {
 	
 	public TutorialOne(Context context) {
 		super();
-		mContext = context;
-		
-		Resources res = context.getResources();
-		mTutorialImg = BitmapFactory.decodeResource(res, R.drawable.tutorial_1);
+		mContext = context;				
 	}
 
 	@Override
@@ -42,7 +38,6 @@ public class TutorialOne extends Fragment implements OnClickListener {
 		ViewGroup root = (ViewGroup) inflater.inflate(R.layout.tutorial_1, null);
 		mView   = (TutorialView)root.findViewById(R.id.tutorialView1);
 		mButton = (ImageButton)root.findViewById(R.id.skipButton);
-		mView.setText("Tutorial 1");
 		mButton.setOnClickListener(this);
 		return root;
 	}
@@ -58,5 +53,11 @@ public class TutorialOne extends Fragment implements OnClickListener {
 			activity.finish();
 			break;		
 		}
+	}
+
+	@Override
+	public void onPause() {
+		mView.onPause();
+		super.onPause();
 	}
 }

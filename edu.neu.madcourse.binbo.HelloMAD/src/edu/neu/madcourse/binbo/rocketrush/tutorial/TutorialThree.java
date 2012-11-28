@@ -4,6 +4,9 @@ import edu.neu.madcourse.binbo.R;
 import edu.neu.madcourse.binbo.rocketrush.RocketRushActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -34,7 +37,6 @@ public class TutorialThree extends Fragment implements OnClickListener {
 		ViewGroup root = (ViewGroup) inflater.inflate(R.layout.tutorial_3, null);
 		mView = (TutorialView)root.findViewById(R.id.tutorialView3);
 		mButton = (ImageButton)root.findViewById(R.id.skipButton);
-		mView.setText("Tutorial 3");
 		mButton.setOnClickListener(this);
 		return root;
 	}
@@ -52,4 +54,9 @@ public class TutorialThree extends Fragment implements OnClickListener {
 		}
 	}
 	
+	@Override
+	public void onPause() {
+		mView.onPause();
+		super.onPause();
+	}
 }
