@@ -13,18 +13,11 @@ import edu.neu.madcourse.binbo.rocketrush.GameCtrl;
 import edu.neu.madcourse.binbo.rocketrush.GameEngine;
 import edu.neu.madcourse.binbo.rocketrush.GameObject;
 
-public class Asteroid extends GameObject implements GameObject.IDrawer {
-	final static int IMAGE_COUNT = 12; // the same size of the total number of bitmaps
+public class Asteroid extends Barrier implements GameObject.IDrawer {
+	protected final static int IMAGE_COUNT = 12; // the same size of the total number of bitmaps
 	protected static boolean sImageLoaded = false;
 	protected static List<Bitmap> sImages = new ArrayList<Bitmap>();
-	protected Bitmap mImage = null;
-	protected int mCanvasWidth  = 0;
-	protected int mCanvasHeight = 0;
-	private int mAccMoveDuration = 0;
-	
-	public float DEFAULT_SPEED_X = 0;
-	public float DEFAULT_SPEED_Y = 3;
-	
+	protected Bitmap mImage = null;		
 	protected Random mRand = new Random();
 	
 	public static void loadImages(Resources res) {
@@ -51,8 +44,7 @@ public class Asteroid extends GameObject implements GameObject.IDrawer {
 		super(res);
 		loadImages(res);
 		setKind(ASTEROID);
-		setMovable(true);
-		initSpeeds(DEFAULT_SPEED_X, DEFAULT_SPEED_Y, 0);		
+		setMovable(true);	
 		setZOrder(ZOrders.ASTEROID);		
 		setImage(sImages.get(mRand.nextInt(IMAGE_COUNT)));
 	}
@@ -61,17 +53,15 @@ public class Asteroid extends GameObject implements GameObject.IDrawer {
 		super(res);
 		loadImages(res);
 		setKind(ASTEROID);
-		setMovable(true);
-		initSpeeds(DEFAULT_SPEED_X, DEFAULT_SPEED_Y, 0);		
+		setMovable(true);		
 		setZOrder(ZOrders.ASTEROID);
 		setImage(sImages.get(mRand.nextInt(IMAGE_COUNT)));		
 	}
 	
-	public void initSpeeds(float x, float y, int accTime) {
-		DEFAULT_SPEED_X = x;
-		DEFAULT_SPEED_Y = y;		
-		float accSpeedY = y / (1000 / GameEngine.ENGINE_SPEED);
+	public void initSpeeds(float x, float y, int accTime) {		
+		float accSpeedY = y / (1000 / GameEngine.ENGINE_SPEED);		
 		setSpeed(x, y + accSpeedY * accTime);
+		setMinSpeed(x, y);
 		setMaxSpeed(x, y * 3);
 		setAccSpeed(0, accSpeedY);
 	}
@@ -84,7 +74,7 @@ public class Asteroid extends GameObject implements GameObject.IDrawer {
 
 	@Override
 	public void doDraw(Canvas c) {
-		if (mX + mWidth <= 0 || mX >= mCanvasWidth ||
+		if (mX + mWidth  <= 0 || mX >= mCanvasWidth ||
 			mY + mHeight <= 0 || mY >= mCanvasHeight) {
 			return; // not necessary to draw the invisible
 		}
@@ -97,26 +87,11 @@ public class Asteroid extends GameObject implements GameObject.IDrawer {
 			mSpeedY = Math.min(mSpeedY + mAccSpeedY, mMaxSpeedY);
 			mAccMoveDuration -= GameEngine.ENGINE_SPEED;
 		} else {
-			mSpeedY = Math.max(mSpeedY - mAccSpeedY, DEFAULT_SPEED_Y);
+			mSpeedY = Math.max(mSpeedY - mAccSpeedY, mMinSpeedY);
 		}
 		
 		mX += mSpeedX;
 		mY += mSpeedY;		
-	}
-	
-	@Override
-	public void operate(GameCtrl ctrl) {
-		int command = ctrl.getCommand();
-		
-		if (command == GameCtrl.MOVE_VERT) {
-			mAccMoveDuration = 1000;
-		} 
-	}
-
-	@Override
-	public void onSizeChanged(int width, int height) {
-		mCanvasWidth  = width;
-		mCanvasHeight = height;		
 	}
 
 }

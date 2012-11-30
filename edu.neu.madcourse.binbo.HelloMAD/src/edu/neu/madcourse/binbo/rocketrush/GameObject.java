@@ -10,13 +10,15 @@ import android.graphics.Canvas;
 
 public class GameObject {
 	public final static int UNKNOWN    = 0;
-	public final static int ASTEROID   = 1;
-	public final static int BACKGROUND = 2;
-	public final static int ROCKET	   = 3;
-	public final static int SPEEDBAR   = 4;
-	public final static int LIFEBAR	   = 5;
-	public final static int LEVEL	   = 6;
-	public final static int ODOMETER   = 7;
+	public final static int BIRD   	   = 1;
+	public final static int ASTEROID   = 2;
+	public final static int ALIENT	   = 3;
+	public final static int BACKGROUND = 4;
+	public final static int ROCKET	   = 5;
+	public final static int SPEEDBAR   = 6;
+	public final static int LIFEBAR	   = 7;
+	public final static int LEVEL	   = 8;
+	public final static int ODOMETER   = 9;
 	
 	protected float mX = 0;
 	protected float mY = 0;
@@ -24,9 +26,11 @@ public class GameObject {
 	protected float mHeight = 0;
 	protected float mSpeedX = 0;
 	protected float mSpeedY = 0;
+	protected float mMinSpeedX = 0;
+	protected float mMinSpeedY = 0;
 	protected float mMaxSpeedX = 0;
-	protected float mAccSpeedX = 0;
 	protected float mMaxSpeedY = 0;	
+	protected float mAccSpeedX = 0;	
 	protected float mAccSpeedY = 0;
 	protected int mKind   = UNKNOWN;
 	protected int mZOrder = 0;
@@ -78,6 +82,16 @@ public class GameObject {
 	public float getSpeedX() { return mSpeedX; }
 	
 	public float getSpeedY() { return mSpeedY; }
+	
+	public void setMinSpeed(float x, float y) { setMinSpeedX(x); setMinSpeedY(y); }
+	
+	public void setMinSpeedX(float x) { mMinSpeedX = x; }
+	
+	public void setMinSpeedY(float y) { mMinSpeedY = y; }
+	
+	public float getMinSpeedX() { return mMinSpeedX; }
+	
+	public float getMinSpeedY() { return mMinSpeedY; }
 	
 	public void setMaxSpeed(float x, float y) { setMaxSpeedX(x); setMaxSpeedY(y); }
 	
@@ -131,13 +145,17 @@ public class GameObject {
 	        obj.put("height", mHeight);
 	        obj.put("speed_x", mSpeedX);
 	        obj.put("speed_y", mSpeedY);
+	        obj.put("min_speed_x", mMinSpeedX);
+	        obj.put("min_speed_y", mMinSpeedY);
 	        obj.put("max_speed_x", mMaxSpeedX);
 	        obj.put("max_speed_y", mMaxSpeedY);
 	        obj.put("acc_speed_x", mAccSpeedX);
 	        obj.put("acc_speed_y", mAccSpeedY);
+	        obj.put("kind", mKind);
 	        obj.put("z_order", mZOrder);
 	        obj.put("visible", mVisible);
 	        obj.put("movable", mMovable);
+	        obj.put("collidable", mCollidable);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -157,13 +175,17 @@ public class GameObject {
 			mHeight = (float)obj.getDouble("height");
 			mSpeedX = (float)obj.getDouble("speed_x");
 			mSpeedY = (float)obj.getDouble("speed_y");
+			mMinSpeedX = (float)obj.getDouble("min_speed_x");
+			mMinSpeedY = (float)obj.getDouble("min_speed_y");
 			mMaxSpeedX = (float)obj.getDouble("max_speed_x");
 			mMaxSpeedY = (float)obj.getDouble("max_speed_y");
 			mAccSpeedX = (float)obj.getDouble("acc_speed_x");
 			mAccSpeedY = (float)obj.getDouble("acc_speed_y");
-			mZOrder  = obj.getInt("z_order");
-			mVisible = obj.getBoolean("visible");
-			mMovable = obj.getBoolean("movable");
+			mKind       = obj.getInt("kind");
+			mZOrder     = obj.getInt("z_order");
+			mVisible    = obj.getBoolean("visible");
+			mMovable    = obj.getBoolean("movable");
+			mCollidable = obj.getBoolean("collidable");
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

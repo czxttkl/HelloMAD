@@ -42,8 +42,7 @@ public class RocketRushActivity extends Activity implements OnClickListener, OnT
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);			
 		setContentView(R.layout.rocket_rush);					
-	    
-		//loadPreferences(command);
+
 		// get views and set listeners
 		setupViews();
 		// adjust layouts according to the screen resolution
@@ -73,7 +72,7 @@ public class RocketRushActivity extends Activity implements OnClickListener, OnT
 			return;
 		}		
 
-		// first stop to update the scene using game engine
+		// first stop to update the scene
 		mCurMode.stop();	
 		// get the new game mode
 		mCurMode = mModes.get(modeTo);
@@ -188,11 +187,11 @@ public class RocketRushActivity extends Activity implements OnClickListener, OnT
 		mGameView = (GameView)findViewById(R.id.rocketRushView);
 		mTimeView = (TextView)findViewById(R.id.timerView);
 		mRushModeButton = (ImageButton)findViewById(R.id.rushModeButton);
-		mVSModeButton = (ImageButton)findViewById(R.id.vsModeButton);
+		mVSModeButton   = (ImageButton)findViewById(R.id.vsModeButton);
 		mSettingsButton = (ImageButton)findViewById(R.id.settingsButton);
 		mTutorialButton = (ImageButton)findViewById(R.id.helpButton);
-		mRankButton = (ImageButton)findViewById(R.id.rankButton);
-		mAboutButton = (ImageButton)findViewById(R.id.aboutButton);
+		mRankButton     = (ImageButton)findViewById(R.id.rankButton);
+		mAboutButton    = (ImageButton)findViewById(R.id.aboutButton);
 		
 		mRushModeButton.setOnClickListener(this);
 		mVSModeButton.setOnClickListener(this);

@@ -15,6 +15,7 @@ import edu.neu.madcourse.binbo.rocketrush.GameEngine;
 import edu.neu.madcourse.binbo.rocketrush.GameObject;
 
 public class Rocket extends GameObject implements GameObject.IDrawer  {
+	protected final static int IMAGE_COUNT = 4; // the same size of the total number of bitmaps
 	protected List<Bitmap> mImages = new ArrayList<Bitmap>();
 	protected int mCanvasWidth  = 0;
 	protected int mCanvasHeight = 0;
@@ -69,12 +70,10 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 	protected int mCurIndex = 0;
 	@Override
 	public void doDraw(Canvas c) {
-		if (mCurIndex == 4) {
+		if (mCurIndex == IMAGE_COUNT) {
 			mCurIndex = 0;
 		}
-		
-		Bitmap image = mImages.get(mCurIndex++);
-		c.drawBitmap(image, mX, mY, null);				
+		c.drawBitmap(mImages.get(mCurIndex++), mX, mY, null);				
 	}
 
 	@Override

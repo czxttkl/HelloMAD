@@ -2,19 +2,16 @@ package edu.neu.madcourse.binbo.rocketrush.gameobjects;
 
 import android.content.res.Resources;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
-import android.graphics.Shader;
 import edu.neu.madcourse.binbo.rocketrush.GameEngine;
 import edu.neu.madcourse.binbo.rocketrush.GameObject;
 
 public class Level extends GameObject {	
-	public int mLevel = 1;
-	public float mBaseSpeedX = 1;
-	public float mBaseSpeedY = 1;
-	public float mComplexity = 1;
+	protected int mLevel = 1;
+	public float mSpeedScaleX     = 1;
+	public float mSpeedScaleY     = 1;
+	public float mComplexityScale = 1;
 
 	protected final static int DEFAULT_MOVE_DURATION = 200;
 	protected final static int DEFAULT_STAY_DURATION = 1000;
@@ -37,11 +34,16 @@ public class Level extends GameObject {
 		mPaint.setTextAlign(Paint.Align.CENTER);
 	}
 	
+	public int getValue() {
+		return mLevel;
+	}
+	
 	public void levelUp() {
-		mLevel += 1;
-		mBaseSpeedX *= 1.25;
-		mBaseSpeedY *= 1.25;
-		mComplexity *= 1.25;
+		++mLevel;
+		
+		mSpeedScaleX     *= 1.1;
+		mSpeedScaleY     *= 1.1;
+		mComplexityScale *= 1.1;
 		mDisplayDuration = DEFAULT_MOVE_DURATION * 2 + DEFAULT_STAY_DURATION;
 		
 		mTextWidth = (int)mPaint.measureText("Level " + mLevel);
