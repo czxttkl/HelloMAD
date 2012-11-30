@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.neu.madcourse.binbo.R;
+import edu.neu.madcourse.binbo.rocketrush.speech.OpusManager;
 import edu.neu.madcourse.binbo.rocketrush.splash.SplashView;
 import android.app.Activity;
 import android.content.Context;
@@ -36,6 +37,8 @@ public class RocketRushActivity extends Activity implements OnClickListener, OnT
 	// all of the game modes
 	protected GameMode mCurMode = null;
 	protected List<GameMode> mModes = new ArrayList<GameMode>();	
+	// speech controller
+	protected OpusManager mOpus = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,8 @@ public class RocketRushActivity extends Activity implements OnClickListener, OnT
 		adjustLayout();
 		// create accelerometer
 		createSensor();
+		// create speech controller
+		createOpus();
 		// create game, including game engine and all the modes and scenes
 		createGame();
 	}	
@@ -170,6 +175,10 @@ public class RocketRushActivity extends Activity implements OnClickListener, OnT
 	private void createSensor() {
 		// get system sensor manager to deal with sensor issues  
         mSensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
+	}
+	
+	private void createOpus() {
+		mOpus = new OpusManager(this);
 	}
 
 	private void adjustLayout() {

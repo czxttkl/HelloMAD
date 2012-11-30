@@ -1,0 +1,149 @@
+LOCAL_PATH := $(call my-dir)
+
+ifeq ($(TARGET_ARCH_ABI), armeabi)
+
+	include $(CLEAR_VARS)	
+	LOCAL_MODULE := opus-driver-6
+	LOCAL_ARM_MODE := arm
+	LOCAL_CFLAGS := $(OPUS_CFLAGS)
+	LOCAL_CFLAGS += $(ARMV6_OPTION)
+	LOCAL_C_INCLUDES += $(LOCAL_PATH)/../ffmpeg-1.0 \			
+						
+	LOCAL_CPP_FEATURES := rtti
+	LOCAL_LDFLAGS += -Wl 
+	LOCAL_LDLIBS := -L$(SYSROOT)/usr/lib -lm -llog \
+	
+	LOCAL_SRC_FILES += \
+		OpusJNI.c \
+		OpusInterf.cpp \
+		Opus.cpp \
+		AudioEncoder.cpp \
+		AudioDecoder.cpp \
+		AudioMuxer.cpp \
+		CallbackManager.cpp \
+		DependencyObject.cpp \
+		Utinities/BaseTypes.cpp \
+		Utinities/Error.cpp \
+	    Utinities/Event.cpp \
+	    Utinities/Lock.cpp \
+	    Utinities/QTime.cpp \
+	    Utinities/QString.cpp \
+	    Utinities/Thread.cpp \
+
+	# show the dependance, must put at the bottom
+	# libOpus-6 is statically link to libffmpeg-6 as an external library
+	LOCAL_SHARED_LIBRARIES += libffmpeg-6
+	include $(BUILD_SHARED_LIBRARY)
+	
+else ifeq ($(TARGET_ARCH_ABI), armeabi-v7a)	
+
+	include $(CLEAR_VARS)	
+	LOCAL_MODULE := opus-driver-7
+	LOCAL_ARM_MODE := arm
+	LOCAL_CFLAGS := $(OPUS_CFLAGS)
+	LOCAL_CFLAGS += $(ARMV7_OPTION)
+	LOCAL_C_INCLUDES += $(LOCAL_PATH)/../opus-1.0.1 \
+						$(LOCAL_PATH)/../ffmpeg-1.0 \
+						$(LOCAL_PATH)/../libogg-1.3.0/include \
+	LOCAL_CPP_FEATURES := rtti -fno-rtti -fpermissive
+	LOCAL_LDFLAGS += -Wl
+	LOCAL_LDLIBS := -L$(SYSROOT)/usr/lib -lm -llog \
+	
+	LOCAL_SRC_FILES += \
+		OpusJNI.c \
+		OpusInterf.cpp \
+		Opus.cpp \
+		OpusEncoder.cpp \
+		OpusDecoder.cpp \
+		WavMuxer.cpp \
+		CallbackManager.cpp \
+		DependencyObject.cpp \
+		Utinities/BaseTypes.cpp \
+		Utinities/Error.cpp \
+	    Utinities/Event.cpp \
+	    Utinities/Lock.cpp \
+	    Utinities/QTime.cpp \
+	    Utinities/QString.cpp \
+	    Utinities/Thread.cpp \
+	    
+	# show the dependance
+	LOCAL_SHARED_LIBRARIES += libffmpeg-7
+	include $(BUILD_SHARED_LIBRARY)
+	#######################################################
+	include $(CLEAR_VARS)	
+	LOCAL_MODULE := opus-driver-7neon
+	LOCAL_ARM_MODE := arm
+	LOCAL_CFLAGS := $(OPUS_CFLAGS)
+	LOCAL_CFLAGS += $(ARMV7NEON_OPTION)
+	LOCAL_C_INCLUDES += $(LOCAL_PATH)/../opus-1.0.1 \
+						$(LOCAL_PATH)/../ffmpeg-1.0 \
+						$(LOCAL_PATH)/../libogg-1.3.0/include \
+	LOCAL_CPP_FEATURES := rtti -fno-rtti -fpermissive
+	LOCAL_LDFLAGS += -Wl,--fix-cortex-a8
+	LOCAL_LDLIBS := -L$(SYSROOT)/usr/lib -lm -llog \
+	
+	LOCAL_SRC_FILES += \
+		OpusJNI.c \
+		OpusInterf.cpp \
+		Opus.cpp \
+		OpusEncoder.cpp \
+		OpusDecoder.cpp \
+		WavMuxer.cpp \
+		CallbackManager.cpp \
+		DependencyObject.cpp \
+		Utinities/BaseTypes.cpp \
+		Utinities/Error.cpp \
+	    Utinities/Event.cpp \
+	    Utinities/Lock.cpp \
+	    Utinities/QTime.cpp \
+	    Utinities/QString.cpp \
+	    Utinities/Thread.cpp \
+	    
+	# show the dependance
+	LOCAL_SHARED_LIBRARIES += libffmpeg-7neon
+	include $(BUILD_SHARED_LIBRARY)
+
+else ifeq ($(TARGET_ARCH_ABI), x86)	
+	
+	include $(CLEAR_VARS)	
+	LOCAL_MODULE := opus-driver-x86atom
+	LOCAL_CFLAGS := $(OPUS_CFLAGS)
+	LOCAL_CFLAGS += $(X86ATOM_OPTION)
+	LOCAL_C_INCLUDES += $(LOCAL_PATH)/../opus-1.0.1 \
+						$(LOCAL_PATH)/../ffmpeg-1.0 \
+						$(LOCAL_PATH)/../libogg-1.3.0/include \
+	LOCAL_CPP_FEATURES := rtti -fno-rtti -fpermissive
+	LOCAL_LDFLAGS += -Wl
+	LOCAL_LDLIBS := -L$(SYSROOT)/usr/lib -lm -llog \
+	
+	LOCAL_SRC_FILES += \
+		OpusJNI.c \
+		OpusInterf.cpp \
+		Opus.cpp \
+		OpusEncoder.cpp \
+		OpusDecoder.cpp \
+		WavMuxer.cpp \
+		CallbackManager.cpp \
+		DependencyObject.cpp \		
+		Utinities/BaseTypes.cpp \
+		Utinities/Error.cpp \
+	    Utinities/Event.cpp \
+	    Utinities/Lock.cpp \
+	    Utinities/QTime.cpp \
+	    Utinities/QString.cpp \
+	    Utinities/Thread.cpp \
+	    opus_tool/audio-in.c \
+		opus_tool/diag_range.c \
+		opus_tool/info_opus.c \
+		opus_tool/lpc.c \
+		opus_tool/opus_header.c \
+		opus_tool/opusinfo.c \
+		opus_tool/opusenc.c \
+		opus_tool/wav_io.c \
+		opus_tool/wave_out.c \
+	    
+	# show the dependance
+	LOCAL_SHARED_LIBRARIES += libffmpeg-x86atom
+	include $(BUILD_SHARED_LIBRARY)
+	
+endif
