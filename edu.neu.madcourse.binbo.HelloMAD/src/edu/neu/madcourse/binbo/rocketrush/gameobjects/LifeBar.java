@@ -66,12 +66,11 @@ public class LifeBar extends GameObject {
 	
 	@Override
 	public void update() {		
-		
+		r3.right = 68 + mWidth * mLife;
 	}
 	
 	@Override
-	public void doDraw(Canvas c) {
-		r3.right = 68 + mWidth * mLife;
+	public void doDraw(Canvas c) {		
 		c.drawText("HP", 16, 72, mPaint0);
 	    c.drawRoundRect(r1, 12, 12, mPaint1);	    	    
 	    c.drawRoundRect(r2, 9, 9, mPaint2);	    
