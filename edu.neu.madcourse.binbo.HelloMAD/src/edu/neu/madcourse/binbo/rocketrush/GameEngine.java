@@ -102,32 +102,24 @@ public class GameEngine {
     // SensorEventListener implement
     // It's special, so I put it here
     protected SensorEventListener mSensorListener = new SensorEventListener() {
-        //int count = 0;
-        //long last_time = System.currentTimeMillis();
+
     	private float mLastX = 0;
     	private float mLastY = 0;
     	
-        public void onSensorChanged(SensorEvent sensorEvent){  
-            if(sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER){  
-//                Log.i(TAG, "onSensorChanged");  
-                                               
-//                if (System.currentTimeMillis() - last_time > 1000) {
-//                	last_time = System.currentTimeMillis();
-//                	count = 0;
-//                }
+        public void onSensorChanged(SensorEvent sensorEvent) {  
+            if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {  
+
                 float x = sensorEvent.values[0];  
                 float y = sensorEvent.values[1];  
-                float z = sensorEvent.values[2];                
-//                Log.i(TAG,"\n heading " + x);  
-//                Log.i(TAG,"\n pitch " + y);
-//                Log.i(TAG,"\n roll " + z); 
-//                Log.i(TAG,"\n count " + count);
-//                count++;
+                float z = sensorEvent.values[2];                                         
+
                 if (mLastX <= -2 && x > -2 && x < 2) {                
                 	mEventQueue.clear();
                 } else if (mLastX >= 2 && x > -2 && x < 2) {
                 	mEventQueue.clear();
                 } else if (Math.abs(x) >= 2 || Math.abs(y) >= 13) {
+                	if (mEventQueue.size() > 2)
+                		return;
                 	ControlEvent e = new ControlEvent((int)x, (int)y, (int)z);
                 	mEventQueue.add(e);
                 }

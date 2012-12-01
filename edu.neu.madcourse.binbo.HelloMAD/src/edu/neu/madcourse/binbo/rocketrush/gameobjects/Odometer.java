@@ -83,7 +83,7 @@ public class Odometer extends GameObject {
 
 	@Override
 	public void doDraw(Canvas c) {
-		c.drawText("Score " + mOdometer, mX, mY, mPaint);
+		c.drawText("Score " + mOdometer / 10, mX, mY, mPaint);
 	}
 	
 	public interface OnOdometerUpdateListener {

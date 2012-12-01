@@ -66,8 +66,6 @@ public class HelloMAD extends Activity implements OnClickListener {
 			startActivity(i);
 			break;
 		case R.id.trickiest_button:
-			//i = new Intent(this, RocketRushActivity.class);
-			//i = new Intent(this, TutorialActivity.class);
 			i = new Intent(this, SplashActivity.class);
 			startActivity(i);
 			break;

@@ -44,40 +44,38 @@ public class LifeBar extends GameObject {
 		mPaint1.setStyle(Style.STROKE);
 		
 		mPaint2.setAntiAlias(true);		    
-		mPaint2.setColor(Color.argb(0x80, 0xCC, 0xCC, 0xCC));
+		mPaint2.setColor(0x80cccccc);
 		mPaint2.setStyle(Style.FILL); 
 		
 		mPaint3.setAntiAlias(true);		    
-		mPaint3.setColor(Color.argb(0xFF, 0x00, 0xCC, 0x00));
+		mPaint3.setColor(0xff00cc00);
 		mPaint3.setStyle(Style.FILL); 
-	}
-
-	public void lifeUp(float up) {
-		mLife = Math.min(mLife + up, 1f);	
-	}
-
-	public void lifeDown(float down) {
-		mLife = Math.max(mLife - down, 0);		
-	}		
-	
-	@Override
-	public void update() {		
 		
-	}
-	
-	@Override
-	public void doDraw(Canvas c) {
 		r3.right = 68 + mWidth * mLife;
-		c.drawText("HP", 16, 72, mPaint0);
-	    c.drawRoundRect(r1, 12, 12, mPaint1);	    	    
-	    c.drawRoundRect(r2, 9, 9, mPaint2);
-	    if (mLife <= 0.33) {
+	}
+
+	public void lifeChange(float change) {
+		mLife = Math.max(Math.min(mLife + change, 1f), 0);
+		
+		if (mLife <= 0.33) {
 	    	mPaint3.setColor(Color.RED);
 	    } else if (mLife <= 0.66) {
 	    	mPaint3.setColor(Color.YELLOW);
 	    } else {
-	    	mPaint3.setColor(Color.GREEN);
+	    	mPaint3.setColor(0xff00cc00);
 	    }
+	}	
+	
+	@Override
+	public void update() {		
+		r3.right = 68 + mWidth * mLife;
+	}
+	
+	@Override
+	public void doDraw(Canvas c) {		
+		c.drawText("HP", 16, 72, mPaint0);
+	    c.drawRoundRect(r1, 12, 12, mPaint1);	    	    
+	    c.drawRoundRect(r2, 9, 9, mPaint2);	    
 	    c.drawRoundRect(r3, 9, 9, mPaint3);
 	}
 

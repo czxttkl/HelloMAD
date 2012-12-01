@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.neu.madcourse.binbo.R;
+import edu.neu.madcourse.binbo.rocketrush.speech.OpusManager;
 import edu.neu.madcourse.binbo.rocketrush.splash.SplashView;
 import android.app.Activity;
 import android.content.Context;
@@ -36,20 +37,23 @@ public class RocketRushActivity extends Activity implements OnClickListener, OnT
 	// all of the game modes
 	protected GameMode mCurMode = null;
 	protected List<GameMode> mModes = new ArrayList<GameMode>();	
+	// speech controller
+	protected OpusManager mOpus = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);			
 		setContentView(R.layout.rocket_rush);					
-	    
-		//loadPreferences(command);
+
 		// get views and set listeners
 		setupViews();
 		// adjust layouts according to the screen resolution
 		adjustLayout();
 		// create accelerometer
 		createSensor();
+		// create speech controller
+		createOpus();
 		// create game, including game engine and all the modes and scenes
 		createGame();
 	}	
@@ -73,7 +77,7 @@ public class RocketRushActivity extends Activity implements OnClickListener, OnT
 			return;
 		}		
 
-		// first stop to update the scene using game engine
+		// first stop to update the scene
 		mCurMode.stop();	
 		// get the new game mode
 		mCurMode = mModes.get(modeTo);
@@ -172,6 +176,10 @@ public class RocketRushActivity extends Activity implements OnClickListener, OnT
 		// get system sensor manager to deal with sensor issues  
         mSensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
 	}
+	
+	private void createOpus() {
+		mOpus = new OpusManager(this);
+	}
 
 	private void adjustLayout() {
 		getWindow().setFlags(
@@ -188,11 +196,11 @@ public class RocketRushActivity extends Activity implements OnClickListener, OnT
 		mGameView = (GameView)findViewById(R.id.rocketRushView);
 		mTimeView = (TextView)findViewById(R.id.timerView);
 		mRushModeButton = (ImageButton)findViewById(R.id.rushModeButton);
-		mVSModeButton = (ImageButton)findViewById(R.id.vsModeButton);
+		mVSModeButton   = (ImageButton)findViewById(R.id.vsModeButton);
 		mSettingsButton = (ImageButton)findViewById(R.id.settingsButton);
 		mTutorialButton = (ImageButton)findViewById(R.id.helpButton);
-		mRankButton = (ImageButton)findViewById(R.id.rankButton);
-		mAboutButton = (ImageButton)findViewById(R.id.aboutButton);
+		mRankButton     = (ImageButton)findViewById(R.id.rankButton);
+		mAboutButton    = (ImageButton)findViewById(R.id.aboutButton);
 		
 		mRushModeButton.setOnClickListener(this);
 		mVSModeButton.setOnClickListener(this);

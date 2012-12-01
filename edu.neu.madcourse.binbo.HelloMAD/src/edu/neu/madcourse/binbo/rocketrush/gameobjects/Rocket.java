@@ -15,7 +15,9 @@ import edu.neu.madcourse.binbo.rocketrush.GameEngine;
 import edu.neu.madcourse.binbo.rocketrush.GameObject;
 
 public class Rocket extends GameObject implements GameObject.IDrawer  {
-	protected List<Bitmap> mImages = new ArrayList<Bitmap>();
+	protected final static int IMAGE_COUNT = 4; // the same size of the total number of bitmaps
+	protected static boolean sImageLoaded = false;	
+	protected static List<Bitmap> sImages = new ArrayList<Bitmap>();	
 	protected int mCanvasWidth  = 0;
 	protected int mCanvasHeight = 0;
 	protected int mLeftDuration  = 0;
@@ -29,6 +31,18 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 	protected Rect mRect = new Rect();
 	protected List<GameObject> mCollideWith = new ArrayList<GameObject>();
 
+	public static void loadImages(Resources res) {
+		if (sImageLoaded) {
+			return;
+		}
+		sImageLoaded = true;
+		
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.ship2_1));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.ship2_2));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.ship2_3));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.ship2_4));
+	}
+	
 	public Rocket(Resources res) {
 		super(res);
 		setKind(ROCKET);
@@ -36,32 +50,11 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 		setSpeed(DEFAULT_SPEED_X, DEFAULT_SPEED_Y);
 		setMaxSpeed(DEFAULT_SPEED_X, DEFAULT_SPEED_Y);			
 		setZOrder(ZOrders.ROCKET);
-		addImage(BitmapFactory.decodeResource(res, R.drawable.ship2_1));
-		addImage(BitmapFactory.decodeResource(res, R.drawable.ship2_2));
-		addImage(BitmapFactory.decodeResource(res, R.drawable.ship2_3));
-		addImage(BitmapFactory.decodeResource(res, R.drawable.ship2_4));
-		setWidth(mImages.get(0).getWidth());
-		setHeight(mImages.get(0).getHeight());				
-	}
-	
-	public Rocket(Resources res, List<Bitmap> images) {
-		super(res);		
-		setKind(ROCKET);
-		setMovable(true);
-		setSpeed(DEFAULT_SPEED_X, DEFAULT_SPEED_Y);
-		setMaxSpeed(DEFAULT_SPEED_X, DEFAULT_SPEED_Y);			
-		setZOrder(ZOrders.ROCKET);
-		for (Bitmap image : images) {
-			addImage(image);
-		}
-		setWidth(mImages.get(0).getWidth());
-		setHeight(mImages.get(0).getHeight());
+		loadImages(res);
+		setWidth(sImages.get(0).getWidth());
+		setHeight(sImages.get(0).getHeight());				
 	}
 
-	public void addImage(Bitmap image) {
-		mImages.add(image);
-	}
-	
 	public int getAccTime() {
 		return (int)((mBottom - mY) / mSpeedY);
 	}
@@ -69,12 +62,10 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 	protected int mCurIndex = 0;
 	@Override
 	public void doDraw(Canvas c) {
-		if (mCurIndex == 4) {
+		if (mCurIndex == IMAGE_COUNT) {
 			mCurIndex = 0;
 		}
-		
-		Bitmap image = mImages.get(mCurIndex++);
-		c.drawBitmap(image, mX, mY, null);				
+		c.drawBitmap(sImages.get(mCurIndex++), mX, mY, null);				
 	}
 
 	@Override
@@ -102,7 +93,7 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 
 	@Override
 	public void release() {
-		for (Bitmap image : mImages) {
+		for (Bitmap image : sImages) {
 			image.recycle();				
 		}
 		super.release();

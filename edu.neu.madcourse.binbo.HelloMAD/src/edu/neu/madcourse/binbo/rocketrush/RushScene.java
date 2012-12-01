@@ -13,13 +13,14 @@ import android.os.Vibrator;
 
 public class RushScene extends GameScene implements OnOdometerUpdateListener {	
 
-	private Rocket mRocket = null;
-	private LifeBar mLifeBar = null;
+	private Rocket   mRocket   = null;
+	private LifeBar  mLifeBar  = null;
 	private SpeedBar mSpeedBar = null;
 	private BackgroundFar  mBackgroundFar  = null;
 	private BackgroundNear mBackgroundNear = null;
-	private Level mLevel = null;
+	private Level mLevel = null;	
 	private Odometer mOdometer = null;
+	private int mCurGamePart = 1;
 	private Random mRandom = new Random();
 	private Context mContext = null;
 	
@@ -28,9 +29,10 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 		mContext = context;
 	}	
 
-	public List<GameObject> load() {		
+	public List<GameObject> load() {
+		// create game objects
 		if (mBackgroundFar == null) {
-			mBackgroundFar  = new BackgroundFar(mRes);			
+			mBackgroundFar = new BackgroundFar(mRes);			
 			mObjects.add(mBackgroundFar);
 		}
 		if (mBackgroundNear == null) {
@@ -89,8 +91,8 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 		}
 		// remove invisible barriers
 		List<GameObject> invisibles = new ArrayList<GameObject>();
-		int edgeLeft  = -mWidth;
-		int edgeRight = mWidth << 1;
+		int edgeLeft  = -(mWidth >> 1);
+		int edgeRight = mWidth + (mWidth >> 1);
 		for (GameObject b : mBarriers) {
 			float x = b.getX(), y = b.getY();
 			if (x < edgeLeft || x > edgeRight || y > mHeight) {
@@ -100,30 +102,69 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 		}
 		mBarriers.removeAll(invisibles);
 		mObjects.removeAll(invisibles);
+		// create barriers based on the current game part	
+		if (mCurGamePart <= 2) {
+			createAlient();						
+		} else if (mCurGamePart <= 4) {
+			createBird();	
+		} else if (mCurGamePart <= 6){
+			createAsteroid();
+		}				
+		
+		return mBarriers;
+	}
+	
+	// probabilities for creating barriers
+	private int mProbBird   = 50; // 1 / 45
+	private int	mProbAster  = 80; // 1 / 55
+	private int mProbAlient = 70; // 1 / 60
+	
+	private void createBird() {		
 		// get the acceleration time 
 		int accTime = mRocket.getAccTime();
-		// generate static barrier
-		int pstatic = 1000 / GameEngine.ENGINE_SPEED;
-		if (mRandom.nextInt(pstatic) == 1) {
+		// generate flying red chicken
+		if (mRandom.nextInt(mProbBird) == 1) {
+			boolean right = mRandom.nextBoolean();
+			Bird b = new Bird(mRes, right);			
+			b.setX(right ? -b.getWidth() : mWidth + b.getWidth());
+			b.setY(mRandom.nextInt(mHeight >> 2));
+			b.initSpeeds(
+				(right ? mRandom.nextInt(5) + 4 : -4 - mRandom.nextInt(5)) * mLevel.mSpeedScaleX,   
+				4f,
+				accTime
+			);
+			b.onSizeChanged(mWidth, mHeight);
+			b.setOnCollideListener(this);
+			mBarriers.add(b);
+			mObjects.add(b);
+		}	
+		// order by Z
+		orderByZ(mObjects);
+	}
+	
+	private void createAsteroid() {
+		// get the acceleration time 
+		int accTime = mRocket.getAccTime();
+		// generate static asteroid
+		if (mRandom.nextInt(mProbAster) == 1) {
 			Asteroid ast = new Asteroid(mRes);
 			ast.setX(mRandom.nextInt((int)(mWidth - ast.getWidth() + 1)));
-			ast.setY(0 - ast.getHeight() / 2);
-			ast.initSpeeds(0, mRandom.nextInt(4) + 3, accTime);
+			ast.setY(0 - ast.getHeight());
+			ast.initSpeeds(0, (mRandom.nextInt(4) + 3) * mLevel.mSpeedScaleY, accTime);
 			ast.onSizeChanged(mWidth, mHeight);
 			ast.setOnCollideListener(this);
 			mBarriers.add(ast);
 			mObjects.add(ast);
 		}		
-		// generate dynamic barrier
-		int pdynamic = (1000 / GameEngine.ENGINE_SPEED + 1) << 1;
-		if (mRandom.nextInt(pdynamic) == 1) {
+		// generate dynamic asteroid
+		if (mRandom.nextInt(mProbAster) == 1) {
 			Asteroid ast = new Asteroid(mRes);
-			boolean left2Right = mRandom.nextBoolean();
-			ast.setX(left2Right ? -ast.getWidth() : mWidth + ast.getWidth());
-			ast.setY(mRandom.nextInt(mHeight >> 2));
+			boolean right = mRandom.nextBoolean();
+			ast.setX(right ? -ast.getWidth() : mWidth + ast.getWidth());
+			ast.setY(mRandom.nextInt(mHeight >> 3));
 			ast.initSpeeds(
-				left2Right ? mRandom.nextInt(3) + 3 : -3 - mRandom.nextInt(3),   
-				mRandom.nextInt(4) + 3,
+				(right ? mRandom.nextInt(3) + 3 : -3 - mRandom.nextInt(3)) * mLevel.mSpeedScaleX,   
+				(mRandom.nextInt(4) + 3) * mLevel.mSpeedScaleY,
 				accTime
 			);
 			ast.onSizeChanged(mWidth, mHeight);
@@ -133,22 +174,60 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 		}
 		// order by Z
 		orderByZ(mObjects);
-		
-		return mBarriers;
+	}
+	
+	private void createAlient() {
+		// get the acceleration time 
+		int accTime = mRocket.getAccTime();
+		// generate static asteroid
+		if (mRandom.nextInt(mProbAster) == 1) {
+			Alient ali = new Alient(mRes);
+			ali.setX(mRandom.nextInt((int)(mWidth - ali.getWidth() + 1)));
+			ali.setY(0 - ali.getHeight());
+			ali.initSpeeds(0, (mRandom.nextInt(4) + 3) * mLevel.mSpeedScaleY, accTime);
+			ali.onSizeChanged(mWidth, mHeight);
+			ali.setOnCollideListener(this);
+			mBarriers.add(ali);
+			mObjects.add(ali);
+		}		
+		// generate dynamic asteroid
+		if (mRandom.nextInt(mProbAster) == 1) {
+			Alient ali = new Alient(mRes);
+			boolean right = mRandom.nextBoolean();
+			ali.setX(right ? -ali.getWidth() : mWidth + ali.getWidth());
+			ali.setY(mRandom.nextInt(mHeight >> 3));
+			ali.initSpeeds(
+				(right ? mRandom.nextInt(3) + 3 : -3 - mRandom.nextInt(3)) * mLevel.mSpeedScaleX,   
+				(mRandom.nextInt(4) + 3) * mLevel.mSpeedScaleY,
+				accTime
+			);
+			ali.onSizeChanged(mWidth, mHeight);
+			ali.setOnCollideListener(this);
+			mBarriers.add(ali);
+			mObjects.add(ali);
+		}
+		// order by Z
+		orderByZ(mObjects);
 	}
 
 	@Override
 	public void onCollide(GameObject obj, List<GameObject> collideWith) {
 		Vibrator vibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
 		vibrator.vibrate(30);
-		mLifeBar.lifeDown(1 / 3f);
+		mLifeBar.lifeChange(-1 / 3f);
 	}
 
 	public void onReachTarget(int odometer) {
-		mLifeBar.lifeUp(0.01f);
+		mLifeBar.lifeChange(0.01f);
 	}
 
-	public void onReachMilestone(int odometer) {			
+	public void onReachMilestone(int odometer) {
+		// level up and update barrier probabilities
 		mLevel.levelUp();
+		mCurGamePart = mLevel.getValue() % 7;
+		mCurGamePart = mCurGamePart == 0 ? 1 : mCurGamePart;
+		mProbBird   /= mLevel.mComplexityScale;
+		mProbAster  /= mLevel.mComplexityScale;
+		mProbAlient /= mLevel.mComplexityScale;
 	}
 }
