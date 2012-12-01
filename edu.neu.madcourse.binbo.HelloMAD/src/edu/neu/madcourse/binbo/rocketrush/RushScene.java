@@ -116,9 +116,9 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 	}
 	
 	// probabilities for creating barriers
-	private int mProbBird   = 150; // 1 / 100
-	private int	mProbAster  = 270; // 1 / 90
-	private int mProbAlient = 120; // 1 / 80
+	private int mProbBird   = 120; // 1 / 100
+	private int	mProbAster  = 216; // 1 / 90
+	private int mProbAlient = 96;  // 1 / 80
 	
 	private void createBird() {		
 		// get the acceleration time 
@@ -128,7 +128,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 			boolean right = mRandom.nextBoolean();
 			Bird b = new Bird(mRes, right);			
 			b.setX(right ? -b.getWidth() : mWidth);
-			b.setY(mRandom.nextInt(mHeight - (mHeight >> 2)));
+			b.setY(mRandom.nextInt(mHeight - (mHeight >> 1)));
 			b.initSpeeds(
 				(right ? mRandom.nextInt(5) + 4 : -4 - mRandom.nextInt(5)) * mLevel.mSpeedScaleX,   
 				3f,
