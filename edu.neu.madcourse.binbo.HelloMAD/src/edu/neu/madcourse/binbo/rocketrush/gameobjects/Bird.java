@@ -41,7 +41,7 @@ public class Bird extends Barrier {
 		float accSpeedY = y / (1000 / GameEngine.ENGINE_SPEED);		
 		setSpeed(x, y + accSpeedY * accTime);
 		setMinSpeed(x, y);
-		setMaxSpeed(x, y * 3);
+		setMaxSpeed(x, y + y + y);
 		setAccSpeed(0, accSpeedY);
 	}
 
