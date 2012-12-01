@@ -175,7 +175,35 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 	}
 	
 	private void createAlient() {
-		
+		// get the acceleration time 
+		int accTime = mRocket.getAccTime();
+		// generate static asteroid
+		if (mRandom.nextInt(mProbAster) == 1) {
+			Alient ali = new Alient(mRes);
+			ali.setX(mRandom.nextInt((int)(mWidth - ali.getWidth() + 1)));
+			ali.setY(0 - ali.getHeight());
+			ali.initSpeeds(0, (mRandom.nextInt(4) + 3) * mLevel.mSpeedScaleY, accTime);
+			ali.onSizeChanged(mWidth, mHeight);
+			ali.setOnCollideListener(this);
+			mBarriers.add(ali);
+			mObjects.add(ali);
+		}		
+		// generate dynamic asteroid
+		if (mRandom.nextInt(mProbAster) == 1) {
+			Alient ali = new Alient(mRes);
+			boolean right = mRandom.nextBoolean();
+			ali.setX(right ? -ali.getWidth() : mWidth + ali.getWidth());
+			ali.setY(mRandom.nextInt(mHeight >> 3));
+			ali.initSpeeds(
+				(right ? mRandom.nextInt(3) + 3 : -3 - mRandom.nextInt(3)) * mLevel.mSpeedScaleX,   
+				(mRandom.nextInt(4) + 3) * mLevel.mSpeedScaleY,
+				accTime
+			);
+			ali.onSizeChanged(mWidth, mHeight);
+			ali.setOnCollideListener(this);
+			mBarriers.add(ali);
+			mObjects.add(ali);
+		}
 	}
 
 	@Override

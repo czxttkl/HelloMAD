@@ -13,27 +13,37 @@ import android.graphics.Canvas;
 
 public class Alient extends Barrier {	
 	protected final static int IMAGE_COUNT = 12; // the same size of the total number of bitmaps
-	protected static List<Bitmap> mImages = new ArrayList<Bitmap>();			
+	protected static boolean sImageLoaded = false;	
+	protected static List<Bitmap> sImages = new ArrayList<Bitmap>();			
+	
+	public static void loadImages(Resources res) {
+		if (sImageLoaded) {
+			return;
+		}
+		sImageLoaded = true;
+		
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient01));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient02));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient03));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient04));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient05));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient06));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient07));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient08));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient09));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient10));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient11));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient12));
+	}
 	
 	public Alient(Resources res) {
 		super(res);		
 		setKind(ALIENT);
 		setMovable(true);	
 		setZOrder(ZOrders.ALIENT);
-		mImages.add(BitmapFactory.decodeResource(res, R.drawable.alient01));
-		mImages.add(BitmapFactory.decodeResource(res, R.drawable.alient02));
-		mImages.add(BitmapFactory.decodeResource(res, R.drawable.alient03));
-		mImages.add(BitmapFactory.decodeResource(res, R.drawable.alient04));
-		mImages.add(BitmapFactory.decodeResource(res, R.drawable.alient05));
-		mImages.add(BitmapFactory.decodeResource(res, R.drawable.alient06));
-		mImages.add(BitmapFactory.decodeResource(res, R.drawable.alient07));
-		mImages.add(BitmapFactory.decodeResource(res, R.drawable.alient08));
-		mImages.add(BitmapFactory.decodeResource(res, R.drawable.alient09));
-		mImages.add(BitmapFactory.decodeResource(res, R.drawable.alient10));
-		mImages.add(BitmapFactory.decodeResource(res, R.drawable.alient11));
-		mImages.add(BitmapFactory.decodeResource(res, R.drawable.alient12));
-		setWidth(mImages.get(0).getWidth());
-		setHeight(mImages.get(0).getHeight());	
+		loadImages(res);
+		setWidth(sImages.get(0).getWidth());
+		setHeight(sImages.get(0).getHeight());	
 	}
 
 	public void initSpeeds(float x, float y, int accTime) {		
@@ -55,7 +65,7 @@ public class Alient extends Barrier {
 		if (mCurIndex == IMAGE_COUNT) {
 			mCurIndex = 0;
 		}
-		c.drawBitmap(mImages.get(mCurIndex++), mX, mY, null);	
+		c.drawBitmap(sImages.get(mCurIndex++), mX, mY, null);	
 	}	
 
 	@Override
