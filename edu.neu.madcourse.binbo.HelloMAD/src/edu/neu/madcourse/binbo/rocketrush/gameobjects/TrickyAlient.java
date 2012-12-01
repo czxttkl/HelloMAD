@@ -1,7 +1,5 @@
 package edu.neu.madcourse.binbo.rocketrush.gameobjects;
 
-import java.util.Random;
-
 import edu.neu.madcourse.binbo.rocketrush.GameEngine;
 import android.content.res.Resources;
 
