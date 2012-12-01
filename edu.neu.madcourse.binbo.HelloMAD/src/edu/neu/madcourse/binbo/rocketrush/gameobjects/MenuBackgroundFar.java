@@ -11,7 +11,7 @@ public class MenuBackgroundFar extends Background {
 
 	public MenuBackgroundFar(Resources res) {
 		super(res);
-		setZOrder(ZOrders.BACKGROUND_FAR);
+		setZOrder(ZOrders.BACKGROUND_FAR);		
 		setImage(BitmapFactory.decodeResource(res, R.drawable.bg_menu));
 	}
 	

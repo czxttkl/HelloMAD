@@ -26,6 +26,7 @@ public class Odometer extends GameObject {
 	public Odometer(Resources res) {
 		super(res);
 		setKind(ODOMETER);
+		setCollidable(false);
 		setZOrder(ZOrders.ODOMETER);
 		setSpeed(DEFAULT_SPEED_X, DEFAULT_SPEED_Y);
 		setMaxSpeed(0, DEFAULT_SPEED_Y * 3);

@@ -24,6 +24,7 @@ public class Level extends GameObject {
 		super(res);
 		setKind(LEVEL);
 		setMovable(true);
+		setCollidable(false);
 		setZOrder(ZOrders.LEVEL);
 		
 		mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);

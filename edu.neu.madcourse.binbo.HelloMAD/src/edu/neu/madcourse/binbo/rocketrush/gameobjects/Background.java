@@ -12,6 +12,7 @@ public class Background extends GameObject {
 		super(res);		
 		setKind(BACKGROUND);
 		setMovable(false);
+		setCollidable(false);
 	}
 
 	public Background(Resources res, Bitmap image) {
@@ -19,6 +20,7 @@ public class Background extends GameObject {
 		setKind(BACKGROUND);
 		setImage(image);
 		setMovable(false);
+		setCollidable(false);
 	}
 	
 	public void setImage(Bitmap image) {

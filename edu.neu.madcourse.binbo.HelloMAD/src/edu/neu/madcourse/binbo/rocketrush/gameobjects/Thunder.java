@@ -29,6 +29,8 @@ public class Thunder extends Barrier {
 		super(res);		
 		setKind(THUNDER);
 		setMovable(true);	
+		setVisible(false);
+		setCollidable(false);
 		setZOrder(ZOrders.THUNDER);
 		loadImages(res);
 		setWidth(sImages.get(0).getWidth());
@@ -49,18 +51,21 @@ public class Thunder extends Barrier {
 			return; // not necessary to draw the invisible
 		}
 		
-		if (mPeriod <= 75) {
-			;
-		} else {
-			if ((mPeriod & 3) != 0) {
-				c.drawBitmap(sImages.get(0), mX, mY, null);
-			}
+		if (mVisible && (mPeriod & 3) != 0) {		
+			c.drawBitmap(sImages.get(0), mX, mY, null);			
 		}
 	}	
 
 	@Override
-	public void update() {	
-		mPeriod = (mPeriod <= 100) ? mPeriod + 1 : 0;
+	public void update() {			
+		if (++mPeriod == 75) {
+			mVisible = true;
+			mCollidable = true;
+		} else if (mPeriod == 100) {
+			mPeriod = 0;
+			mVisible = false;
+			mCollidable = false;
+		}
 		mY += mSpeedY;		
 	}
 }

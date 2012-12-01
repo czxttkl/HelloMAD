@@ -140,20 +140,14 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 			if (obj == this) {
 				continue;
 			}
-			// skip the speed bar and backgrounds because they are also in the list
-			if (obj.getKind() == SPEEDBAR || obj.getKind() == BACKGROUND || 
-				obj.getKind() == LEVEL || obj.getKind() == ODOMETER) {
+			if (!obj.getCollidable()) {
 				continue;
-			}						
-			
+			}
+
 			boolean intersects = mRect.intersects(
 				(int)obj.getX(), (int)obj.getY(), 
 				(int)(obj.getX() + obj.getWidth()), (int)(obj.getY() + obj.getHeight()));
-			if (intersects) {
-				if (!obj.getCollidable()) {
-					continue;
-				}
-				Log.d("danger", "danger, collide!");		
+			if (intersects) {						
 				mCollideWith.add(obj);
 			}
 		}
