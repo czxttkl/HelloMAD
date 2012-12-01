@@ -52,13 +52,17 @@ public class LifeBar extends GameObject {
 		mPaint3.setStyle(Style.FILL); 
 	}
 
-	public void lifeUp(float up) {
-		mLife = Math.min(mLife + up, 1f);	
-	}
-
-	public void lifeDown(float down) {
-		mLife = Math.max(mLife - down, 0);		
-	}		
+	public void lifeChange(float change) {
+		mLife = Math.max(Math.min(mLife + change, 1f), 0);
+		
+		if (mLife <= 0.33) {
+	    	mPaint3.setColor(Color.RED);
+	    } else if (mLife <= 0.66) {
+	    	mPaint3.setColor(Color.YELLOW);
+	    } else {
+	    	mPaint3.setColor(Color.GREEN);
+	    }
+	}	
 	
 	@Override
 	public void update() {		
@@ -70,14 +74,7 @@ public class LifeBar extends GameObject {
 		r3.right = 68 + mWidth * mLife;
 		c.drawText("HP", 16, 72, mPaint0);
 	    c.drawRoundRect(r1, 12, 12, mPaint1);	    	    
-	    c.drawRoundRect(r2, 9, 9, mPaint2);
-	    if (mLife <= 0.33) {
-	    	mPaint3.setColor(Color.RED);
-	    } else if (mLife <= 0.66) {
-	    	mPaint3.setColor(Color.YELLOW);
-	    } else {
-	    	mPaint3.setColor(Color.GREEN);
-	    }
+	    c.drawRoundRect(r2, 9, 9, mPaint2);	    
 	    c.drawRoundRect(r3, 9, 9, mPaint3);
 	}
 

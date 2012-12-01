@@ -104,14 +104,12 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 		mObjects.removeAll(invisibles);
 		// create barriers based on the current game part	
 		if (mCurGamePart <= 2) {
-			createBird();			
+			createAlient();						
 		} else if (mCurGamePart <= 4) {
-			createAsteroid();
+			createBird();	
 		} else if (mCurGamePart <= 6){
-			createAlient();
-		}		
-		// order by Z
-		orderByZ(mObjects);
+			createAsteroid();
+		}				
 		
 		return mBarriers;
 	}
@@ -139,7 +137,9 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 			b.setOnCollideListener(this);
 			mBarriers.add(b);
 			mObjects.add(b);
-		}		
+		}	
+		// order by Z
+		orderByZ(mObjects);
 	}
 	
 	private void createAsteroid() {
@@ -172,6 +172,8 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 			mBarriers.add(ast);
 			mObjects.add(ast);
 		}
+		// order by Z
+		orderByZ(mObjects);
 	}
 	
 	private void createAlient() {
@@ -204,17 +206,19 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 			mBarriers.add(ali);
 			mObjects.add(ali);
 		}
+		// order by Z
+		orderByZ(mObjects);
 	}
 
 	@Override
 	public void onCollide(GameObject obj, List<GameObject> collideWith) {
 		Vibrator vibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
 		vibrator.vibrate(30);
-		mLifeBar.lifeDown(1 / 3f);
+		mLifeBar.lifeChange(-1 / 3f);
 	}
 
 	public void onReachTarget(int odometer) {
-		mLifeBar.lifeUp(0.01f);
+		mLifeBar.lifeChange(0.01f);
 	}
 
 	public void onReachMilestone(int odometer) {

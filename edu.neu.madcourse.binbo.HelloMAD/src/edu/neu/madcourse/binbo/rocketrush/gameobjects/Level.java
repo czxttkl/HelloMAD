@@ -68,7 +68,7 @@ public class Level extends GameObject {
 	
 	public void doDraw(Canvas c) {
 		if (mDisplayDuration > 0) {
-			c.drawText("Level " + mLevel, mX, mHeight / 2, mPaint);
+			c.drawText("Level " + mLevel, mX, mHeight * 0.5f, mPaint);
 		}
 	}
 	

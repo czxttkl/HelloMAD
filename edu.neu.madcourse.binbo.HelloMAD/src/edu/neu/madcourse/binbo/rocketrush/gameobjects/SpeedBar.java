@@ -69,14 +69,13 @@ public class SpeedBar extends GameObject implements GameObject.IDrawer {
 			mY = Math.min(mY + mSpeedY, mBarBottom);
 			mUpDuration = 0;
 		} 
+		r3.top = mY;
 	}
 	
 	@Override
 	public void doDraw(Canvas c) {		             	    
 	    c.drawRoundRect(r1, 12, 12, mPaint1);	    	    
-	    c.drawRoundRect(r2, 9, 9, mPaint2);
-
-	    r3.top = mY;
+	    c.drawRoundRect(r2, 9, 9, mPaint2);	    
 	    c.drawRoundRect(r3, 9, 9, mPaint3);
 	}
 
