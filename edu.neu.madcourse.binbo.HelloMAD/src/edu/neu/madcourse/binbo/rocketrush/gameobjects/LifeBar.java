@@ -26,6 +26,8 @@ public class LifeBar extends GameObject {
 	protected RectF r3 = new RectF();
 	// current life
 	protected float mLife = 1f;
+	// life changed listener
+	protected OnLifeChangedListener mLifeChangedListener = null;
 	
 	public LifeBar(Resources res) {
 		super(res);
@@ -65,8 +67,8 @@ public class LifeBar extends GameObject {
 	    	mPaint3.setColor(0xff00cc00);
 	    }
 		
-		if (mLife == 0) {
-			
+		if (mLifeChangedListener != null) {
+			mLifeChangedListener.onLifeChanged(mLife);
 		}
 	}	
 	
@@ -105,5 +107,13 @@ public class LifeBar extends GameObject {
 	    r3.bottom = 73;
 	    
 	    mWidth = r3.right - r3.left;
+	}
+	
+	public void setOnLifeChangedListener(OnLifeChangedListener listener) {
+		mLifeChangedListener = listener;
+	}
+	
+	public interface OnLifeChangedListener {
+		void onLifeChanged(float life);
 	}
 }
