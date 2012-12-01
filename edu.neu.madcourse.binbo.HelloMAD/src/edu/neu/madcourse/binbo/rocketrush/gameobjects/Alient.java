@@ -47,7 +47,7 @@ public class Alient extends Barrier {
 	}
 
 	public void initSpeeds(float x, float y, int accTime) {		
-		float accSpeedY = y / (1000 / GameEngine.ENGINE_SPEED);		
+		float accSpeedY = y / (1000 / GameEngine.ENGINE_SPEED);			
 		setSpeed(x, y + accSpeedY * accTime);
 		setMinSpeed(x, y);
 		setMaxSpeed(x, y * 3);
@@ -76,7 +76,7 @@ public class Alient extends Barrier {
 		} else {
 			mSpeedY = Math.max(mSpeedY - mAccSpeedY, mMinSpeedY);
 		}
-		
+
 		mX += mSpeedX;
 		mY += mSpeedY;		
 	}

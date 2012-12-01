@@ -91,8 +91,8 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 		}
 		// remove invisible barriers
 		List<GameObject> invisibles = new ArrayList<GameObject>();
-		int edgeLeft  = -(mWidth >> 1);
-		int edgeRight = mWidth + (mWidth >> 1);
+		int edgeLeft  = -(mWidth >> 2);
+		int edgeRight = mWidth + (mWidth >> 2);
 		for (GameObject b : mBarriers) {
 			float x = b.getX(), y = b.getY();
 			if (x < edgeLeft || x > edgeRight || y > mHeight) {
@@ -115,9 +115,9 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 	}
 	
 	// probabilities for creating barriers
-	private int mProbBird   = 50; // 1 / 45
-	private int	mProbAster  = 80; // 1 / 55
-	private int mProbAlient = 70; // 1 / 60
+	private int mProbBird   = 60; // 1 / 60
+	private int	mProbAster  = 110; // 1 / 55
+	private int mProbAlient = 150; // 1 / 50
 	
 	private void createBird() {		
 		// get the acceleration time 
@@ -126,7 +126,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 		if (mRandom.nextInt(mProbBird) == 1) {
 			boolean right = mRandom.nextBoolean();
 			Bird b = new Bird(mRes, right);			
-			b.setX(right ? -b.getWidth() : mWidth + b.getWidth());
+			b.setX(right ? -b.getWidth() : mWidth);
 			b.setY(mRandom.nextInt(mHeight >> 2));
 			b.initSpeeds(
 				(right ? mRandom.nextInt(5) + 4 : -4 - mRandom.nextInt(5)) * mLevel.mSpeedScaleX,   
@@ -144,9 +144,10 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 	
 	private void createAsteroid() {
 		// get the acceleration time 
-		int accTime = mRocket.getAccTime();
-		// generate static asteroid
-		if (mRandom.nextInt(mProbAster) == 1) {
+		int accTime = mRocket.getAccTime();		
+		// generate asteroid
+		int type = mRandom.nextInt(mProbAster);
+		if (type == 1) {
 			Asteroid ast = new Asteroid(mRes);
 			ast.setX(mRandom.nextInt((int)(mWidth - ast.getWidth() + 1)));
 			ast.setY(0 - ast.getHeight());
@@ -155,12 +156,10 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 			ast.setOnCollideListener(this);
 			mBarriers.add(ast);
 			mObjects.add(ast);
-		}		
-		// generate dynamic asteroid
-		if (mRandom.nextInt(mProbAster) == 1) {
+		} else if (type == 2) {
 			Asteroid ast = new Asteroid(mRes);
 			boolean right = mRandom.nextBoolean();
-			ast.setX(right ? -ast.getWidth() : mWidth + ast.getWidth());
+			ast.setX(right ? -ast.getWidth() : mWidth);
 			ast.setY(mRandom.nextInt(mHeight >> 3));
 			ast.initSpeeds(
 				(right ? mRandom.nextInt(3) + 3 : -3 - mRandom.nextInt(3)) * mLevel.mSpeedScaleX,   
@@ -179,28 +178,53 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 	private void createAlient() {
 		// get the acceleration time 
 		int accTime = mRocket.getAccTime();
-		// generate static asteroid
-		if (mRandom.nextInt(mProbAster) == 1) {
-			Alient ali = new Alient(mRes);
-			ali.setX(mRandom.nextInt((int)(mWidth - ali.getWidth() + 1)));
-			ali.setY(0 - ali.getHeight());
-			ali.initSpeeds(0, (mRandom.nextInt(4) + 3) * mLevel.mSpeedScaleY, accTime);
-			ali.onSizeChanged(mWidth, mHeight);
-			ali.setOnCollideListener(this);
-			mBarriers.add(ali);
-			mObjects.add(ali);
-		}		
-		// generate dynamic asteroid
-		if (mRandom.nextInt(mProbAster) == 1) {
-			Alient ali = new Alient(mRes);
-			boolean right = mRandom.nextBoolean();
-			ali.setX(right ? -ali.getWidth() : mWidth + ali.getWidth());
-			ali.setY(mRandom.nextInt(mHeight >> 3));
-			ali.initSpeeds(
-				(right ? mRandom.nextInt(3) + 3 : -3 - mRandom.nextInt(3)) * mLevel.mSpeedScaleX,   
-				(mRandom.nextInt(4) + 3) * mLevel.mSpeedScaleY,
-				accTime
-			);
+		// generate alient
+		int type = mRandom.nextInt(mProbAster);
+		if (type == 1) {
+//			Alient ali = new Alient(mRes);
+//			ali.setX(mRandom.nextInt((int)(mWidth - ali.getWidth() + 1)));
+//			ali.setY(0 - ali.getHeight());
+//			ali.initSpeeds(0, (mRandom.nextInt(4) + 3) * mLevel.mSpeedScaleY, accTime);
+//			ali.onSizeChanged(mWidth, mHeight);
+//			ali.setOnCollideListener(this);
+//			mBarriers.add(ali);
+//			mObjects.add(ali);
+		} else if (type == 2) {
+//			Alient ali = new Alient(mRes);
+//			boolean right = mRandom.nextBoolean();
+//			ali.setX(right ? -ali.getWidth() : mWidth + ali.getWidth());
+//			ali.setY(mRandom.nextInt(mHeight >> 3));
+//			ali.initSpeeds(
+//				(right ? mRandom.nextInt(3) + 3 : -3 - mRandom.nextInt(3)) * mLevel.mSpeedScaleX,   
+//				(mRandom.nextInt(4) + 3) * mLevel.mSpeedScaleY,
+//				accTime
+//			);
+//			ali.onSizeChanged(mWidth, mHeight);
+//			ali.setOnCollideListener(this);
+//			mBarriers.add(ali);
+//			mObjects.add(ali);
+		} else if (type == 3) {
+			int aliType = mRandom.nextInt(2);
+			Alient ali = new TrickyAlient(mRes, aliType);
+			if (aliType == 0) {				
+				boolean right = mRandom.nextBoolean();
+				ali.setX(right ? -ali.getWidth() : mWidth);
+				ali.setY(mRandom.nextInt(mHeight >> 5));
+				ali.initSpeeds(
+					(right ? mRandom.nextInt(6) + 7 : -7 - mRandom.nextInt(6)),   
+					mRandom.nextInt(4) + 2,
+					accTime
+				);
+			} else if (aliType == 1) {
+				float offset = ali.getWidth();				
+				ali.setX(offset + mRandom.nextInt((int) (mWidth - offset - offset - offset)));
+				ali.setY(-ali.getHeight());
+				ali.initSpeeds(
+					5,   
+					(mRandom.nextInt(4) + 2) * mLevel.mSpeedScaleY,
+					accTime
+				);
+			}
 			ali.onSizeChanged(mWidth, mHeight);
 			ali.setOnCollideListener(this);
 			mBarriers.add(ali);
