@@ -64,6 +64,10 @@ public class LifeBar extends GameObject {
 	    } else {
 	    	mPaint3.setColor(0xff00cc00);
 	    }
+		
+		if (mLife == 0) {
+			
+		}
 	}	
 	
 	@Override
