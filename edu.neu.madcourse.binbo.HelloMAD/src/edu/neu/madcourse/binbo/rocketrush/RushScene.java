@@ -21,6 +21,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 	private Level mLevel = null;	
 	private Odometer mOdometer = null;
 	private int mCurGamePart = 1;
+	private int mCurGameLoop = 1;
 	private Random mRandom = new Random();
 	private Context mContext = null;
 	
@@ -250,13 +251,15 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 		// level up and update barrier probabilities
 		mLevel.levelUp();
 		mCurGamePart = mLevel.getValue() % 7;
-		if (mCurGamePart == 0) { // another loop, reset some values
+		if (mCurGamePart == 0) { 
+			// the difficulty increases about 20% after each loop
 			mLevel.mSpeedScaleX *= 0.75;
 			mLevel.mSpeedScaleY *= 0.75;
-			mProbBird   *= 1.4;
-			mProbAster  *= 1.4;
-			mProbAlient *= 1.4;
+			mProbBird   *= 1.42;
+			mProbAster  *= 1.42;
+			mProbAlient *= 1.42;
 			mCurGamePart = 1;
+			++mCurGameLoop;
 		}
 		mProbBird   /= mLevel.mComplexityScale;
 		mProbAster  /= mLevel.mComplexityScale;
