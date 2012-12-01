@@ -3,24 +3,26 @@ package edu.neu.madcourse.binbo.rocketrush;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.neu.madcourse.binbo.R;
-import edu.neu.madcourse.binbo.rocketrush.speech.OpusManager;
-import edu.neu.madcourse.binbo.rocketrush.splash.SplashView;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
-import android.widget.*;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import edu.neu.madcourse.binbo.R;
+import edu.neu.madcourse.binbo.rocketrush.speech.OpusManager;
+import edu.neu.madcourse.binbo.rocketrush.splash.SplashView;
+import edu.neu.madcourse.binbo.rocketrush.tutorial.TutorialActivity;
 
 public class RocketRushActivity extends Activity implements OnClickListener, OnTouchListener {	
 	
@@ -154,6 +156,9 @@ public class RocketRushActivity extends Activity implements OnClickListener, OnT
 		case R.id.vsModeButton:			
 			switchGameMode(MODE_VERSUS);
 			break;
+		case R.id.helpButton:
+			Intent i = new Intent(this, TutorialActivity.class);
+			startActivity(i);
 		}
 	}
 	

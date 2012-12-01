@@ -51,9 +51,11 @@ public class TutorialView extends View {
 
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-		Bitmap image = null;
-		Resources res = getResources();		
+		super.onSizeChanged(w, h, oldw, oldh);
 		
+		Bitmap image = null;
+		Resources res = getResources();
+
 		switch (getId()) {
 		case R.id.tutorialView1:
 			image = BitmapFactory.decodeResource(res, R.drawable.tutorial_1);
@@ -68,12 +70,15 @@ public class TutorialView extends View {
 			break;
 		}
 		
-		Bitmap newImage = Bitmap.createScaledBitmap(image, w, h, true);	
+		// scale the background according to the surface size
+		float radio = image.getHeight() / (float) image.getWidth();	
+		int scaledWidth  = w;
+		int scaledHeight = (int)(w * radio);
+		Bitmap scaledImage = 
+			Bitmap.createScaledBitmap(image, scaledWidth, scaledHeight, true);	
 		image.recycle();
 		image = null;
-		setImage(newImage);
-		
-		super.onSizeChanged(w, h, oldw, oldh);
+		setImage(scaledImage);
 	}
 
 }
