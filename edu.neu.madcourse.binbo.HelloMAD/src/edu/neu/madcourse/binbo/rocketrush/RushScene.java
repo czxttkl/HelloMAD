@@ -253,11 +253,14 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 		mCurGamePart = mLevel.getValue() % 7;
 		if (mCurGamePart == 0) { 
 			// the difficulty increases about 20% after each loop
+			// algorithm: 
+			// for speed: 1.61 * 0.75 Å 1.2
+			// for complexity: 1 / Math.pow(1.1, 6) * 1.476 / 1.1 Å 1 / 1.2
 			mLevel.mSpeedScaleX *= 0.75;
 			mLevel.mSpeedScaleY *= 0.75;
-			mProbBird   *= 1.42;
-			mProbAster  *= 1.42;
-			mProbAlient *= 1.42;
+			mProbBird   *= 1.476;
+			mProbAster  *= 1.476;
+			mProbAlient *= 1.476;
 			mCurGamePart = 1;
 			++mCurGameLoop;
 		}
