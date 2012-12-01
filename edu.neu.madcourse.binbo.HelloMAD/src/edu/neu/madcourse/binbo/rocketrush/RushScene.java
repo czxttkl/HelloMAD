@@ -202,7 +202,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 //			ali.onSizeChanged(mWidth, mHeight);
 //			ali.setOnCollideListener(this);
 //			mBarriers.add(ali);
-//			mObjects.add(ali);
+//			mObjects.add(ali); 
 //		}
 		if (type == 3) {
 			int aliType = mRandom.nextInt(2);
