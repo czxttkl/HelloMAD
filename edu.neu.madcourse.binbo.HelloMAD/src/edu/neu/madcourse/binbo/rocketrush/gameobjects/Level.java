@@ -11,7 +11,7 @@ public class Level extends GameObject {
 	protected int mLevel = 1;
 	public float mSpeedScaleX     = 1;
 	public float mSpeedScaleY     = 1;
-	public float mComplexityScale = 1;
+	public float mComplexityScale = 1.1f;
 
 	protected final static int DEFAULT_MOVE_DURATION = 200;
 	protected final static int DEFAULT_STAY_DURATION = 1000;
@@ -41,9 +41,8 @@ public class Level extends GameObject {
 	public void levelUp() {
 		++mLevel;
 		
-		mSpeedScaleX     *= 1.1;
-		mSpeedScaleY     *= 1.1;
-		mComplexityScale *= 1.1;
+		mSpeedScaleX *= 1.1;
+		mSpeedScaleY *= 1.1;
 		mDisplayDuration = DEFAULT_MOVE_DURATION * 2 + DEFAULT_STAY_DURATION;
 		
 		mTextWidth = (int)mPaint.measureText("Level " + mLevel);

@@ -251,9 +251,11 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 		mLevel.levelUp();
 		mCurGamePart = mLevel.getValue() % 7;
 		if (mCurGamePart == 0) { // another loop, reset some values
-			mLevel.mSpeedScaleX     *= 0.75;
-			mLevel.mSpeedScaleY     *= 0.75;
-			mLevel.mComplexityScale *= 0.75;
+			mLevel.mSpeedScaleX *= 0.75;
+			mLevel.mSpeedScaleY *= 0.75;
+			mProbBird   *= 1.4;
+			mProbAster  *= 1.4;
+			mProbAlient *= 1.4;
 			mCurGamePart = 1;
 		}
 		mProbBird   /= mLevel.mComplexityScale;
