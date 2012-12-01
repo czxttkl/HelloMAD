@@ -15,11 +15,12 @@ public class GameObject {
 	public final static int ALIENT	   = 3;
 	public final static int THUNDER	   = 4;
 	public final static int BACKGROUND = 5;
-	public final static int ROCKET	   = 6;
-	public final static int SPEEDBAR   = 7;
-	public final static int LIFEBAR	   = 8;
-	public final static int LEVEL	   = 9;
-	public final static int ODOMETER   = 10;
+	public final static int REWARD	   = 6;
+	public final static int ROCKET	   = 7;
+	public final static int SPEEDBAR   = 8;
+	public final static int LIFEBAR	   = 9;
+	public final static int LEVEL	   = 10;
+	public final static int ODOMETER   = 11;
 	
 	protected float mX = 0;
 	protected float mY = 0;
@@ -226,6 +227,7 @@ public class GameObject {
 		public static final int ASTEROID		= 2;	
 		public static final int ALIENT			= 2;
 		public static final int THUNDER			= 2;
+		public static final int REWARD			= 3;
 		public static final int ROCKET			= 3;
 		public static final int LIFEBAR			= 4;
 		public static final int SPEEDBAR		= 4;

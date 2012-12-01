@@ -24,12 +24,14 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 	protected int mRightDuration = 0;
 	protected int mUpDuration    = 0;
 	protected float mUpper  = 0;
-	protected float mBottom = 0;
+	protected float mBottom = 0;	
 	public final static float DEFAULT_SPEED_X = 8;
 	public final static float DEFAULT_SPEED_Y = 4;
 	// rocket's area used to detect collision
 	protected Rect mRect = new Rect();
 	protected List<GameObject> mCollideWith = new ArrayList<GameObject>();
+	// reward list notes the rewards bounding to this rocket
+	protected List<Reward> mRewards = new ArrayList<Reward>();
 
 	public static void loadImages(Resources res) {
 		if (sImageLoaded) {
@@ -57,6 +59,22 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 
 	public int getAccTime() {
 		return (int)((mBottom - mY) / mSpeedY);
+	}
+	
+	public void bindReward(Reward reward) {
+		reward.setSpeed(mSpeedX, mSpeedY);
+		reward.setMinSpeed(mMinSpeedX, mMinSpeedY);
+		reward.setMaxSpeed(mMaxSpeedX, mMaxSpeedY);
+		reward.setAccSpeed(mAccSpeedX, mAccSpeedY);
+		mRewards.add(reward);
+	}
+	
+	public void clearTimeoutReward() {
+		for (Reward r : mRewards) {
+			if (r.isTimeout()) {
+				
+			}
+		}
 	}
 
 	protected int mCurIndex = 0;

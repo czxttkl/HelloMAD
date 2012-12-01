@@ -91,18 +91,23 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 			return null;
 		}
 		// remove invisible barriers
-		List<GameObject> invisibles = new ArrayList<GameObject>();
+		List<GameObject> invisibles = null;
 		int edgeLeft  = -(mWidth >> 2);
 		int edgeRight = mWidth + (mWidth >> 2);
 		for (GameObject b : mBarriers) {
 			float x = b.getX(), y = b.getY();
 			if (x < edgeLeft || x > edgeRight || y > mHeight) {
+				if (invisibles == null) {
+					invisibles = new ArrayList<GameObject>();
+				}
 				invisibles.add(b);
 				b.release();
 			}
 		}
-		mBarriers.removeAll(invisibles);
-		mObjects.removeAll(invisibles);
+		if (invisibles != null) {
+			mBarriers.removeAll(invisibles);
+			mObjects.removeAll(invisibles);
+		}
 		// create barriers based on the current game progress
 		if (mCurGamePart <= 2) {
 			createBird();								
@@ -252,6 +257,21 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 			mBarriers.add(t);
 			mObjects.add(t);
 		}	
+		// order by Z
+		orderByZ(mObjects);
+	}
+	
+	// probabilities for creating barriers
+	private void createReward() {
+		if (mRandom.nextInt(1) == 0) {
+			Reward t = new Reward(mRes);			
+			t.setX(mRandom.nextInt((int) (mWidth - t.getWidth())));
+			t.setY(-t.getHeight());			
+			t.onSizeChanged(mWidth, mHeight);
+			t.setOnCollideListener(this);
+			mBarriers.add(t);
+			mObjects.add(t);
+		}
 		// order by Z
 		orderByZ(mObjects);
 	}
