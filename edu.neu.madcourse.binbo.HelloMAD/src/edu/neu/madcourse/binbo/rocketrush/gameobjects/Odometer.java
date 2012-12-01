@@ -17,7 +17,7 @@ public class Odometer extends GameObject {
 	protected int mAccMoveDuration = 0;
 	protected int mOdometer = 0;
 	protected int mTarget = 100;
-	protected int mMilestone = 10000;
+	protected int mMilestone = 5000;
 	protected Paint mPaint = null;
 	protected OnOdometerUpdateListener mOdometerUpdateListener = null; 
 	public final static float DEFAULT_SPEED_X = 0;
@@ -74,7 +74,7 @@ public class Odometer extends GameObject {
 				mOdometerUpdateListener.onReachTarget(mOdometer);
 				if (mOdometer >= mMilestone) {
 					mOdometerUpdateListener.onReachMilestone(mOdometer);
-					mMilestone += 10000;
+					mMilestone += 5000;
 				}
 			}
 			mTarget += 100;			

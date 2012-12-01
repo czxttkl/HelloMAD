@@ -41,8 +41,8 @@ public class Level extends GameObject {
 	public void levelUp() {
 		++mLevel;
 		
-		mSpeedScaleX *= 1.1;
-		mSpeedScaleY *= 1.1;
+		mSpeedScaleX *= 1.05;
+		mSpeedScaleY *= 1.05;
 		mDisplayDuration = DEFAULT_MOVE_DURATION * 2 + DEFAULT_STAY_DURATION;
 		
 		mTextWidth = (int)mPaint.measureText("Level " + mLevel);

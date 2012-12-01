@@ -13,12 +13,13 @@ public class GameObject {
 	public final static int BIRD   	   = 1;
 	public final static int ASTEROID   = 2;
 	public final static int ALIENT	   = 3;
-	public final static int BACKGROUND = 4;
-	public final static int ROCKET	   = 5;
-	public final static int SPEEDBAR   = 6;
-	public final static int LIFEBAR	   = 7;
-	public final static int LEVEL	   = 8;
-	public final static int ODOMETER   = 9;
+	public final static int THUNDER	   = 4;
+	public final static int BACKGROUND = 5;
+	public final static int ROCKET	   = 6;
+	public final static int SPEEDBAR   = 7;
+	public final static int LIFEBAR	   = 8;
+	public final static int LEVEL	   = 9;
+	public final static int ODOMETER   = 10;
 	
 	protected float mX = 0;
 	protected float mY = 0;

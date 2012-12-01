@@ -103,22 +103,26 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 		}
 		mBarriers.removeAll(invisibles);
 		mObjects.removeAll(invisibles);
-		// create barriers based on the current game part	
+		// create barriers based on the current game progress
 		if (mCurGamePart <= 2) {
 			createBird();								
 		} else if (mCurGamePart <= 4) {
 			createAsteroid();
 		} else if (mCurGamePart <= 6){			
 			createAlient();
-		}				
+		}					
+		if (mCurGameLoop > 1) {
+			createThunder();
+		}
 		
 		return mBarriers;
 	}
 	
 	// probabilities for creating barriers
-	private int mProbBird   = 120; // 1 / 100
-	private int	mProbAster  = 216; // 1 / 90
-	private int mProbAlient = 96;  // 1 / 80
+	private int mProbBird    = 100; // 1 / 100
+	private int	mProbAster   = 190; // 1 / 90
+	private int mProbAlient  = 90;  // 1 / 80
+	private int mProbThunder = 270;
 	
 	private void createBird() {		
 		// get the acceleration time 
@@ -130,7 +134,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 			b.setX(right ? -b.getWidth() : mWidth);
 			b.setY(mRandom.nextInt(mHeight - (mHeight >> 1)));
 			b.initSpeeds(
-				(right ? mRandom.nextInt(5) + 4 : -4 - mRandom.nextInt(5)) * mLevel.mSpeedScaleX,   
+				(right ? mRandom.nextInt(4) + 5 : -5 - mRandom.nextInt(4)) * mLevel.mSpeedScaleX,   
 				3f,
 				accTime
 			);
@@ -236,6 +240,22 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 		orderByZ(mObjects);
 	}
 
+	private void createThunder() {
+		// generate flying red chicken
+		if (mRandom.nextInt(mProbThunder) == 1) {
+			Thunder t = new Thunder(mRes);			
+			t.setX(mRandom.nextInt((int) (mWidth - t.getWidth())));
+			t.setY(-t.getHeight());
+			t.initSpeeds(0, 3f, 0);
+			t.onSizeChanged(mWidth, mHeight);
+			t.setOnCollideListener(this);
+			mBarriers.add(t);
+			mObjects.add(t);
+		}	
+		// order by Z
+		orderByZ(mObjects);
+	}
+	
 	@Override
 	public void onCollide(GameObject obj, List<GameObject> collideWith) {
 		Vibrator vibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
@@ -267,5 +287,8 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 		mProbBird   /= mLevel.mComplexityScale;
 		mProbAster  /= mLevel.mComplexityScale;
 		mProbAlient /= mLevel.mComplexityScale;
+		if (mCurGameLoop >= 1) {
+			mProbThunder /= mLevel.mComplexityScale;
+		}
 	}
 }

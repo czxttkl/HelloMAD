@@ -6,6 +6,7 @@ public class ZOrders {
 	public static final int BIRD			= 2;
 	public static final int ASTEROID		= 2;	
 	public static final int ALIENT			= 2;
+	public static final int THUNDER			= 2;
 	public static final int ROCKET			= 3;
 	public static final int LIFEBAR			= 4;
 	public static final int SPEEDBAR		= 4;
