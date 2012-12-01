@@ -46,7 +46,9 @@ public class SpeedBar extends GameObject implements GameObject.IDrawer {
 		
 		mPaint3.setAntiAlias(true);		    
 		mPaint3.setColor(Color.argb(0xFF, 0x00, 0xCC, 0x00));
-		mPaint3.setStyle(Style.FILL); 
+		mPaint3.setStyle(Style.FILL);
+		
+		r3.top = 0;
 	}
 	
 	public SpeedBar(Resources res, Bitmap image) {

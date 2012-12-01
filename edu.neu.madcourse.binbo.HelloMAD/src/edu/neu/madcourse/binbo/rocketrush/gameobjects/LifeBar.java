@@ -44,12 +44,14 @@ public class LifeBar extends GameObject {
 		mPaint1.setStyle(Style.STROKE);
 		
 		mPaint2.setAntiAlias(true);		    
-		mPaint2.setColor(Color.argb(0x80, 0xCC, 0xCC, 0xCC));
+		mPaint2.setColor(0x80cccccc);
 		mPaint2.setStyle(Style.FILL); 
 		
 		mPaint3.setAntiAlias(true);		    
-		mPaint3.setColor(Color.argb(0xFF, 0x00, 0xCC, 0x00));
+		mPaint3.setColor(0xff00cc00);
 		mPaint3.setStyle(Style.FILL); 
+		
+		r3.right = 68 + mWidth * mLife;
 	}
 
 	public void lifeChange(float change) {
@@ -60,7 +62,7 @@ public class LifeBar extends GameObject {
 	    } else if (mLife <= 0.66) {
 	    	mPaint3.setColor(Color.YELLOW);
 	    } else {
-	    	mPaint3.setColor(Color.GREEN);
+	    	mPaint3.setColor(0xff00cc00);
 	    }
 	}	
 	
