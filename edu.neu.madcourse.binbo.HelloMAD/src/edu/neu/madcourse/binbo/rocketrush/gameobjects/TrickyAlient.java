@@ -15,7 +15,7 @@ public class TrickyAlient extends Alient {
 	
 	@Override
 	public void initSpeeds(float x, float y, int accTime) {		
-		float accSpeedX = - x / ((mType == 0 ? 2000 : 500) / GameEngine.ENGINE_SPEED);
+		float accSpeedX = - x / ((mType == 0 ? 2000 : 320) / GameEngine.ENGINE_SPEED);
 		float accSpeedY = y / (1000 / GameEngine.ENGINE_SPEED);			
 		setSpeed(x, y + accSpeedY * accTime);
 		setMinSpeed(0, y);
@@ -35,7 +35,7 @@ public class TrickyAlient extends Alient {
 		if (mType == 0) {
 			mSpeedX += mAccSpeedX;			
 		} else if (mType == 1) {
-			if (Math.abs(Math.abs(mSpeedX) - mMaxSpeedX) <= 1e-6) {
+			if (Math.abs(Math.abs(mSpeedX) - mMaxSpeedX) <= 1e-2) {
 				if (mSpeedX > 0) { // right
 					mAccSpeedX = -Math.abs(mAccSpeedX);
 				} else {

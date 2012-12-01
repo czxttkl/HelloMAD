@@ -104,20 +104,20 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 		mObjects.removeAll(invisibles);
 		// create barriers based on the current game part	
 		if (mCurGamePart <= 2) {
-			createAlient();						
+			createBird();								
 		} else if (mCurGamePart <= 4) {
-			createBird();	
-		} else if (mCurGamePart <= 6){
 			createAsteroid();
+		} else if (mCurGamePart <= 6){			
+			createAlient();
 		}				
 		
 		return mBarriers;
 	}
 	
 	// probabilities for creating barriers
-	private int mProbBird   = 60; // 1 / 60
-	private int	mProbAster  = 110; // 1 / 55
-	private int mProbAlient = 150; // 1 / 50
+	private int mProbBird   = 150; // 1 / 100
+	private int	mProbAster  = 270; // 1 / 90
+	private int mProbAlient = 120; // 1 / 80
 	
 	private void createBird() {		
 		// get the acceleration time 
@@ -180,7 +180,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 		int accTime = mRocket.getAccTime();
 		// generate alient
 		int type = mRandom.nextInt(mProbAster);
-		if (type == 1) {
+//		if (type == 1) {
 //			Alient ali = new Alient(mRes);
 //			ali.setX(mRandom.nextInt((int)(mWidth - ali.getWidth() + 1)));
 //			ali.setY(0 - ali.getHeight());
@@ -189,7 +189,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 //			ali.setOnCollideListener(this);
 //			mBarriers.add(ali);
 //			mObjects.add(ali);
-		} else if (type == 2) {
+//		} else if (type == 2) {
 //			Alient ali = new Alient(mRes);
 //			boolean right = mRandom.nextBoolean();
 //			ali.setX(right ? -ali.getWidth() : mWidth + ali.getWidth());
@@ -203,7 +203,8 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 //			ali.setOnCollideListener(this);
 //			mBarriers.add(ali);
 //			mObjects.add(ali);
-		} else if (type == 3) {
+//		}
+		if (type == 3) {
 			int aliType = mRandom.nextInt(2);
 			Alient ali = new TrickyAlient(mRes, aliType);
 			if (aliType == 0) {				
@@ -220,7 +221,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 				ali.setX(offset + mRandom.nextInt((int) (mWidth - offset - offset - offset)));
 				ali.setY(-ali.getHeight());
 				ali.initSpeeds(
-					5,   
+					6,   
 					(mRandom.nextInt(4) + 2) * mLevel.mSpeedScaleY,
 					accTime
 				);
@@ -249,7 +250,12 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 		// level up and update barrier probabilities
 		mLevel.levelUp();
 		mCurGamePart = mLevel.getValue() % 7;
-		mCurGamePart = mCurGamePart == 0 ? 1 : mCurGamePart;
+		if (mCurGamePart == 0) { // another loop, reset some values
+			mLevel.mSpeedScaleX     *= 0.75;
+			mLevel.mSpeedScaleY     *= 0.75;
+			mLevel.mComplexityScale *= 0.75;
+			mCurGamePart = 1;
+		}
 		mProbBird   /= mLevel.mComplexityScale;
 		mProbAster  /= mLevel.mComplexityScale;
 		mProbAlient /= mLevel.mComplexityScale;
