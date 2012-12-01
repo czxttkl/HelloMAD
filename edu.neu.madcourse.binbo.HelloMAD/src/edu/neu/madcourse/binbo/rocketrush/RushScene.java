@@ -128,10 +128,10 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 			boolean right = mRandom.nextBoolean();
 			Bird b = new Bird(mRes, right);			
 			b.setX(right ? -b.getWidth() : mWidth);
-			b.setY(mRandom.nextInt(mHeight >> 2));
+			b.setY(mRandom.nextInt(mHeight - (mHeight >> 2)));
 			b.initSpeeds(
 				(right ? mRandom.nextInt(5) + 4 : -4 - mRandom.nextInt(5)) * mLevel.mSpeedScaleX,   
-				4f,
+				3f,
 				accTime
 			);
 			b.onSizeChanged(mWidth, mHeight);
@@ -252,15 +252,15 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 		mLevel.levelUp();
 		mCurGamePart = mLevel.getValue() % 7;
 		if (mCurGamePart == 0) { 
-			// the difficulty increases about 20% after each loop
+			// the difficulty increases about 30% after each loop
 			// algorithm: 
-			// for speed: 1.61 * 0.75 Å 1.2
-			// for complexity: 1 / Math.pow(1.1, 6) * 1.476 / 1.1 Å 1 / 1.2
-			mLevel.mSpeedScaleX *= 0.75;
-			mLevel.mSpeedScaleY *= 0.75;
-			mProbBird   *= 1.476;
-			mProbAster  *= 1.476;
-			mProbAlient *= 1.476;
+			// for speed: 1.61 * 0.81 Å 1.3
+			// for complexity: 1 / Math.pow(1.1, 6) * 1.363 / 1.1 Å 1 / 1.3
+			mLevel.mSpeedScaleX *= 0.81;
+			mLevel.mSpeedScaleY *= 0.81;
+			mProbBird   *= 1.363;
+			mProbAster  *= 1.363;
+			mProbAlient *= 1.363;
 			mCurGamePart = 1;
 			++mCurGameLoop;
 		}
