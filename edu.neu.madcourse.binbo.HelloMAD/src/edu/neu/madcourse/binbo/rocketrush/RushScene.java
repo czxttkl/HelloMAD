@@ -288,7 +288,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 		mProbAster  /= mLevel.mComplexityScale;
 		mProbAlient /= mLevel.mComplexityScale;
 		if (mCurGameLoop >= 1) {
-			mProbThunder /= mLevel.mComplexityScale;
+			mProbThunder /= (mLevel.mComplexityScale - 0.04);
 		}
 	}
 }
