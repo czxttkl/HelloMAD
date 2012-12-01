@@ -120,7 +120,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 	
 	// probabilities for creating barriers
 	private int mProbBird    = 100; // 1 / 100
-	private int	mProbAster   = 190; // 1 / 90
+	private int	mProbAster   = 175; // 1 / 90
 	private int mProbAlient  = 90;  // 1 / 80
 	private int mProbThunder = 270;
 	
