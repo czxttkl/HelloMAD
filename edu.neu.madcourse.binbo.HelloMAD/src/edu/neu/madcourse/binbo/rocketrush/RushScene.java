@@ -214,7 +214,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 	public void onCollide(GameObject obj, List<GameObject> collideWith) {
 		Vibrator vibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
 		vibrator.vibrate(30);
-		mLifeBar.lifeChange(-1 / 3f);
+		mLifeBar.lifeChange(-0.334f);
 	}
 
 	public void onReachTarget(int odometer) {
