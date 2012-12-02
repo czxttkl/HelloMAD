@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.neu.madcourse.binbo.R;
-import edu.neu.madcourse.binbo.rocketrush.GameObject.ZOrders;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -102,5 +101,4 @@ public class Field extends Reward {
 		mOffsetX = (mWidth - mRocket.getWidth()) * 0.5f;
 		mOffsetY = (mHeight - mRocket.getHeight()) * 0.5f;
 	}
-
 }

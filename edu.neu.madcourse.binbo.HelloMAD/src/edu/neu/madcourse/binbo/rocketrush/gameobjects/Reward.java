@@ -4,6 +4,7 @@ import java.util.Random;
 
 import android.content.res.Resources;
 import android.graphics.Canvas;
+import edu.neu.madcourse.binbo.rocketrush.GameCtrl;
 import edu.neu.madcourse.binbo.rocketrush.GameObject;
 
 public class Reward extends GameObject {	
@@ -66,6 +67,24 @@ public class Reward extends GameObject {
 		} else {
 			updateUnbound();			
 		}
+	}
+	
+	@Override
+	public void release() {
+		if (mRocket == null) {
+			return;
+		}		
+		mRocket.unbindReward(this);
+	}
+	
+	@Override
+	public void operate(GameCtrl ctrl) {
+	}
+
+	@Override
+	public void onSizeChanged(int width, int height) {
+		mCanvasWidth  = width;
+		mCanvasHeight = height;		
 	}
 	
 	protected void onBound() {}

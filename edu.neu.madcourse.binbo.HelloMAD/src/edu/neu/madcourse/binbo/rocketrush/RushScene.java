@@ -119,6 +119,8 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 		if (mCurGameLoop > 1) {
 			createThunder();
 		}
+		// create some reward
+		createReward();
 		
 		return mBarriers;
 	}
@@ -261,16 +263,17 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 		orderByZ(mObjects);
 	}
 	
-	// probabilities for creating barriers
+	// probabilities for creating reward
+	private int mProbReward = 1200;
+	
 	private void createReward() {
-		if (mRandom.nextInt(1) == 0) {
-			Reward t = new Reward(mRes);			
-			t.setX(mRandom.nextInt((int) (mWidth - t.getWidth())));
-			t.setY(-t.getHeight());			
-			t.onSizeChanged(mWidth, mHeight);
-			t.setOnCollideListener(this);
-			mBarriers.add(t);
-			mObjects.add(t);
+		if (mRandom.nextInt(mProbReward) == 0) {
+			Field f = new Field(mRes);			
+			f.setX(mRandom.nextInt((int) (mWidth - f.getWidth())));
+			f.setY(-f.getHeight());			
+			f.onSizeChanged(mWidth, mHeight);
+			f.setOnCollideListener(this);
+			mObjects.add(f);
 		}
 		// order by Z
 		orderByZ(mObjects);

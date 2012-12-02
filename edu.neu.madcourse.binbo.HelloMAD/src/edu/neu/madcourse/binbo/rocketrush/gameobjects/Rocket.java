@@ -69,12 +69,8 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 		mRewards.add(reward);
 	}
 	
-	public void clearTimeoutReward() {
-		for (Reward r : mRewards) {
-			if (r.isTimeout()) {
-				
-			}
-		}
+	public void unbindReward(Reward reward) {
+		mRewards.remove(reward);
 	}
 
 	protected int mCurIndex = 0;
@@ -165,8 +161,12 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 			boolean intersects = mRect.intersects(
 				(int)obj.getX(), (int)obj.getY(), 
 				(int)(obj.getX() + obj.getWidth()), (int)(obj.getY() + obj.getHeight()));
-			if (intersects) {						
-				mCollideWith.add(obj);
+			if (intersects) {				
+				if (obj.getKind() == REWARD) {
+					((Reward) obj).bindRocket(this);
+				} else {
+					mCollideWith.add(obj);
+				}
 			}
 		}
 		
