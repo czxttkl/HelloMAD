@@ -13,6 +13,7 @@ public class RushModeDialogFragment extends DialogFragment {
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		mActivity = (RocketRushActivity) getActivity();		
+		mGameMode = mActivity.getCurrentGameMode();
 	    // Use the Builder class for convenient dialog construction
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 	    builder.setItems(R.array.rush_mode_dialog_item, new DialogInterface.OnClickListener() {
@@ -21,7 +22,7 @@ public class RushModeDialogFragment extends DialogFragment {
 		    	// of the selected item
 		    	switch (which) {
 		    	case 0: // restart
-		    		//mGameMode.reset();
+		    		mGameMode.reset();
 		    		break;
 		    	case 1: // setting
 		    		
@@ -36,8 +37,7 @@ public class RushModeDialogFragment extends DialogFragment {
 	}
 	
 	@Override
-	public void onStart() {
-		mGameMode = mActivity.getCurrentGameMode();
+	public void onStart() {		
 		mGameMode.stop();
 		super.onStart();
 	}
