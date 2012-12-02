@@ -23,7 +23,7 @@ public class Reward extends GameObject {
 		setKind(REWARD);
 		setMovable(true);			
 		setZOrder(ZOrders.REWARD);		
-		setTimeout(16000, 20000);
+		setTimeout(20000, 20000);
 		// set speed for unbound state
 		setSpeed(2 + mRand.nextInt(3), 2 + mRand.nextInt(4));
 	}
@@ -49,10 +49,7 @@ public class Reward extends GameObject {
 
 	@Override
 	public void doDraw(Canvas c) {					
-		if (mBound) {
-			if (isTimeout()) {
-				return;
-			}
+		if (mBound) {			
 			drawBound(c);
 		} else {
 			drawUnbound(c);

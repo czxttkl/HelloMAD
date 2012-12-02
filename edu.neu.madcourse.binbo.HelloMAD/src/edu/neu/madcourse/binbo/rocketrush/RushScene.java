@@ -264,7 +264,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 	}
 	
 	// probabilities for creating reward
-	private int mProbReward = 120;
+	private int mProbReward = 1200;
 	
 	private void createReward() {
 		if (mRandom.nextInt(mProbReward) == 0) {
