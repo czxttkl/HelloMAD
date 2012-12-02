@@ -48,12 +48,11 @@ public class Reward extends GameObject {
 	}
 
 	@Override
-	public void doDraw(Canvas c) {
-		if (isTimeout()) {
-			return;
-		}
-			
+	public void doDraw(Canvas c) {					
 		if (mBound) {
+			if (isTimeout()) {
+				return;
+			}
 			drawBound(c);
 		} else {
 			drawUnbound(c);
