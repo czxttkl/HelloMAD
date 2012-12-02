@@ -23,6 +23,10 @@ public class GameMode {
 		mEngine.reset();
 	}
 	
+	public void reset() {
+		
+	}
+	
 	public void release() {
 		
 	}

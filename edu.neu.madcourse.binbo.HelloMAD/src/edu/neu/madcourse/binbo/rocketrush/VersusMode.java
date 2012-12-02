@@ -24,6 +24,13 @@ public class VersusMode extends GameMode {
 	}
 	
 	@Override
+	public void reset() {
+		synchronized (mScene) {
+			mScene.reset();
+		}
+	}
+	
+	@Override
 	public void start() {
 		mThread = new VersusModeThread(mHandler);
 		mThread.start();

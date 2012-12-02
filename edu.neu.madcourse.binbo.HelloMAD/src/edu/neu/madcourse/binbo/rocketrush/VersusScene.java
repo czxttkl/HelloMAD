@@ -17,6 +17,12 @@ public class VersusScene extends GameScene {
 	}
 	
 	@Override
+	public void reset() {
+		release();
+		load();
+	}
+
+	@Override
 	public void doDraw(Canvas c) {		
 		c.drawColor(Color.GRAY);		
 	}

@@ -17,6 +17,10 @@ public class GameScene implements GameObject.IDrawer, GameObject.OnCollideListen
 		mRes = res;
 	}
 	
+	public void reset() {
+		
+	}
+	
 	public List<GameObject> load() { return mObjects; }
 	
 	public void release() {

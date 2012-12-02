@@ -29,6 +29,12 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 		super(context.getResources());
 		mContext = context;
 	}	
+	
+	@Override
+	public void reset() {
+		release();
+		load();
+	}
 
 	public List<GameObject> load() {
 		// create game objects
@@ -70,6 +76,13 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 	
 	public void release() {
 		super.release();
+		mBackgroundFar  = null;
+		mBackgroundNear = null;
+		mSpeedBar = null;
+		mRocket   = null;
+		mLevel    = null;
+		mOdometer = null;
+		mLifeBar  = null;
 	}
 	
 	@Override
@@ -149,9 +162,9 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 			b.setOnCollideListener(this);
 			mBarriers.add(b);
 			mObjects.add(b);
-		}	
-		// order by Z
-		orderByZ(mObjects);
+			// order by Z
+			orderByZ(mObjects);
+		}			
 	}
 	
 	private void createAsteroid() {
@@ -168,6 +181,8 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 			ast.setOnCollideListener(this);
 			mBarriers.add(ast);
 			mObjects.add(ast);
+			// order by Z
+			orderByZ(mObjects);
 		} else if (type == 2) {
 			Asteroid ast = new Asteroid(mRes);
 			boolean right = mRandom.nextBoolean();
@@ -182,9 +197,9 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 			ast.setOnCollideListener(this);
 			mBarriers.add(ast);
 			mObjects.add(ast);
-		}
-		// order by Z
-		orderByZ(mObjects);
+			// order by Z
+			orderByZ(mObjects);
+		}		
 	}
 	
 	private void createAlient() {
@@ -201,6 +216,8 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 //			ali.setOnCollideListener(this);
 //			mBarriers.add(ali);
 //			mObjects.add(ali);
+//			// order by Z
+//			orderByZ(mObjects);
 //		} else if (type == 2) {
 //			Alient ali = new Alient(mRes);
 //			boolean right = mRandom.nextBoolean();
@@ -215,6 +232,8 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 //			ali.setOnCollideListener(this);
 //			mBarriers.add(ali);
 //			mObjects.add(ali); 
+//			// order by Z
+//			orderByZ(mObjects);
 //		}
 		if (type == 3) {
 			int aliType = mRandom.nextInt(2);
@@ -242,9 +261,9 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 			ali.setOnCollideListener(this);
 			mBarriers.add(ali);
 			mObjects.add(ali);
-		}
-		// order by Z
-		orderByZ(mObjects);
+			// order by Z
+			orderByZ(mObjects);
+		}		
 	}
 
 	private void createThunder() {
@@ -258,9 +277,9 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 			t.setOnCollideListener(this);
 			mBarriers.add(t);
 			mObjects.add(t);
-		}	
-		// order by Z
-		orderByZ(mObjects);
+			// order by Z
+			orderByZ(mObjects);
+		}			
 	}
 	
 	// probabilities for creating reward
@@ -274,9 +293,9 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 			f.onSizeChanged(mWidth, mHeight);
 			f.setOnCollideListener(this);
 			mObjects.add(f);
-		}
-		// order by Z
-		orderByZ(mObjects);
+			// order by Z
+			orderByZ(mObjects);
+		}		
 	}
 	
 	@Override

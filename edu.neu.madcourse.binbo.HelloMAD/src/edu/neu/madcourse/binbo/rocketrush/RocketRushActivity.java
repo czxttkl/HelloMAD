@@ -14,6 +14,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,12 +24,11 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import edu.neu.madcourse.binbo.R;
-import edu.neu.madcourse.binbo.persistentboggle.PBMain;
 import edu.neu.madcourse.binbo.rocketrush.speech.OpusManager;
 import edu.neu.madcourse.binbo.rocketrush.splash.SplashView;
 import edu.neu.madcourse.binbo.rocketrush.tutorial.TutorialActivity;
 
-public class RocketRushActivity extends Activity implements OnClickListener, OnTouchListener {	
+public class RocketRushActivity extends FragmentActivity implements OnClickListener, OnTouchListener {	
 	
 	protected SplashView mSplashView = null;
 	protected GameView mGameView = null;
@@ -40,9 +40,6 @@ public class RocketRushActivity extends Activity implements OnClickListener, OnT
 	protected ImageButton mRankButton = null;
 	protected ImageButton mAboutButton = null;
 	protected SensorManager mSensorManager = null;
-	// dialog
-	protected Dialog mDialogQuit = null;
-	private static final int DIALOG_QUIT = 0;
 	// all of the game modes
 	protected GameMode mCurMode = null;
 	protected List<GameMode> mModes = new ArrayList<GameMode>();	
@@ -62,14 +59,14 @@ public class RocketRushActivity extends Activity implements OnClickListener, OnT
 		// create accelerometer
 		createSensor();
 		// create speech controller
-		createOpus();
+		// createOpus();
 		// create game, including game engine and all the modes and scenes
 		createGame();
 	}	
 
 	public static final int MODE_WAITING = 0;
 	public static final int MODE_RUSH    = 1;
-	public static final int MODE_VERSUS  = 2;
+	public static final int MODE_VERSUS  = 2;		
 	
 	private void createGame() {
 		GameEngine engine = GameEngine.getInstance();
@@ -81,13 +78,15 @@ public class RocketRushActivity extends Activity implements OnClickListener, OnT
 		mCurMode = mModes.get(MODE_WAITING);
 	}
 	
-	private void switchGameMode(int modeTo) {
+	public void switchGameMode(int modeTo) {
 		if (mCurMode == mModes.get(modeTo)) {
 			return;
 		}		
 
 		// first stop to update the scene
-		mCurMode.stop();	
+		mCurMode.stop();
+		// reset the current mode
+		mCurMode.reset();
 		// get the new game mode
 		mCurMode = mModes.get(modeTo);
 		// set the scene of the new mode to game drawer
@@ -96,14 +95,27 @@ public class RocketRushActivity extends Activity implements OnClickListener, OnT
 		mCurMode.start();
 
 		// ...
-		mRushModeButton.setVisibility(View.INVISIBLE);
-		mVSModeButton.setVisibility(View.INVISIBLE);
-		mSettingsButton.setVisibility(View.INVISIBLE);
-		mTutorialButton.setVisibility(View.INVISIBLE);
-		mRankButton.setVisibility(View.INVISIBLE);
-		mAboutButton.setVisibility(View.INVISIBLE);
+		if (modeTo == MODE_WAITING) {
+			mRushModeButton.setVisibility(View.VISIBLE);
+			mVSModeButton.setVisibility(View.VISIBLE);
+			mSettingsButton.setVisibility(View.VISIBLE);
+			mTutorialButton.setVisibility(View.VISIBLE);
+			mRankButton.setVisibility(View.VISIBLE);
+			mAboutButton.setVisibility(View.VISIBLE);
+		} else {
+			mRushModeButton.setVisibility(View.GONE);
+			mVSModeButton.setVisibility(View.GONE);
+			mSettingsButton.setVisibility(View.GONE);
+			mTutorialButton.setVisibility(View.GONE);
+			mRankButton.setVisibility(View.GONE);
+			mAboutButton.setVisibility(View.GONE);
+		}
 	}
-
+	
+	public GameMode getCurrentGameMode() {
+		return mCurMode;
+	}
+	
 	@Override
 	protected void onDestroy() {
 		mModes.get(0).release();
@@ -175,38 +187,29 @@ public class RocketRushActivity extends Activity implements OnClickListener, OnT
         return false;
     }
 	
+	private final static int WAITING_MODE = 0;
+	private final static int RUSH_MODE	  = 1;
+	private final static int VERSUS_MODE  = 2;
+	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		switch (keyCode) {
 		case KeyEvent.KEYCODE_BACK:
-			showDialog(DIALOG_QUIT);			
-			break;
+			if (mCurMode == mModes.get(WAITING_MODE)) { // waiting mode
+				WaitingModeDialogFragment dialog = new WaitingModeDialogFragment();
+				dialog.show(getSupportFragmentManager(), "WaitingModeDialogFragment");		
+			} else if (mCurMode == mModes.get(RUSH_MODE)) {
+				RushModeDialogFragment dialog = new RushModeDialogFragment();
+				dialog.show(getSupportFragmentManager(), "RushModeDialogFragment");				
+			} else if (mCurMode == mModes.get(VERSUS_MODE)) {
+				VersusModeDialogFragment dialog = new VersusModeDialogFragment();
+				dialog.show(getSupportFragmentManager(), "VersusModeDialogFragment");				
+			}			
+			return true;
 		}
 		
 		return super.onKeyDown(keyCode, event);
 	}		
-	
-	@Override
-	protected Dialog onCreateDialog(int id) {
-		Dialog dlg = null;
-				
-		switch (id) {
-		case DIALOG_QUIT:
-			dlg = buildDialogQuit(this);
-			mDialogQuit = dlg;
-			break;
-//		case DIALOG_RECORD:
-//			dlg = buildDialogRecord(this);
-//			mDialogRecord = dlg;
-//			break;
-//		case DIALOG_CONVERT:
-//			dlg = buildDialogConvert(this);
-//			mDialogConvert = dlg;
-//			break;
-		}
-
-		return dlg;
-	}
 	
 	private void createSensor() {
 		// get system sensor manager to deal with sensor issues  

@@ -5,4 +5,13 @@
 	    <item>@string/sudoku_medium_label</item> 
 	    <item>@string/sudoku_hard_label</item>
     </array>
+    <string-array name="rush_mode_dialog_item">
+        <item>Restart</item>
+        <item>Setting</item>
+        <item>Exit</item>  
+    </string-array>
+    <string-array name="versus_mode_dialog_item">
+        <item>Setting</item>
+        <item>Exit</item>  
+    </string-array>
 </resources>

@@ -24,6 +24,13 @@ public class RushMode extends GameMode {
 	}
 	
 	@Override
+	public void reset() {
+		synchronized (mScene) {
+			mScene.reset();
+		}
+	}
+	
+	@Override
 	public void start() {
 		mThread = new RushModeThread(mHandler);
 		mThread.start();
