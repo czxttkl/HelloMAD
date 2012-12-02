@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
@@ -20,6 +23,7 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import edu.neu.madcourse.binbo.R;
+import edu.neu.madcourse.binbo.persistentboggle.PBMain;
 import edu.neu.madcourse.binbo.rocketrush.speech.OpusManager;
 import edu.neu.madcourse.binbo.rocketrush.splash.SplashView;
 import edu.neu.madcourse.binbo.rocketrush.tutorial.TutorialActivity;
@@ -36,6 +40,9 @@ public class RocketRushActivity extends Activity implements OnClickListener, OnT
 	protected ImageButton mRankButton = null;
 	protected ImageButton mAboutButton = null;
 	protected SensorManager mSensorManager = null;
+	// dialog
+	protected Dialog mDialogQuit = null;
+	private static final int DIALOG_QUIT = 0;
 	// all of the game modes
 	protected GameMode mCurMode = null;
 	protected List<GameMode> mModes = new ArrayList<GameMode>();	
@@ -158,7 +165,9 @@ public class RocketRushActivity extends Activity implements OnClickListener, OnT
 			break;
 		case R.id.helpButton:
 			Intent i = new Intent(this, TutorialActivity.class);
+			i.putExtra("edu.neu.madcourse.binbo.rocketrush.Main", "RocketRushActivity");
 			startActivity(i);
+			break;
 		}
 	}
 	
@@ -170,12 +179,34 @@ public class RocketRushActivity extends Activity implements OnClickListener, OnT
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		switch (keyCode) {
 		case KeyEvent.KEYCODE_BACK:
-			//showDialog(DIALOG_QUIT);			
+			showDialog(DIALOG_QUIT);			
 			break;
 		}
 		
 		return super.onKeyDown(keyCode, event);
 	}		
+	
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		Dialog dlg = null;
+				
+		switch (id) {
+		case DIALOG_QUIT:
+			dlg = buildDialogQuit(this);
+			mDialogQuit = dlg;
+			break;
+//		case DIALOG_RECORD:
+//			dlg = buildDialogRecord(this);
+//			mDialogRecord = dlg;
+//			break;
+//		case DIALOG_CONVERT:
+//			dlg = buildDialogConvert(this);
+//			mDialogConvert = dlg;
+//			break;
+		}
+
+		return dlg;
+	}
 	
 	private void createSensor() {
 		// get system sensor manager to deal with sensor issues  
@@ -227,6 +258,24 @@ public class RocketRushActivity extends Activity implements OnClickListener, OnT
             	break;
             }            
         } 		
-    };        
+    };  
+    
+    private Dialog buildDialogQuit(Context context) {
+		// TODO Auto-generated method stub
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        //builder.setIcon(R.drawable.icon);
+        builder.setTitle("Are you sure you want to quit?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+            	finish();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // do nothing
+            }
+        });
+        return builder.create();
+	}
 	
 }

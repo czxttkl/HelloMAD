@@ -47,8 +47,10 @@ public class TutorialTwo extends Fragment implements OnClickListener {
 		
 		switch (v.getId()) {
 		case R.id.skipButton:	
-			i = new Intent(activity, RocketRushActivity.class);
-			startActivity(i);
+			if (activity.mStartNewActivity) {
+				i = new Intent(activity, RocketRushActivity.class);
+				startActivity(i);
+			}
 			activity.finish();
 			break;		
 		}

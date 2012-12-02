@@ -13,7 +13,7 @@ public class OpusManager {
 	protected static final int OPUS_STATE_RECORDING  = 1 << 1;
 	protected static final int OPUS_STATE_CONVERTING = 1 << 2;
 	// native opus	
-	protected NativeOpus mOpus = new NativeOpus();
+	protected NativeOpus mOpus = null;//new NativeOpus();
 	// threads
 	protected PlayTask    mPlayer    = null;
 	protected RecordTask  mRecorder  = null;

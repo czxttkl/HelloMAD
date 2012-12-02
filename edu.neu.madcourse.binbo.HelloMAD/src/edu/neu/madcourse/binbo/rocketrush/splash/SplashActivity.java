@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.KeyEvent;
 
 public class SplashActivity extends Activity {
 
@@ -55,6 +56,16 @@ public class SplashActivity extends Activity {
 		mView.release();
 		super.onDestroy();
 	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		switch (keyCode) {
+		case KeyEvent.KEYCODE_BACK:
+			return true;
+		}
+		
+		return super.onKeyDown(keyCode, event);
+	}	
 	
 	protected void createIntent() {
 		if (isFirstOpened()) {

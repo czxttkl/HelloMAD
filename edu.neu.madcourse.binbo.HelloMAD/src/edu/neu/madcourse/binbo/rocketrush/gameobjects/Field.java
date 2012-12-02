@@ -12,7 +12,7 @@ import android.graphics.Canvas;
 public class Field extends Reward {
 	protected final static int IMAGE_COUNT = 2; // the same size of the total number of bitmaps
 	protected final static int IMAGE_UNBOUND_START = 0; 
-	protected final static int IMAGE_BOUND_START   = 1;
+	protected final static int IMAGE_BOUND_START   = 0;
 	protected static boolean sImageLoaded = false;	
 	protected static List<Bitmap> sImages = new ArrayList<Bitmap>();
 	// the difference of the top left point between this field and the rocket 
@@ -25,8 +25,8 @@ public class Field extends Reward {
 		}
 		sImageLoaded = true;
 		
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient01));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient02));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.single_protector_1));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.single_protector_2));
 	}
 	
 	public Field(Resources res) {
@@ -50,8 +50,13 @@ public class Field extends Reward {
 		mY = mRocket.getY() - mOffsetY;
 	}
 
+	private int mUpdateUnbound = 0;
 	@Override
 	protected void updateUnbound() {
+		if (++mUpdateUnbound > 32) {
+			mUpdateUnbound = 0;
+		}
+	
 		mX += mSpeedX;
 		mY += mSpeedY;		
 		
@@ -87,11 +92,7 @@ public class Field extends Reward {
 			mY + mHeight <= 0 || mY >= mCanvasHeight) {
 			return; // not necessary to draw the invisible
 		}
-		
-		if (mUnboundIndex == IMAGE_BOUND_START) {
-			mUnboundIndex = 0;
-		}
-		c.drawBitmap(sImages.get(mUnboundIndex++), mX, mY, null);	
+		c.drawBitmap(sImages.get(mUpdateUnbound <= 16 ? 0 : 1), mX, mY, null);	
 	}
 
 	@Override
