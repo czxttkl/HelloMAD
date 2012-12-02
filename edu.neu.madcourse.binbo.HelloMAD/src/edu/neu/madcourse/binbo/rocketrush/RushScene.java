@@ -68,6 +68,11 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 			mLifeBar = new LifeBar(mRes);	
 			mObjects.add(mLifeBar);
 		}
+		if (mWidth > 0 || mHeight > 0) {
+			for (GameObject obj : mObjects) {
+				obj.onSizeChanged(mWidth, mHeight);
+			}
+		}
 		// order by Z
 		orderByZ(mObjects);
 		
