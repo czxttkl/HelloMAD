@@ -61,12 +61,12 @@ public class Field extends Reward {
 		
 		if (mX < 0) {
 			mSpeedX = Math.abs(mSpeedX);
-		} else if (mX > mCanvasWidth) {
+		} else if (mX > mCanvasWidth - mWidth) {
 			mSpeedX = -Math.abs(mSpeedX);
 		}		
 		if (mY < 0) {
 			mSpeedY = Math.abs(mSpeedY);
-		} else if (mY > mCanvasHeight) {
+		} else if (mY > mCanvasHeight - mHeight) {
 			mSpeedY = -Math.abs(mSpeedY);
 		}	
 	}

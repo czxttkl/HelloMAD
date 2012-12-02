@@ -23,7 +23,7 @@ public class Reward extends GameObject {
 		setKind(REWARD);
 		setMovable(true);			
 		setZOrder(ZOrders.REWARD);		
-		setTimeout(16, 20);
+		setTimeout(16000, 20000);
 		// set speed for unbound state
 		setSpeed(2 + mRand.nextInt(3), 2 + mRand.nextInt(4));
 	}
