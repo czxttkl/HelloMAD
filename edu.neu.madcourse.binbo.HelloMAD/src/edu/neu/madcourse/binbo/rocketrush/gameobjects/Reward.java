@@ -19,10 +19,8 @@ public class Reward extends GameObject {
 	protected long mBegTime = System.currentTimeMillis();
 	
 	public Reward(Resources res) {
-		super(res);
-		setKind(REWARD);
-		setMovable(true);			
-		setZOrder(ZOrders.REWARD);		
+		super(res);		
+		setMovable(true);				
 		setTimeout(20000, 20000);
 		// set speed for unbound state
 		setSpeed(2 + mRand.nextInt(3), 2 + mRand.nextInt(4));

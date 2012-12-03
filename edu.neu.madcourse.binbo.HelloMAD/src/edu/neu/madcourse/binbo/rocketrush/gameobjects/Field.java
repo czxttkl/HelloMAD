@@ -33,6 +33,8 @@ public class Field extends Reward {
 	public Field(Resources res) {
 		super(res);
 		loadImages(res);
+		setKind(PROTECTION);
+		setZOrder(ZOrders.PROTECTION);
 		setWidth(sImages.get(IMAGE_UNBOUND_START).getWidth());
 		setHeight(sImages.get(IMAGE_UNBOUND_START).getHeight());	
 	}

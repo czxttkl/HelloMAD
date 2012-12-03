@@ -23,8 +23,13 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 	protected int mLeftDuration  = 0;
 	protected int mRightDuration = 0;
 	protected int mUpDuration    = 0;
+	protected int mVibrateDuration = 0;	
+	protected int mVibrateCount = 0;
+	protected final static int MIN_VIBRATE_DURATION = 160;
+	protected final static int MAX_VIBRATE_DURATION = 240;
 	protected float mUpper  = 0;
 	protected float mBottom = 0;	
+	protected float mCollideArea[] = new float[4];
 	public final static float DEFAULT_SPEED_X = 8;
 	public final static float DEFAULT_SPEED_Y = 4;
 	// rocket's area used to detect collision
@@ -81,7 +86,7 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 		}
 		c.drawBitmap(sImages.get(mCurIndex++), mX, mY, null);				
 	}
-
+	
 	@Override
 	public void update() {		
 		if (mLeftDuration > 0) {
@@ -99,10 +104,23 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 			mY = Math.min(mY + mSpeedY, mBottom);
 		}
 		
-		mRect.left   = (int)(mX + mWidth * 2 / 5);
-		mRect.top    = (int)(mY + mHeight / 3);
-		mRect.right  = (int)(mX + mWidth * 3 / 5);
-		mRect.bottom = (int)(mY + mHeight / 2);
+		if (mVibrateDuration > 0) {					
+			if (mVibrateDuration == MIN_VIBRATE_DURATION) { // first
+				mVibrateCount = 0;
+				mX += -3;				
+			} else if (mVibrateDuration == GameEngine.ENGINE_SPEED) {
+				mX += 3;
+			} else {
+				mX += (mVibrateCount & 1) == 0 ? -6 : 6;  
+			}
+			++mVibrateCount;
+			mVibrateDuration -= GameEngine.ENGINE_SPEED;
+		}
+		
+		mRect.left   = (int)(mX + mCollideArea[0]);
+		mRect.top    = (int)(mY + mCollideArea[1]);
+		mRect.right  = (int)(mX + mCollideArea[2]);
+		mRect.bottom = (int)(mY + mCollideArea[3]);
 	}
 
 	@Override
@@ -119,11 +137,11 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 		mCanvasHeight = height;
 		mX = (width - mWidth) / 2;
 		mY = (height - mHeight) / 2 + height / 4;
-		
-		mRect.left   = (int)(mX + mWidth * 2 / 5);
-		mRect.top    = (int)(mY + mHeight / 3);
-		mRect.right  = (int)(mX + mWidth * 3 / 5);
-		mRect.bottom = (int)(mY + mHeight / 2);
+				
+		mCollideArea[0] = mWidth * 0.2f;
+		mCollideArea[1] = mHeight * 0.3f;
+		mCollideArea[2] = mWidth * 0.8f;
+		mCollideArea[3] = mHeight * 0.5f;
 	
 		mUpper  = (mCanvasHeight - mHeight) * 9 / 20;
 		mBottom = (mCanvasHeight - mHeight) / 2 + mCanvasHeight / 4;
@@ -149,6 +167,12 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 	@Override
 	public void detectCollision(List<GameObject> objects) {		
 		
+		for (Reward reward : mRewards) {
+			if (reward.getKind() == PROTECTION) {
+				return;
+			}
+		}
+		
 		for (GameObject obj : objects) {
 			// won't collide to itself
 			if (obj == this) {
@@ -162,13 +186,13 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 				(int)obj.getX(), (int)obj.getY(), 
 				(int)(obj.getX() + obj.getWidth()), (int)(obj.getY() + obj.getHeight()));
 			if (intersects) {				
-				if (obj.getKind() == REWARD) {
+				if (obj.getKind() == PROTECTION) {
 					((Reward) obj).bindRocket(this);
-				} else {
+				} else {					
 					mCollideWith.add(obj);
 				}
 			}
-		}
+		}				
 		
 		if (mCollideWith.size() > 0) {
 			if (mOnCollideListener != null) {
@@ -178,6 +202,8 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 				}
 				mCollideWith.clear();
 			}
+			// rocket may vibrate for a little bit of time
+			mVibrateDuration = MIN_VIBRATE_DURATION;
 		}
 	}
 }
