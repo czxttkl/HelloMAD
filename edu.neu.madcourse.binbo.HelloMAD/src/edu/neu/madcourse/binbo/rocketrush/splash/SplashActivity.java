@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.KeyEvent;
+import android.view.WindowManager;
 
 public class SplashActivity extends Activity {
 
@@ -25,6 +26,10 @@ public class SplashActivity extends Activity {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
         
+        getWindow().setFlags(
+			WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON | WindowManager.LayoutParams.FLAG_FULLSCREEN, 
+			WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON | WindowManager.LayoutParams.FLAG_FULLSCREEN
+		); 
         // get flag which indicate whether the app is opened for the first time
         mFirst = getPreferences(MODE_PRIVATE).getBoolean("first", true);
         

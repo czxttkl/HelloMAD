@@ -32,6 +32,8 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 	
 	@Override
 	public void reset() {
+		mCurLevel = 1;
+		mCurLoop  = 1; 
 		release();
 		load();
 	}
@@ -161,9 +163,9 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 			boolean right = mRandom.nextBoolean();
 			Bird b = new Bird(mRes, right);			
 			b.setX(right ? -b.getWidth() : mWidth);
-			b.setY(mRandom.nextInt(mHeight - (mHeight >> 1)));
+			b.setY(mRandom.nextInt(mHeight - (mHeight >> 1) - (accTime > 0 ? (mHeight >> 2) : 0)));
 			b.initSpeeds(
-				(right ? mRandom.nextInt(4) + 5 : -5 - mRandom.nextInt(4)) * mLevel.mSpeedScaleX,   
+				(right ? mRandom.nextInt(4) + 4 : -4 - mRandom.nextInt(4)) * mLevel.mSpeedScaleX,   
 				3f,
 				accTime
 			);
@@ -196,7 +198,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 			Asteroid ast = new Asteroid(mRes);
 			boolean right = mRandom.nextBoolean();
 			ast.setX(right ? -ast.getWidth() : mWidth);
-			ast.setY(mRandom.nextInt(mHeight >> 3));
+			ast.setY(mRandom.nextInt(mHeight >> 3) - (accTime > 0 ? (mHeight >> 3) : 0));
 			ast.initSpeeds(
 				(right ? mRandom.nextInt(3) + 3 : -3 - mRandom.nextInt(3)) * mLevel.mSpeedScaleX,   
 				(mRandom.nextInt(4) + 3) * mLevel.mSpeedScaleY,
@@ -250,7 +252,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 			if (aliType == 0) {				
 				boolean right = mRandom.nextBoolean();
 				ali.setX(right ? -ali.getWidth() : mWidth);
-				ali.setY(mRandom.nextInt(mHeight >> 5));
+				ali.setY(mRandom.nextInt(mHeight >> 5) - (accTime > 0 ? (mHeight >> 3) : 0));
 				ali.initSpeeds(
 					(right ? mRandom.nextInt(6) + 7 : -7 - mRandom.nextInt(6)),   
 					mRandom.nextInt(4) + 2,
@@ -262,7 +264,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 				ali.setY(-ali.getHeight());
 				ali.initSpeeds(
 					6,   
-					(mRandom.nextInt(4) + 2) * mLevel.mSpeedScaleY,
+					(mRandom.nextInt(5) + 2),
 					accTime
 				);
 			}
