@@ -2,6 +2,9 @@ package edu.neu.madcourse.binbo.rocketrush;
 
 import java.util.*;
 
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.Barrier;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.Reward;
+
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -11,7 +14,7 @@ public class GameScene implements GameObject.IDrawer, GameObject.OnCollideListen
 	protected int mHeight = 0;
 	protected Resources mRes = null;	
 	protected List<GameObject> mObjects  = new ArrayList<GameObject>();
-	protected List<GameObject> mBarriers = new ArrayList<GameObject>();
+	protected List<Barrier> mBarriers = new ArrayList<Barrier>();
 	
 	public GameScene(Resources res) {
 		mRes = res;
@@ -53,9 +56,9 @@ public class GameScene implements GameObject.IDrawer, GameObject.OnCollideListen
 		return mObjects; 
 	}
 	
-	public List<GameObject> updateBarriers() {
-		return null;
-	}
+	public void updateBarriers() {}
+	
+	public void updateReward() {}
 	
 	protected void orderByZ(List<GameObject> objects) {		
 		Collections.sort(objects, new ZOrderComparator());

@@ -40,6 +40,13 @@ public class Reward extends GameObject {
 		onBound();
 	}
 	
+	public void unbindRocket() {
+		if (mRocket == null) { // hasn't been bound
+			return;
+		}
+		mRocket.unbindReward(this);
+	}
+	
 	public boolean isTimeout() {
 		return (System.currentTimeMillis() - mBegTime) > 
 					(mBound ? mBoundTimeout : mUnboundTimeout);
@@ -57,7 +64,10 @@ public class Reward extends GameObject {
 	@Override
 	public void update() {				
 		if (mBound) {
-			updateBound();			
+			updateBound();
+			if (isTimeout()) {
+				unbindRocket();
+			}
 		} else {
 			updateUnbound();			
 		}
@@ -65,10 +75,7 @@ public class Reward extends GameObject {
 	
 	@Override
 	public void release() {
-		if (mRocket == null) {
-			return;
-		}		
-		mRocket.unbindReward(this);
+		unbindRocket();
 	}
 	
 	@Override

@@ -58,7 +58,7 @@ public class Thunder extends Barrier {
 
 	@Override
 	public void update() {			
-		if (++mPeriod == 75) {
+		if (++mPeriod == 60) {
 			mVisible = true;
 			mCollidable = true;
 		} else if (mPeriod == 100) {
