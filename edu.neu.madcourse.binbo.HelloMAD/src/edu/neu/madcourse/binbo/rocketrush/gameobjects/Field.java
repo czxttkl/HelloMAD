@@ -39,6 +39,7 @@ public class Field extends Reward {
 		setHeight(sImages.get(IMAGE_UNBOUND_START).getHeight());	
 	}
 
+	protected int mFlashDuration = 250; // 1000 / GameEngine.ENGINE_SPEED * 5	
 	@Override
 	protected void updateBound() {
 		if (isTimeout()) {
@@ -51,6 +52,12 @@ public class Field extends Reward {
 		
 		mX = mRocket.getX() - mOffsetX;
 		mY = mRocket.getY() - mOffsetY;
+		
+		if (System.currentTimeMillis() - mBegTime > mBoundTimeout - 5000) {
+			if (mFlashDuration-- % 5 == 0) {
+				mVisible = !mVisible;
+			}
+		}
 	}
 
 	private int mUpdateUnbound = 0;
@@ -79,13 +86,16 @@ public class Field extends Reward {
 		}	
 	}
 
-	protected int mBoundIndex = 0;
+	protected int mBoundIndex = 0;	
 	@Override
 	protected void drawBound(Canvas c) {
-		if (mBoundIndex == sImages.size()) {
-			mBoundIndex = IMAGE_BOUND_START;
+//		if (mBoundIndex == sImages.size()) {
+//			mBoundIndex = IMAGE_BOUND_START;
+//		}
+//		c.drawBitmap(sImages.get(mBoundIndex++), mX, mY - 11f, null);
+		if (mVisible) {
+			c.drawBitmap(sImages.get(IMAGE_BOUND_START), mX, mY - 11f, null);
 		}
-		c.drawBitmap(sImages.get(mBoundIndex++), mX, mY - 11f, null);
 	}
 
 	protected int mUnboundIndex = 0;

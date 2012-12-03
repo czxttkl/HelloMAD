@@ -23,7 +23,7 @@ public class Reward extends GameObject {
 		setMovable(true);				
 		setTimeout(20000, 20000);
 		// set speed for unbound state
-		setSpeed(2 + mRand.nextInt(3), 2 + mRand.nextInt(4));
+		setSpeed(3 + mRand.nextInt(3), 3 + mRand.nextInt(2));
 	}
 	
 	public void setTimeout(long boundTimeout, long unboundTimeout) {
@@ -38,6 +38,13 @@ public class Reward extends GameObject {
 		mRocket  = rocket;
 		mBegTime = System.currentTimeMillis(); // update this time
 		onBound();
+	}
+	
+	public void unbindRocket() {
+		if (mRocket == null) { // hasn't been bound
+			return;
+		}
+		mRocket.unbindReward(this);
 	}
 	
 	public boolean isTimeout() {
@@ -57,7 +64,10 @@ public class Reward extends GameObject {
 	@Override
 	public void update() {				
 		if (mBound) {
-			updateBound();			
+			updateBound();
+			if (isTimeout()) {
+				unbindRocket();
+			}
 		} else {
 			updateUnbound();			
 		}
@@ -65,10 +75,7 @@ public class Reward extends GameObject {
 	
 	@Override
 	public void release() {
-		if (mRocket == null) {
-			return;
-		}		
-		mRocket.unbindReward(this);
+		unbindRocket();
 	}
 	
 	@Override

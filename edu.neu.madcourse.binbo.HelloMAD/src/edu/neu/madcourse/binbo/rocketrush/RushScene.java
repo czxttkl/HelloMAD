@@ -20,8 +20,8 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 	private BackgroundNear mBackgroundNear = null;
 	private Level mLevel = null;	
 	private Odometer mOdometer = null;
-	private int mCurGamePart = 1;
-	private int mCurGameLoop = 1;
+	private int mCurLevel = 1;
+	private int mCurLoop  = 1;
 	private Random mRandom = new Random();
 	private Context mContext = null;
 	
@@ -103,18 +103,14 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 	}
 	
 	@Override
-	public List<GameObject> updateBarriers() {
+	public void updateBarriers() {
 		// surface has not been created
-		if (mWidth == 0 || mHeight == 0) {
-			return null;
-		}
+		if (mWidth == 0 || mHeight == 0) { return; }
 		// remove invisible barriers
 		List<GameObject> invisibles = null;
-		int edgeLeft  = -(mWidth >> 2);
-		int edgeRight = mWidth + (mWidth >> 2);
 		for (GameObject b : mBarriers) {
 			float x = b.getX(), y = b.getY();
-			if (x < edgeLeft || x > edgeRight || y > mHeight) {
+			if (x < -(mWidth >> 2) || x > (mWidth + (mWidth >> 2)) || y > mHeight) {
 				if (invisibles == null) {
 					invisibles = new ArrayList<GameObject>();
 				}
@@ -127,33 +123,41 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 			mObjects.removeAll(invisibles);
 		}
 		// create barriers based on the current game progress
-		if (mCurGamePart <= 2) {
-			createBird();								
-		} else if (mCurGamePart <= 4) {
-			createAsteroid();
-		} else if (mCurGamePart <= 6){			
-			createAlient();
-		}					
-		if (mCurGameLoop > 1) {
-			createThunder();
-		}
-		// create some reward
-		createReward();
-		
-		return mBarriers;
+		if (mCurLevel == 1) {
+			createBird(mProbBird);
+		} else if (mCurLevel == 2) {
+			createBird(mProbBird);
+			createThunder(mProbThunder);
+		} else if (mCurLevel == 3) {
+			createBird(mProbBird << 2);
+			createThunder(mProbThunder << 1);
+			createAsteroid(mProbAster);
+		} else if (mCurLevel == 4) {
+			createThunder(mProbThunder << 2);
+			createAsteroid(mProbAster << 1);
+			createAlient(mProbAlient << 1);
+		} else if (mCurLevel == 5) {	
+			createThunder(mProbThunder << 1);
+			createAsteroid(mProbAster);
+			createAlient(mProbAlient << 1);
+		} else if (mCurLevel == 6) {
+			createThunder(mProbThunder);
+			createAsteroid(mProbAster);
+			createAlient(mProbAlient);
+		}		
 	}
 	
 	// probabilities for creating barriers
-	private int mProbBird    = 100; // 1 / 100
-	private int	mProbAster   = 175; // 1 / 90
-	private int mProbAlient  = 90;  // 1 / 80
-	private int mProbThunder = 270;
+	private int mProbBird    = 80;
+	private int	mProbAster   = 165;
+	private int mProbAlient  = 90;
+	private int mProbThunder = 180;
 	
-	private void createBird() {		
+	private void createBird(int probability) {		
 		// get the acceleration time 
 		int accTime = mRocket.getAccTime();
 		// generate flying red chicken
-		if (mRandom.nextInt(mProbBird) == 1) {
+		if (mRandom.nextInt(probability) == 1) {
 			boolean right = mRandom.nextBoolean();
 			Bird b = new Bird(mRes, right);			
 			b.setX(right ? -b.getWidth() : mWidth);
@@ -172,11 +176,11 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 		}			
 	}
 	
-	private void createAsteroid() {
+	private void createAsteroid(int probability) {
 		// get the acceleration time 
 		int accTime = mRocket.getAccTime();		
 		// generate asteroid
-		int type = mRandom.nextInt(mProbAster);
+		int type = mRandom.nextInt(probability);
 		if (type == 1) {
 			Asteroid ast = new Asteroid(mRes);
 			ast.setX(mRandom.nextInt((int)(mWidth - ast.getWidth() + 1)));
@@ -207,11 +211,11 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 		}		
 	}
 	
-	private void createAlient() {
+	private void createAlient(int probability) {
 		// get the acceleration time 
 		int accTime = mRocket.getAccTime();
 		// generate alient
-		int type = mRandom.nextInt(mProbAster);
+		int type = mRandom.nextInt(probability);
 //		if (type == 1) {
 //			Alient ali = new Alient(mRes);
 //			ali.setX(mRandom.nextInt((int)(mWidth - ali.getWidth() + 1)));
@@ -271,9 +275,9 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 		}		
 	}
 
-	private void createThunder() {
+	private void createThunder(int probability) {
 		// generate flying red chicken
-		if (mRandom.nextInt(mProbThunder) == 1) {
+		if (mRandom.nextInt(probability) == 1) {
 			Thunder t = new Thunder(mRes);			
 			t.setX(mRandom.nextInt((int) (mWidth - t.getWidth())));
 			t.setY(-t.getHeight());
@@ -288,9 +292,9 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 	}
 	
 	// probabilities for creating reward
-	private int mProbReward = 1200;
+	protected int mProbReward = 1200;
 	
-	private void createReward() {
+	public void updateReward() {
 		if (mRandom.nextInt(mProbReward) == 0) {
 			Field f = new Field(mRes);			
 			f.setX(mRandom.nextInt((int) (mWidth - f.getWidth())));
@@ -317,8 +321,8 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 	public void onReachMilestone(int odometer) {
 		// level up and update barrier probabilities
 		mLevel.levelUp();
-		mCurGamePart = mLevel.getValue() % 7;
-		if (mCurGamePart == 0) { 
+		mCurLevel = mLevel.getValue() % 7;
+		if (mCurLevel == 0) { 
 			// the difficulty increases about 30% after each loop
 			// algorithm: 
 			// for speed: ...
@@ -328,14 +332,13 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 			mProbBird   *= 1.363;
 			mProbAster  *= 1.363;
 			mProbAlient *= 1.363;
-			mCurGamePart = 1;
-			++mCurGameLoop;
+			mProbThunder *= 1.2;
+			mCurLevel = 1;
+			++mCurLoop;
 		}
 		mProbBird   /= mLevel.mComplexityScale;
 		mProbAster  /= mLevel.mComplexityScale;
 		mProbAlient /= mLevel.mComplexityScale;
-		if (mCurGameLoop >= 1) {
-			mProbThunder /= (mLevel.mComplexityScale - 0.04);
-		}
+		mProbThunder /= (mLevel.mComplexityScale - 0.05);
 	}
 }

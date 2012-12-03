@@ -138,9 +138,9 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 		mX = (width - mWidth) / 2;
 		mY = (height - mHeight) / 2 + height / 4;
 				
-		mCollideArea[0] = mWidth * 0.2f;
+		mCollideArea[0] = mWidth * 0.25f;
 		mCollideArea[1] = mHeight * 0.3f;
-		mCollideArea[2] = mWidth * 0.8f;
+		mCollideArea[2] = mWidth * 0.75f;
 		mCollideArea[3] = mHeight * 0.5f;
 	
 		mUpper  = (mCanvasHeight - mHeight) * 9 / 20;
@@ -165,13 +165,7 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 	}
 
 	@Override
-	public void detectCollision(List<GameObject> objects) {		
-		
-		for (Reward reward : mRewards) {
-			if (reward.getKind() == PROTECTION) {
-				return;
-			}
-		}
+	public void detectCollision(List<GameObject> objects) {						
 		
 		for (GameObject obj : objects) {
 			// won't collide to itself
@@ -188,7 +182,12 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 			if (intersects) {				
 				if (obj.getKind() == PROTECTION) {
 					((Reward) obj).bindRocket(this);
-				} else {					
+				} else {
+					for (Reward reward : mRewards) {
+						if (reward.getKind() == PROTECTION) {
+							return;
+						}
+					}
 					mCollideWith.add(obj);
 				}
 			}

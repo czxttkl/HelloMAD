@@ -34,6 +34,11 @@ public class WaitingScene extends GameScene {
 			mBackgroundNear = new MenuBackgroundNear(mRes);			
 			mObjects.add(mBackgroundNear);
 		}
+		if (mWidth > 0 || mHeight > 0) {
+			for (GameObject obj : mObjects) {
+				obj.onSizeChanged(mWidth, mHeight);
+			}
+		}
 		
 		return mObjects;
 	}
@@ -55,7 +60,7 @@ public class WaitingScene extends GameScene {
 	}
 
 	@Override
-	public List<GameObject> updateBarriers() {
+	public void updateBarriers() {
 		/*// surface has not been created
 		if (mWidth == 0 || mHeight == 0) {
 			return null;
@@ -97,8 +102,6 @@ public class WaitingScene extends GameScene {
 			mObjects.add(ast);
 		}
 		// order by Z
-		orderByZ(mObjects);*/
-		
-		return new ArrayList<GameObject>();
+		orderByZ(mObjects);*/				
 	}
 }
