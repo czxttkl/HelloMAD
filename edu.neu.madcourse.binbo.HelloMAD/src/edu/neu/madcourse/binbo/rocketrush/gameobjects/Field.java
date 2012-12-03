@@ -12,7 +12,7 @@ import android.graphics.Canvas;
 public class Field extends Reward {
 	protected final static int IMAGE_COUNT = 2; // the same size of the total number of bitmaps
 	protected final static int IMAGE_UNBOUND_START = 0; 
-	protected final static int IMAGE_BOUND_START   = 0;
+	protected final static int IMAGE_BOUND_START   = 2;
 	protected static boolean sImageLoaded = false;	
 	protected static List<Bitmap> sImages = new ArrayList<Bitmap>();
 	// the difference of the top left point between this field and the rocket 
@@ -27,6 +27,7 @@ public class Field extends Reward {
 		
 		sImages.add(BitmapFactory.decodeResource(res, R.drawable.single_protector_1));
 		sImages.add(BitmapFactory.decodeResource(res, R.drawable.single_protector_2));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.protection_bubble));
 	}
 	
 	public Field(Resources res) {
@@ -82,7 +83,7 @@ public class Field extends Reward {
 		if (mBoundIndex == sImages.size()) {
 			mBoundIndex = IMAGE_BOUND_START;
 		}
-		c.drawBitmap(sImages.get(mBoundIndex++), mX, mY, null);
+		c.drawBitmap(sImages.get(mBoundIndex++), mX, mY - 11f, null);
 	}
 
 	protected int mUnboundIndex = 0;
