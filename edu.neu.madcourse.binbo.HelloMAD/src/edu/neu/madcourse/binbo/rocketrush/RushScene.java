@@ -126,7 +126,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 		if (mCurLevel == 1) {
 			createBird(mProbBird);
 		} else if (mCurLevel == 2) {
-			createBird(mProbBird << 1);
+			createBird(mProbBird);
 			createThunder(mProbThunder);
 		} else if (mCurLevel == 3) {
 			createBird(mProbBird << 2);
@@ -151,7 +151,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 	private int mProbBird    = 90;
 	private int	mProbAster   = 165;
 	private int mProbAlient  = 90;
-	private int mProbThunder = 240;
+	private int mProbThunder = 180;
 	
 	private void createBird(int probability) {		
 		// get the acceleration time 
@@ -338,8 +338,6 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 		mProbBird   /= mLevel.mComplexityScale;
 		mProbAster  /= mLevel.mComplexityScale;
 		mProbAlient /= mLevel.mComplexityScale;
-		if (mCurLoop >= 1) {
-			mProbThunder /= (mLevel.mComplexityScale - 0.04);
-		}
+		mProbThunder /= (mLevel.mComplexityScale - 0.05);
 	}
 }

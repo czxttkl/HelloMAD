@@ -165,13 +165,7 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 	}
 
 	@Override
-	public void detectCollision(List<GameObject> objects) {		
-		
-		for (Reward reward : mRewards) {
-			if (reward.getKind() == PROTECTION) {
-				return;
-			}
-		}
+	public void detectCollision(List<GameObject> objects) {						
 		
 		for (GameObject obj : objects) {
 			// won't collide to itself
@@ -188,7 +182,12 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 			if (intersects) {				
 				if (obj.getKind() == PROTECTION) {
 					((Reward) obj).bindRocket(this);
-				} else {					
+				} else {
+					for (Reward reward : mRewards) {
+						if (reward.getKind() == PROTECTION) {
+							return;
+						}
+					}
 					mCollideWith.add(obj);
 				}
 			}
