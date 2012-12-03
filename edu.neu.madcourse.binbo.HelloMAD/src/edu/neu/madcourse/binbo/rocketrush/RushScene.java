@@ -107,13 +107,20 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 		// surface has not been created
 		if (mWidth == 0 || mHeight == 0) { return; }
 		// remove invisible barriers
-		for (Barrier b : mBarriers) {
+		List<GameObject> invisibles = null;
+		for (GameObject b : mBarriers) {
 			float x = b.getX(), y = b.getY();
 			if (x < -(mWidth >> 2) || x > (mWidth + (mWidth >> 2)) || y > mHeight) {
-				mBarriers.remove(b);
-				mObjects.remove(b);
+				if (invisibles == null) {
+					invisibles = new ArrayList<GameObject>();
+				}
+				invisibles.add(b);
 				b.release();
 			}
+		}
+		if (invisibles != null) {
+			mBarriers.removeAll(invisibles);
+			mObjects.removeAll(invisibles);
 		}
 		// create barriers based on the current game progress
 		if (mCurLevel == 1) {
@@ -138,14 +145,13 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 			createAsteroid(mProbAster);
 			createAlient(mProbAlient);
 		}		
-
 	}
 	
 	// probabilities for creating barriers
 	private int mProbBird    = 90;
-	private int	mProbAster   = 180;
-	private int mProbAlient  = 100;
-	private int mProbThunder = 250;
+	private int	mProbAster   = 165;
+	private int mProbAlient  = 90;
+	private int mProbThunder = 240;
 	
 	private void createBird(int probability) {		
 		// get the acceleration time 
@@ -157,7 +163,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 			b.setX(right ? -b.getWidth() : mWidth);
 			b.setY(mRandom.nextInt(mHeight - (mHeight >> 1)));
 			b.initSpeeds(
-				(right ? mRandom.nextInt(4) + 4 : -4 - mRandom.nextInt(4)) * mLevel.mSpeedScaleX,   
+				(right ? mRandom.nextInt(4) + 5 : -5 - mRandom.nextInt(4)) * mLevel.mSpeedScaleX,   
 				3f,
 				accTime
 			);
