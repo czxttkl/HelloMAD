@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 
 public class TutorialActivity extends FragmentActivity {
 	private ViewPager mViewPager; // container for all tab views
@@ -18,7 +19,12 @@ public class TutorialActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tutorial);
-       
+
+		getWindow().setFlags(
+			WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON | WindowManager.LayoutParams.FLAG_FULLSCREEN, 
+			WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON | WindowManager.LayoutParams.FLAG_FULLSCREEN
+		);  
+    	
         String creator = getIntent().getStringExtra("edu.neu.madcourse.binbo.rocketrush.Main");
         if (creator != null) {
         	// some activity starts this, no need to start a new
