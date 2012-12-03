@@ -332,6 +332,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 			mProbBird   *= 1.363;
 			mProbAster  *= 1.363;
 			mProbAlient *= 1.363;
+			mProbThunder *= 1.2;
 			mCurLevel = 1;
 			++mCurLoop;
 		}
