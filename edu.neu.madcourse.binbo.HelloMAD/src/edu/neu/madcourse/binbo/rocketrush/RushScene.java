@@ -33,7 +33,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 	@Override
 	public void reset() {
 		mCurLevel = 1;
-		mCurLoop  = 1;
+		mCurLoop  = 1; 
 		release();
 		load();
 	}
