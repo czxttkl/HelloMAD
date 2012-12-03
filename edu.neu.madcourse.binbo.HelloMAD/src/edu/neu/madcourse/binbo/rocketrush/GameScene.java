@@ -30,6 +30,8 @@ public class GameScene implements GameObject.IDrawer, GameObject.OnCollideListen
 		for (GameObject obj : mBarriers) {
 			obj.release();
 		}
+		mObjects.clear();
+		mBarriers.clear();
 	}
 	
 	protected void onSizeChanged(int width, int height) {

@@ -107,9 +107,9 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 
 	@Override
 	public void release() {
-		for (Bitmap image : sImages) {
-			image.recycle();				
-		}
+//		for (Bitmap image : sImages) {
+//			image.recycle();				
+//		}
 		super.release();
 	}
 
