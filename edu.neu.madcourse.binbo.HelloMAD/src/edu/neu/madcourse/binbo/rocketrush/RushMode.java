@@ -5,6 +5,7 @@ import java.util.List;
 import android.content.Context;
 import android.hardware.SensorEventListener;
 import android.os.Handler;
+import android.os.Message;
 
 public class RushMode extends GameMode {
 	
@@ -16,6 +17,7 @@ public class RushMode extends GameMode {
 		setHandler(handler);
 		mScene = new RushScene(context);
 		mScene.load();
+		mScene.setGameEventHandler(this);
 	}
 	
 	@Override
@@ -32,8 +34,10 @@ public class RushMode extends GameMode {
 	
 	@Override
 	public void start() {
-		mThread = new RushModeThread(mHandler);
-		mThread.start();
+		if (mThread == null) {
+			mThread = new RushModeThread(mHandler);
+			mThread.start();
+		}
 		super.start();
 	}
 
@@ -85,6 +89,19 @@ public class RushMode extends GameMode {
 	public void onCollide(GameObject obj, List<GameObject> collideWith) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void handleGameEvent(GameEvent evt) {
+		if (evt.mEventType == GameEvent.EVENT_STATE) {
+			StateEvent se = (StateEvent) evt;
+			if (se.mWhat == StateEvent.STATE_OVER) {
+				Message msg = mHandler.obtainMessage();     	
+		        msg.what = StateEvent.STATE_OVER;
+		        msg.obj  = se.mDescription;
+		        mHandler.sendMessage(msg);
+			}
+		}
 	}
 	
 }

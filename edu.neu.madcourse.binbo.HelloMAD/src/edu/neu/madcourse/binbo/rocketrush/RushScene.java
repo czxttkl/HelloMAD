@@ -5,13 +5,15 @@ import java.util.List;
 import java.util.Random;
 
 import edu.neu.madcourse.binbo.rocketrush.gameobjects.*;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.LifeBar.OnLifeChangedListener;
 import edu.neu.madcourse.binbo.rocketrush.gameobjects.Odometer.OnOdometerUpdateListener;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.os.Vibrator;
 
 
-public class RushScene extends GameScene implements OnOdometerUpdateListener {	
+public class RushScene extends GameScene implements OnOdometerUpdateListener, 
+										 			OnLifeChangedListener {	
 
 	private Rocket   mRocket   = null;
 	private LifeBar  mLifeBar  = null;
@@ -342,5 +344,12 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener {
 		mProbAster  /= mLevel.mComplexityScale;
 		mProbAlient /= mLevel.mComplexityScale;
 		mProbThunder /= (mLevel.mComplexityScale - 0.05);
+	}
+
+	public void onLifeChanged(float life) {
+		if (life == 0) { // compare a float, not good, modify later if neccessary
+			GameEvent e = new StateEvent(StateEvent.STATE_OVER, "life is 0, game over");
+			mEventHandler.handleGameEvent(e);
+		}
 	}
 }

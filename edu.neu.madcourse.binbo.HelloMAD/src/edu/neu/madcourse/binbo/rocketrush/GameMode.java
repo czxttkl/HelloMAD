@@ -1,15 +1,16 @@
 package edu.neu.madcourse.binbo.rocketrush;
 
+import edu.neu.madcourse.binbo.rocketrush.GameEvent.IGameEventHandler;
 import android.hardware.SensorEventListener;
 import android.os.Handler;
 
 
-public class GameMode {
+public class GameMode implements IGameEventHandler {
 	// engine of the game
 	protected GameEngine mEngine = null;
 	// message handler
 	protected Handler mHandler = null;	
-	
+
 	protected GameMode(GameEngine engine) {
 		assert(engine != null);
 		setEngine(engine);
@@ -50,4 +51,8 @@ public class GameMode {
 	protected GameEngine getEngine() {
 		return mEngine;
 	}
+
+	public void handleGameEvent(GameEvent evt) {
+	}
+		
 }

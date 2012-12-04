@@ -3,7 +3,6 @@ package edu.neu.madcourse.binbo.rocketrush;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -28,7 +27,8 @@ import edu.neu.madcourse.binbo.rocketrush.speech.OpusManager;
 import edu.neu.madcourse.binbo.rocketrush.splash.SplashView;
 import edu.neu.madcourse.binbo.rocketrush.tutorial.TutorialActivity;
 
-public class RocketRushActivity extends FragmentActivity implements OnClickListener, OnTouchListener {	
+public class RocketRushActivity extends FragmentActivity 
+								implements OnClickListener, OnTouchListener {	
 	
 	protected SplashView mSplashView = null;
 	protected GameView mGameView = null;
@@ -256,7 +256,10 @@ public class RocketRushActivity extends FragmentActivity implements OnClickListe
 
 		public void handleMessage(Message msg) {        	
 			// all game messages that should handle in UI thread
-        	switch (msg.what) {     		        
+        	switch (msg.what) {  
+        	case StateEvent.STATE_OVER:
+        		
+        		break;
             default:
             	break;
             }            

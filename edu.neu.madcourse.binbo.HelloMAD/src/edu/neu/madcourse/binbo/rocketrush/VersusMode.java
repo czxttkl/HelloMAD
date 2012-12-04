@@ -16,6 +16,7 @@ public class VersusMode extends GameMode {
 		setHandler(handler);		
 		mScene = new VersusScene(context);
 		mScene.load();
+		mScene.setGameEventHandler(this);
 	}
 	
 	@Override
@@ -32,8 +33,10 @@ public class VersusMode extends GameMode {
 	
 	@Override
 	public void start() {
-		mThread = new VersusModeThread(mHandler);
-		mThread.start();
+		if (mThread == null) {
+			mThread = new VersusModeThread(mHandler);
+			mThread.start();
+		}
 		super.start();
 	}
 
