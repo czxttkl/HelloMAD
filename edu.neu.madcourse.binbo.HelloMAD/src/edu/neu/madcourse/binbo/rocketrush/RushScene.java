@@ -352,6 +352,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 			;
 		} else if (mCurLevel == 3 || mCurLevel == 5) {
 			mBackgroundFar.switchToNext();
+			mBackgroundNear.switchToNext();
 		}
 	}
 

@@ -15,19 +15,19 @@ import edu.neu.madcourse.binbo.rocketrush.GameEngine;
 
 public class BackgroundFar extends Background {
 	
-	protected final static int IMAGE_COUNT = 3; // the same size of the total number of bitmaps
+	protected final static int BACK_GROUND_COUNT = 3; // the same size of the total number of bitmaps
+	protected final static int TRANSITION_COUNT  = 2;
 	protected static boolean sImageLoaded = false;	
 	protected static List<Bitmap> sImages = new ArrayList<Bitmap>();	
 	
 	private int mAccMoveDuration = 0;	
 	public final static float DEFAULT_SPEED_X = 0;
 	public final static float DEFAULT_SPEED_Y = 1f;	
+	
 	protected boolean mSwitching[] = { false, false };
+	protected boolean mDrawTrans = false;
 	protected int mImageIndex[] = { 0, 0 };
-	protected boolean mSubTransPart = false;
-	protected int mTransPartHeight[] = { 0, 0, 0 };
-	protected List<Rect> mRects = new ArrayList<Rect>();
-	protected RectF mRectF = new RectF();
+	protected int mTransIndex = BACK_GROUND_COUNT - 1;
 	
 	public static void loadImages(Resources res) {
 		if (sImageLoaded) {
@@ -37,7 +37,9 @@ public class BackgroundFar extends Background {
 		
 		sImages.add(BitmapFactory.decodeResource(res, R.drawable.bg1_far));
 		sImages.add(BitmapFactory.decodeResource(res, R.drawable.bg2_far));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.bg1_far));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.bg3_far));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.b1_to_b2));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.b2_to_b3));
 	}
 	
 	public BackgroundFar(Resources res) {
@@ -49,48 +51,29 @@ public class BackgroundFar extends Background {
 		loadImages(res);
 		setWidth(sImages.get(0).getWidth());
 		setHeight(sImages.get(0).getHeight());
-		mRectF = new RectF();
 	}
 	
 	public void switchToNext() {
 		mSwitching[0] = true;
 		mSwitching[1] = true;
+		mTransIndex = Math.min(mTransIndex + 1, BACK_GROUND_COUNT + TRANSITION_COUNT - 1);
 	}
 
 	@Override
 	public void onSizeChanged(int width, int height) {
 		// scale the background according to the surface size				
-		for (int i = 0; i < IMAGE_COUNT; ++i) {
+		for (int i = 0; i < BACK_GROUND_COUNT + TRANSITION_COUNT; ++i) {
 			float radio = sImages.get(i).getHeight() / (float) sImages.get(i).getWidth();	
 			int scaledWidth  = width;
 			int scaledHeight = (int)(width * radio);
-						
-			if (i == 0) {
-				mTransPartHeight[i] = 0; // no transition part for background 1
-			} else {
-				mTransPartHeight[i] = (int)(width * (200f / sImages.get(i).getWidth()));
-			}
 			
 			Bitmap newImage = 
 				Bitmap.createScaledBitmap(sImages.get(i), scaledWidth, scaledHeight, true);	
 			sImages.get(i).recycle(); // explicit call to avoid out of memory
 			sImages.set(i, newImage);
-			
-			// initialize rects for drawing
-			Rect rect = new Rect(); 
-			rect.left   = 0;
-			rect.top    = newImage.getHeight() - mTransPartHeight[i];
-			rect.right  = newImage.getWidth();
-			rect.bottom = newImage.getHeight() - mTransPartHeight[i];
-			mRects.add(rect);
 		}
 		mWidth  = sImages.get(0).getWidth();
 		mHeight = sImages.get(0).getHeight();
-		// initialize dest rect
-		mRectF.left   = 0;
-		mRectF.top    = 0;
-		mRectF.right  = width;
-		mRectF.bottom = 0;
 	}
 	
 	@Override
@@ -115,38 +98,27 @@ public class BackgroundFar extends Background {
 	}
 
 	@Override
-	public void doDraw(Canvas c) {
-		int maxHeight = sImages.get(mImageIndex[1]).getHeight() 
-				- (mSubTransPart ? mTransPartHeight[mImageIndex[1]] : 0);
+	public void doDraw(Canvas c) {	
+		int transHeight = sImages.get(mTransIndex).getHeight();
+		int maxHeight = sImages.get(mImageIndex[1]).getHeight() + (mDrawTrans ? transHeight : 0);
 		
 		if (mY >= maxHeight) {
 			mY = 0;
-			mRects.get(mImageIndex[1]).top = mRects.get(mImageIndex[1]).bottom; 
-			mRectF.bottom = 0;
 			if (mSwitching[0]) { // we need to draw the old first, so update mImageIndex[1]
-				mImageIndex[1] = Math.min(mImageIndex[1] + 1, IMAGE_COUNT - 1);
+				mImageIndex[1] = Math.min(mImageIndex[1] + 1, BACK_GROUND_COUNT - 1);
 				mSwitching[0] = false;
-				mSubTransPart = false;
+				mDrawTrans = true;
 			} else if (mSwitching[1]) { // the old image has drawn up, update mImageIndex[0] to the new
-				mImageIndex[0] = Math.min(mImageIndex[0] + 1, IMAGE_COUNT - 1);
+				mImageIndex[0] = Math.min(mImageIndex[0] + 1, BACK_GROUND_COUNT - 1);
 				mSwitching[1] = false;
-				mSubTransPart = true;
+				mDrawTrans = false;
 			}			
 			c.drawBitmap(sImages.get(mImageIndex[0]), mX, mY, null);
 		} else {
-			if (!mSwitching[0] && mSwitching[1]) { // the time we still need to draw the old
-				// the maxHeight here equals to the height of the bitmap with transition part
-				c.drawBitmap(sImages.get(mImageIndex[1]), mX, mY - maxHeight, null);
-			} else {
-				// draw the bitmap without the transition part
-				mRects.get(mImageIndex[1]).top = (int) (maxHeight - mY); 
-				mRectF.bottom = mY;
-				c.drawBitmap(sImages.get(mImageIndex[1]), mRects.get(mImageIndex[1]), mRectF, null);
-			}
-			// draw it directly, the transition part won't be displayed for this part  
-			// because the non-transition part is longer than the height of the screen
-			// based on the 16 : 9 screen. But if the screen's w/h radio is larger than
-			// 16 : 9, the transition part may display, but it's very rare for the phone.
+			c.drawBitmap(sImages.get(mImageIndex[1]), mX, mY - maxHeight, null);
+			if (mDrawTrans) {
+				c.drawBitmap(sImages.get(mTransIndex), mX, mY - transHeight, null);
+			}			
 			c.drawBitmap(sImages.get(mImageIndex[0]), mX, mY, null);
 		}
 
