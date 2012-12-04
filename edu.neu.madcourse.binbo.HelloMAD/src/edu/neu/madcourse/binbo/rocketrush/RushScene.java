@@ -69,7 +69,8 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 			mObjects.add(mOdometer);
 		}
 		if (mLifeBar == null) {
-			mLifeBar = new LifeBar(mRes);	
+			mLifeBar = new LifeBar(mRes);
+			mLifeBar.setOnLifeChangedListener(this);
 			mObjects.add(mLifeBar);
 		}
 		if (mWidth > 0 || mHeight > 0) {
@@ -324,7 +325,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 
 	public void onReachMilestone(int odometer) {
 		// level up and update barrier probabilities
-		mLevel.levelUp();
+		mLevel.levelUp();		
 		mCurLevel = mLevel.getValue() % 7;
 		if (mCurLevel == 0) { 
 			// the difficulty increases about 30% after each loop
@@ -333,17 +334,25 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 			// for complexity: 1 / Math.pow(1.1, 6) * 1.363 / 1.1 Å 1 / 1.3
 			mLevel.mSpeedScaleX *= 0.9;
 			mLevel.mSpeedScaleY *= 0.9;
-			mProbBird   *= 1.363;
-			mProbAster  *= 1.363;
-			mProbAlient *= 1.363;
+			mProbBird    *= 1.363;
+			mProbAster   *= 1.363;
+			mProbAlient  *= 1.363;
 			mProbThunder *= 1.2;
-			mCurLevel = 1;
 			++mCurLoop;
 		}
-		mProbBird   /= mLevel.mComplexityScale;
-		mProbAster  /= mLevel.mComplexityScale;
-		mProbAlient /= mLevel.mComplexityScale;
+		mCurLevel = mCurLoop > 1 ? mCurLevel + 1 : mCurLevel;
+		
+		mProbBird    /= mLevel.mComplexityScale;
+		mProbAster   /= mLevel.mComplexityScale;
+		mProbAlient  /= mLevel.mComplexityScale;
 		mProbThunder /= (mLevel.mComplexityScale - 0.05);
+		
+		// update the background according to the current level
+		if (mCurLevel == 1) {
+			;
+		} else if (mCurLevel == 3 || mCurLevel == 5) {
+			mBackgroundFar.switchToNext();
+		}
 	}
 
 	public void onLifeChanged(float life) {

@@ -22,6 +22,7 @@ import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 import edu.neu.madcourse.binbo.R;
 import edu.neu.madcourse.binbo.rocketrush.speech.OpusManager;
 import edu.neu.madcourse.binbo.rocketrush.splash.SplashView;
@@ -222,9 +223,9 @@ public class RocketRushActivity extends FragmentActivity
         mSensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
 	}
 	
-	private void createOpus() {
-		mOpus = new OpusManager(this);
-	}
+//	private void createOpus() {
+//		mOpus = new OpusManager(this);
+//	}
 
 	private void adjustLayout() {
 		getWindow().setFlags(
@@ -264,7 +265,7 @@ public class RocketRushActivity extends FragmentActivity
 			// all game messages that should handle in UI thread
         	switch (msg.what) {  
         	case StateEvent.STATE_OVER:
-        		
+        		Toast.makeText(getApplicationContext(), "Game Over!", Toast.LENGTH_SHORT).show();
         		break;
             default:
             	break;
@@ -272,22 +273,4 @@ public class RocketRushActivity extends FragmentActivity
         } 		
     };  
     
-    private Dialog buildDialogQuit(Context context) {
-		// TODO Auto-generated method stub
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        //builder.setIcon(R.drawable.icon);
-        builder.setTitle("Are you sure you want to quit?");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-            	finish();
-            }
-        });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                // do nothing
-            }
-        });
-        return builder.create();
-	}
-	
 }

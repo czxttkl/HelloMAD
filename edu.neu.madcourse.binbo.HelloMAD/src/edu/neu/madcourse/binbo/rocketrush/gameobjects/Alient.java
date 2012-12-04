@@ -62,10 +62,10 @@ public class Alient extends Barrier {
 			return; // not necessary to draw the invisible
 		}
 		
-		if (mCurIndex == IMAGE_COUNT) {
+		if (mCurIndex == (IMAGE_COUNT << 1)) {
 			mCurIndex = 0;
 		}
-		c.drawBitmap(sImages.get(mCurIndex++), mX, mY, null);	
+		c.drawBitmap(sImages.get(mCurIndex++ >> 1), mX, mY, null);	
 	}	
 
 	@Override
