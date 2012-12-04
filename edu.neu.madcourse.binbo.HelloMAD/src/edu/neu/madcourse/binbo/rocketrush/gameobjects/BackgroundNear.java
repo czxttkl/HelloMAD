@@ -59,6 +59,11 @@ public class BackgroundNear extends Background {
 			int scaledWidth  = width;
 			int scaledHeight = (int)(width * radio);
 			
+			if (scaledWidth == sImages.get(i).getWidth() && 
+				scaledHeight == sImages.get(i).getHeight()) {
+				continue;
+			}
+			
 			Bitmap newImage = 
 				Bitmap.createScaledBitmap(sImages.get(i), scaledWidth, scaledHeight, true);	
 			sImages.get(i).recycle(); // explicit call to avoid out of memory

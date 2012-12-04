@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.neu.madcourse.binbo.R;
+import edu.neu.madcourse.binbo.rocketrush.GameObject;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -89,10 +90,6 @@ public class Field extends Reward {
 	protected int mBoundIndex = 0;	
 	@Override
 	protected void drawBound(Canvas c) {
-//		if (mBoundIndex == sImages.size()) {
-//			mBoundIndex = IMAGE_BOUND_START;
-//		}
-//		c.drawBitmap(sImages.get(mBoundIndex++), mX, mY - 11f, null);
 		if (mVisible) {
 			c.drawBitmap(sImages.get(IMAGE_BOUND_START), mX, mY - 11f, null);
 		}
@@ -115,4 +112,46 @@ public class Field extends Reward {
 		mOffsetX = (mWidth - mRocket.getWidth()) * 0.5f;
 		mOffsetY = (mHeight - mRocket.getHeight()) * 0.5f;
 	}
+	
+//	@Override
+//	public void detectCollision(List<GameObject> objects) {						
+//		
+//		for (GameObject obj : objects) {
+//			// won't collide to itself
+//			if (obj == this) {
+//				continue;
+//			}
+//			if (!obj.getCollidable()) {
+//				continue;
+//			}
+//
+//			boolean intersects = mRect.intersects(
+//				(int)obj.getX(), (int)obj.getY(), 
+//				(int)(obj.getX() + obj.getWidth()), (int)(obj.getY() + obj.getHeight()));
+//			if (intersects) {				
+//				if (obj.getKind() == PROTECTION) {
+//					((Reward) obj).bindRocket(this);
+//				} else {
+//					for (Reward reward : mRewards) {
+//						if (reward.getKind() == PROTECTION) {
+//							return;
+//						}
+//					}
+//					mCollideWith.add(obj);
+//				}
+//			}
+//		}				
+//		
+//		if (mCollideWith.size() > 0) {
+//			if (mOnCollideListener != null) {
+//				mOnCollideListener.onCollide(this, mCollideWith);
+//				for (GameObject obj : mCollideWith) {
+//					obj.setCollidable(false);
+//				}
+//				mCollideWith.clear();
+//			}
+//			// rocket may vibrate for a little bit of time
+//			mVibrateDuration = MIN_VIBRATE_DURATION;
+//		}
+//	}
 }

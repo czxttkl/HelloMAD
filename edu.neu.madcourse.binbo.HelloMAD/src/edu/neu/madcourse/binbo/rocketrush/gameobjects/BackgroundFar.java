@@ -67,7 +67,8 @@ public class BackgroundFar extends Background {
 			int scaledWidth  = width;
 			int scaledHeight = (int)(width * radio);
 			
-			if (scaledWidth == sImages.get(i).getWidth() && scaledHeight == sImages.get(i).getHeight()) {
+			if (scaledWidth == sImages.get(i).getWidth() && 
+				scaledHeight == sImages.get(i).getHeight()) {
 				continue;
 			}
 			
