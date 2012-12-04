@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:background="#b3ddff" >"
+	android:background="#b3ddff" >
 
 	<edu.neu.madcourse.binbo.rocketrush.GameView
 	    android:id="@+id/rocketRushView"
@@ -52,31 +52,31 @@
 		    	android:id="@+id/settingsButton"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:src="@drawable/btn_settings"
-				android:layout_marginRight="20dp"
+				android:src="@drawable/btn_settings_selector"
+				android:layout_marginRight="30dp"
 				android:background="#00000000" />
 		    
 		    <ImageButton
 		    	android:id="@+id/helpButton"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:src="@drawable/btn_help"
-				android:layout_marginRight="20dp"
+				android:src="@drawable/btn_help_selector"
+				android:layout_marginRight="30dp"
 				android:background="#00000000" />
 		    
 		    <ImageButton
 		    	android:id="@+id/rankButton"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:src="@drawable/btn_rank"
-				android:layout_marginRight="20dp"
+				android:src="@drawable/btn_rank_selector"
+				android:layout_marginRight="30dp"
 				android:background="#00000000" />
 		    
 		    <ImageButton
 		    	android:id="@+id/aboutButton"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:src="@drawable/btn_about"
+				android:src="@drawable/btn_about_selector"
 				android:background="#00000000" />
 		    
 		</LinearLayout>
