@@ -1,5 +1,7 @@
 package edu.neu.madcourse.binbo.rocketrush.gameobjects;
 
+import java.util.List;
+
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -26,6 +28,8 @@ public class LifeBar extends GameObject {
 	protected RectF r3 = new RectF();
 	// current life
 	protected float mLife = 1f;
+	// OnLifeChangedListener
+	protected OnLifeChangedListener mLifeChangedListener = null; 
 
 	public LifeBar(Resources res) {
 		super(res);
@@ -53,6 +57,10 @@ public class LifeBar extends GameObject {
 		
 		r3.right = 68 + mWidth * mLife;
 	}
+	
+	public float getLife() {
+		return mLife;
+	}
 
 	public void lifeChange(float change) {
 		mLife = Math.max(Math.min(mLife + change, 1f), 0);
@@ -64,7 +72,15 @@ public class LifeBar extends GameObject {
 	    } else {
 	    	mPaint3.setColor(0xff00cc00);
 	    }
+		
+		if (mLifeChangedListener != null) {
+			mLifeChangedListener.onLifeChanged(mLife);
+		}
 	}	
+	
+	public void setOnLifeChangedListener(OnLifeChangedListener listener) {
+		mLifeChangedListener = listener;
+	}
 	
 	@Override
 	public void update() {		
@@ -103,4 +119,7 @@ public class LifeBar extends GameObject {
 	    mWidth = r3.right - r3.left;
 	}
 
+	public interface OnLifeChangedListener {
+		void onLifeChanged(float life);
+	}
 }

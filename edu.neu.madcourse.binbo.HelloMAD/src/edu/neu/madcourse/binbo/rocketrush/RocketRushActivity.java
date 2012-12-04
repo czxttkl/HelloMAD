@@ -3,7 +3,6 @@ package edu.neu.madcourse.binbo.rocketrush;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -23,12 +22,14 @@ import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 import edu.neu.madcourse.binbo.R;
 import edu.neu.madcourse.binbo.rocketrush.speech.OpusManager;
 import edu.neu.madcourse.binbo.rocketrush.splash.SplashView;
 import edu.neu.madcourse.binbo.rocketrush.tutorial.TutorialActivity;
 
-public class RocketRushActivity extends FragmentActivity implements OnClickListener, OnTouchListener {	
+public class RocketRushActivity extends FragmentActivity 
+								implements OnClickListener, OnTouchListener {	
 	
 	protected SplashView mSplashView = null;
 	protected GameView mGameView = null;
@@ -222,9 +223,9 @@ public class RocketRushActivity extends FragmentActivity implements OnClickListe
         mSensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
 	}
 	
-	private void createOpus() {
-		mOpus = new OpusManager(this);
-	}
+//	private void createOpus() {
+//		mOpus = new OpusManager(this);
+//	}
 
 	private void adjustLayout() {
 		getWindow().setFlags(
@@ -262,29 +263,14 @@ public class RocketRushActivity extends FragmentActivity implements OnClickListe
 
 		public void handleMessage(Message msg) {        	
 			// all game messages that should handle in UI thread
-        	switch (msg.what) {     		        
+        	switch (msg.what) {  
+        	case StateEvent.STATE_OVER:
+        		Toast.makeText(getApplicationContext(), "Game Over!", Toast.LENGTH_SHORT).show();
+        		break;
             default:
             	break;
             }            
         } 		
     };  
     
-    private Dialog buildDialogQuit(Context context) {
-		// TODO Auto-generated method stub
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        //builder.setIcon(R.drawable.icon);
-        builder.setTitle("Are you sure you want to quit?");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-            	finish();
-            }
-        });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                // do nothing
-            }
-        });
-        return builder.create();
-	}
-	
 }

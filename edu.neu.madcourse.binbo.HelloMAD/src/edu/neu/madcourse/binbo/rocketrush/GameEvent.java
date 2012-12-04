@@ -1,12 +1,12 @@
 package edu.neu.madcourse.binbo.rocketrush;
 
 public class GameEvent {
-	public static final int EVENT_NORMAL  = 0;
-	public static final int EVENT_CONTROL = 1;	
-	protected int  mEventType;
+	public static final int EVENT_STATE   = 0;
+	public static final int EVENT_CONTROL = 1;
 	public static final int SENSOR_ACCELEROMETER = 1;
-	protected int  mWhat = 0;
-	protected long mEventTime;	
+	public int  mEventType;
+	public int  mWhat = 0;
+	public long mEventTime;	
 	
     public GameEvent(int eventType) {   
     	setEventType(eventType);
@@ -24,4 +24,8 @@ public class GameEvent {
     public long getEventTime() {
     	return mEventTime;
     }
+    
+    public interface IGameEventHandler {
+		void handleGameEvent(GameEvent evt);
+	}
 }

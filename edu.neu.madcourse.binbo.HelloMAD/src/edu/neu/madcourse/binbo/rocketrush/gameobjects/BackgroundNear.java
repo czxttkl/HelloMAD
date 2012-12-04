@@ -19,7 +19,7 @@ public class BackgroundNear extends Background {
 		setMaxSpeed(0, DEFAULT_SPEED_Y * 3);
 		setAccSpeed(0, DEFAULT_SPEED_Y / (1000 / GameEngine.ENGINE_SPEED));
 		setZOrder(ZOrders.BACKGROUND_NEAR);
-		setImage(BitmapFactory.decodeResource(res, R.drawable.background_b));
+		setImage(BitmapFactory.decodeResource(res, R.drawable.bg1_near));
 	}
 	
 	public BackgroundNear(Resources res, Bitmap image) {

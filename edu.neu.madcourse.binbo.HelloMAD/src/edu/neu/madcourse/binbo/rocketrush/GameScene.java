@@ -2,6 +2,7 @@ package edu.neu.madcourse.binbo.rocketrush;
 
 import java.util.*;
 
+import edu.neu.madcourse.binbo.rocketrush.GameEvent.IGameEventHandler;
 import edu.neu.madcourse.binbo.rocketrush.gameobjects.Barrier;
 import edu.neu.madcourse.binbo.rocketrush.gameobjects.Reward;
 
@@ -15,6 +16,7 @@ public class GameScene implements GameObject.IDrawer, GameObject.OnCollideListen
 	protected Resources mRes = null;	
 	protected List<GameObject> mObjects  = new ArrayList<GameObject>();
 	protected List<Barrier> mBarriers = new ArrayList<Barrier>();
+	protected IGameEventHandler mEventHandler = null;
 	
 	public GameScene(Resources res) {
 		mRes = res;
@@ -35,6 +37,10 @@ public class GameScene implements GameObject.IDrawer, GameObject.OnCollideListen
 		}
 		mObjects.clear();
 		mBarriers.clear();
+	}
+	
+	public void setGameEventHandler(IGameEventHandler handler) {
+		mEventHandler = handler;
 	}
 	
 	protected void onSizeChanged(int width, int height) {
