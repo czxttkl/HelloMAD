@@ -37,7 +37,7 @@ public class BackgroundFar extends Background {
 		
 		sImages.add(BitmapFactory.decodeResource(res, R.drawable.bg1_far));
 		sImages.add(BitmapFactory.decodeResource(res, R.drawable.bg2_far));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.bg3_far));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.bg1_far));
 	}
 	
 	public BackgroundFar(Resources res) {

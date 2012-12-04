@@ -3,6 +3,7 @@ package edu.neu.madcourse.binbo.rocketrush.gameobjects;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import edu.neu.madcourse.binbo.R;
 
 public class MenuBackgroundNear extends Background {
@@ -33,5 +34,16 @@ public class MenuBackgroundNear extends Background {
 			Bitmap.createScaledBitmap(mImage, scaledWidth, scaledHeight, true);
 		mImage.recycle(); // explicit call to avoid out of memory
 		setImage(newImage);
+	}
+
+	@Override
+	public void doDraw(Canvas c) {
+		if (mX >= mWidth) {
+			mX = 0;
+			c.drawBitmap(mImage, mX, mY, null);
+		} else {
+			c.drawBitmap(mImage, mX - mWidth, mY, null);
+			c.drawBitmap(mImage, mX, mY, null);
+		}
 	}
 }
