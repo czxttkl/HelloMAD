@@ -175,10 +175,16 @@ public class RocketRushActivity extends FragmentActivity
 		case R.id.vsModeButton:			
 			switchGameMode(MODE_VERSUS);
 			break;
+		case R.id.settingsButton:
+			startActivity(new Intent(this, Prefs.class));
+			break;
 		case R.id.helpButton:
 			Intent i = new Intent(this, TutorialActivity.class);
 			i.putExtra("edu.neu.madcourse.binbo.rocketrush.Main", "RocketRushActivity");
 			startActivity(i);
+			break;
+		case R.id.aboutButton:
+			startActivity(new Intent(this, Acknowledge.class));
 			break;
 		}
 	}
@@ -197,13 +203,13 @@ public class RocketRushActivity extends FragmentActivity
 		case KeyEvent.KEYCODE_BACK:
 			if (mCurMode == mModes.get(WAITING_MODE)) { // waiting mode
 				WaitingModeDialogFragment dialog = new WaitingModeDialogFragment();
-				dialog.show(getSupportFragmentManager(), "WaitingModeDialogFragment");		
+				dialog.show(getSupportFragmentManager(), "WaitingModeDialogFragment");
 			} else if (mCurMode == mModes.get(RUSH_MODE)) {
 				RushModeDialogFragment dialog = new RushModeDialogFragment();
 				dialog.show(getSupportFragmentManager(), "RushModeDialogFragment");				
 			} else if (mCurMode == mModes.get(VERSUS_MODE)) {
 				VersusModeDialogFragment dialog = new VersusModeDialogFragment();
-				dialog.show(getSupportFragmentManager(), "VersusModeDialogFragment");				
+				dialog.show(getSupportFragmentManager(), "VersusModeDialogFragment");
 			}			
 			return true;
 		}
