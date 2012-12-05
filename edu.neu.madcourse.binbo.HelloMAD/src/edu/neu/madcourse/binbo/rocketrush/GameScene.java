@@ -37,6 +37,7 @@ public class GameScene implements GameObject.IDrawer, GameObject.OnCollideListen
 		}
 		mObjects.clear();
 		mBarriers.clear();
+		System.gc();
 	}
 	
 	public void setGameEventHandler(IGameEventHandler handler) {
