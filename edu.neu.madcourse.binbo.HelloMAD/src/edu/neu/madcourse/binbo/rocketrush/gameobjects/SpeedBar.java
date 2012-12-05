@@ -96,12 +96,12 @@ public class SpeedBar extends GameObject implements GameObject.IDrawer {
 		mCanvasHeight = height;
 		
 		r1.left   = 30;
-	    r1.top    = mCanvasHeight * 0.6f;
+	    r1.top    = mCanvasHeight * 0.57f;
 	    r1.right  = 54;
 	    r1.bottom = mCanvasHeight * 0.9f;
 	    
 	    r2.left   = 32;
-	    r2.top    = mCanvasHeight * 0.6f + 2;
+	    r2.top    = mCanvasHeight * 0.57f + 2;
 	    r2.right  = 52;
 	    r2.bottom = mCanvasHeight * 0.9f - 2;
 	    
@@ -111,11 +111,11 @@ public class SpeedBar extends GameObject implements GameObject.IDrawer {
 	    r3.bottom = mCanvasHeight * 0.9f - 2;
 	    
 	    rShadow.left = 26;
-	    rShadow.top = mCanvasHeight * 0.6f - 4;
+	    rShadow.top = mCanvasHeight * 0.57f - 4;
 	    rShadow.right = 58;
 	    rShadow.bottom = mCanvasHeight * 0.9f + 4;
 	    
-	    mBarTop    = mCanvasHeight * 0.6f + 2;
+	    mBarTop    = mCanvasHeight * 0.57f + 2;
 	    mBarBottom = mCanvasHeight * 0.9f - 2;
 	    mY = mBarBottom;	   
 	    setSpeed(0, (mBarBottom - mBarTop) / (3000f / GameEngine.ENGINE_SPEED));
