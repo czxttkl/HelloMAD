@@ -25,7 +25,8 @@ public class TrickyAlient extends Alient {
 	public void update() {	
 		if (mSpeedUnchangeable) {
 			mX += mSpeedX;
-			mY += mSpeedY;	
+			mY += mSpeedY;
+			return;
 		}
 		
 		if (mAccMoveDuration > 0) {
