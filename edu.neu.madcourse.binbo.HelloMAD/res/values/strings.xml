@@ -128,8 +128,8 @@
     <string name="vibrate_summary">Enable vibration</string>
     <string name="ac_title">Acknowledgement</string>
     
-    <string name="rr_ac_design">Design</string>
-    <string name="rr_ac_develop">Develop</string>
+    <string name="rr_ac_design">Designer</string>
+    <string name="rr_ac_develop">Developer</string>
     <string name="rr_ac_designer">Wang Wenjing</string>
     <string name="rr_ac_developer">Bo Bin</string>
     <string name="rr_img_rkt_credit">Image of The Rocket</string>
