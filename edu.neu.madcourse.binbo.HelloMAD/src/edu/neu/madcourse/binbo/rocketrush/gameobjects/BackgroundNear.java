@@ -31,9 +31,12 @@ public class BackgroundNear extends Background {
 		}
 		sImageLoaded = true;
 		
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.bg1_near));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.bg2_near));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.bg3_near));
+		BitmapFactory.Options options = new BitmapFactory.Options(); 
+        options.inPurgeable = true;
+		
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.bg1_near, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.bg2_near, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.bg3_near, options));
 	}
 	
 	public BackgroundNear(Resources res) {

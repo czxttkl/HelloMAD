@@ -35,11 +35,14 @@ public class BackgroundFar extends Background {
 		}
 		sImageLoaded = true;
 		
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.bg1_far));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.bg2_far));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.bg3_far));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.b1_to_b2));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.b2_to_b3));
+		BitmapFactory.Options options = new BitmapFactory.Options(); 
+        options.inPurgeable = true;
+		
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.bg1_far, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.bg2_far, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.bg3_far, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.b1_to_b2, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.b2_to_b3, options));
 	}
 	
 	public BackgroundFar(Resources res) {
@@ -76,7 +79,7 @@ public class BackgroundFar extends Background {
 				Bitmap.createScaledBitmap(sImages.get(i), scaledWidth, scaledHeight, true);	
 			sImages.get(i).recycle(); // explicit call to avoid out of memory
 			sImages.set(i, newImage);
-			
+
 			Runtime.getRuntime().gc();
 		}
 		mWidth  = sImages.get(0).getWidth();
@@ -133,7 +136,6 @@ public class BackgroundFar extends Background {
 
 	@Override
 	public void release() {
-		// TODO Auto-generated method stub
 		super.release();
 	}
 	

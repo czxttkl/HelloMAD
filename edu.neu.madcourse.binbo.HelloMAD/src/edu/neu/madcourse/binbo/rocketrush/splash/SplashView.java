@@ -97,6 +97,11 @@ public class SplashView extends View {
 		float radio = bgHeight / (float) bgWidth;	
 		int scaledWidth  = w;
 		int scaledHeight = (int)(w * radio);
+		
+		if (scaledWidth == mBackground.getWidth() && scaledHeight == mBackground.getHeight()) {
+			return;
+		}
+		
 		Bitmap newImage = 
 			Bitmap.createScaledBitmap(mBackground, scaledWidth, scaledHeight, false);
 		

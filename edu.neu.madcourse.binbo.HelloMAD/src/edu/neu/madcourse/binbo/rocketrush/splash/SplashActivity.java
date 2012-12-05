@@ -75,8 +75,10 @@ public class SplashActivity extends Activity {
 	protected void createIntent() {
 		if (isFirstOpened()) {
 			mIntent = new Intent(this, TutorialActivity.class);
+			mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		} else {
 			mIntent = new Intent(this, RocketRushActivity.class);
+			mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		}
 	}
 	

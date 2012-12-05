@@ -181,6 +181,7 @@ public class RocketRushActivity extends FragmentActivity
 			break;
 		case R.id.helpButton:
 			Intent i = new Intent(this, TutorialActivity.class);
+			i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			i.putExtra("edu.neu.madcourse.binbo.rocketrush.Main", "RocketRushActivity");
 			startActivity(i);
 			break;
