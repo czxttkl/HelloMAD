@@ -38,7 +38,7 @@ public class Level extends GameObject {
 		mPaint.setTextSize(40);
 		mPaint.setTextAlign(Paint.Align.CENTER);
 		
-		mPaintContainer.setARGB(255, 10, 10, 10);
+		mPaintContainer.setARGB(60, 115, 115, 115);
 		mPaintContainer.setStyle(Style.FILL);
 		mPaintContainer.setAntiAlias(true);
 	}
