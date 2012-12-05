@@ -29,7 +29,7 @@ public class SplashView extends View {
 		mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		mPaint.setColor(0xff404040);
 		mPaint.setStyle(Style.FILL);
-		mPaint.setTextSize(24);
+		mPaint.setTextSize(28);
 		mPaint.setTextAlign(Paint.Align.CENTER);
 		
 		Resources res = context.getResources();
@@ -61,7 +61,7 @@ public class SplashView extends View {
 			progress = " " + progress;
 		}
 		
-		canvas.drawText("Loading..." + progress, width / 2, height / 20 * 11, mPaint);
+		canvas.drawText("Loading..." + progress, width / 2, height / 20f * 11, mPaint);
 	}
 
 	public void updateProgress(int progress) {
@@ -84,7 +84,7 @@ public class SplashView extends View {
 				image = null;
 			}			
 		}
-		Runtime.getRuntime().gc();
+		System.gc();
 	}
 
 	@Override
@@ -104,10 +104,9 @@ public class SplashView extends View {
 		
 		Bitmap newImage = 
 			Bitmap.createScaledBitmap(mBackground, scaledWidth, scaledHeight, false);
-		
 		mBackground.recycle(); // explicit call to avoid out of memory
 		mBackground = newImage;
 		
-		Runtime.getRuntime().gc();
+		System.gc();
 	}
 }

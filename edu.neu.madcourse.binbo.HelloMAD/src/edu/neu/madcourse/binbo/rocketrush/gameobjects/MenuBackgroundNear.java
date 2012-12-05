@@ -39,7 +39,7 @@ public class MenuBackgroundNear extends Background {
 		mImage.recycle(); // explicit call to avoid out of memory
 		setImage(newImage);
 		
-		Runtime.getRuntime().gc();
+		System.gc();
 	}
 
 	@Override
