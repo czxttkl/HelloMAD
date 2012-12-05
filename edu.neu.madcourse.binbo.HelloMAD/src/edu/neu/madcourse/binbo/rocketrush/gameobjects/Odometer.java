@@ -32,10 +32,10 @@ public class Odometer extends GameObject {
 		setMaxSpeed(0, DEFAULT_SPEED_Y * 3);
 		setAccSpeed(0, DEFAULT_SPEED_Y / (1000 / GameEngine.ENGINE_SPEED));
 		
-		mX = 16; mY = 32;
+		mX = 24; mY = 40;
 		
 		mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		mPaint.setColor(0xff404040);
+		mPaint.setARGB(255, 0, 0, 0);
 		mPaint.setStyle(Style.FILL);	
 		mPaint.setFakeBoldText(true);
 		mPaint.setTextSize(28);
@@ -84,7 +84,7 @@ public class Odometer extends GameObject {
 
 	@Override
 	public void doDraw(Canvas c) {
-		c.drawText("Distance " + mOdometer / 10, mX, mY, mPaint);
+		c.drawText("Distance    " + mOdometer / 10, mX, mY, mPaint);
 	}
 	
 	public interface OnOdometerUpdateListener {

@@ -23,9 +23,11 @@ public class SpeedBar extends GameObject implements GameObject.IDrawer {
 	protected Paint mPaint1 = new Paint();
 	protected Paint mPaint2 = new Paint(); 
 	protected Paint mPaint3 = new Paint();
+	protected Paint mPaintShadow = new Paint();
 	protected RectF r1 = new RectF();
 	protected RectF r2 = new RectF();
 	protected RectF r3 = new RectF();
+	protected RectF rShadow = new RectF();
 	// duration for move up, the same as Rocket
 	protected int mUpDuration = 0;
 
@@ -37,17 +39,22 @@ public class SpeedBar extends GameObject implements GameObject.IDrawer {
 		setZOrder(ZOrders.SPEEDBAR);
 		
 		mPaint1.setAntiAlias(true);
-		mPaint1.setColor(Color.BLACK);                   
-		mPaint1.setStrokeWidth(3.0f);
+		mPaint1.setARGB(180, 0, 0, 0);                 
+		mPaint1.setStrokeWidth(4.0f);
 		mPaint1.setStyle(Style.STROKE);
 		
 		mPaint2.setAntiAlias(true);		    
-		mPaint2.setColor(Color.argb(0x80, 0xCC, 0xCC, 0xCC));
-		mPaint2.setStyle(Style.FILL); 
+		mPaint2.setARGB(100, 255, 255, 255);
+		mPaint2.setStyle(Style.FILL);
 		
 		mPaint3.setAntiAlias(true);		    
-		mPaint3.setColor(Color.argb(0xFF, 0x00, 0xCC, 0x00));
+		mPaint3.setARGB(255, 86, 217, 7);
 		mPaint3.setStyle(Style.FILL);
+		
+		mPaintShadow.setARGB(70, 0, 0, 0);
+		mPaintShadow.setStrokeWidth(4.0f);
+		mPaintShadow.setStyle(Style.STROKE);
+		mPaintShadow.setAntiAlias(true);
 	}
 	
 	public SpeedBar(Resources res, Bitmap image) {
@@ -76,7 +83,8 @@ public class SpeedBar extends GameObject implements GameObject.IDrawer {
 	
 	@Override
 	public void doDraw(Canvas c) {             	    
-	    c.drawRoundRect(r1, 12, 12, mPaint1);	    	    
+		c.drawRoundRect(rShadow, 15, 15, mPaintShadow);
+		c.drawRoundRect(r1, 12, 12, mPaint1);	    	    
 	    c.drawRoundRect(r2, 9, 9, mPaint2);	    
 	    c.drawRoundRect(r3, 9, 9, mPaint3);
 	}
@@ -88,12 +96,12 @@ public class SpeedBar extends GameObject implements GameObject.IDrawer {
 		mCanvasHeight = height;
 		
 		r1.left   = 30;
-	    r1.top    = mCanvasHeight * 0.65f;
+	    r1.top    = mCanvasHeight * 0.5f;
 	    r1.right  = 54;
 	    r1.bottom = mCanvasHeight * 0.9f;
 	    
 	    r2.left   = 32;
-	    r2.top    = mCanvasHeight * 0.65f + 2;
+	    r2.top    = mCanvasHeight * 0.5f + 2;
 	    r2.right  = 52;
 	    r2.bottom = mCanvasHeight * 0.9f - 2;
 	    
@@ -102,8 +110,13 @@ public class SpeedBar extends GameObject implements GameObject.IDrawer {
 	    r3.right  = 52;
 	    r3.bottom = mCanvasHeight * 0.9f - 2;
 	    
-	    mBarTop    = mCanvasHeight * 0.65f + 2;
-	    mBarBottom = mCanvasHeight * 0.9f - 2;   
+	    rShadow.left = 26;
+	    rShadow.top = mCanvasHeight * 0.5f - 4;
+	    rShadow.right = 58;
+	    rShadow.bottom = mCanvasHeight * 0.9f + 4;
+	    
+	    mBarTop    = mCanvasHeight * 0.5f + 2;
+	    mBarBottom = mCanvasHeight * 0.9f - 2;
 	    mY = mBarBottom;	   
 	    setSpeed(0, (mBarBottom - mBarTop) / (3000f / GameEngine.ENGINE_SPEED));
 	}
