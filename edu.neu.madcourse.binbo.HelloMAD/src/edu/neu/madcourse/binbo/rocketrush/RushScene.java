@@ -323,10 +323,12 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 		}
 		
 		// trigger collide effects for all barriers
+		float centerX = obj.getX() + obj.getWidth() * 0.5f;
+		float centerY = obj.getY() + obj.getHeight() * 0.5f;
 		for (GameObject object : collideWith) {
 			try {
 				Barrier b = (Barrier) object;
-				b.triggerCollideEffect();
+				b.triggerCollideEffect(kind, centerX, centerY);
 			} catch (ClassCastException e) {
 				; // do nothing, just continue
 			}

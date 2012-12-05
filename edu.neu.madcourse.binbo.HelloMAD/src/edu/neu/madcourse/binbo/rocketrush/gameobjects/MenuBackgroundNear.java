@@ -30,6 +30,10 @@ public class MenuBackgroundNear extends Background {
 		int scaledHeight = (int)(width * radio);
 		scaledWidth += mSpeedX - scaledWidth % mSpeedX;
 		
+		if (scaledWidth == mImage.getWidth() && scaledHeight == mImage.getHeight()) {
+			return;
+		}
+		
 		Bitmap newImage = 
 			Bitmap.createScaledBitmap(mImage, scaledWidth, scaledHeight, true);
 		mImage.recycle(); // explicit call to avoid out of memory

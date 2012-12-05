@@ -29,6 +29,10 @@ public class MenuBackgroundFar extends Background {
 		int scaledWidth  = width;
 		int scaledHeight = (int)(width * radio);
 		
+		if (scaledWidth == mImage.getWidth() && scaledHeight == mImage.getHeight()) {
+			return;
+		}
+		
 		Bitmap newImage = 
 			Bitmap.createScaledBitmap(mImage, scaledWidth, scaledHeight, true);	
 		mImage.recycle(); // explicit call to avoid out of memory
