@@ -14,6 +14,8 @@ public class Barrier extends GameObject {
 		super(res);		
 	}
 
+	public void triggerCollideEffect() {}
+	
 	@Override
 	public void operate(GameCtrl ctrl) {
 		int command = ctrl.getCommand();

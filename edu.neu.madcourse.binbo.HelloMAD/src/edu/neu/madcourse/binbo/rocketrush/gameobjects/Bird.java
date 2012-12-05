@@ -73,4 +73,9 @@ public class Bird extends Barrier {
 		mY += mSpeedY;		
 	}
 
+	@Override
+	public void triggerCollideEffect() {
+		mX = -mX;
+	}
+
 }

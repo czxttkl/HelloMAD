@@ -319,7 +319,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 		if (kind == GameObject.ROCKET) {
 			Vibrator vibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
 			vibrator.vibrate(30);
-			mLifeBar.lifeChange(-0.334f);			
+			mLifeBar.lifeChange(-0.334f);	
 		}
 	}
 

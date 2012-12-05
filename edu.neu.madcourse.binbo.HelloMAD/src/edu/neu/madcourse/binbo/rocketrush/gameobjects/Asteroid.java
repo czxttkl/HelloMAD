@@ -14,11 +14,14 @@ import edu.neu.madcourse.binbo.rocketrush.GameEngine;
 import edu.neu.madcourse.binbo.rocketrush.GameObject;
 
 public class Asteroid extends Barrier implements GameObject.IDrawer {
-	protected final static int IMAGE_COUNT = 12; // the same size of the total number of bitmaps
+	protected final static int ASTEROID_COUNT = 12; // the same size of the total number of bitmaps
+	protected final static int EXPLODING_ASTEROID_COUNT = 4;
 	protected static boolean sImageLoaded = false;
 	protected static List<Bitmap> sImages = new ArrayList<Bitmap>();
 	protected Bitmap mImage = null;		
 	protected Random mRand = new Random();
+	protected boolean mExplode = false;
+	protected int mExplodeIndex = 0;
 	
 	public static void loadImages(Resources res) {
 		if (sImageLoaded) {
@@ -38,6 +41,10 @@ public class Asteroid extends Barrier implements GameObject.IDrawer {
 		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid10));
 		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid11));
 		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid12));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid_explode1));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid_explode2));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid_explode3));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid_explode4));
 	}
 	
 	public Asteroid(Resources res) {
@@ -46,7 +53,7 @@ public class Asteroid extends Barrier implements GameObject.IDrawer {
 		setKind(ASTEROID);
 		setMovable(true);	
 		setZOrder(ZOrders.ASTEROID);		
-		setImage(sImages.get(mRand.nextInt(IMAGE_COUNT)));
+		setImage(sImages.get(mRand.nextInt(ASTEROID_COUNT)));
 	}
 
 	public Asteroid(Resources res, Bitmap image) {
@@ -55,7 +62,7 @@ public class Asteroid extends Barrier implements GameObject.IDrawer {
 		setKind(ASTEROID);
 		setMovable(true);		
 		setZOrder(ZOrders.ASTEROID);
-		setImage(sImages.get(mRand.nextInt(IMAGE_COUNT)));		
+		setImage(sImages.get(mRand.nextInt(ASTEROID_COUNT)));		
 	}
 	
 	public void initSpeeds(float x, float y, int accTime) {		
@@ -78,7 +85,17 @@ public class Asteroid extends Barrier implements GameObject.IDrawer {
 			mY + mHeight <= 0 || mY >= mCanvasHeight) {
 			return; // not necessary to draw the invisible
 		}
-		c.drawBitmap(mImage, mX, mY, null);
+		
+		if (mExplode) {
+			c.drawBitmap(sImages.get(mExplodeIndex++), mX, mY, null);
+			if (mExplodeIndex >= ASTEROID_COUNT + EXPLODING_ASTEROID_COUNT) {
+				mExplode = false;
+				mVisible = false;
+			}
+		}
+		if (mVisible) {
+			c.drawBitmap(mImage, mX, mY, null);
+		}
 	}	
 
 	@Override
@@ -91,7 +108,13 @@ public class Asteroid extends Barrier implements GameObject.IDrawer {
 		}
 		
 		mX += mSpeedX;
-		mY += mSpeedY;		
+		mY += mSpeedY;	
+	}
+
+	@Override
+	public void triggerCollideEffect() {
+		mExplode = true;
+		mExplodeIndex = ASTEROID_COUNT;
 	}
 
 }
