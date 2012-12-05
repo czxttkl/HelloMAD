@@ -22,7 +22,12 @@ public class TrickyAlient extends Alient {
 	}
 
 	@Override
-	public void update() {		
+	public void update() {	
+		if (mSpeedUnchangeable) {
+			mX += mSpeedX;
+			mY += mSpeedY;	
+		}
+		
 		if (mAccMoveDuration > 0) {
 			mSpeedY = Math.min(mSpeedY + mAccSpeedY, mMaxSpeedY);
 			mAccMoveDuration -= GameEngine.ENGINE_SPEED;
@@ -46,5 +51,9 @@ public class TrickyAlient extends Alient {
 		mX += mSpeedX;
 		mY += mSpeedY;		
 	}
-	
+
+	@Override
+	public void triggerCollideEffect(int kind, float x, float y) {
+		super.triggerCollideEffect(kind, x, y);		
+	}
 }
