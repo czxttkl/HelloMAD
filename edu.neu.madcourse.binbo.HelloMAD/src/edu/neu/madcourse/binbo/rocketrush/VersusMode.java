@@ -2,6 +2,7 @@ package edu.neu.madcourse.binbo.rocketrush;
 
 import java.util.List;
 
+import edu.neu.madcourse.binbo.R;
 import android.content.Context;
 import android.hardware.SensorEventListener;
 import android.os.Handler;
@@ -10,10 +11,12 @@ public class VersusMode extends GameMode {
 	
 	protected VersusScene mScene = null; 
 	protected VersusModeThread mThread = null;
+	protected Context mContext = null;
 	
 	public VersusMode(Context context, GameEngine engine, Handler handler) {
 		super(engine);
 		setHandler(handler);		
+		mContext = context;
 		mScene = new VersusScene(context);
 		mScene.load();
 		mScene.setGameEventHandler(this);
@@ -25,28 +28,41 @@ public class VersusMode extends GameMode {
 	}
 	
 	@Override
-	public void reset() {
-		synchronized (mScene) {
-			mScene.reset();
+	public void resume() {
+		mThread = new VersusModeThread(mHandler);
+		mThread.start();
+		mBackgroundMusic.play();
+		super.resume();
+	}
+
+	@Override
+	public void pause() {
+		if (mThread != null) {
+			mThread.end();
+			mThread = null;
 		}
+		mBackgroundMusic.pause();
+		super.pause();
 	}
 	
 	@Override
 	public void start() {
-		if (mThread == null) {
-			mThread = new VersusModeThread(mHandler);
-			mThread.start();
-		}
+		mBackgroundMusic.create(mContext, R.raw.bkg_music_3);
 		super.start();
 	}
 
 	@Override
 	public void stop() {
-		if (mThread != null) {
-			mThread.end();
-			mThread = null;
-		}
+		mBackgroundMusic.stop();
 		super.stop();
+	}
+
+	@Override
+	public void reset() {
+		synchronized (mScene) {
+			mScene.reset();
+		}		
+		mBackgroundMusic.reset();
 	}
 	
 	private final class VersusModeThread extends BaseThread {

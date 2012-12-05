@@ -162,7 +162,7 @@ public class BoggleGame extends Activity implements IBoggleGame, OnClickListener
  		tonePlayer = new ToneGenerator(AudioManager.STREAM_MUSIC, 70); 
  		
  		// create the boggle music
- 		BoggleMusic.create(this, R.raw.boggle_game);
+ 		BoggleMusic.create(this, R.raw.game_over);
  		if (command == NEW_GAME) {
  			BoggleMusic.reset();
  		}
@@ -173,7 +173,7 @@ public class BoggleGame extends Activity implements IBoggleGame, OnClickListener
 	
 	@Override
 	protected void onDestroy() {
-		BoggleMusic.stop(this);
+		BoggleMusic.stop();
 		// TODO Auto-generated method stub
 		super.onDestroy();		
 	}

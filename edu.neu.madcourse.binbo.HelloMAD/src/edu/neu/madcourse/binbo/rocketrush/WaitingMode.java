@@ -1,5 +1,6 @@
 package edu.neu.madcourse.binbo.rocketrush;
 
+import edu.neu.madcourse.binbo.R;
 import android.content.Context;
 import android.hardware.SensorEventListener;
 import android.os.Handler;
@@ -7,13 +8,15 @@ import android.os.Handler;
 public class WaitingMode extends GameMode {
 
 	protected WaitingScene mScene = null; 
-	protected WaitingModeThread mThread = null;
+	protected WaitingModeThread mThread = null;	
+	protected Context mContext = null;
 	
 	public WaitingMode(Context context, GameEngine engine, Handler handler) {
 		super(engine);
 		setHandler(handler);
+		mContext = context;
 		mScene = new WaitingScene(context);
-		mScene.load();
+		mScene.load();		
 	}
 	
 	@Override
@@ -22,19 +25,41 @@ public class WaitingMode extends GameMode {
 	}	
 	
 	@Override
-	public void start() {		
+	public void resume() {
 		mThread = new WaitingModeThread(mHandler);
 		mThread.start();
-		super.start();
+		mBackgroundMusic.play();
+		super.resume();
 	}
 
 	@Override
-	public void stop() {
+	public void pause() {
 		if (mThread != null) {
 			mThread.end();
 			mThread = null;
 		}
+		mBackgroundMusic.pause();
+		super.pause();
+	}
+	
+	@Override
+	public void start() {				
+		mBackgroundMusic.create(mContext, R.raw.bkg_music_1);
+		super.start();		
+	}
+
+	@Override
+	public void stop() {
+		mBackgroundMusic.stop();
 		super.stop();
+	}
+	
+	@Override
+	public void reset() {		
+		synchronized (mScene) {
+			mScene.reset();
+		}
+		mBackgroundMusic.reset();
 	}
 
 	private final class WaitingModeThread extends BaseThread {
@@ -80,6 +105,6 @@ public class WaitingMode extends GameMode {
 	public SensorEventListener getSensorListener() {
 		// TODO Auto-generated method stub
 		return super.getSensorListener();
-	}
+	}	
 
 }

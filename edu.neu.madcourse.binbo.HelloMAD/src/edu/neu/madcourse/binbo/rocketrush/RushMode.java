@@ -1,20 +1,26 @@
 package edu.neu.madcourse.binbo.rocketrush;
 
-import java.util.List;
-
+import edu.neu.madcourse.binbo.R;
 import android.content.Context;
 import android.hardware.SensorEventListener;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.FragmentActivity;
 
 public class RushMode extends GameMode {
 	
 	protected RushScene mScene = null; 
 	protected RushModeThread mThread = null;
+	protected Context mContext = null;
+	protected int mMusicIDs[] = { 
+		R.raw.game_over, R.raw.bkg_music_2, R.raw.bkg_music_3, R.raw.bkg_music_4
+	};
+	protected int mMusicIndex = 1;
 	
 	public RushMode(Context context, GameEngine engine, Handler handler) {
 		super(engine);
 		setHandler(handler);
+		mContext = context;
 		mScene = new RushScene(context);
 		mScene.load();
 		mScene.setGameEventHandler(this);
@@ -26,30 +32,43 @@ public class RushMode extends GameMode {
 	}
 	
 	@Override
-	public void reset() {
-		synchronized (mScene) {
-			mScene.reset();
+	public void resume() {
+		mThread = new RushModeThread(mHandler);
+		mThread.start();
+		mBackgroundMusic.play();
+		super.resume();
+	}
+
+	@Override
+	public void pause() {
+		if (mThread != null) {
+			mThread.end();
+			mThread = null;
 		}
+		mBackgroundMusic.pause();
+		super.pause();
 	}
 	
 	@Override
 	public void start() {
-		if (mThread == null) {
-			mThread = new RushModeThread(mHandler);
-			mThread.start();
-		}
+		mBackgroundMusic.create(mContext, mMusicIDs[mMusicIndex]);
 		super.start();
 	}
 
 	@Override
 	public void stop() {
-		if (mThread != null) {
-			mThread.end();
-			mThread = null;
-		}
+		mBackgroundMusic.stop();
 		super.stop();
 	}
 	
+	@Override
+	public void reset() {		
+		synchronized (mScene) {
+			mScene.reset();
+		}
+		mBackgroundMusic.reset();
+	}
+
 	private final class RushModeThread extends BaseThread {
 		
 		public RushModeThread(Handler handler) {
@@ -86,11 +105,6 @@ public class RushMode extends GameMode {
 		return super.getSensorListener();
 	}
 
-	public void onCollide(GameObject obj, List<GameObject> collideWith) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	@Override
 	public void handleGameEvent(GameEvent evt) {
 		if (evt.mEventType == GameEvent.EVENT_STATE) {
@@ -100,6 +114,21 @@ public class RushMode extends GameMode {
 		        msg.what = StateEvent.STATE_OVER;
 		        msg.obj  = se.mDescription;
 		        mHandler.sendMessage(msg);
+		        ((FragmentActivity) mContext).runOnUiThread(new Runnable() {
+				    public void run() {				    	
+				    	mBackgroundMusic.create(mContext, mMusicIDs[++mMusicIndex]);
+				    	mBackgroundMusic.play();
+				    }
+				});
+			} else if (se.mWhat == StateEvent.STATE_LEVELUP) {
+				// not good to do the cast here, modify later
+				((FragmentActivity) mContext).runOnUiThread(new Runnable() {
+				    public void run() {				    	
+				    	mBackgroundMusic.create(mContext, mMusicIDs[++mMusicIndex]);
+				    	mBackgroundMusic.play();
+				    }
+				});
+				
 			}
 		}
 	}

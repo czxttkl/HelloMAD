@@ -7,35 +7,38 @@ import android.os.Handler;
 
 public class GameMode implements IGameEventHandler {
 	// engine of the game
-	protected GameEngine mEngine = null;
+	protected GameEngine mEngine = null;	
 	// message handler
 	protected Handler mHandler = null;	
+	// music of the game
+	protected BackgroundMusic mBackgroundMusic = new BackgroundMusic();
 
 	protected GameMode(GameEngine engine) {
 		assert(engine != null);
 		setEngine(engine);
 	}
 	
+	public void resume() {
+	}
+	
+	public void pause() {
+	}
+	
 	public void start() {
-		
 	}
 	
 	public void stop() {
-		mEngine.reset();
+		mEngine.reset();		
 	}
 	
-	public void reset() {
-		
-	}
+	public void reset() {}
 	
-	public void release() {
-		
-	}
+	public void release() {}
 	
 	public GameScene getScene() {
 		return null;
 	}
-	
+
 	public SensorEventListener getSensorListener() {
 		return mEngine.getSensorEventListener();
 	}

@@ -85,6 +85,7 @@ public class RocketRushActivity extends FragmentActivity
 		}		
 
 		// first stop to update the scene
+		mCurMode.pause();
 		mCurMode.stop();
 		// reset the current mode
 		mCurMode.reset();
@@ -94,6 +95,7 @@ public class RocketRushActivity extends FragmentActivity
 		mGameView.getDrawer().setGameScene(mCurMode.getScene());		
 		// finally start the new game mode
 		mCurMode.start();
+		mCurMode.resume();
 
 		// ...
 		if (modeTo == MODE_WAITING) {
@@ -128,7 +130,7 @@ public class RocketRushActivity extends FragmentActivity
 	@Override
 	protected void onPause() {
 		mGameView.onPause();
-		mCurMode.stop();
+		mCurMode.pause();
  
         if (mSensorManager != null) {
         	mSensorManager.unregisterListener(
@@ -152,18 +154,18 @@ public class RocketRushActivity extends FragmentActivity
         }        
 		                
 		mGameView.onResume(mCurMode.getScene());
-		mCurMode.start();
+		mCurMode.resume();
 	}
 
 	@Override
 	protected void onStart() {
-		// TODO Auto-generated method stub
+		mCurMode.start();
 		super.onStart();
 	}
 
 	@Override
 	protected void onStop() {
-		// TODO Auto-generated method stub
+		mCurMode.stop();
 		super.onStop();
 	}
 	
@@ -181,7 +183,6 @@ public class RocketRushActivity extends FragmentActivity
 			break;
 		case R.id.helpButton:
 			Intent i = new Intent(this, TutorialActivity.class);
-			i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			i.putExtra("edu.neu.madcourse.binbo.rocketrush.Main", "RocketRushActivity");
 			startActivity(i);
 			break;

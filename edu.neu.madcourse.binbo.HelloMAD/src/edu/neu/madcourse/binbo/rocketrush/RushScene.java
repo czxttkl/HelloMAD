@@ -153,10 +153,10 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 	}
 	
 	// probabilities for creating barriers
-	private int mProbBird    = 80;
-	private int	mProbAster   = 165;
-	private int mProbAlient  = 90;
-	private int mProbThunder = 180;
+	private int mProbBird    = 100;
+	private int	mProbAster   = 180;
+	private int mProbAlient  = 150;
+	private int mProbThunder = 300;
 	
 	private void createBird(int probability) {		
 		// get the acceleration time 
@@ -370,6 +370,8 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 		} else if (mCurLevel == 3 || mCurLevel == 5) {
 			mBackgroundFar.switchToNext();
 			mBackgroundNear.switchToNext();
+			GameEvent e = new StateEvent(StateEvent.STATE_LEVELUP, "go to next level, music should be changed");
+			mEventHandler.handleGameEvent(e);
 		}
 	}
 

@@ -38,14 +38,14 @@ public class RushModeDialogFragment extends DialogFragment {
 	
 	@Override
 	public void onStart() {		
-		mGameMode.stop();
+		mGameMode.pause();
 		super.onStart();
 	}
 
 	@Override
 	public void onStop() {
 		if (mGameMode == mActivity.getCurrentGameMode()) {
-			mGameMode.start();
+			mGameMode.resume();
 		}
 		super.onStop();
 	}

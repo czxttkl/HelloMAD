@@ -117,7 +117,7 @@ public class SpeedBar extends GameObject implements GameObject.IDrawer {
 	    
 	    mBarTop    = mCanvasHeight * 0.58f + 2;
 	    mBarBottom = mCanvasHeight * 0.9f - 2;
-	    mY = mBarBottom;	   
+	    mY = mBarBottom;
 	    setSpeed(0, (mBarBottom - mBarTop) / (3000f / GameEngine.ENGINE_SPEED));
 	}
 
