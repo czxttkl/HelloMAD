@@ -113,6 +113,7 @@ public class Asteroid extends Barrier implements GameObject.IDrawer {
 
 	@Override
 	public void triggerCollideEffect() {
+		setZOrder(ZOrders.EFFECTS);
 		mExplode = true;
 		mExplodeIndex = ASTEROID_COUNT;
 	}

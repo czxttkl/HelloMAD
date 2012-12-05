@@ -75,7 +75,8 @@ public class Bird extends Barrier {
 
 	@Override
 	public void triggerCollideEffect() {
-		mX = -mX;
+		mSpeedX = -mSpeedX;
+		setImage(sImages.get(mSpeedX > 0 ? 1 : 0));
 	}
 
 }
