@@ -134,12 +134,14 @@ public class Field extends Reward {
 		
 		if (mCollideWith.size() > 0) {
 			if (mOnCollideListener != null) {
-				mOnCollideListener.onCollide(this, mCollideWith);
-				for (GameObject obj : mCollideWith) {
+				mOnCollideListener.onCollide(this, mCollideWith);				
+			}
+			for (GameObject obj : mCollideWith) {
+				if (obj.getKind() != PROTECTION) {
 					obj.setCollidable(false);
 				}
-				mCollideWith.clear();
 			}
+			mCollideWith.clear();
 		}
 	}
 	

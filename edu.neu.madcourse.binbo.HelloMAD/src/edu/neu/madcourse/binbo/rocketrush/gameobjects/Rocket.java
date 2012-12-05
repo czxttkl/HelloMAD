@@ -195,12 +195,12 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 		
 		if (mCollideWith.size() > 0) {
 			if (mOnCollideListener != null) {
-				mOnCollideListener.onCollide(this, mCollideWith);
-				for (GameObject obj : mCollideWith) {
-					obj.setCollidable(false);
-				}
-				mCollideWith.clear();
+				mOnCollideListener.onCollide(this, mCollideWith);				
 			}
+			for (GameObject obj : mCollideWith) {
+				obj.setCollidable(false);
+			}
+			mCollideWith.clear();
 			// rocket may vibrate for a little bit of time
 			mVibrateDuration = MIN_VIBRATE_DURATION;
 		}
