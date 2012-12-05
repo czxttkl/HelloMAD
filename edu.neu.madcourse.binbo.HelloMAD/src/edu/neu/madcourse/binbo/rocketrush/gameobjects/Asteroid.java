@@ -20,6 +20,7 @@ public class Asteroid extends Barrier implements GameObject.IDrawer {
 	protected static List<Bitmap> sImages = new ArrayList<Bitmap>();
 	protected Bitmap mImage = null;		
 	protected Random mRand = new Random();
+	protected boolean mSpeedUnchangeable = false;
 	protected boolean mExplode = false;
 	protected int mExplodeIndex = 0;
 	
@@ -99,12 +100,14 @@ public class Asteroid extends Barrier implements GameObject.IDrawer {
 	}	
 
 	@Override
-	public void update() {		
-		if (mAccMoveDuration > 0) {
-			mSpeedY = Math.min(mSpeedY + mAccSpeedY, mMaxSpeedY);
-			mAccMoveDuration -= GameEngine.ENGINE_SPEED;
-		} else {
-			mSpeedY = Math.max(mSpeedY - mAccSpeedY, mMinSpeedY);
+	public void update() {	
+		if (!mSpeedUnchangeable) {
+			if (mAccMoveDuration > 0) {
+				mSpeedY = Math.min(mSpeedY + mAccSpeedY, mMaxSpeedY);
+				mAccMoveDuration -= GameEngine.ENGINE_SPEED;
+			} else {
+				mSpeedY = Math.max(mSpeedY - mAccSpeedY, mMinSpeedY);
+			}
 		}
 		
 		mX += mSpeedX;
@@ -112,9 +115,37 @@ public class Asteroid extends Barrier implements GameObject.IDrawer {
 	}
 
 	@Override
-	public void triggerCollideEffect() {
-		mExplode = true;
-		mExplodeIndex = ASTEROID_COUNT;
+	public void triggerCollideEffect(int kind, float x, float y) {
+		if (kind == ROCKET) {
+			float cX = mX + mWidth * 0.5f;
+			float cY = mY + mHeight * 0.5f;
+			float offsetY = 10;				
+					
+			if (cX <= x && cY <= y - offsetY) {
+				mSpeedX = -8;
+				mSpeedY = -8;
+			} else if (cX <= x && cY <= y + offsetY) {
+				mSpeedX = -12;
+				mSpeedY = (mRand.nextInt(2) == 0 ? 2 : -2);
+			} else if (cX <= x && cY > y + offsetY) {
+				mSpeedX = -8;
+				mSpeedY = 8;
+			} else if (cX > x && cY <= y - offsetY) {
+				mSpeedX = 8;
+				mSpeedY = -8;
+			} else if (cX > x && cY <= y + offsetY) {
+				mSpeedX = 12;
+				mSpeedY = (mRand.nextInt(2) == 0 ? 2 : -2);
+			} else {
+				mSpeedX = 8;
+				mSpeedY = 8;
+			}			
+			mSpeedUnchangeable = true;
+		} else if (kind == PROTECTION) {
+			setZOrder(ZOrders.EFFECTS);
+			mExplode = true;
+			mExplodeIndex = ASTEROID_COUNT;
+		}
 	}
 
 }

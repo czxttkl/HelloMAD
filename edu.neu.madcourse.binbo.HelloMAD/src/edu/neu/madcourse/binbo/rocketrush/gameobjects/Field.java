@@ -19,6 +19,8 @@ public class Field extends Reward {
 	// the difference of the top left point between this field and the rocket 
 	protected float mOffsetX = 0;
 	protected float mOffsetY = 0;	
+	// save for objects collided with this field
+	protected List<GameObject> mCollideWith = new ArrayList<GameObject>();
 	
 	public static void loadImages(Resources res) {
 		if (sImageLoaded) {
@@ -113,45 +115,46 @@ public class Field extends Reward {
 		mOffsetY = (mHeight - mRocket.getHeight()) * 0.5f;
 	}
 	
-//	@Override
-//	public void detectCollision(List<GameObject> objects) {						
-//		
-//		for (GameObject obj : objects) {
-//			// won't collide to itself
-//			if (obj == this) {
-//				continue;
-//			}
-//			if (!obj.getCollidable()) {
-//				continue;
-//			}
-//
-//			boolean intersects = mRect.intersects(
-//				(int)obj.getX(), (int)obj.getY(), 
-//				(int)(obj.getX() + obj.getWidth()), (int)(obj.getY() + obj.getHeight()));
-//			if (intersects) {				
-//				if (obj.getKind() == PROTECTION) {
-//					((Reward) obj).bindRocket(this);
-//				} else {
-//					for (Reward reward : mRewards) {
-//						if (reward.getKind() == PROTECTION) {
-//							return;
-//						}
-//					}
-//					mCollideWith.add(obj);
-//				}
-//			}
-//		}				
-//		
-//		if (mCollideWith.size() > 0) {
-//			if (mOnCollideListener != null) {
-//				mOnCollideListener.onCollide(this, mCollideWith);
-//				for (GameObject obj : mCollideWith) {
-//					obj.setCollidable(false);
-//				}
-//				mCollideWith.clear();
-//			}
-//			// rocket may vibrate for a little bit of time
-//			mVibrateDuration = MIN_VIBRATE_DURATION;
-//		}
-//	}
+	@Override
+	public void detectCollision(List<GameObject> objects) {						
+		
+		for (GameObject obj : objects) {
+			// won't collide to itself
+			if (obj == this) {
+				continue;
+			}
+			if (!obj.getCollidable() || obj.getKind() == ROCKET) {
+				continue;
+			}			
+
+			if (isCollidedWith(obj)) {				
+				mCollideWith.add(obj);
+			}
+		}				
+		
+		if (mCollideWith.size() > 0) {
+			if (mOnCollideListener != null) {
+				mOnCollideListener.onCollide(this, mCollideWith);				
+			}
+			for (GameObject obj : mCollideWith) {
+				if (obj.getKind() != PROTECTION) {
+					obj.setCollidable(false);
+				}
+			}
+			mCollideWith.clear();
+		}
+	}
+	
+	protected boolean isCollidedWith(GameObject obj) {
+		float centerX = mX + mWidth * 0.5f;
+		float centerY = mY + mHeight * 0.5f;
+		float centerObjX = obj.getX() + obj.getWidth() * 0.5f;
+		float centerObjY = obj.getY() + obj.getHeight() * 0.5f;
+		
+		if (Math.pow((centerX - centerObjX), 2f) + Math.pow((centerY - centerObjY), 2f) < 
+			Math.pow((mWidth + obj.getWidth()) * 0.5f, 2))			
+			return true;
+		
+		return false;
+	}
 }

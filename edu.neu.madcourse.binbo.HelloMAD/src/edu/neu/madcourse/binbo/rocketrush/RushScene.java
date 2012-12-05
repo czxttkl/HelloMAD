@@ -321,6 +321,19 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 			vibrator.vibrate(30);
 			mLifeBar.lifeChange(-0.334f);	
 		}
+		
+		// trigger collide effects for all barriers
+		float centerX = obj.getX() + obj.getWidth() * 0.5f;
+		float centerY = obj.getY() + obj.getHeight() * 0.5f;
+		for (GameObject object : collideWith) {
+			try {
+				Barrier b = (Barrier) object;
+				b.triggerCollideEffect(kind, centerX, centerY);
+			} catch (ClassCastException e) {
+				; // do nothing, just continue
+			}
+		}
+		orderByZ(mObjects);
 	}
 
 	public void onReachTarget(int odometer) {

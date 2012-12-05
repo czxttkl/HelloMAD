@@ -14,7 +14,7 @@ public class Barrier extends GameObject {
 		super(res);		
 	}
 
-	public void triggerCollideEffect() {}
+	public void triggerCollideEffect(int kind, float x, float y) {}
 	
 	@Override
 	public void operate(GameCtrl ctrl) {

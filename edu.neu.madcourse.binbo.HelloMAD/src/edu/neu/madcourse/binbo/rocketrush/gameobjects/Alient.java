@@ -14,7 +14,9 @@ import android.graphics.Canvas;
 public class Alient extends Barrier {	
 	protected final static int IMAGE_COUNT = 12; // the same size of the total number of bitmaps
 	protected static boolean sImageLoaded = false;	
-	protected static List<Bitmap> sImages = new ArrayList<Bitmap>();			
+	protected static List<Bitmap> sImages = new ArrayList<Bitmap>();	
+	protected Random mRand = new Random();
+	protected boolean mSpeedUnchangeable = false;
 	
 	public static void loadImages(Resources res) {
 		if (sImageLoaded) {
@@ -69,15 +71,52 @@ public class Alient extends Barrier {
 	}	
 
 	@Override
-	public void update() {		
-		if (mAccMoveDuration > 0) {
-			mSpeedY = Math.min(mSpeedY + mAccSpeedY, mMaxSpeedY);
-			mAccMoveDuration -= GameEngine.ENGINE_SPEED;
-		} else {
-			mSpeedY = Math.max(mSpeedY - mAccSpeedY, mMinSpeedY);
+	public void update() {	
+		if (!mSpeedUnchangeable) {
+			if (mAccMoveDuration > 0) {
+				mSpeedY = Math.min(mSpeedY + mAccSpeedY, mMaxSpeedY);
+				mAccMoveDuration -= GameEngine.ENGINE_SPEED;
+			} else {
+				mSpeedY = Math.max(mSpeedY - mAccSpeedY, mMinSpeedY);
+			}
 		}
 
 		mX += mSpeedX;
 		mY += mSpeedY;		
+	}
+
+	@Override
+	public void triggerCollideEffect(int kind, float x, float y) {
+		float cX = mX + mWidth * 0.5f;
+		float cY = mY + mHeight * 0.5f;
+		float offsetY = 0;
+		
+		if (kind == ROCKET) {
+			offsetY = 10;
+		} else if (kind == PROTECTION) {
+			offsetY = 16;
+		}
+				
+		if (cX <= x && cY <= y - offsetY) {
+			mSpeedX = -8;
+			mSpeedY = -8;
+		} else if (cX <= x && cY <= y + offsetY) {
+			mSpeedX = -12;
+			mSpeedY = (mRand.nextInt(2) == 0 ? 2 : -2);
+		} else if (cX <= x && cY > y + offsetY) {
+			mSpeedX = -8;
+			mSpeedY = 8;
+		} else if (cX > x && cY <= y - offsetY) {
+			mSpeedX = 8;
+			mSpeedY = -8;
+		} else if (cX > x && cY <= y + offsetY) {
+			mSpeedX = 12;
+			mSpeedY = (mRand.nextInt(2) == 0 ? 2 : -2);
+		} else {
+			mSpeedX = 8;
+			mSpeedY = 8;
+		}
+		
+		mSpeedUnchangeable = true;
 	}
 }
