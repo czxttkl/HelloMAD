@@ -68,6 +68,8 @@ public class BackgroundNear extends Background {
 				Bitmap.createScaledBitmap(sImages.get(i), scaledWidth, scaledHeight, true);	
 			sImages.get(i).recycle(); // explicit call to avoid out of memory
 			sImages.set(i, newImage);
+			
+			Runtime.getRuntime().gc();
 		}
 		mWidth  = sImages.get(0).getWidth();
 		mHeight = sImages.get(0).getHeight();

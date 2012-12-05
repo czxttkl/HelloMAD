@@ -84,6 +84,7 @@ public class SplashView extends View {
 				image = null;
 			}			
 		}
+		Runtime.getRuntime().gc();
 	}
 
 	@Override
@@ -97,9 +98,11 @@ public class SplashView extends View {
 		int scaledWidth  = w;
 		int scaledHeight = (int)(w * radio);
 		Bitmap newImage = 
-			Bitmap.createScaledBitmap(mBackground, scaledWidth, scaledHeight, true);
+			Bitmap.createScaledBitmap(mBackground, scaledWidth, scaledHeight, false);
 		
 		mBackground.recycle(); // explicit call to avoid out of memory
 		mBackground = newImage;
+		
+		Runtime.getRuntime().gc();
 	}
 }

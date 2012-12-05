@@ -36,6 +36,7 @@ public class TutorialView extends View {
 			mImage.recycle();
 			mImage = null;
 		}
+		Runtime.getRuntime().gc();
 	}
 	
 //	public void setText(String text) {
@@ -55,16 +56,18 @@ public class TutorialView extends View {
 		
 		Bitmap image = null;
 		Resources res = getResources();
-
+		BitmapFactory.Options options = new BitmapFactory.Options(); 
+        options.inPurgeable = true;
+        
 		switch (getId()) {
 		case R.id.tutorialView1:
-			image = BitmapFactory.decodeResource(res, R.drawable.tutorial_1);
+			image = BitmapFactory.decodeResource(res, R.drawable.tutorial_1, options);
 			break;
 		case R.id.tutorialView2:
-			image = BitmapFactory.decodeResource(res, R.drawable.tutorial_2);
+			image = BitmapFactory.decodeResource(res, R.drawable.tutorial_2, options);
 			break;
 		case R.id.tutorialView3:
-			image = BitmapFactory.decodeResource(res, R.drawable.tutorial_3);
+			image = BitmapFactory.decodeResource(res, R.drawable.tutorial_3, options);
 			break;	
 		default:
 			break;
@@ -74,11 +77,14 @@ public class TutorialView extends View {
 		float radio = image.getHeight() / (float) image.getWidth();	
 		int scaledWidth  = w;
 		int scaledHeight = (int)(w * radio);
+		
 		Bitmap scaledImage = 
-			Bitmap.createScaledBitmap(image, scaledWidth, scaledHeight, true);	
+			Bitmap.createScaledBitmap(image, scaledWidth, scaledHeight, false);	
 		image.recycle();
 		image = null;
 		setImage(scaledImage);
+		
+		Runtime.getRuntime().gc();
 	}
 
 }
