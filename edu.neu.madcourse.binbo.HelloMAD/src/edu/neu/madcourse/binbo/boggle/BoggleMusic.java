@@ -9,7 +9,7 @@ public class BoggleMusic {
 	/** Stop old song and start new one */
 
 	public static void create(Context context, int resource) {
-		stop(context);
+		stop();
 
 		// Start music only if not disabled in preferences
 		if (BogglePrefs.getMusic(context)) {
@@ -46,11 +46,12 @@ public class BoggleMusic {
 	}
 
 	/** Stop the music */
-	public static void stop(Context context) {
+	public static void stop() {
 		if (mp != null) {
 			mp.stop();
 			mp.release();
 			mp = null;
+			System.gc();
 		}
 	}
 }

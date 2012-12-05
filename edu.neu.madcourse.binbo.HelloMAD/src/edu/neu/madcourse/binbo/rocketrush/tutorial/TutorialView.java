@@ -48,17 +48,19 @@ public class TutorialView extends View {
 	
 	@Override
 	protected void onDraw(Canvas canvas) {	
-		if (mImageIndex == 0) {
-			mImage = BitmapFactory.decodeResource(getResources(), R.drawable.tutorial_1);
-		} else if (mImageIndex == 1) {
-			mImage = BitmapFactory.decodeResource(getResources(), R.drawable.tutorial_2);
-		} else if (mImageIndex == 2) {
-			mImage = BitmapFactory.decodeResource(getResources(), R.drawable.tutorial_3);
+		if (mImage == null) {
+			if (mImageIndex == 0) {
+				mImage = BitmapFactory.decodeResource(getResources(), R.drawable.tutorial_1);
+			} else if (mImageIndex == 1) {
+				mImage = BitmapFactory.decodeResource(getResources(), R.drawable.tutorial_2);
+			} else if (mImageIndex == 2) {
+				mImage = BitmapFactory.decodeResource(getResources(), R.drawable.tutorial_3);
+			}
 		}
 		Rect rect = new Rect(0, 0, mScreenWidth, mScreenHeight);
-		canvas.drawBitmap(mImage, null, rect, null); 	
-		mImage.recycle();
-		mImage = null;
+		canvas.drawBitmap(mImage, null, rect, null); 			
+//		mImage.recycle();
+//		mImage = null;
 		System.gc();
 	}
 

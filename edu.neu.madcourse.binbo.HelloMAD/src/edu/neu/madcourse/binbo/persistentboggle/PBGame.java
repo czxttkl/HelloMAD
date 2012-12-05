@@ -145,7 +145,7 @@ public class PBGame extends Activity implements IBoggleGame, OnClickListener, On
 
 	@Override
 	protected void onDestroy() {
-		BoggleMusic.stop(this);
+		BoggleMusic.stop();
 		super.onDestroy();
 	}
 
