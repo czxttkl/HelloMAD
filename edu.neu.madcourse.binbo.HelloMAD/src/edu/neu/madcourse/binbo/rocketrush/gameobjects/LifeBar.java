@@ -10,7 +10,7 @@ import android.graphics.Paint.Style;
 import edu.neu.madcourse.binbo.rocketrush.GameEngine;
 import edu.neu.madcourse.binbo.rocketrush.GameObject;
 
-public class LifeBar extends GameObject {
+public class LifeBar extends Utility {
 	// canvas size
 	protected int mCanvasWidth  = 0;
 	protected int mCanvasHeight = 0;
@@ -75,7 +75,10 @@ public class LifeBar extends GameObject {
 	}
 	
 	@Override
-	public void update() {		
+	public void update() {	
+		if (!mEnable) {
+			return;
+		}
 		r3.right = 78 + mWidth * mLife;
 	}
 	

@@ -105,6 +105,50 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 		mTimer    = null;
 	}
 	
+	public void openInteraction() {
+		if (mRocket != null) {
+			mRocket.setMovable(true);
+			mRocket.setOnCollideListener(this);
+		}
+		if (mOdometer != null) {
+			mOdometer.setOdometerUpdateListener(this);
+			mOdometer.setEnable(true);
+		}
+		if (mLifeBar != null) {
+			mLifeBar.setOnLifeChangedListener(this);
+			mLifeBar.setEnable(true);
+		}
+		if (mSpeedBar != null) {
+			mSpeedBar.setEnable(true);
+		}
+		if (mTimer != null) {
+			mTimer.setOnTimeUpdateListener(this);
+			mTimer.setEnable(true);
+		}
+	}
+	
+	public void closeInteraction() {
+		if (mRocket != null) {
+			mRocket.setMovable(false);
+			mRocket.setOnCollideListener(null);
+		}
+		if (mOdometer != null) {
+			mOdometer.setOdometerUpdateListener(null);
+			mOdometer.setEnable(false);
+		}
+		if (mLifeBar != null) {
+			mLifeBar.setOnLifeChangedListener(null);
+			mLifeBar.setEnable(false);
+		}
+		if (mSpeedBar != null) {
+			mSpeedBar.setEnable(false);
+		}
+		if (mTimer != null) {
+			mTimer.setOnTimeUpdateListener(null);
+			mTimer.setEnable(false);
+		}
+	}
+	
 	@Override
 	public void doDraw(Canvas c) {
 		for (GameObject obj : mObjects) {

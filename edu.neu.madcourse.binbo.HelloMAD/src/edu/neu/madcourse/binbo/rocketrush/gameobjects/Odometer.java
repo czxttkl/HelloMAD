@@ -12,7 +12,7 @@ import edu.neu.madcourse.binbo.rocketrush.GameCtrl;
 import edu.neu.madcourse.binbo.rocketrush.GameEngine;
 import edu.neu.madcourse.binbo.rocketrush.GameObject;
 
-public class Odometer extends GameObject {
+public class Odometer extends Utility {
 
 	protected int mAccMoveDuration = 0;
 	protected int mOdometer = 0;
@@ -62,6 +62,9 @@ public class Odometer extends GameObject {
 
 	@Override
 	public void update() {
+		if (!mEnable) {
+			return;
+		}
 		if (mAccMoveDuration > 0) {
 			mSpeedY = Math.min(mSpeedY + mAccSpeedY, mMaxSpeedY);			
 			mAccMoveDuration -= GameEngine.ENGINE_SPEED;

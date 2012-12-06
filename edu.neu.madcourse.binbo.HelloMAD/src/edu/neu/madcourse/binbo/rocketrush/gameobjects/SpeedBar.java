@@ -11,7 +11,7 @@ import edu.neu.madcourse.binbo.rocketrush.GameCtrl;
 import edu.neu.madcourse.binbo.rocketrush.GameEngine;
 import edu.neu.madcourse.binbo.rocketrush.GameObject;
 
-public class SpeedBar extends GameObject implements GameObject.IDrawer {
+public class SpeedBar extends Utility {
 	protected Bitmap mImage = null;
 	// canvas size
 	protected int mCanvasWidth  = 0;
@@ -70,7 +70,7 @@ public class SpeedBar extends GameObject implements GameObject.IDrawer {
 	}
 
 	@Override
-	public void update() {
+	public void update() {		
 		if (mUpDuration > 0) {
 			mY = Math.max(mY - mSpeedY, mBarTop);
 			mUpDuration -= GameEngine.ENGINE_SPEED;
@@ -122,7 +122,10 @@ public class SpeedBar extends GameObject implements GameObject.IDrawer {
 	}
 
 	@Override
-	public void operate(GameCtrl ctrl) {
+	public void operate(GameCtrl ctrl) {	
+		if (!mEnable) {
+			return;
+		}
 		int command = ctrl.getCommand();
 
 		if (command == GameCtrl.MOVE_VERT) {

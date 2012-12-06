@@ -10,7 +10,7 @@ import android.graphics.Typeface;
 import edu.neu.madcourse.binbo.rocketrush.GameEngine;
 import edu.neu.madcourse.binbo.rocketrush.GameObject;
 
-public class Level extends GameObject {	
+public class Level extends Utility {	
 	protected int mLevel = 1;
 	public float mSpeedScaleX     = 1;
 	public float mSpeedScaleY     = 1;

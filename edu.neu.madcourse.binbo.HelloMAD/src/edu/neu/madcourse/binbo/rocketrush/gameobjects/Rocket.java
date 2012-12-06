@@ -151,6 +151,10 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 
 	@Override
 	public void operate(GameCtrl ctrl) {
+		if (mMovable == false) {
+			return;
+		}
+		
 		int command = ctrl.getCommand();
 		
 		if (command == GameCtrl.MOVE_LEFT) {

@@ -10,7 +10,7 @@ import edu.neu.madcourse.binbo.rocketrush.GameEngine;
 import edu.neu.madcourse.binbo.rocketrush.GameObject;
 import edu.neu.madcourse.binbo.rocketrush.GameObject.ZOrders;
 
-public class Timer extends GameObject {
+public class Timer extends Utility {
 
 	protected Paint mPaint = null;
 	protected int mTime = 40;
@@ -44,6 +44,9 @@ public class Timer extends GameObject {
 	
 	@Override
 	public void update() {
+		if (!mEnable) {
+			return;
+		}
 		if (mOneSecond == 0) {
 			mOneSecond = 1000;
 			mTime = Math.max(mTime - 1, 0);

@@ -137,6 +137,15 @@ public class RushMode extends GameMode {
 		        msg.what = StateEvent.STATE_OVER;
 		        msg.obj  = se.mDescription;
 		        mHandler.sendMessage(msg);
+		        // unregister some listeners
+		        mScene.closeInteraction();	        
+		        ((FragmentActivity) mContext).runOnUiThread(new Runnable() {
+				    public void run() {		
+				    	mBackgroundMusic.create(mContext, mMusicIDs[0]);
+				    	mBackgroundMusic.setLooping(false);
+				    	mBackgroundMusic.play();
+				    }
+				});
 			}
 		} else if (evt.mEventType == GameEvent.EVENT_SCENE) {
 			final SceneEvent sce = (SceneEvent) evt;
