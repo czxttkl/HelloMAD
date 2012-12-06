@@ -35,14 +35,7 @@ public class RushMode extends GameMode {
 		mContext = context;
 		mScene = new RushScene(context);
 		mScene.load();
-		mScene.setGameEventHandler(this);
-		
-		mSoundPool = new SoundPool(10, AudioManager.STREAM_SYSTEM, 5);   
-		for (int resID : mSoundResIDs) {
-			int soundID = mSoundPool.load(context, resID, 1);
-			mSoundIDs.add(Integer.valueOf(soundID));
-		}
-
+		mScene.setGameEventHandler(this);				
 	}
 	
 	@Override
@@ -71,12 +64,23 @@ public class RushMode extends GameMode {
 	@Override
 	public void start() {
 		mBackgroundMusic.create(mContext, mMusicIDs[mMusicIndex]);
+		if (mSoundPool == null) {
+			mSoundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);   
+			for (int resID : mSoundResIDs) {
+				int soundID = mSoundPool.load(mContext, resID, 1);
+				mSoundIDs.add(Integer.valueOf(soundID));
+			}
+		}
 		super.start();
 	}
 
 	@Override
 	public void stop() {
 		mBackgroundMusic.stop();
+		if (mSoundPool != null) {
+			mSoundPool.release();
+			mSoundPool = null;
+		}
 		super.stop();
 	}
 	
@@ -140,7 +144,7 @@ public class RushMode extends GameMode {
 				// not good to do the cast here, modify later
 				((FragmentActivity) mContext).runOnUiThread(new Runnable() {
 				    public void run() {				    	
-				    	mMusicIndex = mMusicIndex > 3 ? 0 : mMusicIndex + 1;
+				    	mMusicIndex = mMusicIndex > 3 ? 1 : mMusicIndex + 1;
 				    	mBackgroundMusic.create(mContext, mMusicIDs[mMusicIndex]);
 				    	mBackgroundMusic.play();
 				    }
@@ -166,7 +170,7 @@ public class RushMode extends GameMode {
 				    		soundID = mSoundIDs.get(4);
 				    		break;
 				    	}
-				    	int ret = mSoundPool.play(soundID, 0.3f, 0.3f, 2, 0, 1);
+				    	int ret = mSoundPool.play(soundID, 0.3f, 0.3f, 10, 0, 1);
 				    	if (ret == 0) {
 				    		ret = 1;
 				    	}

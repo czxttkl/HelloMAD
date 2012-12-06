@@ -182,6 +182,9 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 			if (intersects) {				
 				if (obj.getKind() == PROTECTION) {
 					((Reward) obj).bindRocket(this);
+				} else {
+					// rocket may vibrate for a little bit of time
+					mVibrateDuration = MIN_VIBRATE_DURATION;
 				}
 				mCollideWith.add(obj);				
 			}
@@ -194,9 +197,7 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 			for (GameObject obj : mCollideWith) {
 				obj.setCollidable(false);
 			}
-			mCollideWith.clear();
-			// rocket may vibrate for a little bit of time
-			mVibrateDuration = MIN_VIBRATE_DURATION;
+			mCollideWith.clear();			
 		}
 	}
 }

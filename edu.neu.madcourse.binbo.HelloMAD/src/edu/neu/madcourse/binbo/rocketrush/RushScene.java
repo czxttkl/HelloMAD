@@ -28,7 +28,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 	private Timer 	 mTimer    = null;
 	private int mCurLevel = 1;
 	private int mCurLoop  = 1;
-	private Random mRandom = new Random();
+	private Random mRandom   = new Random();
 	private Context mContext = null;
 	
 	public RushScene(Context context) {
