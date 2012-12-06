@@ -34,10 +34,7 @@ public class SplashActivity extends Activity {
         mFirst = getPreferences(MODE_PRIVATE).getBoolean("first", true);
         
         setupView();    
-        createIntent();        
-        // thread for displaying the SplashScreen
-        mThread = new SplashThread(mHandler);
-        mThread.start();
+        createIntent();                
 	}
 	
 	private void setupView() {
@@ -50,7 +47,10 @@ public class SplashActivity extends Activity {
 	}
 
 	@Override
-	protected void onResume() {		
+	protected void onResume() {	
+		// thread for displaying the SplashScreen
+        mThread = new SplashThread(mHandler);
+        mThread.start();
 		super.onResume();
 	}
 
