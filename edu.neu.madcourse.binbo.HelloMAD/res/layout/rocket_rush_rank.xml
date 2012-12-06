@@ -2,44 +2,51 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rocketrankRoot" 
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    android:background="#3399FF"  
-    android:gravity="center"
+    android:background="#bce0ff"  
+    android:gravity="center|top"
+    android:paddingTop="30dp"
     android:orientation="vertical" >
 	
 	<TableLayout  
-        android:layout_width="wrap_content"  
-        android:layout_height="wrap_content"  
-        android:background="#00000000"  
-        android:paddingLeft="32dip"
-	    android:paddingRight="32dip"
-        android:stretchColumns="*" >  
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#00000000"
+        android:paddingLeft="24dip"
+	    android:paddingRight="24dip"
+        android:stretchColumns="*" >
   
         <TableRow  
-            android:layout_margin="1dip"  
-            android:gravity="center"
-            android:background="#50999999" >  
+            android:background="#333" >
+            
             <TextView  
-                android:background="#50999999"  
-                android:gravity="center"                  
-                android:text="Rank"    
-                android:layout_gravity="center"                             	
-                android:textSize="18sp"  
+                android:text=""    
+                android:layout_gravity="center"
+                android:gravity="left"
+                android:textColor="#fff"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:textSize="20sp"
                 android:textStyle="bold" />  
 
-            <TextView              
-                android:background="#50999999"                  
+            <TextView                             
                 android:text="Score"   
-                android:layout_gravity="center"                 	
-                android:textSize="18sp"  
+                android:layout_gravity="center"
+                android:gravity="left"
+                android:textColor="#fff"
+                android:textSize="20sp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
                 android:textStyle="bold" />  
   
-            <TextView    
-                android:background="#50999999"                  
+            <TextView                    
                 android:text="Time"     
-                android:layout_gravity="center"  	
-                android:textSize="18sp"  
+                android:layout_gravity="center"
+                android:textColor="#fff"
+                android:textSize="20sp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
                 android:textStyle="bold" />  
         </TableRow>  
     </TableLayout>  
@@ -48,57 +55,32 @@
         android:id="@+id/rocketrankScrollView" 
         android:layout_width="fill_parent" 
         android:layout_height="wrap_content"
-        android:paddingLeft="32dip"
-	    android:paddingRight="32dip" >
+        android:background="#fff"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="24dip"
+	    android:layout_marginRight="24dip"
+	    android:padding="10dp" >
         
     <TableLayout  
         android:id="@+id/tableLayoutRocketRank"  
-        android:layout_width="wrap_content"  
+        android:layout_width="fill_parent"  
         android:layout_height="wrap_content"        
-        android:background="#00000000"  
+        android:background="#fff"  
         android:stretchColumns="*" >  
-  
-        <TableRow  
-            android:id="@+id/rankTableRow"
-            android:layout_margin="0.5dip"  
-            android:background="#50999999" >  
-  
-            <TextView  
-                android:layout_margin="2dip"  
-                android:background="#50999999"
-                android:layout_weight="1"  
-                android:gravity="center" 
-                android:text=""  
-                android:textSize="16sp"  
-                android:textStyle="bold" />  
-  
-            <TextView  
-                android:layout_margin="2dip"  
-                android:background="#50999999"  
-                android:layout_weight="2"
-                android:gravity="center" 
-                android:text=""  
-                android:textSize="16sp"  
-                android:textStyle="bold" />  
-  
-            <TextView  
-                android:layout_margin="2dip"  
-                android:background="#50999999"  
-                android:layout_weight="2"
-                android:gravity="center" 
-                android:text=""  
-                android:textSize="16sp"  
-                android:textStyle="bold" />  
-        </TableRow>  
+
     </TableLayout> 
     
     </ScrollView> 	
     
 	<Button
 		android:id="@+id/rocketRankButtonBack"
-		android:layout_width="100dip"
-		android:layout_height="36dip"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:textSize="24px"
+		android:textStyle="bold"
 		android:text="Back"
-		android:layout_marginTop="16dip" />
+		android:layout_marginTop="16dip"
+		android:layout_marginLeft="24dip"
+	    android:layout_marginRight="24dip" />
 
 </LinearLayout>

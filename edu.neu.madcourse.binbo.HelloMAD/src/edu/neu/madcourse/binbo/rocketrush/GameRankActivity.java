@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -59,7 +60,7 @@ public class GameRankActivity extends FragmentActivity implements OnClickListene
 		LayoutParams laParams = null;
 		ScrollView scrollView = (ScrollView)findViewById(R.id.rocketrankScrollView);
 		laParams = scrollView.getLayoutParams();
-		laParams.height = (int) (dm.heightPixels * 0.6f);
+		laParams.height = (int) (dm.heightPixels * 0.7f);
 		scrollView.setLayoutParams(laParams);
 	}
 
@@ -75,11 +76,15 @@ public class GameRankActivity extends FragmentActivity implements OnClickListene
 	protected void onResume() {
 		for (int i = 0; i < 50; ++i) {    		
 	    	TableRow tablerow = new TableRow(getApplicationContext());  
-            tablerow.setBackgroundColor(Color.rgb(222, 220, 210));  
+            tablerow.setBackgroundColor(Color.rgb(255, 255, 255));
                               
-                TextView textViewRank = new TextView(getApplicationContext());  
-                textViewRank.setText(String.valueOf(i + 1));                
-                tablerow.addView(textViewRank);   
+                TextView textViewRank = new TextView(getApplicationContext());
+                textViewRank.setTextSize(18);
+                textViewRank.setTextColor(getApplicationContext().getResources().getColor(R.color.rr_grey));
+                textViewRank.setPadding(10, 10, 10, 10);
+                textViewRank.setWidth(30);
+                textViewRank.setText(String.valueOf(i + 1));           
+                tablerow.addView(textViewRank);
                 
 //                TextView textViewScore = new TextView(getApplicationContext());  
 //                textViewName.setText(player.getName());                

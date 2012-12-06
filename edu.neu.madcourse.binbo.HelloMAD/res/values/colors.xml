@@ -28,5 +28,6 @@
     <color name="rr_blue">#b5ddff</color>
     <color name="rr_red">#ff0000</color>
     <color name="rr_dark">#666</color>
+    <color name="rr_grey">#333</color>
     
 </resources>
