@@ -1,7 +1,6 @@
 package edu.neu.madcourse.binbo.boggle;
 
 import edu.neu.madcourse.binbo.R;
-import edu.neu.madcourse.binbo.R.xml;
 import android.content.Context;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;

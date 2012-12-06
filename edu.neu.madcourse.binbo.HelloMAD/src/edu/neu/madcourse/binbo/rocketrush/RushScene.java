@@ -315,20 +315,18 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 	
 	@Override
 	public void onCollide(GameObject obj, List<GameObject> collideWith) {
-		int kind = obj.getKind();
-		
-		if (kind == GameObject.ROCKET) {
-			Vibrator vibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
-			vibrator.vibrate(30);
-			mLifeBar.lifeChange(-0.334f);	
-		}
-		
+		int kind = obj.getKind();						
 		// trigger collide effects for all barriers
 		float centerX = obj.getX() + obj.getWidth() * 0.5f;
 		float centerY = obj.getY() + obj.getHeight() * 0.5f;
 		for (GameObject object : collideWith) {			
-			try {
+			try {				
 				Barrier b = (Barrier) object;				
+				if (kind == GameObject.ROCKET) {
+					Vibrator vibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
+					vibrator.vibrate(30);
+					mLifeBar.lifeChange(-0.334f);	
+				}
 				b.triggerCollideEffect(kind, centerX, centerY);
 			} catch (ClassCastException e) {
 				; // do nothing, just continue
