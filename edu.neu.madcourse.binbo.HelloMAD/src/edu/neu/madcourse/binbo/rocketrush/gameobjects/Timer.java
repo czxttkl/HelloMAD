@@ -6,13 +6,16 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.Paint.Style;
+import edu.neu.madcourse.binbo.rocketrush.GameEngine;
 import edu.neu.madcourse.binbo.rocketrush.GameObject;
 import edu.neu.madcourse.binbo.rocketrush.GameObject.ZOrders;
 
 public class Timer extends GameObject {
 
 	protected Paint mPaint = null;
-	protected int mTime = 30;
+	protected int mTime = 40;
+	protected int mOneSecond = 1000;
+	protected String mTextTime = "Time: " + mTime;
 	protected int mCanvasWidth  = 0;
 	protected int mCanvasHeight = 0;
 	protected OnTimeUpdateListener mTimeUpdateListener = null;
@@ -41,15 +44,19 @@ public class Timer extends GameObject {
 	
 	@Override
 	public void update() {
+		if (mOneSecond == 0) {
+			mOneSecond = 1000;
+			mTime = Math.max(mTime - 1, 0);
+			mTextTime = "Time: " + (mTime < 10 ? " " : "") + mTime;
+		}
+		mOneSecond -= GameEngine.ENGINE_SPEED;
 		// TODO Auto-generated method stub
 		super.update();
 	}		
 
 	@Override
-	public void doDraw(Canvas c) {
-		String textTime = "Time: " + mTime;
-		float textLength = mPaint.measureText(textTime);
-		c.drawText(textTime, mCanvasWidth - textLength - 24, 40, mPaint);
+	public void doDraw(Canvas c) {		
+		c.drawText(mTextTime, mCanvasWidth - mPaint.measureText(mTextTime) - 24, 40, mPaint);
 	}
 
 	@Override

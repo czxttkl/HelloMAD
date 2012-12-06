@@ -119,7 +119,7 @@ public class GameEngine {
                 } else if (mLastX >= 2 && x > -2 && x < 2) {
                 	mEventQueue.clear();
                 } else if (Math.abs(x) >= 2 || Math.abs(y) >= 13) {
-                	if (mEventQueue.size() > 2)
+                	if (mEventQueue.size() > 4)
                 		return;
                 	ControlEvent e = new ControlEvent((int)x, (int)y, (int)z);
                 	mEventQueue.add(e);
