@@ -399,13 +399,15 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 
 	public void onLifeChanged(float life) {
 		if (life == 0) { // compare a float, not good, modify later if neccessary
-			GameEvent e = new StateEvent(StateEvent.STATE_OVER, "life is 0, game over");
+			GameEvent e = new StateEvent(StateEvent.STATE_OVER, StateEvent.NO_LIFE);
 			mEventHandler.handleGameEvent(e);
 		}
 	}
 
 	public void onTimeUpdate(int curTime) {
-		// TODO Auto-generated method stub
-		
+		if (curTime == 0) {
+			GameEvent e = new StateEvent(StateEvent.STATE_OVER, StateEvent.NO_TIME);
+			mEventHandler.handleGameEvent(e);
+		}
 	}
 }

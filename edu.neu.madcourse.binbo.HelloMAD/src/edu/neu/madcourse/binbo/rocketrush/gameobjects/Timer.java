@@ -48,6 +48,9 @@ public class Timer extends GameObject {
 			mOneSecond = 1000;
 			mTime = Math.max(mTime - 1, 0);
 			mTextTime = "Time: " + (mTime < 10 ? " " : "") + mTime;
+			if (mTimeUpdateListener != null) {
+				mTimeUpdateListener.onTimeUpdate(mTime);
+			}
 		}
 		mOneSecond -= GameEngine.ENGINE_SPEED;
 		// TODO Auto-generated method stub
