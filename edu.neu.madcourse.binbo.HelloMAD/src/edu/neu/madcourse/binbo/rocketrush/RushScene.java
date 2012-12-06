@@ -9,6 +9,7 @@ import edu.neu.madcourse.binbo.rocketrush.gameobjects.LifeBar.OnLifeChangedListe
 import edu.neu.madcourse.binbo.rocketrush.gameobjects.Odometer.OnOdometerUpdateListener;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.os.Message;
 import android.os.Vibrator;
 
 
@@ -325,12 +326,17 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 		// trigger collide effects for all barriers
 		float centerX = obj.getX() + obj.getWidth() * 0.5f;
 		float centerY = obj.getY() + obj.getHeight() * 0.5f;
-		for (GameObject object : collideWith) {
+		for (GameObject object : collideWith) {			
 			try {
-				Barrier b = (Barrier) object;
+				Barrier b = (Barrier) object;				
 				b.triggerCollideEffect(kind, centerX, centerY);
 			} catch (ClassCastException e) {
 				; // do nothing, just continue
+			} finally {
+				Message msg = new Message();
+				msg.what = object.getKind();
+				GameEvent e = new SceneEvent(SceneEvent.SCENE_COLLIDE, msg);
+				mEventHandler.handleGameEvent(e);
 			}
 		}
 		orderByZ(mObjects);
@@ -370,9 +376,14 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 		} else if (mCurLevel == 3 || mCurLevel == 5) {
 			mBackgroundFar.switchToNext();
 			mBackgroundNear.switchToNext();
-			GameEvent e = new StateEvent(StateEvent.STATE_LEVELUP, "go to next level, music should be changed");
+			Message msg = new Message();
+			msg.what = mCurLevel;
+			GameEvent e = new SceneEvent(SceneEvent.SCENE_LEVELUP, msg);
 			mEventHandler.handleGameEvent(e);
 		}
+		
+		Runtime.getRuntime().gc();
+		System.gc();
 	}
 
 	public void onLifeChanged(float life) {

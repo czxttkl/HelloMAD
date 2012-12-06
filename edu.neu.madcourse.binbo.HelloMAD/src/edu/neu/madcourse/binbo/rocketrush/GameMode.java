@@ -2,6 +2,7 @@ package edu.neu.madcourse.binbo.rocketrush;
 
 import edu.neu.madcourse.binbo.rocketrush.GameEvent.IGameEventHandler;
 import android.hardware.SensorEventListener;
+import android.media.SoundPool;
 import android.os.Handler;
 
 
@@ -11,7 +12,7 @@ public class GameMode implements IGameEventHandler {
 	// message handler
 	protected Handler mHandler = null;	
 	// music of the game
-	protected BackgroundMusic mBackgroundMusic = new BackgroundMusic();
+	protected BackgroundMusic mBackgroundMusic = new BackgroundMusic();	
 
 	protected GameMode(GameEngine engine) {
 		assert(engine != null);
