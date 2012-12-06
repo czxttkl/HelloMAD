@@ -140,7 +140,8 @@ public class RushMode extends GameMode {
 				// not good to do the cast here, modify later
 				((FragmentActivity) mContext).runOnUiThread(new Runnable() {
 				    public void run() {				    	
-				    	mBackgroundMusic.create(mContext, mMusicIDs[++mMusicIndex]);
+				    	mMusicIndex = mMusicIndex > 3 ? 0 : mMusicIndex + 1;
+				    	mBackgroundMusic.create(mContext, mMusicIDs[mMusicIndex]);
 				    	mBackgroundMusic.play();
 				    }
 				});
