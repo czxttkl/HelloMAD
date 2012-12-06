@@ -1,4 +1,4 @@
-package edu.neu.madcourse.binbo.rocketrush;
+package edu.neu.madcourse.binbo.rocketrush.dialog;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

@@ -47,9 +47,9 @@ public class RushMode extends GameMode {
 	public void resume() {
 		if (mThread == null) {
 			mThread = new RushModeThread(mHandler);
-			mThread.start();
-			mBackgroundMusic.play();
+			mThread.start();			
 		}
+		mBackgroundMusic.play();
 		super.resume();
 	}
 

@@ -29,8 +29,10 @@ public class VersusMode extends GameMode {
 	
 	@Override
 	public void resume() {
-		mThread = new VersusModeThread(mHandler);
-		mThread.start();
+		if (mThread == null) {
+			mThread = new VersusModeThread(mHandler);
+			mThread.start();
+		}
 		mBackgroundMusic.play();
 		super.resume();
 	}

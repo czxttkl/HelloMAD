@@ -1,6 +1,8 @@
-package edu.neu.madcourse.binbo.rocketrush;
+package edu.neu.madcourse.binbo.rocketrush.dialog;
 
 import edu.neu.madcourse.binbo.R;
+import edu.neu.madcourse.binbo.rocketrush.GameMode;
+import edu.neu.madcourse.binbo.rocketrush.RocketRushActivity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
