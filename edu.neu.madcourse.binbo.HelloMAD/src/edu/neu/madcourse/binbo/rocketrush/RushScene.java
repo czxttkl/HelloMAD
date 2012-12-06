@@ -7,6 +7,7 @@ import java.util.Random;
 import edu.neu.madcourse.binbo.rocketrush.gameobjects.*;
 import edu.neu.madcourse.binbo.rocketrush.gameobjects.LifeBar.OnLifeChangedListener;
 import edu.neu.madcourse.binbo.rocketrush.gameobjects.Odometer.OnOdometerUpdateListener;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.Timer.OnTimeUpdateListener;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.os.Message;
@@ -14,15 +15,17 @@ import android.os.Vibrator;
 
 
 public class RushScene extends GameScene implements OnOdometerUpdateListener, 
-										 			OnLifeChangedListener {	
+										 			OnLifeChangedListener,
+										 			OnTimeUpdateListener {	
 
 	private Rocket   mRocket   = null;
 	private LifeBar  mLifeBar  = null;
 	private SpeedBar mSpeedBar = null;
 	private BackgroundFar  mBackgroundFar  = null;
 	private BackgroundNear mBackgroundNear = null;
-	private Level mLevel = null;	
+	private Level 	 mLevel    = null;	
 	private Odometer mOdometer = null;
+	private Timer 	 mTimer    = null;
 	private int mCurLevel = 1;
 	private int mCurLoop  = 1;
 	private Random mRandom = new Random();
@@ -74,6 +77,11 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 			mLifeBar.setOnLifeChangedListener(this);
 			mObjects.add(mLifeBar);
 		}
+		if (mTimer == null) {
+			mTimer = new Timer(mRes);
+			mTimer.setOnTimeUpdateListener(this);
+			mObjects.add(mTimer);
+		}
 		if (mWidth > 0 || mHeight > 0) {
 			for (GameObject obj : mObjects) {
 				obj.onSizeChanged(mWidth, mHeight);
@@ -94,6 +102,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 		mLevel    = null;
 		mOdometer = null;
 		mLifeBar  = null;
+		mTimer    = null;
 	}
 	
 	@Override
@@ -319,7 +328,11 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 		// trigger collide effects for all barriers
 		float centerX = obj.getX() + obj.getWidth() * 0.5f;
 		float centerY = obj.getY() + obj.getHeight() * 0.5f;
-		for (GameObject object : collideWith) {			
+		for (GameObject object : collideWith) {		
+			if (kind == GameObject.PROTECTION && kind == object.getKind()) {
+				continue;
+			}
+			
 			try {				
 				Barrier b = (Barrier) object;				
 				if (kind == GameObject.ROCKET) {
@@ -330,7 +343,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 				b.triggerCollideEffect(kind, centerX, centerY);
 			} catch (ClassCastException e) {
 				; // do nothing, just continue
-			} finally {
+			} finally {				
 				Message msg = new Message();
 				msg.what = object.getKind();
 				GameEvent e = new SceneEvent(SceneEvent.SCENE_COLLIDE, msg);
@@ -389,5 +402,10 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 			GameEvent e = new StateEvent(StateEvent.STATE_OVER, "life is 0, game over");
 			mEventHandler.handleGameEvent(e);
 		}
+	}
+
+	public void onTimeUpdate(int curTime) {
+		// TODO Auto-generated method stub
+		
 	}
 }
