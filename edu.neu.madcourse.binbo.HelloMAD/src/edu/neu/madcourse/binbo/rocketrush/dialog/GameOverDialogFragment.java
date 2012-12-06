@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.KeyEvent;
@@ -14,12 +15,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 public class GameOverDialogFragment extends DialogFragment implements OnClickListener {
 	protected RocketRushActivity mActivity = null;
 	protected GameMode mGameMode = null;
 	protected ImageButton mRestartButton = null;
 	protected ImageButton mExitButton    = null;	
+	protected TextView mDistanceTextView = null;
 	protected int mDistance = 0;
 
 	@Override
@@ -35,10 +38,14 @@ public class GameOverDialogFragment extends DialogFragment implements OnClickLis
 		final View layout = inflater.inflate(R.layout.rocket_rush_gameover, null);		
 	    builder.setView(layout);
 	    // setup subviews
+	    mDistanceTextView = (TextView) layout.findViewById(R.id.gameover_distanceText);
 	    mRestartButton = (ImageButton) layout.findViewById(R.id.gameover_restartButton);
-		mExitButton    = (ImageButton) layout.findViewById(R.id.gameover_exitButton);
+		mExitButton    = (ImageButton) layout.findViewById(R.id.gameover_exitButton);		
 		mRestartButton.setOnClickListener(this);
 		mExitButton.setOnClickListener(this);
+		
+		mDistanceTextView.setText(String.valueOf(mDistance));
+		mDistanceTextView.setTextColor(Color.RED);
 	    
 	    return builder.create();
 	}
@@ -68,6 +75,6 @@ public class GameOverDialogFragment extends DialogFragment implements OnClickLis
 	}
 
 	public void setDistance(int distance) {
-		mDistance = distance;
+		mDistance = distance;	
 	}
 }
