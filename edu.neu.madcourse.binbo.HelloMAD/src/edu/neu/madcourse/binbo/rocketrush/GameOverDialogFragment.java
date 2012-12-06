@@ -44,7 +44,7 @@ public class GameOverDialogFragment extends DialogFragment implements OnClickLis
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.gameover_restartButton:
-			mGameMode.reset();
+			mGameMode.restart();
 			break;
 		case R.id.gameover_exitButton:
 			mActivity.switchGameMode(0);

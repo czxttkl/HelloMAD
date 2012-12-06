@@ -22,7 +22,7 @@ public class RushModeDialogFragment extends DialogFragment {
 		    	// of the selected item
 		    	switch (which) {
 		    	case 0: // restart
-		    		mGameMode.reset();
+		    		mGameMode.restart();
 		    		break;
 		    	case 1: // setting
 		    		
@@ -44,9 +44,7 @@ public class RushModeDialogFragment extends DialogFragment {
 
 	@Override
 	public void onStop() {
-		if (mGameMode == mActivity.getCurrentGameMode()) {
-			mGameMode.resume();
-		}
+		mGameMode.resume();
 		super.onStop();
 	}
 }

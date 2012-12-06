@@ -45,9 +45,11 @@ public class RushMode extends GameMode {
 	
 	@Override
 	public void resume() {
-		mThread = new RushModeThread(mHandler);
-		mThread.start();
-		mBackgroundMusic.play();
+		if (mThread == null) {
+			mThread = new RushModeThread(mHandler);
+			mThread.start();
+			mBackgroundMusic.play();
+		}
 		super.resume();
 	}
 
@@ -91,7 +93,7 @@ public class RushMode extends GameMode {
 		}
 		mMusicIndex = 1;
 		mBackgroundMusic.create(mContext, mMusicIDs[mMusicIndex]);
-	}
+	}		
 
 	private final class RushModeThread extends BaseThread {
 		

@@ -34,6 +34,12 @@ public class GameMode implements IGameEventHandler {
 	
 	public void reset() {}
 	
+	public void restart() {
+		pause();
+		reset();
+		resume();
+	}
+	
 	public void release() {}
 	
 	public GameScene getScene() {
