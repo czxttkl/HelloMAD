@@ -89,7 +89,8 @@ public class RushMode extends GameMode {
 		synchronized (mScene) {
 			mScene.reset();
 		}
-		mBackgroundMusic.reset();
+		mMusicIndex = 1;
+		mBackgroundMusic.create(mContext, mMusicIDs[mMusicIndex]);
 	}
 
 	private final class RushModeThread extends BaseThread {
@@ -135,10 +136,10 @@ public class RushMode extends GameMode {
 			if (se.mWhat == StateEvent.STATE_OVER) {
 				Message msg = mHandler.obtainMessage();     	
 		        msg.what = StateEvent.STATE_OVER;
-		        msg.obj  = se.mDescription;
+		        msg.obj  = se.mExtra;
 		        mHandler.sendMessage(msg);
 		        // unregister some listeners
-		        mScene.closeInteraction();	        
+		        mScene.closeInteraction();
 		        ((FragmentActivity) mContext).runOnUiThread(new Runnable() {
 				    public void run() {		
 				    	mBackgroundMusic.create(mContext, mMusicIDs[0]);
@@ -164,7 +165,7 @@ public class RushMode extends GameMode {
 				    	int soundID = 0;
 				    	switch (sce.mMsg.what) {
 				    	case GameObject.PROTECTION:
-				    		soundID = mSoundIDs.get(0);
+				    		soundID = mSoundIDs.get(1);
 				    		break;
 				    	case GameObject.ALIENT:
 				    		soundID = mSoundIDs.get(2);
@@ -188,8 +189,5 @@ public class RushMode extends GameMode {
 			}
 		}
 	}
-//	protected int mSoundResIDs[] = {
-//			R.raw.get_reward_1, R.raw.get_reward_2, R.raw.hit_alient, R.raw.hit_bird,
-//			R.raw.hit_stone_thunder
-//		};
+
 }

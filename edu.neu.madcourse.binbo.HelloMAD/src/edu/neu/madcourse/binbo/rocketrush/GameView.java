@@ -23,7 +23,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 	
 	public void onPause() {
 		mDrawer.end();
-		mDrawer = null;
 	}
 	
 	public void onResume(GameScene scene) {

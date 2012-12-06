@@ -8,6 +8,7 @@ public class GameEvent {
 	public int  mEventType;
 	public int  mWhat = 0;
 	public long mEventTime;	
+	public Object mExtra = null;
 	
     public GameEvent(int eventType) {   
     	setEventType(eventType);

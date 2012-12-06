@@ -41,6 +41,10 @@ public class Odometer extends Utility {
 		mPaint.setTextSize(28);
 	}
 	
+	public int getDistance() {
+		return mOdometer / 10;
+	}
+	
 	public void setOdometerUpdateListener(OnOdometerUpdateListener listener) {
 		mOdometerUpdateListener = listener;
 	}
