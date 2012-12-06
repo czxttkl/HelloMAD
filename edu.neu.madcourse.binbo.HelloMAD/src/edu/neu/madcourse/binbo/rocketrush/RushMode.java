@@ -1,8 +1,13 @@
 package edu.neu.madcourse.binbo.rocketrush;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.neu.madcourse.binbo.R;
 import android.content.Context;
 import android.hardware.SensorEventListener;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentActivity;
@@ -16,6 +21,13 @@ public class RushMode extends GameMode {
 		R.raw.game_over, R.raw.bkg_music_2, R.raw.bkg_music_3, R.raw.bkg_music_4
 	};
 	protected int mMusicIndex = 1;
+	// audio feedback
+	protected SoundPool mSoundPool = null;
+	protected int mSoundResIDs[] = {
+		R.raw.get_reward_1, R.raw.get_reward_2, R.raw.hit_alient, R.raw.hit_bird,
+		R.raw.hit_stone_thunder
+	};
+	protected List<Integer> mSoundIDs = new ArrayList<Integer>();
 	
 	public RushMode(Context context, GameEngine engine, Handler handler) {
 		super(engine);
@@ -24,6 +36,13 @@ public class RushMode extends GameMode {
 		mScene = new RushScene(context);
 		mScene.load();
 		mScene.setGameEventHandler(this);
+		
+		mSoundPool = new SoundPool(10, AudioManager.STREAM_SYSTEM, 5);   
+		for (int resID : mSoundResIDs) {
+			int soundID = mSoundPool.load(context, resID, 1);
+			mSoundIDs.add(Integer.valueOf(soundID));
+		}
+
 	}
 	
 	@Override
@@ -114,13 +133,10 @@ public class RushMode extends GameMode {
 		        msg.what = StateEvent.STATE_OVER;
 		        msg.obj  = se.mDescription;
 		        mHandler.sendMessage(msg);
-		        ((FragmentActivity) mContext).runOnUiThread(new Runnable() {
-				    public void run() {				    	
-				    	mBackgroundMusic.create(mContext, mMusicIDs[++mMusicIndex]);
-				    	mBackgroundMusic.play();
-				    }
-				});
-			} else if (se.mWhat == StateEvent.STATE_LEVELUP) {
+			}
+		} else if (evt.mEventType == GameEvent.EVENT_SCENE) {
+			final SceneEvent sce = (SceneEvent) evt;
+			if (sce.mWhat == SceneEvent.SCENE_LEVELUP) {
 				// not good to do the cast here, modify later
 				((FragmentActivity) mContext).runOnUiThread(new Runnable() {
 				    public void run() {				    	
@@ -128,9 +144,38 @@ public class RushMode extends GameMode {
 				    	mBackgroundMusic.play();
 				    }
 				});
-				
+			} else if (sce.mWhat == SceneEvent.SCENE_COLLIDE) {
+				((FragmentActivity) mContext).runOnUiThread(new Runnable() {
+				    public void run() {
+				    	int soundID = 0;
+				    	switch (sce.mMsg.what) {
+				    	case GameObject.PROTECTION:
+				    		soundID = mSoundIDs.get(0);
+				    		break;
+				    	case GameObject.ALIENT:
+				    		soundID = mSoundIDs.get(2);
+				    		break;
+				    	case GameObject.BIRD:
+				    		soundID = mSoundIDs.get(3);
+				    		break;
+				    	case GameObject.ASTEROID:
+				    		soundID = mSoundIDs.get(4);
+				    		break;
+				    	case GameObject.THUNDER:
+				    		soundID = mSoundIDs.get(4);
+				    		break;
+				    	}
+				    	int ret = mSoundPool.play(soundID, 0.3f, 0.3f, 2, 0, 1);
+				    	if (ret == 0) {
+				    		ret = 1;
+				    	}
+				    }
+				});
 			}
 		}
 	}
-	
+//	protected int mSoundResIDs[] = {
+//			R.raw.get_reward_1, R.raw.get_reward_2, R.raw.hit_alient, R.raw.hit_bird,
+//			R.raw.hit_stone_thunder
+//		};
 }

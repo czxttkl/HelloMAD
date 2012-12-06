@@ -190,7 +190,7 @@ public class PBResult extends Activity implements OnClickListener {
 	              
 	            mTable.addView(tablerow, new TableLayout.LayoutParams(  
 	                    LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-	    	}            
+	    	}         
 	    }       
 	    
 	    private void onUpdateDataError() {   

@@ -3,6 +3,7 @@ package edu.neu.madcourse.binbo.rocketrush;
 public class GameEvent {
 	public static final int EVENT_STATE   = 0;
 	public static final int EVENT_CONTROL = 1;
+	public static final int EVENT_SCENE   = 2;
 	public static final int SENSOR_ACCELEROMETER = 1;
 	public int  mEventType;
 	public int  mWhat = 0;

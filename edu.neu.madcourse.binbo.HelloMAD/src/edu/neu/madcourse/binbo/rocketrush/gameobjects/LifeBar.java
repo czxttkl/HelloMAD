@@ -1,6 +1,5 @@
 package edu.neu.madcourse.binbo.rocketrush.gameobjects;
 
-import java.util.List;
 
 import android.content.res.Resources;
 import android.graphics.Canvas;

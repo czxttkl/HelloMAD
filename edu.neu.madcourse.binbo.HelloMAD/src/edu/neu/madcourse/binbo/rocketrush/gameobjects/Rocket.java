@@ -182,14 +182,8 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 			if (intersects) {				
 				if (obj.getKind() == PROTECTION) {
 					((Reward) obj).bindRocket(this);
-				} else {
-					for (Reward reward : mRewards) {
-						if (reward.getKind() == PROTECTION) { 
-							return; // the rocket is being protected
-						}
-					}
-					mCollideWith.add(obj);
 				}
+				mCollideWith.add(obj);				
 			}
 		}				
 		

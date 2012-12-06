@@ -181,6 +181,9 @@ public class RocketRushActivity extends FragmentActivity
 		case R.id.settingsButton:
 			startActivity(new Intent(this, Prefs.class));
 			break;
+		case R.id.rankButton:
+			startActivity(new Intent(this, GameRankActivity.class));
+			break;
 		case R.id.helpButton:
 			Intent i = new Intent(this, TutorialActivity.class);
 			i.putExtra("edu.neu.madcourse.binbo.rocketrush.Main", "RocketRushActivity");

@@ -1,11 +1,7 @@
 package edu.neu.madcourse.binbo.rocketrush.tutorial;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import edu.neu.madcourse.binbo.R;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;

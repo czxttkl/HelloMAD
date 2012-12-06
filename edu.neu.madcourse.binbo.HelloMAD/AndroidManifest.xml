@@ -143,6 +143,13 @@
             android:theme="@android:style/Theme.NoTitleBar">
 		</activity>	
 		
+		<activity android:name=".rocketrush.GameRankActivity"
+			android:screenOrientation="portrait"
+		    android:launchMode="singleTop"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.NoTitleBar">
+		</activity>
+		
 		<activity android:name=".rocketrush.Prefs"
 			android:screenOrientation="portrait"
 		    android:launchMode="singleTop"
