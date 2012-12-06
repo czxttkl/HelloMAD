@@ -210,7 +210,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 	private int mProbBird    = 100;
 	private int	mProbAster   = 180;
 	private int mProbAlient  = 150;
-	private int mProbThunder = 300;
+	private int mProbThunder = 275;
 	
 	private void createBird(int probability) {		
 		// get the acceleration time 
@@ -444,6 +444,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 	public void onLifeChanged(float life) {
 		if (life == 0) { // compare a float, not good, modify later if neccessary
 			GameEvent e = new StateEvent(StateEvent.STATE_OVER, StateEvent.NO_LIFE);
+			e.mExtra = Integer.valueOf(mOdometer.getDistance());
 			mEventHandler.handleGameEvent(e);
 		}
 	}
@@ -451,6 +452,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 	public void onTimeUpdate(int curTime) {
 		if (curTime == 0) {
 			GameEvent e = new StateEvent(StateEvent.STATE_OVER, StateEvent.NO_TIME);
+			e.mExtra = Integer.valueOf(mOdometer.getDistance());
 			mEventHandler.handleGameEvent(e);
 		}
 	}

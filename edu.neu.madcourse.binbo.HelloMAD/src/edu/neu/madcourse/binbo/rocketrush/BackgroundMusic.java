@@ -36,9 +36,9 @@ public class BackgroundMusic {
 	public void play() {
 		if (mPlayer != null) {
 			if (!mPlayer.isPlaying()) {
-				mPlayer.start();
-			}
-			mPlayer.seekTo(mSeekPos);
+				mPlayer.seekTo(mSeekPos);
+				mPlayer.start();						
+			}			
 		}
 	}
 	

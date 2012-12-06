@@ -24,13 +24,17 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import edu.neu.madcourse.binbo.R;
+import edu.neu.madcourse.binbo.rocketrush.dialog.GameOverDialogFragment;
+import edu.neu.madcourse.binbo.rocketrush.dialog.RushModeDialogFragment;
+import edu.neu.madcourse.binbo.rocketrush.dialog.VersusModeDialogFragment;
+import edu.neu.madcourse.binbo.rocketrush.dialog.WaitingModeDialogFragment;
 import edu.neu.madcourse.binbo.rocketrush.speech.OpusManager;
 import edu.neu.madcourse.binbo.rocketrush.splash.SplashView;
 import edu.neu.madcourse.binbo.rocketrush.tutorial.TutorialActivity;
 
 public class RocketRushActivity extends FragmentActivity 
 								implements OnClickListener, OnTouchListener {	
-	
+	// views in the game menu
 	protected SplashView mSplashView = null;
 	protected GameView mGameView = null;
 	protected TextView mTimeView = null;
@@ -262,7 +266,7 @@ public class RocketRushActivity extends FragmentActivity
 		
 		mGameView.setHandler(mHandler);
 	}
-	
+
 	// use main looper as the default
 	private final Handler mHandler = new Handler() {	
 
@@ -270,7 +274,9 @@ public class RocketRushActivity extends FragmentActivity
 			// all game messages that should handle in UI thread
         	switch (msg.what) {  
         	case StateEvent.STATE_OVER:
-        		Toast.makeText(getApplicationContext(), "Game Over!", Toast.LENGTH_SHORT).show();
+        		GameOverDialogFragment dialog = new GameOverDialogFragment();
+        		dialog.setDistance(((Integer) msg.obj).intValue());
+				dialog.show(getSupportFragmentManager(), "GameOverDialogFragment");
         		break;
             default:
             	break;
