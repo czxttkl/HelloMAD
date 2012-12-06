@@ -92,7 +92,6 @@ public class RushMode extends GameMode {
 			mScene.reset();
 		}
 		mMusicIndex = 1;
-		mBackgroundMusic.create(mContext, mMusicIDs[mMusicIndex]);
 	}		
 
 	private final class RushModeThread extends BaseThread {
