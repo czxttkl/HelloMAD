@@ -21,6 +21,18 @@ public class BackgroundMusic {
 		mSeekPos = 0;
 	}
 	
+	public void setLooping(boolean looping) {
+		if (mPlayer != null) {
+			mPlayer.setLooping(looping);
+		}
+	}
+	
+	public void setVolume(float leftVolume, float rightVolume) {
+		if (mPlayer != null) {
+			mPlayer.setVolume(leftVolume, rightVolume);				
+		}
+	}
+	
 	public void play() {
 		if (mPlayer != null) {
 			if (!mPlayer.isPlaying()) {
