@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import edu.neu.madcourse.binbo.rocketrush.GameEngine;
 import edu.neu.madcourse.binbo.rocketrush.GameObject;
 
@@ -34,11 +35,13 @@ public class Level extends GameObject {
 		mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		mPaint.setColor(Color.WHITE);
 		mPaint.setStyle(Style.FILL);
+		mPaint.setTypeface(Typeface.SERIF);
 		mPaint.setFakeBoldText(true);
 		mPaint.setTextSize(40);
+		mPaint.setShadowLayer(4, 1, 1, Color.BLACK);
 		mPaint.setTextAlign(Paint.Align.CENTER);
 		
-		mPaintContainer.setARGB(60, 115, 115, 115);
+		mPaintContainer.setARGB(80, 0, 0, 0);
 		mPaintContainer.setStyle(Style.FILL);
 		mPaintContainer.setAntiAlias(true);
 	}
@@ -54,16 +57,16 @@ public class Level extends GameObject {
 		mSpeedScaleY *= 1.07;
 		mDisplayDuration = DEFAULT_MOVE_DURATION * 2 + DEFAULT_STAY_DURATION;
 
-		mTextWidth = (int)mPaint.measureText("Level " + String.valueOf(mLevel));
-		float centerX = (mWidth - mTextWidth) / 2;		
-		mSpeedX = (centerX + mTextWidth) / (DEFAULT_MOVE_DURATION / GameEngine.ENGINE_SPEED);
+		mTextWidth = mPaint.measureText("Level " + String.valueOf(mLevel));	
+		float centerX = (mWidth + mTextWidth) / 2;		
+		mSpeedX = centerX / (DEFAULT_MOVE_DURATION / GameEngine.ENGINE_SPEED);
 		
-		mX = -mTextWidth;
+		mX = -mTextWidth/2;
 	}
 	
 	@Override
 	public void update() {		
-		if (mDisplayDuration >= DEFAULT_STAY_DURATION + DEFAULT_MOVE_DURATION) {
+		if (mDisplayDuration > DEFAULT_STAY_DURATION + DEFAULT_MOVE_DURATION) {
 			mX += mSpeedX;
 			mDisplayDuration -= GameEngine.ENGINE_SPEED;
 		} else if (mDisplayDuration >= DEFAULT_MOVE_DURATION) {
@@ -85,11 +88,11 @@ public class Level extends GameObject {
 		mWidth  = width;
 		mHeight = height;
 			
-		mTextWidth = (int)mPaint.measureText("Level " + mLevel);
-		float centerX = (mWidth - mTextWidth) / 2;		
-		mSpeedX = (centerX + mTextWidth) / (DEFAULT_MOVE_DURATION / GameEngine.ENGINE_SPEED);
+		mTextWidth = mPaint.measureText("Level " + mLevel);
+		float centerX = (mWidth + mTextWidth) / 2;		
+		mSpeedX = centerX / (DEFAULT_MOVE_DURATION / GameEngine.ENGINE_SPEED);
 		
-		mX = -mTextWidth;
+		mX = -mTextWidth/2;
 		
 		mContainer.top = (int) (mHeight * 0.5f - 110);
 		mContainer.bottom = (int) (mHeight * 0.5f + 90);
