@@ -5,22 +5,27 @@ import java.util.List;
 
 import edu.neu.madcourse.binbo.R;
 import edu.neu.madcourse.binbo.rocketrush.GameObject;
+import edu.neu.madcourse.binbo.rocketrush.GameObject.ZOrders;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
-public class Field extends Reward {
+public class TimeBonus extends Reward {
 	protected final static int IMAGE_COUNT = 2; // the same size of the total number of bitmaps
 	protected final static int IMAGE_UNBOUND_START = 0; 
-	protected final static int IMAGE_BOUND_START   = 2;
+	protected final static int IMAGE_BOUND_START   = 0;
 	protected static boolean sImageLoaded = false;	
 	protected static List<Bitmap> sImages = new ArrayList<Bitmap>();
+	// time bonus value
+	protected int mBonus = 12;
 	// the difference of the top left point between this field and the rocket 
 	protected float mOffsetX = 0;
 	protected float mOffsetY = 0;	
 	// save for objects collided with this field
 	protected List<GameObject> mCollideWith = new ArrayList<GameObject>();
+	// OnGotTimeBonusListener
+	protected OnGotTimeBonusListener mListener = null;
 	
 	public static void loadImages(Resources res) {
 		if (sImageLoaded) {
@@ -28,39 +33,17 @@ public class Field extends Reward {
 		}
 		sImageLoaded = true;
 		
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.single_protector_1));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.single_protector_2));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.protection_bubble));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.single_time_bonus_1));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.single_time_bonus_2));
 	}
 	
-	public Field(Resources res) {
+	public TimeBonus(Resources res) {
 		super(res);
 		loadImages(res);
-		setKind(PROTECTION);
-		setZOrder(ZOrders.PROTECTION);
+		setKind(TIMEBONUS);
+		setZOrder(ZOrders.TIMEBONUS);
 		setWidth(sImages.get(IMAGE_UNBOUND_START).getWidth());
 		setHeight(sImages.get(IMAGE_UNBOUND_START).getHeight());	
-	}
-
-	protected int mFlashDuration = 250; // 1000 / GameEngine.ENGINE_SPEED * 5	
-	@Override
-	protected void updateBound() {
-		if (isTimeout()) {
-			// just make sure it's out of the screen, 
-			// then it can be released in the next loop
-			mX = -10000;
-			mY = -10000;
-			return;
-		}
-		
-		mX = mRocket.getX() - mOffsetX;
-		mY = mRocket.getY() - mOffsetY;
-		
-		if (System.currentTimeMillis() - mBegTime > mBoundTimeout - 5000) {
-			if (mFlashDuration-- % 5 == 0) {
-				mVisible = !mVisible;
-			}
-		}
 	}
 
 	private int mUpdateUnbound = 0;
@@ -89,14 +72,6 @@ public class Field extends Reward {
 		}	
 	}
 
-	protected int mBoundIndex = 0;	
-	@Override
-	protected void drawBound(Canvas c) {
-		if (mVisible) {
-			c.drawBitmap(sImages.get(IMAGE_BOUND_START), mX, mY - 11f, null);
-		}
-	}
-
 	protected int mUnboundIndex = 0;
 	@Override
 	protected void drawUnbound(Canvas c) {
@@ -105,14 +80,6 @@ public class Field extends Reward {
 			return; // not necessary to draw the invisible
 		}
 		c.drawBitmap(sImages.get(mUpdateUnbound <= 16 ? 0 : 1), mX, mY, null);	
-	}
-
-	@Override
-	protected void onBound() {
-		setWidth(sImages.get(IMAGE_BOUND_START).getWidth());
-		setHeight(sImages.get(IMAGE_BOUND_START).getHeight());	
-		mOffsetX = (mWidth - mRocket.getWidth()) * 0.5f;
-		mOffsetY = (mHeight - mRocket.getHeight()) * 0.5f;
 	}
 	
 	@Override
@@ -124,7 +91,7 @@ public class Field extends Reward {
 				continue;
 			}
 			int kind = obj.getKind();
-			if (!obj.getCollidable() || kind == ROCKET || kind == TIMEBONUS || kind == PROTECTION) {
+			if (!obj.getCollidable() || kind == ROCKET || kind == PROTECTION || kind == TIMEBONUS) {
 				continue;
 			}			
 
@@ -138,7 +105,7 @@ public class Field extends Reward {
 				mOnCollideListener.onCollide(this, mCollideWith);				
 			}
 			for (GameObject obj : mCollideWith) {
-				obj.setCollidable(false);			
+				obj.setCollidable(false);				
 			}
 			mCollideWith.clear();
 		}
@@ -155,5 +122,24 @@ public class Field extends Reward {
 			return true;
 		
 		return false;
+	}
+
+	@Override
+	protected void onBound() {
+		if (mListener != null) {
+			mListener.onGotTimeBonus(mBonus);
+		}
+		
+		// make it out of the screen, so it can be recycled
+		mX = 10000;
+		mY = 10000;
+	}
+	
+	public void setOnGotTimeBonusListener(OnGotTimeBonusListener listener) {
+		mListener = listener;
+	}
+	
+	public interface OnGotTimeBonusListener {
+		void onGotTimeBonus(int bonus);
 	}
 }

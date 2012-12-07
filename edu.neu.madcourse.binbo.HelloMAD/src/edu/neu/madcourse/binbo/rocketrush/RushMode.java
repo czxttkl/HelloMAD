@@ -151,11 +151,13 @@ public class RushMode extends GameMode {
 			}
 		} else if (evt.mEventType == GameEvent.EVENT_SCENE) {
 			final SceneEvent sce = (SceneEvent) evt;
-			if (sce.mWhat == SceneEvent.SCENE_LEVELUP) {
+			if (sce.mWhat == SceneEvent.SCENE_MILESTONE) {
+				int level = mScene.onLevelUp();				
 				// not good to do the cast here, modify later
+				if (level == 3 || level == 5)
 				((FragmentActivity) mContext).runOnUiThread(new Runnable() {
 				    public void run() {				    	
-				    	mMusicIndex = mMusicIndex > 3 ? 1 : mMusicIndex + 1;
+				    	mMusicIndex = (mMusicIndex >= 3 ? 1 : mMusicIndex + 1);
 				    	mBackgroundMusic.create(mContext, mMusicIDs[mMusicIndex]);
 				    	mBackgroundMusic.play();
 				    }

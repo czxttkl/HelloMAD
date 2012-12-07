@@ -67,6 +67,10 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 	}
 	
 	public void bindReward(Reward reward) {
+		if (reward.getKind() == TIMEBONUS) {
+			reward.setVisible(false);
+			return;
+		}
 		reward.setSpeed(mSpeedX, mSpeedY);
 		reward.setMinSpeed(mMinSpeedX, mMinSpeedY);
 		reward.setMaxSpeed(mMaxSpeedX, mMaxSpeedY);
@@ -184,7 +188,7 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 				(int)obj.getX(), (int)obj.getY(), 
 				(int)(obj.getX() + obj.getWidth()), (int)(obj.getY() + obj.getHeight()));
 			if (intersects) {				
-				if (obj.getKind() == PROTECTION) {
+				if (obj.getKind() == PROTECTION || obj.getKind() == TIMEBONUS) {
 					((Reward) obj).bindRocket(this);
 				} else {
 					// rocket may vibrate for a little bit of time

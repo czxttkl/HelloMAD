@@ -7,6 +7,7 @@ import java.util.Random;
 import edu.neu.madcourse.binbo.rocketrush.gameobjects.*;
 import edu.neu.madcourse.binbo.rocketrush.gameobjects.LifeBar.OnLifeChangedListener;
 import edu.neu.madcourse.binbo.rocketrush.gameobjects.Odometer.OnOdometerUpdateListener;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.TimeBonus.OnGotTimeBonusListener;
 import edu.neu.madcourse.binbo.rocketrush.gameobjects.Timer.OnTimeUpdateListener;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -16,7 +17,8 @@ import android.os.Vibrator;
 
 public class RushScene extends GameScene implements OnOdometerUpdateListener, 
 										 			OnLifeChangedListener,
-										 			OnTimeUpdateListener {	
+										 			OnTimeUpdateListener,
+										 			OnGotTimeBonusListener {	
 
 	private Rocket   mRocket   = null;
 	private LifeBar  mLifeBar  = null;
@@ -28,7 +30,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 	private Timer 	 mTimer    = null;
 	private int mCurLevel = 1;
 	private int mCurLoop  = 1;
-	private Random mRandom   = new Random();
+	private Random  mRandom  = new Random();
 	private Context mContext = null;
 	
 	public RushScene(Context context) {
@@ -352,6 +354,8 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 	
 	// probabilities for creating reward
 	protected int mProbReward = 1200;
+	// flag to indicate whether to generate the time bonus
+	protected boolean mGenerateTimeBonus = false;
 	
 	public void updateReward() {
 		if (mRandom.nextInt(mProbReward) == 0) {
@@ -363,45 +367,23 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 			mObjects.add(f);
 			// order by Z
 			orderByZ(mObjects);
-		}		
+		}
+		
+		if (mGenerateTimeBonus) {
+			TimeBonus tb = new TimeBonus(mRes);
+			tb.setX(mRandom.nextInt((int) (mWidth - tb.getWidth())));
+			tb.setY(-tb.getHeight());	
+			tb.onSizeChanged(mWidth, mHeight);
+			tb.setOnCollideListener(this);
+			tb.setOnGotTimeBonusListener(this);
+			mObjects.add(tb);
+			// order by Z
+			orderByZ(mObjects);
+			mGenerateTimeBonus = false;
+		}
 	}
 	
-	@Override
-	public void onCollide(GameObject obj, List<GameObject> collideWith) {
-		int kind = obj.getKind();						
-		// trigger collide effects for all barriers
-		float centerX = obj.getX() + obj.getWidth() * 0.5f;
-		float centerY = obj.getY() + obj.getHeight() * 0.5f;
-		for (GameObject object : collideWith) {		
-			if (kind == GameObject.PROTECTION && kind == object.getKind()) {
-				continue;
-			}
-			
-			try {				
-				Barrier b = (Barrier) object;				
-				if (kind == GameObject.ROCKET) {
-					Vibrator vibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
-					vibrator.vibrate(30);
-					mLifeBar.lifeChange(-0.334f);	
-				}
-				b.triggerCollideEffect(kind, centerX, centerY);
-			} catch (ClassCastException e) {
-				; // do nothing, just continue
-			} finally {				
-				Message msg = new Message();
-				msg.what = object.getKind();
-				GameEvent e = new SceneEvent(SceneEvent.SCENE_COLLIDE, msg);
-				mEventHandler.handleGameEvent(e);
-			}
-		}
-		orderByZ(mObjects);
-	}
-
-	public void onReachTarget(int odometer) {
-		mLifeBar.lifeChange(0.01f);
-	}
-
-	public void onReachMilestone(int odometer) {
+	public int onLevelUp() {
 		// level up and update barrier probabilities
 		mLevel.levelUp();		
 		mCurLevel = mLevel.getValue() % 7;
@@ -431,14 +413,50 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 		} else if (mCurLevel == 3 || mCurLevel == 5) {
 			mBackgroundFar.switchToNext();
 			mBackgroundNear.switchToNext();
-			Message msg = new Message();
-			msg.what = mCurLevel;
-			GameEvent e = new SceneEvent(SceneEvent.SCENE_LEVELUP, msg);
-			mEventHandler.handleGameEvent(e);
 		}
+				
+		// create a timebonus in the next loop
+		mGenerateTimeBonus = true;
 		
-		Runtime.getRuntime().gc();
-		System.gc();
+		return mCurLevel;
+	}
+	
+	@Override
+	public void onCollide(GameObject obj, List<GameObject> collideWith) {
+		int kind = obj.getKind();						
+		// trigger collide effects for all barriers
+		float centerX = obj.getX() + obj.getWidth() * 0.5f;
+		float centerY = obj.getY() + obj.getHeight() * 0.5f;
+		for (GameObject object : collideWith) {		
+			try {				
+				Barrier b = (Barrier) object;				
+				if (kind == GameObject.ROCKET) {
+					Vibrator vibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
+					vibrator.vibrate(30);
+					mLifeBar.lifeChange(-0.334f);	
+				}
+				b.triggerCollideEffect(kind, centerX, centerY);
+			} catch (ClassCastException e) {
+				; // do nothing, just continue
+			} finally {				
+				Message msg = new Message();
+				msg.what = object.getKind();
+				GameEvent e = new SceneEvent(SceneEvent.SCENE_COLLIDE, msg);
+				mEventHandler.handleGameEvent(e);
+			}
+		}
+		orderByZ(mObjects);
+	}
+
+	public void onReachTarget(int odometer) {
+		mLifeBar.lifeChange(0.01f);
+	}
+
+	public void onReachMilestone(int odometer) {
+		Message msg = new Message();
+		msg.what = odometer;
+		GameEvent e = new SceneEvent(SceneEvent.SCENE_MILESTONE, msg);
+		mEventHandler.handleGameEvent(e);		
 	}
 
 	public void onLifeChanged(float life) {
@@ -455,5 +473,9 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 			e.mExtra = Integer.valueOf(mOdometer.getDistance());
 			mEventHandler.handleGameEvent(e);
 		}
+	}
+
+	public void onGotTimeBonus(int bonus) {
+		mTimer.addBonusTime(bonus);
 	}
 }
