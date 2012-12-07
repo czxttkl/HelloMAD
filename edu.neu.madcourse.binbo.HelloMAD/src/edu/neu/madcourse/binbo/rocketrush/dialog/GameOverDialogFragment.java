@@ -30,7 +30,7 @@ public class GameOverDialogFragment extends DialogFragment implements OnClickLis
 		mActivity = (RocketRushActivity) getActivity();
 		mGameMode = mActivity.getCurrentGameMode();		
 	    // Use the Builder class for convenient dialog construction
-		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), 4);
 		LayoutInflater inflater = getActivity().getLayoutInflater();
 		
 	    // Inflate and set the layout for the dialog

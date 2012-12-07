@@ -168,6 +168,9 @@ public class RushMode extends GameMode {
 				    	int soundID = 0;
 				    	switch (sce.mMsg.what) {
 				    	case GameObject.PROTECTION:
+				    		soundID = mSoundIDs.get(0);
+				    		break;
+				    	case GameObject.TIMEBONUS:
 				    		soundID = mSoundIDs.get(1);
 				    		break;
 				    	case GameObject.ALIENT:
@@ -183,7 +186,7 @@ public class RushMode extends GameMode {
 				    		soundID = mSoundIDs.get(4);
 				    		break;
 				    	}
-				    	int ret = mSoundPool.play(soundID, 0.3f, 0.3f, 10, 0, 1);
+				    	int ret = mSoundPool.play(soundID, 0.4f, 0.4f, 10, 0, 1);
 				    	if (ret == 0) {
 				    		ret = 1;
 				    	}

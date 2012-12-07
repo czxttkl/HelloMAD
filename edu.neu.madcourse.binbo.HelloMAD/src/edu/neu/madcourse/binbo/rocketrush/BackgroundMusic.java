@@ -15,7 +15,7 @@ public class BackgroundMusic {
 			mPlayer = MediaPlayer.create(context, resource);
 			if (mPlayer != null) {
 				mPlayer.setLooping(true);
-				mPlayer.setVolume(0.2f, 0.2f);				
+				mPlayer.setVolume(0.4f, 0.4f);				
 			}
 		}
 		mSeekPos = 0;
