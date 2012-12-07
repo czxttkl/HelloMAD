@@ -132,6 +132,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 	public void closeInteraction() {
 		if (mRocket != null) {
 			mRocket.setMovable(false);
+			mRocket.setCollidable(false);
 			mRocket.setOnCollideListener(null);
 		}
 		if (mOdometer != null) {
