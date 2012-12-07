@@ -60,6 +60,9 @@
 				<Button
 					android:id="@+id/trickiest_button"
 					android:text="@string/trickiest_label" />
+				<Button
+				    android:id="@+id/finalproject_button"
+				    android:text="@string/finalproject_label" />
 			</TableRow>
 		</TableLayout>
 		

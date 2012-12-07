@@ -35,14 +35,14 @@ public class VersusModeDialogFragment extends DialogFragment {
 	}
 	
 	@Override
-	public void onStop() {		
-		mGameMode.pause();
-		super.onStop();
+	public void onPause() {
+		mGameMode.resume();			
+		super.onPause();
 	}
 
 	@Override
-	public void onStart() {
-		mGameMode.resume();	
-		super.onStart();
+	public void onResume() {
+		mGameMode.pause();
+		super.onResume();
 	}
 }
