@@ -12,7 +12,9 @@ public class GameMode implements IGameEventHandler {
 	// message handler
 	protected Handler mHandler = null;	
 	// music of the game
-	protected BackgroundMusic mBackgroundMusic = new BackgroundMusic();	
+	protected BackgroundMusic mBackgroundMusic = new BackgroundMusic();
+	// flag to indicate whether the game mode is enabled
+	protected boolean mEnable = true;
 
 	protected GameMode(GameEngine engine) {
 		assert(engine != null);
@@ -43,6 +45,14 @@ public class GameMode implements IGameEventHandler {
 	}
 	
 	public void release() {}
+	
+	public void setEnable(boolean enable) {
+		mEnable = enable;
+	}
+	
+	public boolean isEnabled() {
+		return mEnable;
+	}
 	
 	public GameScene getScene() {
 		return null;

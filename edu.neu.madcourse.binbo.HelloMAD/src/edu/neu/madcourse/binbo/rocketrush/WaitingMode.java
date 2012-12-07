@@ -26,8 +26,12 @@ public class WaitingMode extends GameMode {
 	
 	@Override
 	public void resume() {
-		mThread = new WaitingModeThread(mHandler);
-		mThread.start();
+		if (!mEnable) return;
+		
+		if (mThread == null) {
+			mThread = new WaitingModeThread(mHandler);
+			mThread.start();
+		}
 		mBackgroundMusic.play();
 		super.resume();
 	}
@@ -43,7 +47,9 @@ public class WaitingMode extends GameMode {
 	}
 	
 	@Override
-	public void start() {				
+	public void start() {		
+		if (!mEnable) return;
+		
 		mBackgroundMusic.create(mContext, R.raw.bkg_music_1);
 		super.start();		
 	}

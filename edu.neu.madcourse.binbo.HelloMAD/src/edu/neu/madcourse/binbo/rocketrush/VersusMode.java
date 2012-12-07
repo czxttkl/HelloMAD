@@ -29,6 +29,8 @@ public class VersusMode extends GameMode {
 	
 	@Override
 	public void resume() {
+		if (!mEnable) return;
+		
 		if (mThread == null) {
 			mThread = new VersusModeThread(mHandler);
 			mThread.start();
@@ -49,6 +51,8 @@ public class VersusMode extends GameMode {
 	
 	@Override
 	public void start() {
+		if (!mEnable) return;
+		
 		mBackgroundMusic.create(mContext, R.raw.bkg_music_3);
 		super.start();
 	}

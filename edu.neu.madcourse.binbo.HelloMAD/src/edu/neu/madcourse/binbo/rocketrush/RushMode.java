@@ -45,6 +45,8 @@ public class RushMode extends GameMode {
 	
 	@Override
 	public void resume() {
+		if (!mEnable) return;
+		
 		if (mThread == null) {
 			mThread = new RushModeThread(mHandler);
 			mThread.start();			
@@ -65,6 +67,8 @@ public class RushMode extends GameMode {
 	
 	@Override
 	public void start() {
+		if (!mEnable) return;
+		
 		mBackgroundMusic.create(mContext, mMusicIDs[mMusicIndex]);
 		if (mSoundPool == null) {
 			mSoundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);   
@@ -93,6 +97,10 @@ public class RushMode extends GameMode {
 		}
 		mMusicIndex = 1;
 	}		
+	
+	public void setEnable(boolean enable) {
+		mEnable = enable;
+	}
 
 	private final class RushModeThread extends BaseThread {
 		
@@ -156,7 +164,7 @@ public class RushMode extends GameMode {
 				// not good to do the cast here, modify later
 				if (level == 3 || level == 5)
 				((FragmentActivity) mContext).runOnUiThread(new Runnable() {
-				    public void run() {				    	
+				    public void run() {		    	
 				    	mMusicIndex = (mMusicIndex >= 3 ? 1 : mMusicIndex + 1);
 				    	mBackgroundMusic.create(mContext, mMusicIDs[mMusicIndex]);
 				    	mBackgroundMusic.play();

@@ -93,8 +93,10 @@ public class RocketRushActivity extends FragmentActivity
 		mCurMode.stop();
 		// reset the current mode
 		mCurMode.reset();
+		mCurMode.setEnable(false); // disable it, then pause() and start() will do nothing
 		// get the new game mode
 		mCurMode = mModes.get(modeTo);
+		mCurMode.setEnable(true); // enable it, otherwise pause() and start() will do nothing
 		// set the scene of the new mode to game drawer
 		mGameView.getDrawer().setGameScene(mCurMode.getScene());		
 		// finally start the new game mode
