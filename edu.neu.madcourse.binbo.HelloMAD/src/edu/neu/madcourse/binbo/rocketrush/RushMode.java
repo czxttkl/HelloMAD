@@ -194,10 +194,7 @@ public class RushMode extends GameMode {
 				    		soundID = mSoundIDs.get(4);
 				    		break;
 				    	}
-				    	int ret = mSoundPool.play(soundID, 0.4f, 0.4f, 10, 0, 1);
-				    	if (ret == 0) {
-				    		ret = 1;
-				    	}
+				    	mSoundPool.play(soundID, 0.4f, 0.4f, 10, 0, 1);
 				    }
 				});
 			}

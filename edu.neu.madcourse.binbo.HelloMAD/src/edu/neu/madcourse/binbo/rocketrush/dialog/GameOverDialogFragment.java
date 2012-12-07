@@ -34,7 +34,6 @@ public class GameOverDialogFragment extends DialogFragment implements OnClickLis
 	    // Use the Builder class for convenient dialog construction
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		LayoutInflater inflater = getActivity().getLayoutInflater();
-
 	    // Inflate and set the layout for the dialog
 	    // Pass null as the parent view because its going in the dialog layout
 		final View layout = inflater.inflate(R.layout.rocket_rush_gameover, null);		
@@ -62,18 +61,6 @@ public class GameOverDialogFragment extends DialogFragment implements OnClickLis
 			break;
 		}
 		dismiss();
-	}
-
-	@Override
-	public void onPause() {
-		// TODO Auto-generated method stub
-		super.onPause();
-	}
-
-	@Override
-	public void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
 	}
 
 	public void setDistance(int distance) {

@@ -1,6 +1,9 @@
 package edu.neu.madcourse.binbo.rocketrush;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import android.app.AlertDialog;
@@ -176,6 +179,7 @@ public class RocketRushActivity extends FragmentActivity
 	}
 	
 	public void onClick(View v) {
+		Intent i = null;
 		// here we switch from waiting mode to other modes
 		switch (v.getId()) {
 		case R.id.rushModeButton:	
@@ -188,10 +192,12 @@ public class RocketRushActivity extends FragmentActivity
 			startActivity(new Intent(this, Prefs.class));
 			break;
 		case R.id.rankButton:
-			startActivity(new Intent(this, GameRankActivity.class));
+			i = new Intent(this, GameRank.class);
+			i.putExtra(GameRank.RESULTS, getGameResults());
+			startActivity(i);			
 			break;
 		case R.id.helpButton:
-			Intent i = new Intent(this, TutorialActivity.class);
+			i = new Intent(this, TutorialActivity.class);
 			i.putExtra("edu.neu.madcourse.binbo.rocketrush.Main", "RocketRushActivity");
 			startActivity(i);
 			break;
@@ -267,6 +273,32 @@ public class RocketRushActivity extends FragmentActivity
 		mAboutButton.setOnClickListener(this);
 		
 		mGameView.setHandler(mHandler);
+	}	
+	
+	protected final static String RANK_SIZE  = "rank_size";
+	protected final static String RANK_SCORE = "rank_score_";
+	protected final static String RANK_TIME  = "rank_time_";
+	
+	protected void recordGameResult(int score, String time) {
+		int size = getPreferences(MODE_PRIVATE).getInt(RANK_SIZE, 0);
+		getPreferences(MODE_PRIVATE).edit().putInt(RANK_SIZE, size + 1).commit();	
+		getPreferences(MODE_PRIVATE).edit().putInt(RANK_SCORE + size, score).commit();
+		getPreferences(MODE_PRIVATE).edit().putString(RANK_TIME + size, time).commit();
+	}
+	
+	protected GameResults getGameResults() {
+		GameResults results = new GameResults();
+		
+		int size = getPreferences(MODE_PRIVATE).getInt(RANK_SIZE, 0);
+		for (int i = 0; i < size; ++i) {								
+			int score = getPreferences(MODE_PRIVATE).getInt(RANK_SCORE + i, 0);
+			String date = getPreferences(MODE_PRIVATE).getString(RANK_TIME + i, "");
+			GameResult result = new GameResult(score, date);
+			results.add(result);
+		}	
+		Collections.sort(results, Collections.reverseOrder());
+	
+		return results;
 	}
 
 	// use main looper as the default
@@ -279,11 +311,13 @@ public class RocketRushActivity extends FragmentActivity
         		GameOverDialogFragment dialog = new GameOverDialogFragment();
         		dialog.setDistance(((Integer) msg.obj).intValue());
 				dialog.show(getSupportFragmentManager(), "GameOverDialogFragment");
+				recordGameResult(((Integer) msg.obj).intValue(), 
+						DateFormat.getDateInstance().format(new Date()));
         		break;
             default:
             	break;
             }            
-        } 		
+        }			
     };  
     
 }
