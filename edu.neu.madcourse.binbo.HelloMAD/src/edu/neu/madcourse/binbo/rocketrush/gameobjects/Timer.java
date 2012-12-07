@@ -28,10 +28,12 @@ public class Timer extends Utility {
 		setZOrder(ZOrders.TIMER);
 		
 		mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		mPaint.setColor(Color.BLACK);
+		mPaint.setColor(Color.WHITE);
 		mPaint.setStyle(Style.FILL);
+		mPaint.setTypeface(Typeface.SERIF);
 		mPaint.setFakeBoldText(true);
-		mPaint.setTextSize(34);		
+		mPaint.setShadowLayer(4, 1, 1, Color.DKGRAY);
+		mPaint.setTextSize(38);		
 	}
 	
 	public void setOnTimeUpdateListener(OnTimeUpdateListener listener) {

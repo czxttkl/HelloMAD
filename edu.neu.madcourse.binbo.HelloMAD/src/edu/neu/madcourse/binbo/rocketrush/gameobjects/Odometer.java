@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.graphics.Paint.Style;
 import edu.neu.madcourse.binbo.rocketrush.GameCtrl;
 import edu.neu.madcourse.binbo.rocketrush.GameEngine;
@@ -37,8 +38,11 @@ public class Odometer extends Utility {
 		mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		mPaint.setARGB(255, 0, 0, 0);
 		mPaint.setStyle(Style.FILL);	
+		mPaint.setColor(Color.WHITE);
+		mPaint.setTypeface(Typeface.SERIF);
 		mPaint.setFakeBoldText(true);
-		mPaint.setTextSize(28);
+		mPaint.setShadowLayer(4, 1, 1, Color.DKGRAY);
+		mPaint.setTextSize(30);
 	}
 	
 	public int getDistance() {

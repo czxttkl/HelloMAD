@@ -35,6 +35,8 @@ public class HelloMAD extends Activity implements OnClickListener {
 		pbgameButton.setOnClickListener(this);		
 		View trickiestButton = this.findViewById(R.id.trickiest_button);
 		trickiestButton.setOnClickListener(this);
+		View finalprojectButton = this.findViewById(R.id.finalproject_button);
+		finalprojectButton.setOnClickListener(this);
 		
 		//PhoneCheckAPI.doAuthorization(this);
 	}
@@ -66,6 +68,10 @@ public class HelloMAD extends Activity implements OnClickListener {
 			startActivity(i);
 			break;
 		case R.id.trickiest_button:
+			i = new Intent(this, SplashActivity.class);
+			startActivity(i);
+			break;
+		case R.id.finalproject_button:
 			i = new Intent(this, SplashActivity.class);
 			startActivity(i);
 			break;

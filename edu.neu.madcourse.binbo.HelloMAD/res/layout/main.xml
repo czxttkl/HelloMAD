@@ -49,6 +49,11 @@
 	   android:layout_height="wrap_content"
 	   android:text="@string/trickiest_label" />
 	<Button
+	    android:id="@+id/finalproject_button"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:text="@string/finalproject_label" />
+	<Button
 	   android:id="@+id/error_button"
 	   android:layout_width="fill_parent"
 	   android:layout_height="wrap_content"

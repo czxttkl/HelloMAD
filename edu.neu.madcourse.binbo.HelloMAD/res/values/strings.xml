@@ -8,6 +8,7 @@
     <string name="trickiest_label">Trickiest Part.</string>
     <string name="error_label">Generate Error</string>
     <string name="quit_lable">Quit</string>
+    <string name="finalproject_label">Final Project</string>
     <string name="about_title">Team Member</string>
     <string name="about_lable">About</string>
     <string name="about_text">\
@@ -122,12 +123,12 @@
        BO BIN \n
        WANG WENJING
     </string>
+    <string name="rocket_rush_app">MAD-RocketRush</string>
     <string name="sound_title">Sound</string>
     <string name="sound_summary">Enable sound effects</string>
     <string name="vibrate_title">Vibrate</string>
     <string name="vibrate_summary">Enable vibration</string>
     <string name="ac_title">Acknowledgement</string>
-    
     <string name="rr_ac_design">Designer</string>
     <string name="rr_ac_develop">Developer</string>
     <string name="rr_ac_designer">Wang Wenjing</string>
@@ -136,5 +137,4 @@
     <string name="rr_img_rkt_credit_owner">Nathanial Wilson</string>
     <string name="rr_img_credit">Other Image Resouces</string>
     <string name="rr_img_credit_owner">IconFinder</string>
-    
 </resources>

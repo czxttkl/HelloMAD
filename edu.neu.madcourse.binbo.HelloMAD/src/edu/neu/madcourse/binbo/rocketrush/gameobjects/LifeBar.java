@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.graphics.Paint.Style;
 import edu.neu.madcourse.binbo.rocketrush.GameEngine;
 import edu.neu.madcourse.binbo.rocketrush.GameObject;
@@ -33,10 +34,12 @@ public class LifeBar extends Utility {
 		setKind(LIFEBAR);
 		setZOrder(ZOrders.LIFEBAR);
 		
-		mPaint0.setColor(Color.BLACK);
+		mPaint0.setColor(Color.WHITE);
 		mPaint0.setStyle(Style.FILL);
 		mPaint0.setAntiAlias(true);
+		mPaint0.setTypeface(Typeface.SERIF);
 		mPaint0.setFakeBoldText(true);
+		mPaint0.setShadowLayer(4, 1, 1, Color.DKGRAY);
 		mPaint0.setTextSize(28);
 
 		mPaint2.setAntiAlias(true);		    
@@ -84,7 +87,7 @@ public class LifeBar extends Utility {
 	
 	@Override
 	public void doDraw(Canvas c) {		
-		c.drawText("HP", 24, 80, mPaint0);   	    
+		c.drawText("HP", 24, 84, mPaint0);   	    
 	    c.drawRect(r2, mPaint2);	    
 	    c.drawRect(r3, mPaint3);
 	}
@@ -96,14 +99,14 @@ public class LifeBar extends Utility {
 		mCanvasHeight = height;
 	    
 	    r2.left   = 78;
-	    r2.top    = 62;
+	    r2.top    = 66;
 	    r2.right  = 68 + width / 3f;
-	    r2.bottom = 78;
+	    r2.bottom = 82;
 	    
 	    r3.left   = 78;
-	    r3.top    = 62;
+	    r3.top    = 66;
 	    r3.right  = 68 + width / 3f;
-	    r3.bottom = 78;
+	    r3.bottom = 82;
 	    
 	    mWidth = r3.right - r3.left;
 	}

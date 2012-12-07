@@ -38,7 +38,7 @@ public class Level extends Utility {
 		mPaint.setTypeface(Typeface.SERIF);
 		mPaint.setFakeBoldText(true);
 		mPaint.setTextSize(40);
-		mPaint.setShadowLayer(4, 1, 1, Color.BLACK);
+		mPaint.setShadowLayer(4, 1, 1, Color.DKGRAY);
 		mPaint.setTextAlign(Paint.Align.CENTER);
 		
 		mPaintContainer.setARGB(80, 0, 0, 0);
