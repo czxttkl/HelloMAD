@@ -57,4 +57,11 @@
 		<item name="android:backgroundDimAmount">0.6</item> 
     </style>
     
+    <style name="trans_dialog" parent="@android:style/Theme.Light"> 
+		<item name="android:windowNoTitle">true</item> 
+	   	<item name="android:windowIsTranslucent">true</item>
+	   	<item name="android:background">#00fff000</item>	   	
+	   	<item name="android:colorBackgroundCacheHint">@null</item>
+	</style>  
+    
 </resources>

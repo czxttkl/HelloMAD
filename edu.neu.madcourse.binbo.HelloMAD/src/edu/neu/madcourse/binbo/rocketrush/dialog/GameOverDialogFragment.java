@@ -10,10 +10,12 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.view.ContextThemeWrapper;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -30,9 +32,9 @@ public class GameOverDialogFragment extends DialogFragment implements OnClickLis
 		mActivity = (RocketRushActivity) getActivity();
 		mGameMode = mActivity.getCurrentGameMode();		
 	    // Use the Builder class for convenient dialog construction
-		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), 4);
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		LayoutInflater inflater = getActivity().getLayoutInflater();
-		
+
 	    // Inflate and set the layout for the dialog
 	    // Pass null as the parent view because its going in the dialog layout
 		final View layout = inflater.inflate(R.layout.rocket_rush_gameover, null);		
@@ -46,7 +48,7 @@ public class GameOverDialogFragment extends DialogFragment implements OnClickLis
 		
 		mDistanceTextView.setText(String.valueOf(mDistance));
 		mDistanceTextView.setTextColor(Color.RED);
-	    
+		//AlertDialog dialog = builder.create();			    
 	    return builder.create();
 	}
 
