@@ -27,10 +27,7 @@ public class RushModeDialogFragment extends DialogFragment {
 		    	case 0: // restart
 		    		mGameMode.restart();
 		    		break;
-		    	case 1: // setting
-		    		
-		    		break;
-		    	case 2: // exit		    		
+		    	case 1: // exit		    		
 		    		mActivity.switchGameMode(0); // waiting mode
 		    		break;
 		    	}

@@ -24,9 +24,7 @@ public class VersusModeDialogFragment extends DialogFragment {
 		    	// The 'which' argument contains the index position
 		    	// of the selected item
 		    	switch (which) {
-		    	case 0: // setting
-		    		break;
-		    	case 1: // exit		    		
+		    	case 0:	    		
 		    		mActivity.switchGameMode(0); // waiting mode
 		    		break;
 		    	}
