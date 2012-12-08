@@ -2,29 +2,38 @@ package edu.neu.madcourse.binbo.rocketrush;
 
 import edu.neu.madcourse.binbo.R;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
+import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.WindowManager;
 
-public class Prefs extends PreferenceActivity {
+public class Prefs extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
 	// Option names and default values
-	private static final String OPT_SOUND = "sound";
-	private static final boolean OPT_SOUND_DEF = true;
-	private static final String OPT_VIB = "vibration";
-	private static final boolean OPT_VIB_DEF = true;
+	private static final String OPT_SOUND = "music";
+	private static boolean OPT_SOUND_DEF = true;
+	private static final String OPT_VIB = "vibrate";
+	private static boolean OPT_VIB_DEF = true;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+		super.onCreate(savedInstanceState);		
 		addPreferencesFromResource(R.xml.rocket_rush_settings);
+		//get the specified preferences using the key declared in preferences.xml
+		final CheckBoxPreference musicPref   = (CheckBoxPreference) findPreference(OPT_SOUND);
+		final CheckBoxPreference vibratePref = (CheckBoxPreference) findPreference(OPT_VIB);		
+		musicPref.setOnPreferenceChangeListener(this); 		
+		vibratePref.setOnPreferenceChangeListener(this); 
 		
 		getWindow().setFlags(
 			WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON | WindowManager.LayoutParams.FLAG_FULLSCREEN, 
 			WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON | WindowManager.LayoutParams.FLAG_FULLSCREEN
 		); 
 	}
-
+	
 	/** Get the current value of the music option */
 	public static boolean getMusic(Context context) {
 		return PreferenceManager.getDefaultSharedPreferences(context)
@@ -35,5 +44,11 @@ public class Prefs extends PreferenceActivity {
 	public static boolean getHints(Context context) {
 		return PreferenceManager.getDefaultSharedPreferences(context)
 				.getBoolean(OPT_VIB, OPT_VIB_DEF);
+	}
+
+	public boolean onPreferenceChange(Preference preference, Object newValue) {
+		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+    	sharedPref.edit().putBoolean(preference.getKey(), (Boolean) newValue);
+        return true;
 	}
 }

@@ -7,7 +7,7 @@
       android:summary="@string/sound_summary"
       android:defaultValue="true" />
    <CheckBoxPreference
-      android:key="hints"
+      android:key="vibrate"
       android:title="@string/vibrate_title"
       android:summary="@string/vibrate_summary"
       android:defaultValue="true" />
