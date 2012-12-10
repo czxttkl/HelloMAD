@@ -1,15 +1,10 @@
 package edu.neu.madcourse.binbo.rocketrush;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
@@ -27,6 +22,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import edu.neu.madcourse.binbo.R;
+import edu.neu.madcourse.binbo.rocketrush.dialog.GameOverDialog;
 import edu.neu.madcourse.binbo.rocketrush.dialog.GameOverDialogFragment;
 import edu.neu.madcourse.binbo.rocketrush.dialog.RushModeDialogFragment;
 import edu.neu.madcourse.binbo.rocketrush.dialog.VersusModeDialogFragment;
@@ -53,6 +49,8 @@ public class RocketRushActivity extends FragmentActivity
 	protected List<GameMode> mModes = new ArrayList<GameMode>();	
 	// speech controller
 	protected OpusManager mOpus = null;
+	// for dialog request code
+	protected final static int GAMEOVER_DIALOG_REQUEST = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -138,7 +136,7 @@ public class RocketRushActivity extends FragmentActivity
 
 	@Override
 	protected void onPause() {
-		mGameView.onPause();
+		//mGameView.onPause();
 		mCurMode.pause();
  
         if (mSensorManager != null) {
@@ -162,18 +160,20 @@ public class RocketRushActivity extends FragmentActivity
         	);                 	
         }        
 		                
-		mGameView.onResume(mCurMode.getScene());
+		//mGameView.onResume(mCurMode.getScene());
 		mCurMode.resume();
 	}
 
 	@Override
 	protected void onStart() {
 		mCurMode.start();
+		mGameView.onStart(mCurMode.getScene());
 		super.onStart();
 	}
 
 	@Override
 	protected void onStop() {
+		mGameView.onStop();
 		mCurMode.stop();
 		super.onStop();
 	}
@@ -305,19 +305,34 @@ public class RocketRushActivity extends FragmentActivity
 	private final Handler mHandler = new Handler() {	
 
 		public void handleMessage(Message msg) {        	
+			Intent i = null;
 			// all game messages that should handle in UI thread
         	switch (msg.what) {  
         	case StateEvent.STATE_OVER:
-        		GameOverDialogFragment dialog = new GameOverDialogFragment();
-        		dialog.setDistance(((Integer) msg.obj).intValue());
-				dialog.show(getSupportFragmentManager(), "GameOverDialogFragment");
-				recordGameResult(((Integer) msg.obj).intValue(), 
-						DateFormat.getDateInstance().format(new Date()));
+//        		GameOverDialogFragment dialog = new GameOverDialogFragment();
+//        		dialog.setDistance(((Integer) msg.obj).intValue());
+//				dialog.show(getSupportFragmentManager(), "GameOverDialogFragment");
+//				recordGameResult(((Integer) msg.obj).intValue(), 
+//						DateFormat.getDateInstance().format(new Date()));
+        		i = new Intent(getApplicationContext(), GameOverDialog.class);
+        		i.putExtra("distance", ((Integer) msg.obj).intValue());
+        		startActivityForResult(i, GAMEOVER_DIALOG_REQUEST);
         		break;
             default:
             	break;
             }            
         }			
-    };  
+    };
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == GAMEOVER_DIALOG_REQUEST) {
+            if (resultCode == GameOverDialog.RESTART_GAME) {
+                mCurMode.restart();
+            } else if (resultCode == GameOverDialog.BACK_TO_MENU) {
+            	switchGameMode(0);
+            }
+        }
+    } 
     
 }

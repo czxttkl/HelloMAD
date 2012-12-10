@@ -48,20 +48,11 @@
     </style>
 	
     <style name="rocket_rush_dialog" parent="@android:style/Theme.Dialog">
-        <item name="android:windowFrame">@null</item>  
-		<item name="android:windowIsFloating">true</item>  
-		<item name="android:windowIsTranslucent">false</item>  
-		<item name="android:windowNoTitle">true</item>  
-		<item name="android:windowBackground">@drawable/filled_box</item>  
-		<item name="android:backgroundDimEnabled">false</item>  
-		<item name="android:backgroundDimAmount">0.6</item> 
+        <item name="android:windowNoTitle">true</item>
+		<item name="android:background">#00000000</item>
+		<item name="android:windowBackground">@android:color/transparent</item>
+		<item name="android:colorBackgroundCacheHint">@null</item>
+		<item name="android:windowIsTranslucent">true</item>
     </style>
-    
-    <style name="trans_dialog" parent="@android:style/Theme.Light"> 
-		<item name="android:windowNoTitle">true</item> 
-	   	<item name="android:windowIsTranslucent">true</item>
-	   	<item name="android:background">#00fff000</item>	   	
-	   	<item name="android:colorBackgroundCacheHint">@null</item>
-	</style>  
     
 </resources>

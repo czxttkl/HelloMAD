@@ -210,10 +210,10 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 	}
 	
 	// probabilities for creating barriers
-	private int mProbBird    = 100;
-	private int	mProbAster   = 180;
-	private int mProbAlient  = 150;
-	private int mProbThunder = 275;
+	private int mProbBird    = 90;
+	private int	mProbAster   = 170;
+	private int mProbAlient  = 140;
+	private int mProbThunder = 250;
 	
 	private void createBird(int probability) {		
 		// get the acceleration time 

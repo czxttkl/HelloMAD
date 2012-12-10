@@ -172,6 +172,13 @@
             android:theme="@android:style/Theme.NoTitleBar">
 		</activity>
 		
+		<activity android:name=".rocketrush.dialog.GameOverDialog"
+			android:screenOrientation="portrait"
+		    android:launchMode="singleTop"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/rocket_rush_dialog">
+		</activity>
+		
     </application>
 
 </manifest>

@@ -52,7 +52,7 @@ public class TutorialActivity extends FragmentActivity {
 
 			public void onPageSelected(int position) {
 				// TODO Auto-generated method stub
-				switch(position){
+				switch(position) {
 				case 0:
 					findViewById(R.id.first_tab).setVisibility(View.VISIBLE);
 					findViewById(R.id.second_tab).setVisibility(View.INVISIBLE);
