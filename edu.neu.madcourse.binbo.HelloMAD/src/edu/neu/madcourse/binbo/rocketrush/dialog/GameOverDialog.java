@@ -4,6 +4,7 @@ import edu.neu.madcourse.binbo.R;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
@@ -34,6 +35,7 @@ public class GameOverDialog extends Activity implements OnClickListener {
 		mExitButton.setOnClickListener(this);
 				
 		mTextView.setTextColor(Color.RED);
+		mTextView.setShadowLayer(10, 8, 6, Color.GRAY);
 		mTextView.setText(String.valueOf(mDistance));
 	}
 
@@ -67,5 +69,14 @@ public class GameOverDialog extends Activity implements OnClickListener {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		switch (keyCode) {
+		case KeyEvent.KEYCODE_BACK:		
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 }

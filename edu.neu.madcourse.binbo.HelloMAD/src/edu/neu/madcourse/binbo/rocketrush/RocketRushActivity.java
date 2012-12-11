@@ -1,7 +1,9 @@
 package edu.neu.madcourse.binbo.rocketrush;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import android.content.Context;
@@ -314,9 +316,11 @@ public class RocketRushActivity extends FragmentActivity
 //				dialog.show(getSupportFragmentManager(), "GameOverDialogFragment");
 //				recordGameResult(((Integer) msg.obj).intValue(), 
 //						DateFormat.getDateInstance().format(new Date()));
+        		int distance = ((Integer) msg.obj).intValue();
         		i = new Intent(getApplicationContext(), GameOverDialog.class);
-        		i.putExtra("distance", ((Integer) msg.obj).intValue());
+        		i.putExtra("distance", distance);
         		startActivityForResult(i, GAMEOVER_DIALOG_REQUEST);
+        		recordGameResult(distance, DateFormat.getDateInstance().format(new Date()));
         		break;
             default:
             	break;

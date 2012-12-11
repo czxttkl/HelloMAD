@@ -10,9 +10,9 @@
         android:layout_width="fill_parent"   
 		android:layout_height="wrap_content"
 		android:gravity="center"
-		android:paddingTop="52dip"			
+		android:paddingTop="50dip"			
 		android:paddingBottom="22dip"
-		android:textSize="34sp"
+		android:textSize="36sp"		
 		android:textStyle="bold"
 		android:typeface="serif"
 		android:text="" />

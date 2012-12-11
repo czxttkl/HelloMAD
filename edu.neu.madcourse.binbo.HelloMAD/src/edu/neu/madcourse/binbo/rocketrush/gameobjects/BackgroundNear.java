@@ -50,6 +50,12 @@ public class BackgroundNear extends Background {
 		setHeight(sImages.get(0).getHeight());
 	}
 	
+	public void switchToFirst() {
+		mY = 0;		
+		mImageIndex[0] = 0;
+		mImageIndex[1] = 0;
+	}
+	
 	public void switchToNext() {
 		mSwitching[0] = true;
 		mSwitching[1] = true;

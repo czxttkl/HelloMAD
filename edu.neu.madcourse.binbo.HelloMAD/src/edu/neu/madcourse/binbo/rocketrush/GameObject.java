@@ -23,6 +23,7 @@ public class GameObject {
 	public final static int LEVEL	   = 11;
 	public final static int ODOMETER   = 12;
 	public final static int TIMER	   = 13;
+	public final static int CURTAIN	   = 14;
 	
 	protected float mX = 0;
 	protected float mY = 0;
@@ -238,5 +239,6 @@ public class GameObject {
 		public static final int LEVEL			= 5;
 		public static final int ODOMETER	    = 5;
 		public static final int TIMER			= 5;
+		public static final int CURTAIN			= 6;
 	}
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import edu.neu.madcourse.binbo.rocketrush.gameobjects.*;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.Curtain.OnCurtainEventListener;
 import edu.neu.madcourse.binbo.rocketrush.gameobjects.LifeBar.OnLifeChangedListener;
 import edu.neu.madcourse.binbo.rocketrush.gameobjects.Odometer.OnOdometerUpdateListener;
 import edu.neu.madcourse.binbo.rocketrush.gameobjects.TimeBonus.OnGotTimeBonusListener;
@@ -18,7 +19,8 @@ import android.os.Vibrator;
 public class RushScene extends GameScene implements OnOdometerUpdateListener, 
 										 			OnLifeChangedListener,
 										 			OnTimeUpdateListener,
-										 			OnGotTimeBonusListener {	
+										 			OnGotTimeBonusListener,
+										 			OnCurtainEventListener {	
 
 	private Rocket   mRocket   = null;
 	private LifeBar  mLifeBar  = null;
@@ -28,6 +30,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 	private Level 	 mLevel    = null;	
 	private Odometer mOdometer = null;
 	private Timer 	 mTimer    = null;
+	private Curtain  mCurtain  = null;
 	private int mCurLevel = 1;
 	private int mCurLoop  = 1;
 	private Random  mRandom  = new Random();
@@ -84,6 +87,11 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 			mTimer.setOnTimeUpdateListener(this);
 			mObjects.add(mTimer);
 		}
+		if (mCurtain == null) {
+			mCurtain = new Curtain(mRes);
+			mCurtain.setCurtainEventListener(this);
+			mObjects.add(mCurtain);
+		}
 		if (mWidth > 0 || mHeight > 0) {
 			for (GameObject obj : mObjects) {
 				obj.onSizeChanged(mWidth, mHeight);
@@ -105,6 +113,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 		mOdometer = null;
 		mLifeBar  = null;
 		mTimer    = null;
+		mCurtain  = null;
 	}
 	
 	public void openInteraction() {
@@ -211,8 +220,8 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 	
 	// probabilities for creating barriers
 	private int mProbBird    = 90;
-	private int	mProbAster   = 170;
-	private int mProbAlient  = 140;
+	private int	mProbAster   = 175;
+	private int mProbAlient  = 135;
 	private int mProbThunder = 250;
 	
 	private void createBird(int probability) {		
@@ -225,7 +234,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 			b.setX(right ? -b.getWidth() : mWidth);
 			b.setY(mRandom.nextInt(mHeight - (mHeight >> 1) - (accTime > 0 ? (mHeight >> 2) : 0)));
 			b.initSpeeds(
-				(right ? mRandom.nextInt(4) + 4 : -4 - mRandom.nextInt(4)) * mLevel.mSpeedScaleX,   
+				(right ? mRandom.nextInt(3) + 5 : -5 - mRandom.nextInt(3)) * mLevel.mSpeedScaleX,   
 				3f,
 				accTime
 			);
@@ -247,7 +256,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 			Asteroid ast = new Asteroid(mRes);
 			ast.setX(mRandom.nextInt((int)(mWidth - ast.getWidth() + 1)));
 			ast.setY(0 - ast.getHeight());
-			ast.initSpeeds(0, (mRandom.nextInt(4) + 3) * mLevel.mSpeedScaleY, accTime);
+			ast.initSpeeds(0, (mRandom.nextInt(3) + 2) * mLevel.mSpeedScaleY, accTime);
 			ast.onSizeChanged(mWidth, mHeight);
 			ast.setOnCollideListener(this);
 			mBarriers.add(ast);
@@ -261,7 +270,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 			ast.setY(mRandom.nextInt(mHeight >> 3) - (accTime > 0 ? (mHeight >> 3) : 0));
 			ast.initSpeeds(
 				(right ? mRandom.nextInt(3) + 3 : -3 - mRandom.nextInt(3)) * mLevel.mSpeedScaleX,   
-				(mRandom.nextInt(4) + 3) * mLevel.mSpeedScaleY,
+				(mRandom.nextInt(3) + 2) * mLevel.mSpeedScaleY,
 				accTime
 			);
 			ast.onSizeChanged(mWidth, mHeight);
@@ -394,12 +403,12 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 			// for speed: ...
 			// for complexity: 1 / Math.pow(1.1, 6) * 1.363 / 1.1 Å 1 / 1.3
 			mLevel.mSpeedScaleX *= 0.9;
-			mLevel.mSpeedScaleY *= 0.9;
-			mProbBird    *= 1.363;
-			mProbAster   *= 1.363;
-			mProbAlient  *= 1.363;
+			mLevel.mSpeedScaleY *= 0.875;
+			mProbBird    *= 1.25;
+			mProbAster   *= 1.25;
+			mProbAlient  *= 1.25;
 			mProbThunder *= 1.2;
-			++mCurLoop;
+			++mCurLoop;			
 		}
 		mCurLevel = mCurLoop > 1 ? mCurLevel + 1 : mCurLevel;
 		
@@ -410,7 +419,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 		
 		// update the background according to the current level
 		if (mCurLevel == 1) {
-			;
+			mCurtain.close();
 		} else if (mCurLevel == 3 || mCurLevel == 5) {
 			mBackgroundFar.switchToNext();
 			mBackgroundNear.switchToNext();
@@ -480,5 +489,26 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 
 	public void onGotTimeBonus(int bonus) {
 		mTimer.addBonusTime(bonus);
+	}
+
+	public void onCurtainClosed() {				
+		mCurtain.setDelay(1000);
+		mCurtain.open();
+		// switch background
+		mBackgroundFar.switchToFirst();
+		mBackgroundNear.switchToFirst();
+	}
+
+	public void onCurtainOpened() {
+		openInteraction();
+	}
+
+	public void onCurtainPreClosing() {
+		closeInteraction();
+	}
+
+	public void onCurtainPreOpening() {
+		// disable user interaction
+		
 	}
 }

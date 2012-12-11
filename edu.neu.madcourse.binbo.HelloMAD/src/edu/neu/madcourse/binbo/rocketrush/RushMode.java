@@ -51,7 +51,7 @@ public class RushMode extends GameMode {
 			mThread = new RushModeThread(mHandler);
 			mThread.start();			
 		}
-		mBackgroundMusic.play();
+		
 		super.resume();
 	}
 
@@ -61,7 +61,7 @@ public class RushMode extends GameMode {
 			mThread.end();
 			mThread = null;
 		}
-		mBackgroundMusic.pause();
+		
 		super.pause();
 	}
 	
@@ -70,6 +70,7 @@ public class RushMode extends GameMode {
 		if (!mEnable) return;
 		
 		mBackgroundMusic.create(mContext, mMusicIDs[mMusicIndex]);
+		mBackgroundMusic.play();
 		if (mSoundPool == null) {
 			mSoundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);   
 			for (int resID : mSoundResIDs) {
@@ -82,6 +83,7 @@ public class RushMode extends GameMode {
 
 	@Override
 	public void stop() {
+		mBackgroundMusic.pause();
 		mBackgroundMusic.stop();
 		if (mSoundPool != null) {
 			mSoundPool.release();
@@ -162,14 +164,23 @@ public class RushMode extends GameMode {
 			if (sce.mWhat == SceneEvent.SCENE_MILESTONE) {
 				int level = mScene.onLevelUp();				
 				// not good to do the cast here, modify later
-				if (level == 3 || level == 5)
-				((FragmentActivity) mContext).runOnUiThread(new Runnable() {
-				    public void run() {		    	
-				    	mMusicIndex = (mMusicIndex >= 3 ? 1 : mMusicIndex + 1);
-				    	mBackgroundMusic.create(mContext, mMusicIDs[mMusicIndex]);
-				    	mBackgroundMusic.play();
-				    }
-				});
+				if (level == 3 || level == 5) {
+					((FragmentActivity) mContext).runOnUiThread(new Runnable() {
+					    public void run() {		    	
+					    	++mMusicIndex;
+					    	mBackgroundMusic.create(mContext, mMusicIDs[mMusicIndex]);
+					    	mBackgroundMusic.play();
+					    }
+					});
+				} else if (level == 1) { // a new loop
+					((FragmentActivity) mContext).runOnUiThread(new Runnable() {
+					    public void run() {		    	
+					    	mMusicIndex = 1;
+					    	mBackgroundMusic.create(mContext, mMusicIDs[mMusicIndex]);
+					    	mBackgroundMusic.play();
+					    }
+					});
+				}
 			} else if (sce.mWhat == SceneEvent.SCENE_COLLIDE) {
 				((FragmentActivity) mContext).runOnUiThread(new Runnable() {
 				    public void run() {

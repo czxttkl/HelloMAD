@@ -21,7 +21,7 @@ public class Reward extends GameObject {
 	public Reward(Resources res) {
 		super(res);		
 		setMovable(true);				
-		setTimeout(20000, 20000);
+		setTimeout(20000, 18000);
 		// set speed for unbound state
 		setSpeed(3 + mRand.nextInt(3), 3 + mRand.nextInt(2));
 	}

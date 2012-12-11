@@ -162,7 +162,7 @@ public class BoggleGame extends Activity implements IBoggleGame, OnClickListener
  		tonePlayer = new ToneGenerator(AudioManager.STREAM_MUSIC, 70); 
  		
  		// create the boggle music
- 		BoggleMusic.create(this, R.raw.game_over);
+ 		BoggleMusic.create(this, R.raw.boggle_game);
  		if (command == NEW_GAME) {
  			BoggleMusic.reset();
  		}

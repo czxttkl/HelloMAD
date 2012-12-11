@@ -61,7 +61,7 @@ public class Level extends Utility {
 		float centerX = (mWidth + mTextWidth) / 2;		
 		mSpeedX = centerX / (DEFAULT_MOVE_DURATION / GameEngine.ENGINE_SPEED);
 		
-		mX = -mTextWidth/2;
+		mX = -mTextWidth / 2;
 	}
 	
 	@Override
