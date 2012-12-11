@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+	android:background="@color/rr_blue"
+	android:gravity="center"
+	android:padding="10dip">
+	
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textSize="24sp"
+		android:typeface="serif"
+		android:textColor="@color/rr_red"
+		android:textStyle="bold"
+		android:text="@string/rr_description_title"
+		android:paddingTop="16dp"
+		android:paddingBottom="30dp" />
+	
+	<ScrollView 
+        android:id="@+id/ScrlViewDescription" 
+        android:gravity="center"
+        android:layout_width="fill_parent" 
+        android:layout_height="fill_parent" >        
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="17sp"
+			android:typeface="serif"
+			android:textColor="@color/black"
+			android:textStyle="bold"
+			android:text="@string/rr_description"
+			android:paddingBottom="10dp" />
+	</ScrollView>
+	
+	<Button
+	   android:id="@+id/start_rr"
+	   android:layout_width="fill_parent"
+	   android:layout_height="wrap_content"
+	   android:text="@string/rr_start"
+	   android:layout_marginBottom="6dip" />
+	
+</LinearLayout>

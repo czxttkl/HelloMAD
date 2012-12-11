@@ -137,4 +137,8 @@
     <string name="rr_img_rkt_credit_owner">Nathanial Wilson</string>
     <string name="rr_img_credit">Other Image Resouces</string>
     <string name="rr_img_credit_owner">IconFinder</string>
+    <string name="rr_description_title">Description</string>
+    <string name="rr_description">Rocket Rush is a game to encourage you to take exercises and get sweating in one minute!
+In this game, all you need to do is to keep squatting down and standing up to make your rocket rush higher in the sky.  You may also get into some small troubles with our cute enemies. In short, with Rocket Rush, you will definitely enjoy  the time of exercising and sweating, and in the end get a better body.</string>
+	<string name="rr_start">Start RocketRush</string>
 </resources>

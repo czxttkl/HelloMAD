@@ -72,7 +72,7 @@ public class HelloMAD extends Activity implements OnClickListener {
 			startActivity(i);
 			break;
 		case R.id.finalproject_button:
-			i = new Intent(this, SplashActivity.class);
+			i = new Intent(this, Description.class);
 			startActivity(i);
 			break;
 		// More buttons go here (if any) ...
