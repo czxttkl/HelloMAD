@@ -109,7 +109,7 @@ public class RocketRushActivity extends FragmentActivity
 		// ...
 		if (modeTo == MODE_WAITING) {
 			mRushModeButton.setVisibility(View.VISIBLE);
-			mVSModeButton.setVisibility(View.VISIBLE);
+			mVSModeButton.setVisibility(View.GONE);
 			mSettingsButton.setVisibility(View.VISIBLE);
 			mTutorialButton.setVisibility(View.VISIBLE);
 			mRankButton.setVisibility(View.VISIBLE);
@@ -273,6 +273,7 @@ public class RocketRushActivity extends FragmentActivity
 		mTutorialButton.setOnClickListener(this);
 		mRankButton.setOnClickListener(this);
 		mAboutButton.setOnClickListener(this);
+		mVSModeButton.setVisibility(View.GONE);
 		
 		mGameView.setHandler(mHandler);
 	}	

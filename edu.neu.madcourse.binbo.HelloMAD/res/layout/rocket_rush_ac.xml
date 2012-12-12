@@ -4,34 +4,34 @@
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:orientation="vertical"
-	android:background="@color/rr_blue"
 	android:gravity="center"
-	android:padding="10dip">
-	
-	<TextView
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:textSize="24sp"
-		android:typeface="serif"
-		android:textColor="@color/rr_red"
-		android:textStyle="bold"
-		android:text="@string/ac_title"
-		android:paddingBottom="30dp" />
+	android:padding="16dip">
 	
 	<TextView
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:textSize="20sp"
 		android:typeface="serif"
-		android:textColor="@color/black"
+		android:textColor="@color/rr_red"
 		android:textStyle="bold"
-		android:text="@string/rr_ac_design"
-		android:paddingBottom="10dp" />
+		android:text="@string/ac_title"
+		android:paddingTop="10dp"
+		android:paddingBottom="22dp" />
 	
 	<TextView
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:textSize="18sp"
+		android:textSize="16sp"
+		android:typeface="serif"
+		android:textColor="@color/black"
+		android:textStyle="bold"
+		android:text="@string/rr_ac_design"
+		android:paddingBottom="8dp" />
+	
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textSize="15sp"
 		android:typeface="serif"
 		android:textColor="@color/rr_dark"
 		android:textStyle="bold"
@@ -40,18 +40,18 @@
 	<TextView
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:textSize="20sp"
+		android:textSize="16sp"
 		android:typeface="serif"
 		android:textColor="@color/black"
 		android:textStyle="bold"
 		android:text="@string/rr_ac_develop"
 		android:paddingTop="20dp"
-		android:paddingBottom="10dp" />
+		android:paddingBottom="8dp" />
 	
 	<TextView
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:textSize="18sp"
+		android:textSize="15sp"
 		android:typeface="serif"
 		android:textColor="@color/rr_dark"
 		android:textStyle="bold"
@@ -60,18 +60,18 @@
 	<TextView
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:textSize="20sp"
+		android:textSize="16sp"
 		android:typeface="serif"
 		android:textColor="@color/black"
 		android:textStyle="bold"
 		android:text="@string/rr_img_rkt_credit"
 		android:paddingTop="20dp"
-		android:paddingBottom="10dp" />
+		android:paddingBottom="8dp" />
 	
 	<TextView
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:textSize="18sp"
+		android:textSize="15sp"
 		android:typeface="serif"
 		android:textColor="@color/rr_dark"
 		android:textStyle="bold"
@@ -80,21 +80,22 @@
 	<TextView
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:textSize="20sp"
+		android:textSize="16sp"
 		android:typeface="serif"
 		android:textColor="@color/black"
 		android:textStyle="bold"
 		android:text="@string/rr_img_credit"
 		android:paddingTop="20dp"
-		android:paddingBottom="10dp" />
+		android:paddingBottom="8dp" />
 	
 	<TextView
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:textSize="18sp"
+		android:textSize="15sp"
 		android:typeface="serif"
 		android:textColor="@color/rr_dark"
 		android:textStyle="bold"
-		android:text="@string/rr_img_credit_owner" />
+		android:text="@string/rr_img_credit_owner"
+		android:paddingBottom="16dp" />
 	
 </LinearLayout>
