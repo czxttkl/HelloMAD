@@ -20,17 +20,9 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_gravity="center"
-			android:src="@drawable/rush_mode_btn_selector"
+			android:src="@drawable/btn_start_selector"
+			android:paddingTop="60dp"
 			android:background="#00000000" />
-		
-		<ImageButton
-		    android:id="@+id/vsModeButton"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_gravity="center"
-		    android:layout_marginTop="10dip"
-		    android:src="@drawable/vs_mode_btn_selector"
-		    android:background="#00000000" />
 		
 		<TextView 
 		    android:id="@+id/timerView" 
@@ -45,7 +37,7 @@
 		    android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_gravity="center"
-			android:layout_marginTop="20dp"
+			android:layout_marginTop="60dp"
 		    android:orientation="horizontal" >
 		
 		    <ImageButton

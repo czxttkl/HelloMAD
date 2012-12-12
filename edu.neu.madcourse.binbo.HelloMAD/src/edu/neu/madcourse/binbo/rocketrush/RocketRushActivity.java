@@ -40,7 +40,6 @@ public class RocketRushActivity extends FragmentActivity
 	protected GameView mGameView = null;
 	protected TextView mTimeView = null;
 	protected ImageButton mRushModeButton = null;
-	protected ImageButton mVSModeButton = null;
 	protected ImageButton mSettingsButton = null;
 	protected ImageButton mTutorialButton = null;
 	protected ImageButton mRankButton = null;
@@ -109,14 +108,12 @@ public class RocketRushActivity extends FragmentActivity
 		// ...
 		if (modeTo == MODE_WAITING) {
 			mRushModeButton.setVisibility(View.VISIBLE);
-			mVSModeButton.setVisibility(View.VISIBLE);
 			mSettingsButton.setVisibility(View.VISIBLE);
 			mTutorialButton.setVisibility(View.VISIBLE);
 			mRankButton.setVisibility(View.VISIBLE);
 			mAboutButton.setVisibility(View.VISIBLE);
 		} else {
 			mRushModeButton.setVisibility(View.GONE);
-			mVSModeButton.setVisibility(View.GONE);
 			mSettingsButton.setVisibility(View.GONE);
 			mTutorialButton.setVisibility(View.GONE);
 			mRankButton.setVisibility(View.GONE);
@@ -187,9 +184,6 @@ public class RocketRushActivity extends FragmentActivity
 		case R.id.rushModeButton:	
 			switchGameMode(MODE_RUSH);
 			break;		
-		case R.id.vsModeButton:			
-			switchGameMode(MODE_VERSUS);
-			break;
 		case R.id.settingsButton:
 			startActivity(new Intent(this, Prefs.class));
 			break;
@@ -261,14 +255,12 @@ public class RocketRushActivity extends FragmentActivity
 		mGameView = (GameView)findViewById(R.id.rocketRushView);
 		mTimeView = (TextView)findViewById(R.id.timerView);
 		mRushModeButton = (ImageButton)findViewById(R.id.rushModeButton);
-		mVSModeButton   = (ImageButton)findViewById(R.id.vsModeButton);
 		mSettingsButton = (ImageButton)findViewById(R.id.settingsButton);
 		mTutorialButton = (ImageButton)findViewById(R.id.helpButton);
 		mRankButton     = (ImageButton)findViewById(R.id.rankButton);
 		mAboutButton    = (ImageButton)findViewById(R.id.aboutButton);
 		
 		mRushModeButton.setOnClickListener(this);
-		mVSModeButton.setOnClickListener(this);
 		mSettingsButton.setOnClickListener(this);
 		mTutorialButton.setOnClickListener(this);
 		mRankButton.setOnClickListener(this);
