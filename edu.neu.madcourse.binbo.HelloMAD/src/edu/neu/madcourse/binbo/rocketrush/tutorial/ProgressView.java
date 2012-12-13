@@ -5,16 +5,13 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
+import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
 public class ProgressView extends View implements OnTutorialChangedListener {
-
-	protected int mPosition = 0;
-	protected Paint mPaint = new Paint();
-	protected Paint mPaintFocus = new Paint();
 	
-	public ProgressView(TutorialActivity context) {
+	public ProgressView(Context context) {
 		super(context);
 		
 		mPaint.setAntiAlias(true);		    
@@ -25,6 +22,23 @@ public class ProgressView extends View implements OnTutorialChangedListener {
 		mPaintFocus.setARGB(255, 255, 255, 255);
 		mPaintFocus.setStyle(Style.FILL);
 	}
+	
+	public ProgressView(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		
+		mPaint.setAntiAlias(true);		    
+		mPaint.setARGB(150, 240, 240, 240);
+		mPaint.setStyle(Style.FILL);
+		
+		mPaintFocus.setAntiAlias(true);		    
+		mPaintFocus.setARGB(255, 255, 255, 255);
+		mPaintFocus.setStyle(Style.FILL);
+	}
+
+	protected int mPosition = 0;
+	protected Paint mPaint = new Paint();
+	protected Paint mPaintFocus = new Paint();
+
 
 	@Override
 	protected void onDraw(Canvas canvas) {

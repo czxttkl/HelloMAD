@@ -5,6 +5,8 @@ import java.util.List;
 
 import edu.neu.madcourse.binbo.R;
 import edu.neu.madcourse.binbo.boggle.BogglePuzzleView;
+import edu.neu.madcourse.binbo.rocketrush.RocketRushActivity;
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -13,13 +15,16 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
-public class TutorialActivity extends FragmentActivity {
+public class TutorialActivity extends FragmentActivity implements OnClickListener {
 	private ViewPager mViewPager; // container for all tab views
 	private ViewPagerAdapter mAdapter;
 	private ProgressView mProgView;
+	private ImageButton  mButton = null;
 	public boolean mStartNewActivity = true;	
 	protected OnTutorialChangedListener mListener = null;
     /** Called when the activity is first created. */
@@ -54,12 +59,11 @@ public class TutorialActivity extends FragmentActivity {
 	    mViewPager.setAdapter(mAdapter);
 	    mViewPager.setCurrentItem(0);
 	    
-	    mProgView = new ProgressView(this);
-	    mProgView.setBackgroundColor(0xa0505050);
+	    mProgView = (ProgressView)findViewById(R.id.progView);
 	    setOnTutorialChangedListener(mProgView);
-	 // adjust the layout according to the screen resolution
-	    FrameLayout main = (FrameLayout)findViewById(R.id.tutorial_layout_root); 		
- 		main.addView(mProgView);
+ 		
+ 		mButton = (ImageButton) findViewById(R.id.skipButton); 		
+		mButton.setOnClickListener(this);
     }
     
     private void setTab() {
@@ -97,6 +101,20 @@ public class TutorialActivity extends FragmentActivity {
 		});    	
 
     }
+    
+    public void onClick(View v) {
+		Intent i = null;
+		
+		switch (v.getId()) {
+		case R.id.skipButton:	
+			if (mStartNewActivity) {
+				i = new Intent(this, RocketRushActivity.class);
+				startActivity(i);
+			}
+			finish();
+			break;		
+		}
+	}
     
     @Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
