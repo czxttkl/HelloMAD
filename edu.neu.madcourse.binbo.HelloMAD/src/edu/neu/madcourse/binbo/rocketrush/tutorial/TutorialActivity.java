@@ -52,22 +52,22 @@ public class TutorialActivity extends FragmentActivity {
 
 			public void onPageSelected(int position) {
 				// TODO Auto-generated method stub
-				switch(position) {
-				case 0:
-					findViewById(R.id.first_tab).setVisibility(View.VISIBLE);
-					findViewById(R.id.second_tab).setVisibility(View.INVISIBLE);
-					findViewById(R.id.third_tab).setVisibility(View.INVISIBLE);
-					break;					
-				case 1:
-					findViewById(R.id.first_tab).setVisibility(View.INVISIBLE);
-					findViewById(R.id.second_tab).setVisibility(View.VISIBLE);
-					findViewById(R.id.third_tab).setVisibility(View.INVISIBLE);
-					break;
-				case 2:
-					findViewById(R.id.first_tab).setVisibility(View.INVISIBLE);
-					findViewById(R.id.second_tab).setVisibility(View.INVISIBLE);
-					findViewById(R.id.third_tab).setVisibility(View.VISIBLE);
-					break;
+				switch(position) { // the following code is useful when the indicator is used
+//				case 0:
+//					findViewById(R.id.first_tab).setVisibility(View.VISIBLE);
+//					findViewById(R.id.second_tab).setVisibility(View.INVISIBLE);
+//					findViewById(R.id.third_tab).setVisibility(View.INVISIBLE);
+//					break;					
+//				case 1:
+//					findViewById(R.id.first_tab).setVisibility(View.INVISIBLE);
+//					findViewById(R.id.second_tab).setVisibility(View.VISIBLE);
+//					findViewById(R.id.third_tab).setVisibility(View.INVISIBLE);
+//					break;
+//				case 2:
+//					findViewById(R.id.first_tab).setVisibility(View.INVISIBLE);
+//					findViewById(R.id.second_tab).setVisibility(View.INVISIBLE);
+//					findViewById(R.id.third_tab).setVisibility(View.VISIBLE);
+//					break;
 				}
 			}
 				

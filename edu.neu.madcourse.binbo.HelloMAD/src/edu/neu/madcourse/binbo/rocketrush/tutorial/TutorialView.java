@@ -17,12 +17,21 @@ public class TutorialView extends View {
 	protected Bitmap mImage = null;
 	protected int mScreenWidth  = 0;
 	protected int mScreenHeight = 0;
+	protected Paint mPaint = new Paint();
+	protected Paint mPaintFocus = new Paint();
 //	private Paint  mPaint = null;  // used for testing only
 //	private String mText  = "";    // used for testing only	
 	
 	public TutorialView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 
+		mPaint.setAntiAlias(true);		    
+		mPaint.setARGB(150, 240, 240, 240);
+		mPaint.setStyle(Style.FILL);
+		
+		mPaintFocus.setAntiAlias(true);		    
+		mPaintFocus.setARGB(255, 255, 255, 255);
+		mPaintFocus.setStyle(Style.FILL);
 //		mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 //		mPaint.setColor(Color.BLUE);
 //		mPaint.setStyle(Style.FILL);
@@ -57,6 +66,10 @@ public class TutorialView extends View {
 		canvas.drawBitmap(mImage, null, rect, null); 			
 //		mImage.recycle();
 //		mImage = null;
+		// draw the dots
+		canvas.drawCircle(mScreenWidth / 2 - 40, mScreenHeight * 0.875f, 8, mImageIndex == 0 ? mPaintFocus : mPaint);
+		canvas.drawCircle(mScreenWidth / 2, mScreenHeight * 0.875f, 8, mImageIndex == 1 ? mPaintFocus : mPaint);
+		canvas.drawCircle(mScreenWidth / 2 + 40, mScreenHeight * 0.875f, 8, mImageIndex == 2 ? mPaintFocus : mPaint);
 		System.gc();
 	}
 

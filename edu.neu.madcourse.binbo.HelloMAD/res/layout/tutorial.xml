@@ -50,10 +50,10 @@
     </TableLayout> -->
     
     <!-- Include Tab Indicator  -->
- 	<include 
+ 	<!-- <include 
  	    layout="@layout/indicator" 
  	    android:layout_width="fill_parent" 
- 	    android:layout_height="wrap_content"  />
+ 	    android:layout_height="wrap_content"  /> -->
  
 	<android.support.v4.view.ViewPager
 		android:layout_width="fill_parent" 
