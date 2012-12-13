@@ -65,7 +65,7 @@ public class TutorialActivity extends FragmentActivity implements OnClickListene
  		
  		mButton = (ImageButton) findViewById(R.id.skipButton); 		
 		mButton.setOnClickListener(this);
-		mButton.setVisibility(View.GONE);
+//		mButton.setVisibility(View.GONE);
     }
     
     private void setTab() {
