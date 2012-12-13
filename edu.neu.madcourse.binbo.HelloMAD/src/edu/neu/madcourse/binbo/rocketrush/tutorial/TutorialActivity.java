@@ -55,7 +55,7 @@ public class TutorialActivity extends FragmentActivity {
 	    mViewPager.setCurrentItem(0);
 	    
 	    mProgView = new ProgressView(this);
-	    mProgView.setBackgroundColor(0x00000000);
+	    mProgView.setBackgroundColor(0xa0505050);
 	    setOnTutorialChangedListener(mProgView);
 	 // adjust the layout according to the screen resolution
 	    FrameLayout main = (FrameLayout)findViewById(R.id.tutorial_layout_root); 		
