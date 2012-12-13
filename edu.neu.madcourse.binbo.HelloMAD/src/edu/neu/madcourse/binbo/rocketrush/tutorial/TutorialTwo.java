@@ -15,11 +15,10 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-public class TutorialTwo extends Fragment implements OnClickListener {
+public class TutorialTwo extends Fragment {
 	
 	private Context mContext = null;
-	private TutorialView mView   = null;
-	private ImageButton  mButton = null;
+	private TutorialView mView   = null;	
 	
 	public static Fragment newInstance(Context context) {
 		TutorialTwo f = new TutorialTwo(context);	
@@ -35,27 +34,10 @@ public class TutorialTwo extends Fragment implements OnClickListener {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 		ViewGroup root = (ViewGroup) inflater.inflate(R.layout.tutorial_2, null);
-		mView = (TutorialView)root.findViewById(R.id.tutorialView2);
-		mButton = (ImageButton)root.findViewById(R.id.skipButton);
-		mButton.setOnClickListener(this);		
+		mView = (TutorialView)root.findViewById(R.id.tutorialView2);		
 		return root;
 	}
-	
-	public void onClick(View v) {
-		Intent i = null;
-		TutorialActivity activity = (TutorialActivity) mContext;
-		
-		switch (v.getId()) {
-		case R.id.skipButton:	
-			if (activity.mStartNewActivity) {
-				i = new Intent(activity, RocketRushActivity.class);
-				startActivity(i);
-			}
-			activity.finish();
-			break;		
-		}
-	}
-	
+
 	@Override
 	public void onPause() {
 		mView.onPause();

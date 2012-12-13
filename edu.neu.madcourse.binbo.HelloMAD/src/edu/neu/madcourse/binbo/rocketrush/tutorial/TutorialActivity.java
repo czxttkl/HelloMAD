@@ -1,7 +1,13 @@
 package edu.neu.madcourse.binbo.rocketrush.tutorial;
 
 
+import java.util.List;
+
 import edu.neu.madcourse.binbo.R;
+import edu.neu.madcourse.binbo.boggle.BogglePuzzleView;
+import edu.neu.madcourse.binbo.rocketrush.RocketRushActivity;
+import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -9,11 +15,18 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.View.OnClickListener;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
-public class TutorialActivity extends FragmentActivity {
+public class TutorialActivity extends FragmentActivity implements OnClickListener {
 	private ViewPager mViewPager; // container for all tab views
 	private ViewPagerAdapter mAdapter;
-	public boolean mStartNewActivity = true;
+	private ProgressView mProgView;
+	private ImageButton  mButton = null;
+	public boolean mStartNewActivity = true;	
+	protected OnTutorialChangedListener mListener = null;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,11 +49,21 @@ public class TutorialActivity extends FragmentActivity {
         setTab();
     }
     
+    public void setOnTutorialChangedListener(OnTutorialChangedListener listener) {
+    	mListener = listener;
+    }
+    
     private void setupView(){    	
     	mViewPager = (ViewPager)findViewById(R.id.viewPager);
     	mAdapter = new ViewPagerAdapter(this, getSupportFragmentManager());
 	    mViewPager.setAdapter(mAdapter);
 	    mViewPager.setCurrentItem(0);
+	    
+	    mProgView = (ProgressView)findViewById(R.id.progView);
+	    setOnTutorialChangedListener(mProgView);
+ 		
+ 		mButton = (ImageButton) findViewById(R.id.skipButton); 		
+		mButton.setOnClickListener(this);
     }
     
     private void setTab() {
@@ -52,8 +75,12 @@ public class TutorialActivity extends FragmentActivity {
 
 			public void onPageSelected(int position) {
 				// TODO Auto-generated method stub
-				switch(position) { // the following code is useful when the indicator is used
-//				case 0:
+				if (mListener != null) {
+					mListener.OnTutorialChanged(position);
+				}
+				
+//				switch(position) { // the following code is useful when the indicator is used
+//				case 0:					
 //					findViewById(R.id.first_tab).setVisibility(View.VISIBLE);
 //					findViewById(R.id.second_tab).setVisibility(View.INVISIBLE);
 //					findViewById(R.id.third_tab).setVisibility(View.INVISIBLE);
@@ -68,12 +95,26 @@ public class TutorialActivity extends FragmentActivity {
 //					findViewById(R.id.second_tab).setVisibility(View.INVISIBLE);
 //					findViewById(R.id.third_tab).setVisibility(View.VISIBLE);
 //					break;
-				}
+//				}
 			}
 				
 		});    	
 
     }
+    
+    public void onClick(View v) {
+		Intent i = null;
+		
+		switch (v.getId()) {
+		case R.id.skipButton:	
+			if (mStartNewActivity) {
+				i = new Intent(this, RocketRushActivity.class);
+				startActivity(i);
+			}
+			finish();
+			break;		
+		}
+	}
     
     @Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -86,5 +127,9 @@ public class TutorialActivity extends FragmentActivity {
 		}
 		
 		return super.onKeyDown(keyCode, event);
+	}
+    
+    public interface OnTutorialChangedListener {
+		void OnTutorialChanged(int position);
 	}
 }

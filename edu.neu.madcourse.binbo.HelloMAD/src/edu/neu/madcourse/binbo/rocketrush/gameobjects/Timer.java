@@ -62,8 +62,23 @@ public class Timer extends Utility {
 		super.update();
 	}		
 
+	protected int mHalfSecond = 500;	
 	@Override
-	public void doDraw(Canvas c) {		
+	public void doDraw(Canvas c) {
+		if (mHalfSecond == 0) {
+			mHalfSecond = 500;
+			if (mTime > 0 && mTime < 10) {
+				if (mPaint.getColor() == Color.WHITE) {
+					mPaint.setColor(Color.RED);
+				} else {
+					mPaint.setColor(Color.WHITE);
+				}
+			}
+			if (mTime == 0) {
+				mPaint.setColor(Color.WHITE);
+			}
+		}
+		mHalfSecond -= GameEngine.ENGINE_SPEED;
 		c.drawText(mTextTime, mCanvasWidth - mPaint.measureText(mTextTime) - 24, 40, mPaint);
 	}
 

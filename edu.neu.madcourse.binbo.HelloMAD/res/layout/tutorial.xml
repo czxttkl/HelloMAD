@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tutorial_layout_root"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/white"
@@ -54,10 +55,26 @@
  	    layout="@layout/indicator" 
  	    android:layout_width="fill_parent" 
  	    android:layout_height="wrap_content"  /> -->
- 
-	<android.support.v4.view.ViewPager
+ 	    
+ 	<android.support.v4.view.ViewPager
 		android:layout_width="fill_parent" 
 		android:layout_height="fill_parent"
 		android:id="@+id/viewPager" />
+ 
+	<edu.neu.madcourse.binbo.rocketrush.tutorial.ProgressView
+		android:layout_width="fill_parent" 
+		android:layout_height="fill_parent"
+		android:background="#70606060"
+		android:id="@+id/progView" />		
 	
-</LinearLayout>
+	<ImageButton
+    	android:id="@+id/skipButton"
+    	android:background="#00000000"
+    	android:contentDescription="skip the tutorial"
+    	android:src="@drawable/btn_skip"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="right|bottom"
+		android:padding="16dip" />
+	
+</FrameLayout>
