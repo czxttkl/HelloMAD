@@ -80,11 +80,11 @@ public class TutorialActivity extends FragmentActivity implements OnClickListene
 				if (mListener != null) {
 					mListener.OnTutorialChanged(position);
 				}
-				if (position == 2) {
-					mButton.setVisibility(View.VISIBLE);
-				} else {
-					mButton.setVisibility(View.GONE);
-				}
+//				if (position == 2) {
+//					mButton.setVisibility(View.VISIBLE);
+//				} else {
+//					mButton.setVisibility(View.GONE);
+//				}
 				
 //				switch(position) { // the following code is useful when the indicator is used
 //				case 0:					
