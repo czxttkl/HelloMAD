@@ -44,7 +44,11 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 	@Override
 	public void reset() {
 		mCurLevel = 1;
-		mCurLoop  = 1; 
+		mCurLoop  = 1; 	
+		mProbBird    = 90;
+		mProbAster   = 190;
+		mProbAlient  = 135;
+		mProbThunder = 250;
 		release();
 		load();
 	}
@@ -220,7 +224,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 	
 	// probabilities for creating barriers
 	private int mProbBird    = 90;
-	private int	mProbAster   = 175;
+	private int	mProbAster   = 190;
 	private int mProbAlient  = 135;
 	private int mProbThunder = 250;
 	
@@ -472,7 +476,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 	}
 
 	public void onLifeChanged(float life) {
-		if (life == 0) { // compare a float, not good, modify later if neccessary
+		if (life == 0) { // compare a float, not good, modify later if necessary
 			GameEvent e = new StateEvent(StateEvent.STATE_OVER, StateEvent.NO_LIFE);
 			e.mExtra = Integer.valueOf(mOdometer.getDistance());
 			mEventHandler.handleGameEvent(e);

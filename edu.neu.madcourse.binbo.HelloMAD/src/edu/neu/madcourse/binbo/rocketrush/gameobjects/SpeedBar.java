@@ -97,22 +97,22 @@ public class SpeedBar extends Utility {
 		
 		r1.left   = 30;
 	    r1.top    = mCanvasHeight * 0.58f;
-	    r1.right  = 54;
+	    r1.right  = 50;
 	    r1.bottom = mCanvasHeight * 0.9f;
 	    
 	    r2.left   = 32;
 	    r2.top    = mCanvasHeight * 0.58f + 2;
-	    r2.right  = 52;
+	    r2.right  = 48;
 	    r2.bottom = mCanvasHeight * 0.9f - 2;
 	    
 	    r3.left   = 32;
-	    r3.top    = mCanvasHeight * 0.9f - 2;
-	    r3.right  = 52;
+	    r3.top    = mCanvasHeight * 0.58f + 2;
+	    r3.right  = 48;
 	    r3.bottom = mCanvasHeight * 0.9f - 2;
 	    
-	    rShadow.left = 26;
-	    rShadow.top = mCanvasHeight * 0.58f - 4;
-	    rShadow.right = 58;
+	    rShadow.left   = 26;
+	    rShadow.top    = mCanvasHeight * 0.58f - 4;
+	    rShadow.right  = 54;
 	    rShadow.bottom = mCanvasHeight * 0.9f + 4;
 	    
 	    mBarTop    = mCanvasHeight * 0.58f + 2;

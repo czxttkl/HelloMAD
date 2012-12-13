@@ -32,8 +32,7 @@ public class Timer extends Utility {
 		mPaint.setStyle(Style.FILL);
 		mPaint.setTypeface(Typeface.SERIF);
 		mPaint.setFakeBoldText(true);
-		mPaint.setShadowLayer(4, 1, 1, Color.DKGRAY);
-		mPaint.setTextSize(38);		
+		mPaint.setShadowLayer(4, 1, 1, Color.DKGRAY);		
 	}
 	
 	public void setOnTimeUpdateListener(OnTimeUpdateListener listener) {
@@ -67,14 +66,15 @@ public class Timer extends Utility {
 	public void doDraw(Canvas c) {
 		if (mHalfSecond == 0) {
 			mHalfSecond = 500;
-			if (mTime > 0 && mTime < 10) {
+			if (mTime == 0) {
+				mPaint.setColor(Color.WHITE);
+			} else if (mTime > 0 && mTime < 10) {
 				if (mPaint.getColor() == Color.WHITE) {
 					mPaint.setColor(Color.RED);
 				} else {
 					mPaint.setColor(Color.WHITE);
 				}
-			}
-			if (mTime == 0) {
+			} else if (mTime >= 10) {
 				mPaint.setColor(Color.WHITE);
 			}
 		}
@@ -86,6 +86,12 @@ public class Timer extends Utility {
 	public void onSizeChanged(int width, int height) {
 		mCanvasWidth  = width;
 		mCanvasHeight = height;
+		
+		if (mWidth <= 500) {
+			mPaint.setTextSize(32);
+		} else {
+			mPaint.setTextSize(38);
+		}
 	}
 	
 	public interface OnTimeUpdateListener {

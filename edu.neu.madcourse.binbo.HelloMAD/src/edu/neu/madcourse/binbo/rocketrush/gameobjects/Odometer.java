@@ -41,8 +41,7 @@ public class Odometer extends Utility {
 		mPaint.setColor(Color.WHITE);
 		mPaint.setTypeface(Typeface.SERIF);
 		mPaint.setFakeBoldText(true);
-		mPaint.setShadowLayer(4, 1, 1, Color.DKGRAY);
-		mPaint.setTextSize(30);
+		mPaint.setShadowLayer(4, 1, 1, Color.DKGRAY);		
 	}
 	
 	public int getDistance() {
@@ -57,6 +56,12 @@ public class Odometer extends Utility {
 	public void onSizeChanged(int width, int height) {
 		mWidth  = width;
 		mHeight = height;
+		
+		if (mWidth <= 500) {
+			mPaint.setTextSize(24);
+		} else {
+			mPaint.setTextSize(30);
+		}
 	}
 	
 	@Override

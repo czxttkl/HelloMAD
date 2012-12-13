@@ -2,13 +2,12 @@ package edu.neu.madcourse.binbo.rocketrush;
 
 import edu.neu.madcourse.binbo.R;
 import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.WindowManager;
 
 public class Prefs extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
@@ -47,8 +46,9 @@ public class Prefs extends PreferenceActivity implements Preference.OnPreference
 	}
 
 	public boolean onPreferenceChange(Preference preference, Object newValue) {
-		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-    	sharedPref.edit().putBoolean(preference.getKey(), (Boolean) newValue);
+		Editor editor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
+		editor.putBoolean(preference.getKey(), (Boolean) newValue);
+		editor.commit();
         return true;
 	}
 }

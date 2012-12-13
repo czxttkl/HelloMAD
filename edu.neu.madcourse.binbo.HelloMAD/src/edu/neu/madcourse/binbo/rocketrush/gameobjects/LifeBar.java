@@ -39,8 +39,7 @@ public class LifeBar extends Utility {
 		mPaint0.setAntiAlias(true);
 		mPaint0.setTypeface(Typeface.SERIF);
 		mPaint0.setFakeBoldText(true);
-		mPaint0.setShadowLayer(4, 1, 1, Color.DKGRAY);
-		mPaint0.setTextSize(28);
+		mPaint0.setShadowLayer(4, 1, 1, Color.DKGRAY);		
 
 		mPaint2.setAntiAlias(true);		    
 		mPaint2.setARGB(120, 255, 255, 255);
@@ -59,6 +58,7 @@ public class LifeBar extends Utility {
 
 	public void lifeChange(float change) {
 		mLife = Math.max(Math.min(mLife + change, 1f), 0);
+		r3.right = 78 + mWidth * mLife;
 		
 		if (mLife <= 0.33) {
 	    	mPaint3.setARGB(255, 230, 0, 0);
@@ -87,7 +87,7 @@ public class LifeBar extends Utility {
 	
 	@Override
 	public void doDraw(Canvas c) {		
-		c.drawText("HP", 24, 84, mPaint0);   	    
+		c.drawText("HP", 24, 82, mPaint0);   	    
 	    c.drawRect(r2, mPaint2);	    
 	    c.drawRect(r3, mPaint3);
 	}
@@ -97,6 +97,12 @@ public class LifeBar extends Utility {
 	public void onSizeChanged(int width, int height) {
 		mCanvasWidth  = width;
 		mCanvasHeight = height;
+		
+		if (mWidth <= 500) {
+			mPaint0.setTextSize(24);
+		} else {
+			mPaint0.setTextSize(28);
+		}
 	    
 	    r2.left   = 78;
 	    r2.top    = 66;
