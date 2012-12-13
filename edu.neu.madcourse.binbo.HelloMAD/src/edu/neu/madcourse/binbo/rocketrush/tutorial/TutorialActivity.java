@@ -8,6 +8,7 @@ import edu.neu.madcourse.binbo.boggle.BogglePuzzleView;
 import edu.neu.madcourse.binbo.rocketrush.RocketRushActivity;
 import android.content.Intent;
 import android.graphics.Point;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -64,6 +65,7 @@ public class TutorialActivity extends FragmentActivity implements OnClickListene
  		
  		mButton = (ImageButton) findViewById(R.id.skipButton); 		
 		mButton.setOnClickListener(this);
+		mButton.setVisibility(View.GONE);
     }
     
     private void setTab() {
@@ -77,6 +79,11 @@ public class TutorialActivity extends FragmentActivity implements OnClickListene
 				// TODO Auto-generated method stub
 				if (mListener != null) {
 					mListener.OnTutorialChanged(position);
+				}
+				if (position == 2) {
+					mButton.setVisibility(View.VISIBLE);
+				} else {
+					mButton.setVisibility(View.GONE);
 				}
 				
 //				switch(position) { // the following code is useful when the indicator is used

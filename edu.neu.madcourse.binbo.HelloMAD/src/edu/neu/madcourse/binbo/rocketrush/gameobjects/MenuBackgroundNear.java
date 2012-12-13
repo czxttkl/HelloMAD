@@ -37,9 +37,10 @@ public class MenuBackgroundNear extends Background {
 		Bitmap newImage = 
 			Bitmap.createScaledBitmap(mImage, scaledWidth, scaledHeight, true);
 		mImage.recycle(); // explicit call to avoid out of memory
-		setImage(newImage);
-		
+		mImage = null;
 		System.gc();
+		
+		setImage(newImage);
 	}
 
 	@Override
