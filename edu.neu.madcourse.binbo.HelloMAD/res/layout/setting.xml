@@ -3,7 +3,18 @@
     android:orientation="vertical"
     android:gravity="center"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:padding="10dp">
+    
+    <TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textSize="20sp"
+		android:typeface="serif"
+		android:textColor="@color/rr_red"
+		android:textStyle="bold"
+		android:text="Settings"
+		android:paddingBottom="12dp" />
     
     <TextView
 		android:layout_width="wrap_content"
@@ -22,7 +33,7 @@
         android:layout_height="wrap_content"        
         android:paddingBottom="12dp"
         android:progressDrawable="@@drawable/progress"
-        android:max="100" 
+        android:max="100"
         android:progress="40"/>
  	
  	<TextView
@@ -32,15 +43,14 @@
 		android:typeface="serif"
 		android:textColor="@color/black"
 		android:textStyle="bold"
-		android:text="Sfx Volume"
+		android:text="Sound Effect Volume"
 		android:paddingTop="12dp" 
 		android:paddingBottom="8dp" />
  	
  	<SeekBar 
         android:id="@+id/sfx_seek"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"        
-        android:paddingBottom="12dp"
+        android:layout_height="wrap_content"
         android:progressDrawable="@@drawable/progress"
         android:max="100" 
         android:progress="40"/>
