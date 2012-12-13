@@ -95,7 +95,7 @@ public class Odometer extends Utility {
 
 	@Override
 	public void doDraw(Canvas c) {
-		String s = "Distance    " + mOdometer / 10 + " / " + mMilestone / 10;
+		String s = "Distance   " + mOdometer / 10 + " / " + mMilestone / 10;
 		c.drawText(s, mX, mY, mPaint);
 	}
 	
