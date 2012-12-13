@@ -35,7 +35,7 @@ public class GameOverDialog extends Activity implements OnClickListener {
 		mExitButton.setOnClickListener(this);
 				
 		mTextView.setTextColor(Color.RED);
-		mTextView.setShadowLayer(10, 8, 6, Color.GRAY);
+		mTextView.getPaint().setFakeBoldText(true);
 		mTextView.setText(String.valueOf(mDistance));
 	}
 

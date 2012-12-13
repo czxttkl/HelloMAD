@@ -33,15 +33,15 @@ public class Odometer extends Utility {
 		setMaxSpeed(0, DEFAULT_SPEED_Y * 3);
 		setAccSpeed(0, DEFAULT_SPEED_Y / (1000 / GameEngine.ENGINE_SPEED));
 		
-		mX = 24; mY = 40;
+		mX = 24; mY = 82;
 		
 		mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		mPaint.setARGB(255, 0, 0, 0);
 		mPaint.setStyle(Style.FILL);	
 		mPaint.setColor(Color.WHITE);
-		mPaint.setTypeface(Typeface.SERIF);
+		mPaint.setTextSize(30);
 		mPaint.setFakeBoldText(true);
-		mPaint.setShadowLayer(4, 1, 1, Color.DKGRAY);		
+		mPaint.setShadowLayer(2, 1, 1, Color.BLACK);		
 	}
 	
 	public int getDistance() {
@@ -50,18 +50,6 @@ public class Odometer extends Utility {
 	
 	public void setOdometerUpdateListener(OnOdometerUpdateListener listener) {
 		mOdometerUpdateListener = listener;
-	}
-	
-	@Override
-	public void onSizeChanged(int width, int height) {
-		mWidth  = width;
-		mHeight = height;
-		
-		if (mWidth <= 500) {
-			mPaint.setTextSize(24);
-		} else {
-			mPaint.setTextSize(30);
-		}
 	}
 	
 	@Override

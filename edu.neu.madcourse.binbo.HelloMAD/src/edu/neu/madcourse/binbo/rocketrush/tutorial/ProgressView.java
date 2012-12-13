@@ -3,6 +3,7 @@ package edu.neu.madcourse.binbo.rocketrush.tutorial;
 import edu.neu.madcourse.binbo.rocketrush.tutorial.TutorialActivity.OnTutorialChangedListener;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.util.AttributeSet;
@@ -27,11 +28,12 @@ public class ProgressView extends View implements OnTutorialChangedListener {
 		super(context, attrs);
 		
 		mPaint.setAntiAlias(true);		    
-		mPaint.setARGB(150, 240, 240, 240);
+		mPaint.setARGB(80, 0, 0, 0);
 		mPaint.setStyle(Style.FILL);
 		
 		mPaintFocus.setAntiAlias(true);		    
 		mPaintFocus.setARGB(255, 255, 255, 255);
+		mPaintFocus.setShadowLayer(4, 0, 0, Color.BLACK);
 		mPaintFocus.setStyle(Style.FILL);
 	}
 

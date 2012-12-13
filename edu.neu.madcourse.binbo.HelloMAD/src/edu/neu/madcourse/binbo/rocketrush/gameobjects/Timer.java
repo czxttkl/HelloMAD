@@ -30,9 +30,9 @@ public class Timer extends Utility {
 		mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		mPaint.setColor(Color.WHITE);
 		mPaint.setStyle(Style.FILL);
-		mPaint.setTypeface(Typeface.SERIF);
+		mPaint.setTextSize(30);
 		mPaint.setFakeBoldText(true);
-		mPaint.setShadowLayer(4, 1, 1, Color.DKGRAY);		
+		mPaint.setShadowLayer(2, 1, 1, Color.BLACK);		
 	}
 	
 	public void setOnTimeUpdateListener(OnTimeUpdateListener listener) {
@@ -51,7 +51,7 @@ public class Timer extends Utility {
 		if (mOneSecond == 0) {
 			mOneSecond = 1000;
 			mTime = Math.max(mTime - 1, 0);
-			mTextTime = "Time: " + (mTime < 10 ? " " : "") + mTime;
+			mTextTime = "Time " + (mTime < 10 ? " " : "") + mTime;
 			if (mTimeUpdateListener != null) {
 				mTimeUpdateListener.onTimeUpdate(mTime);
 			}
@@ -86,12 +86,6 @@ public class Timer extends Utility {
 	public void onSizeChanged(int width, int height) {
 		mCanvasWidth  = width;
 		mCanvasHeight = height;
-		
-		if (mWidth <= 500) {
-			mPaint.setTextSize(32);
-		} else {
-			mPaint.setTextSize(38);
-		}
 	}
 	
 	public interface OnTimeUpdateListener {
