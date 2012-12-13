@@ -3,31 +3,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rocketrankRoot" 
     android:layout_width="fill_parent"
-    android:layout_height="match_parent"
-    android:background="#bce0ff"  
-    android:gravity="center|top"
-    android:paddingTop="30dp"
+    android:layout_height="fill_parent"
+    android:background="#00000000"
+    android:gravity="center"
     android:orientation="vertical" >
 	
+	<TextView  
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Rank"    
+        android:gravity="center"
+        android:textColor="@color/rr_red"
+        android:typeface="serif"
+        android:paddingBottom="6dp"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+	<!--
 	<TableLayout  
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="#00000000"
-        android:paddingLeft="24dip"
-	    android:paddingRight="24dip"
         android:stretchColumns="*" >
   
         <TableRow  
             android:background="#333" >
             
             <TextView  
-                android:text=""    
+                android:text="No."    
                 android:layout_gravity="center"
                 android:gravity="left"
                 android:textColor="#fff"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />  
 
             <TextView                             
@@ -35,7 +43,7 @@
                 android:layout_gravity="center"
                 android:gravity="left"
                 android:textColor="#fff"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:textStyle="bold" />  
@@ -44,43 +52,47 @@
                 android:text="Time"     
                 android:layout_gravity="center"
                 android:textColor="#fff"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:textStyle="bold" />  
         </TableRow>  
-    </TableLayout>  
+    </TableLayout>
+    -->
   
+  	<TextView                    
+        android:id="@+id/rankNoRecordTextView"
+        android:text="You haven't any rush history."
+        android:layout_width="wrap_content"  
+        android:layout_height="wrap_content"  
+        android:layout_gravity="center"
+        android:textColor="#666"
+        android:textSize="16sp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:visibility="gone"
+        android:textStyle="bold" />  
+	
 	<ScrollView 
         android:id="@+id/rocketrankScrollView" 
         android:layout_width="fill_parent" 
         android:layout_height="wrap_content"
         android:background="#fff"
         android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="24dip"
-	    android:layout_marginRight="24dip"
-	    android:padding="10dp" >
-        
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp">
+
     <TableLayout  
         android:id="@+id/tableLayoutRocketRank"  
         android:layout_width="fill_parent"  
         android:layout_height="wrap_content"        
         android:background="#fff"  
-        android:stretchColumns="*" >  
+        android:stretchColumns="*" >
 
     </TableLayout> 
     
-    </ScrollView> 	
-    
-	<Button
-		android:id="@+id/rocketRankButtonBack"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:textSize="24px"
-		android:textStyle="bold"
-		android:text="Back"
-		android:layout_marginTop="16dip"
-		android:layout_marginLeft="24dip"
-	    android:layout_marginRight="24dip" />
+    </ScrollView>
 
 </LinearLayout>

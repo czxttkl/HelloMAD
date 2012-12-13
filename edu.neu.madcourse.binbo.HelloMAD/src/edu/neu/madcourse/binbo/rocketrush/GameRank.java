@@ -10,6 +10,7 @@ import edu.neu.madcourse.binbo.persistentboggle.PBInvite;
 import edu.neu.madcourse.binbo.persistentboggle.PBPlayerInfo;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
@@ -27,9 +28,9 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-public class GameRank extends FragmentActivity implements OnClickListener {
+public class GameRank extends FragmentActivity {
 	protected TableLayout mTable = null;
-	protected Button mBackButton = null;	
+	protected TextView mNoRecord = null;
 	protected List<GameResult> mResults = new ArrayList<GameResult>();
 	protected static final String RESULTS = "results";
 	
@@ -46,16 +47,15 @@ public class GameRank extends FragmentActivity implements OnClickListener {
 	
 	private void setupViews() {
 		mTable = (TableLayout) findViewById(R.id.tableLayoutRocketRank);
-		// Set up click listeners for all the buttons
-		mBackButton = (Button) findViewById(R.id.rocketRankButtonBack);		
-		mBackButton.setOnClickListener(this);
+		mNoRecord = (TextView) findViewById(R.id.rankNoRecordTextView);
 	}
 	
 	private void adjustLayout() {
 		getWindow().setFlags(
 			WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON | WindowManager.LayoutParams.FLAG_FULLSCREEN, 
 			WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON | WindowManager.LayoutParams.FLAG_FULLSCREEN
-		); 
+		);
+		
 		// get screen resolution
 		DisplayMetrics dm = new DisplayMetrics();  
         Display display = getWindowManager().getDefaultDisplay(); 		
@@ -67,49 +67,51 @@ public class GameRank extends FragmentActivity implements OnClickListener {
 		laParams = scrollView.getLayoutParams();
 		laParams.height = (int) (dm.heightPixels * 0.7f);
 		scrollView.setLayoutParams(laParams);
-	}
-
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.rocketRankButtonBack:
-			finish();
-			break;
-		}
+		getWindow().setLayout((int)(dm.widthPixels * 0.9f), (int)(dm.heightPixels * 0.9f));
 	}
 
 	@Override
 	protected void onResume() {						
-		for (int i = 0; i < mResults.size(); ++i) {    		
-	    	TableRow tablerow = new TableRow(getApplicationContext());  
-            tablerow.setBackgroundColor(Color.rgb(255, 255, 255));
-                              
-            TextView textViewRank = new TextView(getApplicationContext());
-            textViewRank.setTextSize(18);
-            textViewRank.setTextColor(getApplicationContext().getResources().getColor(R.color.rr_grey));
-            textViewRank.setPadding(10, 10, 10, 10);
-            textViewRank.setWidth(30);
-            textViewRank.setText(String.valueOf(i + 1));           
-            tablerow.addView(textViewRank);
-            
-            TextView textViewScore = new TextView(getApplicationContext());  
-            textViewScore.setTextSize(18);
-            textViewScore.setTextColor(getApplicationContext().getResources().getColor(R.color.rr_grey));
-            textViewScore.setPadding(10, 10, 10, 10);
-            textViewScore.setWidth(30);  
-            textViewScore.setText(String.valueOf(mResults.get(i).mScore));                
-            tablerow.addView(textViewScore);
-            
-            TextView textViewTime = new TextView(getApplicationContext());  
-            textViewTime.setTextSize(18);
-            textViewTime.setTextColor(getApplicationContext().getResources().getColor(R.color.rr_grey));
-            textViewTime.setPadding(10, 10, 10, 10);
-            textViewTime.setWidth(50);  
-            textViewTime.setText(mResults.get(i).mDate);                
-            tablerow.addView(textViewTime);
-              
-            mTable.addView(tablerow, new TableLayout.LayoutParams(  
-                    LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-    	}         
+		if (mResults.size() == 0) {
+			mNoRecord.setVisibility(View.VISIBLE);
+		} else {
+			mNoRecord.setVisibility(View.GONE);
+			for (int i = 0; i < mResults.size(); ++i) {    		
+		    	TableRow tablerow = new TableRow(getApplicationContext());  
+	            tablerow.setBackgroundColor(Color.rgb(255, 255, 255));
+	                              
+	            TextView textViewRank = new TextView(getApplicationContext());
+	            textViewRank.setTextSize(16);
+	            textViewRank.setTextColor(getApplicationContext().getResources().getColor(R.color.rr_grey));
+	            textViewRank.setPadding(10, 10, 10, 10);
+	            textViewRank.setWidth(10);
+	            textViewRank.setText(String.valueOf(i + 1));           
+	            textViewRank.getPaint().setFakeBoldText(true);
+	            tablerow.addView(textViewRank);
+	            
+	            TextView textViewScore = new TextView(getApplicationContext());  
+	            textViewScore.setTextSize(16);
+	            textViewScore.setTextColor(getApplicationContext().getResources().getColor(R.color.rr_grey));
+	            textViewScore.setPadding(10, 10, 10, 10);
+	            textViewScore.setWidth(50);
+	            textViewScore.getPaint().setFakeBoldText(true);
+	            textViewScore.setText(String.valueOf(mResults.get(i).mScore));                
+	            tablerow.addView(textViewScore);
+	            
+	            TextView textViewTime = new TextView(getApplicationContext());  
+	            textViewTime.setTextSize(16);
+	            textViewTime.setTextColor(getApplicationContext().getResources().getColor(R.color.rr_grey));
+	            textViewTime.setPadding(10, 10, 10, 10);
+	            textViewTime.setWidth(70);
+	            textViewTime.getPaint().setFakeBoldText(true);
+	            textViewTime.setText(mResults.get(i).getDate());                
+	            tablerow.addView(textViewTime);
+	              
+	            mTable.addView(tablerow, new TableLayout.LayoutParams(  
+	                    LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+	    	} 
+		}
+		  
 		super.onResume();
 	}	
 }
