@@ -28,6 +28,9 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 		case 2:
 			f = TutorialThree.newInstance(mContext);
 			break;
+		case 3:
+			f = TutorialEnd.newInstance(mContext);
+			break;
 		}
 		
 		return f;
@@ -35,7 +38,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
 	@Override
 	public int getCount() {
-		return 3;
+		return 4;
 	}
 
 }

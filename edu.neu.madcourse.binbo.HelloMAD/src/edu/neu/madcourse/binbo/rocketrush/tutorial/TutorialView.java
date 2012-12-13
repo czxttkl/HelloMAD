@@ -51,6 +51,8 @@ public class TutorialView extends View {
 				mImage = BitmapFactory.decodeResource(getResources(), R.drawable.tutorial_2);
 			} else if (mImageIndex == 2) {
 				mImage = BitmapFactory.decodeResource(getResources(), R.drawable.tutorial_3);
+			} else if (mImageIndex == 3) {
+				mImage = BitmapFactory.decodeResource(getResources(), R.drawable.tutorial_end);
 			}
 		}
 		Rect rect = new Rect(0, 0, mScreenWidth, mScreenHeight);
@@ -73,6 +75,9 @@ public class TutorialView extends View {
 			break;
 		case R.id.tutorialView3:
 			mImageIndex = 2;
+			break;
+		case R.id.tutorialEndView:
+			mImageIndex = 3;
 			break;	
 		}
 		

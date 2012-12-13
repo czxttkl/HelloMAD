@@ -47,9 +47,10 @@ public class ProgressView extends View implements OnTutorialChangedListener {
 		int width  = getWidth();
 		int height = getHeight();
 		// draw the dots
-		canvas.drawCircle(width / 2 - 40, height * 0.9f, 8, mPosition == 0 ? mPaintFocus : mPaint);
-		canvas.drawCircle(width / 2, height * 0.9f, 8, mPosition == 1 ? mPaintFocus : mPaint);
-		canvas.drawCircle(width / 2 + 40, height * 0.9f, 8, mPosition == 2 ? mPaintFocus : mPaint);
+		canvas.drawCircle(width / 2 - 60, height * 0.9f, 8, mPosition == 0 ? mPaintFocus : mPaint);
+		canvas.drawCircle(width / 2 - 20, height * 0.9f, 8, mPosition == 1 ? mPaintFocus : mPaint);
+		canvas.drawCircle(width / 2 + 20, height * 0.9f, 8, mPosition == 2 ? mPaintFocus : mPaint);
+		canvas.drawCircle(width / 2 + 60, height * 0.9f, 8, mPosition == 3 ? mPaintFocus : mPaint);
 	}
 
 	@Override

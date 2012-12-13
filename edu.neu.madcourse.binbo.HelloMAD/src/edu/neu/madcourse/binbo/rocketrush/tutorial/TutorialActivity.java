@@ -25,7 +25,7 @@ public class TutorialActivity extends FragmentActivity implements OnClickListene
 	private ViewPager mViewPager; // container for all tab views
 	private ViewPagerAdapter mAdapter;
 	private ProgressView mProgView;
-	private ImageButton  mButton = null;
+	//private ImageButton  mButton = null;
 	public boolean mStartNewActivity = true;	
 	protected OnTutorialChangedListener mListener = null;
     /** Called when the activity is first created. */
@@ -63,8 +63,8 @@ public class TutorialActivity extends FragmentActivity implements OnClickListene
 	    mProgView = (ProgressView)findViewById(R.id.progView);
 	    setOnTutorialChangedListener(mProgView);
  		
- 		mButton = (ImageButton) findViewById(R.id.skipButton); 		
-		mButton.setOnClickListener(this);
+ 		//mButton = (ImageButton) findViewById(R.id.skipButton); 		
+		//mButton.setOnClickListener(this);
 //		mButton.setVisibility(View.GONE);
     }
     
@@ -112,15 +112,15 @@ public class TutorialActivity extends FragmentActivity implements OnClickListene
     public void onClick(View v) {
 		Intent i = null;
 		
-		switch (v.getId()) {
-		case R.id.skipButton:	
-			if (mStartNewActivity) {
-				i = new Intent(this, RocketRushActivity.class);
-				startActivity(i);
-			}
-			finish();
-			break;		
-		}
+//		switch (v.getId()) {
+//		case R.id.endTutorialButton:	
+//			if (mStartNewActivity) {
+//				i = new Intent(this, RocketRushActivity.class);
+//				startActivity(i);
+//			}
+//			finish();
+//			break;		
+//		}
 	}
     
     @Override

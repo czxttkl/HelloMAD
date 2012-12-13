@@ -5,50 +5,6 @@
     android:layout_height="fill_parent"
     android:background="@color/white"
     android:orientation="vertical" >
-
-   <!--  <TableLayout
-        style="@style/layout_f_w"
-        android:stretchColumns="*" >
-        <TableRow
-            android:id="@+id/tableRow1"
-            android:background="#dddddd"
-            style="@style/layout_wrap">            
-            
-            First Tab
-	        <LinearLayout
-		        style="@style/layout_f_w"
-		        android:id="@+id/first_text"
-		        android:orientation="vertical" >		        
-                <TextView
-	                android:id="@+id/textView1"
-	                style="@style/text_title"
-	                android:text="Tab1" />                           
-	        </LinearLayout>
-	           
-	        Second Tab
-	        <LinearLayout
-		        style="@style/layout_f_w"
-		        android:id="@+id/second_text"
-		        android:orientation="vertical" >
-                <TextView
-                    android:id="@+id/textView2"
-                    style="@style/text_title"
-                    android:text="Tab2" />
-	        </LinearLayout>
-	        
-	        Second Tab
-	        <LinearLayout
-		        style="@style/layout_f_w"
-		        android:id="@+id/third_text"
-		        android:orientation="vertical" >
-                <TextView
-                    android:id="@+id/textView3"
-                    style="@style/text_title"
-                    android:text="Tab3" />
-	        </LinearLayout>
-	     
-        </TableRow>
-    </TableLayout> -->
     
     <!-- Include Tab Indicator  -->
  	<!-- <include 
@@ -67,6 +23,7 @@
 		android:background="#00000000"
 		android:id="@+id/progView" />		
 	
+	<!--
 	<ImageButton
     	android:id="@+id/skipButton"
     	android:background="#00000000"
@@ -75,6 +32,6 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_gravity="right|bottom"
-		android:padding="16dip" />
+		android:padding="16dip" /> -->
 	
 </FrameLayout>
