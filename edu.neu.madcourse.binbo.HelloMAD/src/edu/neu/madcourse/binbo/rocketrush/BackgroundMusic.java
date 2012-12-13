@@ -2,6 +2,7 @@ package edu.neu.madcourse.binbo.rocketrush;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.preference.PreferenceManager;
 
 public class BackgroundMusic {
 	private static MediaPlayer mPlayer = null;
@@ -11,13 +12,15 @@ public class BackgroundMusic {
 	public void create(Context context, int resource) {
 		stop();
 		// Start music only if not disabled in preferences
-		if (Prefs.getMusic(context)) {
+//		if (Prefs.getMusic(context)) {
 			mPlayer = MediaPlayer.create(context, resource);
 			if (mPlayer != null) {
 				mPlayer.setLooping(true);
-				mPlayer.setVolume(0.4f, 0.4f);				
+				float volume = 
+					PreferenceManager.getDefaultSharedPreferences(context).getInt(Setting.SND_KEY, 40) / 100f;
+				mPlayer.setVolume(volume, volume);				
 			}
-		}
+//		}
 		mSeekPos = 0;
 	}
 	

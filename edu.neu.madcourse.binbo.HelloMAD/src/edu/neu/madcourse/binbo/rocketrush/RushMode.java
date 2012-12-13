@@ -10,6 +10,7 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 
 public class RushMode extends GameMode {
@@ -205,7 +206,9 @@ public class RushMode extends GameMode {
 				    		soundID = mSoundIDs.get(4);
 				    		break;
 				    	}
-				    	mSoundPool.play(soundID, 0.4f, 0.4f, 10, 0, 1);
+				    	float volume = 
+							PreferenceManager.getDefaultSharedPreferences(mContext).getInt(Setting.SFX_KEY, 40) / 100f;
+				    	mSoundPool.play(soundID, volume, volume, 10, 0, 1);
 				    }
 				});
 			}

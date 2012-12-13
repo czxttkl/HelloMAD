@@ -183,7 +183,8 @@ public class RocketRushActivity extends FragmentActivity
 			switchGameMode(MODE_RUSH);
 			break;		
 		case R.id.settingsButton:
-			startActivity(new Intent(this, Prefs.class));
+			//startActivity(new Intent(this, Prefs.class));
+			startActivity(new Intent(this, Setting.class));
 			break;
 		case R.id.rankButton:
 			i = new Intent(this, GameRank.class);

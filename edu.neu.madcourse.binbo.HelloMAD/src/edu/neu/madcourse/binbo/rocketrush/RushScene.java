@@ -472,7 +472,9 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 		Message msg = new Message();
 		msg.what = odometer;
 		GameEvent e = new SceneEvent(SceneEvent.SCENE_MILESTONE, msg);
-		mEventHandler.handleGameEvent(e);		
+		mEventHandler.handleGameEvent(e);
+		
+		System.gc();
 	}
 
 	public void onLifeChanged(float life) {

@@ -172,6 +172,13 @@
             android:theme="@style/rocket_rush_dialog_2">
 		</activity>
 		
+		<activity android:name=".rocketrush.Setting"
+			android:screenOrientation="portrait"
+		    android:launchMode="singleTop"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/rocket_rush_dialog_2">
+		</activity>
+		
 		<activity android:name=".rocketrush.Acknowledge"
 			android:screenOrientation="portrait"
 		    android:launchMode="singleTop"

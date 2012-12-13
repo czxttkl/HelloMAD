@@ -31,8 +31,7 @@ public class WaitingMode extends GameMode {
 		if (mThread == null) {
 			mThread = new WaitingModeThread(mHandler);
 			mThread.start();
-		}
-		mBackgroundMusic.play();
+		}		
 		super.resume();
 	}
 
@@ -41,8 +40,7 @@ public class WaitingMode extends GameMode {
 		if (mThread != null) {
 			mThread.end();
 			mThread = null;
-		}
-		mBackgroundMusic.pause();
+		}		
 		super.pause();
 	}
 	
@@ -51,11 +49,13 @@ public class WaitingMode extends GameMode {
 		if (!mEnable) return;
 		
 		mBackgroundMusic.create(mContext, R.raw.bkg_music_1);
+		mBackgroundMusic.play();
 		super.start();		
 	}
 
 	@Override
 	public void stop() {
+		mBackgroundMusic.pause();
 		mBackgroundMusic.stop();
 		super.stop();
 	}
