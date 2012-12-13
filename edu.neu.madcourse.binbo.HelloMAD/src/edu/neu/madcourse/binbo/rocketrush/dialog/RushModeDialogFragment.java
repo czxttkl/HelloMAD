@@ -3,9 +3,11 @@ package edu.neu.madcourse.binbo.rocketrush.dialog;
 import edu.neu.madcourse.binbo.R;
 import edu.neu.madcourse.binbo.rocketrush.GameMode;
 import edu.neu.madcourse.binbo.rocketrush.RocketRushActivity;
+import edu.neu.madcourse.binbo.rocketrush.Setting;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
@@ -26,7 +28,11 @@ public class RushModeDialogFragment extends DialogFragment {
 		    	switch (which) {
 		    	case 0: // restart
 		    		mGameMode.restart();
-		    		break;
+		    		break;		    		
+//			    case 1: // restart
+//			    	Intent i = new Intent(mActivity, Setting.class);
+//			    	startActivity(i);
+//			    	break;
 		    	case 1: // exit		    		
 		    		mActivity.switchGameMode(0); // waiting mode
 		    		break;

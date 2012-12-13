@@ -12,7 +12,7 @@ public class GameMode implements IGameEventHandler {
 	// message handler
 	protected Handler mHandler = null;	
 	// music of the game
-	protected BackgroundMusic mBackgroundMusic = new BackgroundMusic();
+	protected BackgroundMusic mBackgroundMusic = BackgroundMusic.getInstance();
 	// flag to indicate whether the game mode is enabled
 	protected boolean mEnable = true;
 

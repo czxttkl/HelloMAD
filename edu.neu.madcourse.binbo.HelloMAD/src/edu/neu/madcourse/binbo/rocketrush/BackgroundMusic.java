@@ -7,7 +7,19 @@ import android.preference.PreferenceManager;
 public class BackgroundMusic {
 	private static MediaPlayer mPlayer = null;
 	private static int mSeekPos = 0;
+	private static BackgroundMusic sBackgroundMusic = null;
+	private static boolean sInitialized = false;
 	/** Stop old song and start new one */
+	
+	private BackgroundMusic() {}
+	
+	public static BackgroundMusic getInstance() {
+		if (!sInitialized) {
+			sBackgroundMusic = new BackgroundMusic();
+			sInitialized = true;
+		}
+		return sBackgroundMusic;
+	}
 
 	public void create(Context context, int resource) {
 		stop();

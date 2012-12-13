@@ -63,6 +63,8 @@ public class Setting extends Activity implements OnSeekBarChangeListener {
 		
 		if (seekBar == mSndSeek) {
 			editor.putInt(SND_KEY, progress);
+			float volume = progress / 100f;
+			BackgroundMusic.getInstance().setVolume(volume, volume);
 		} else if (seekBar == mSfxSeek) {
 			editor.putInt(SFX_KEY, progress);
 		}
