@@ -5,11 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Toast;
 import edu.neu.madcourse.binbo.boggle.Boggle;
 import edu.neu.madcourse.binbo.persistentboggle.PBWelcome;
-import edu.neu.madcourse.binbo.rocketrush.RocketRushActivity;
 import edu.neu.madcourse.binbo.rocketrush.splash.SplashActivity;
-import edu.neu.madcourse.binbo.rocketrush.tutorial.TutorialActivity;
 import edu.neu.madcourse.binbo.sudoku.Sudoku;
 import edu.neu.mobileClass.*;
 
@@ -38,7 +37,10 @@ public class HelloMAD extends Activity implements OnClickListener {
 		View finalprojectButton = this.findViewById(R.id.finalproject_button);
 		finalprojectButton.setOnClickListener(this);
 		
-		//PhoneCheckAPI.doAuthorization(this);
+		if (!PhoneCheckAPI.doAuthorization(this)) {
+			Toast.makeText(this, "Your phone hasn't been authorized!", Toast.LENGTH_SHORT).show();
+			finish();
+		}
 	}
 
 	public void onClick(View v) {

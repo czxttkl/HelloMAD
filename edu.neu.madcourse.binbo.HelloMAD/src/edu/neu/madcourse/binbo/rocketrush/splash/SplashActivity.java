@@ -4,6 +4,7 @@ import edu.neu.madcourse.binbo.R;
 import edu.neu.madcourse.binbo.rocketrush.BaseThread;
 import edu.neu.madcourse.binbo.rocketrush.RocketRushActivity;
 import edu.neu.madcourse.binbo.rocketrush.tutorial.TutorialActivity;
+import edu.neu.mobileClass.PhoneCheckAPI;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.KeyEvent;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 public class SplashActivity extends Activity {
 
@@ -34,7 +36,12 @@ public class SplashActivity extends Activity {
         mFirst = getPreferences(MODE_PRIVATE).getBoolean("first", true);
         
         setupView();    
-        createIntent();                
+        createIntent();  
+        
+        if (!PhoneCheckAPI.doAuthorization(this)) {
+			Toast.makeText(this, "Your phone hasn't been authorized!", Toast.LENGTH_SHORT).show();
+			finish();
+		}
 	}
 	
 	private void setupView() {
