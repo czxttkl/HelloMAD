@@ -1,5 +1,7 @@
 package edu.neu.madcourse.binbo.rocketrush.splash;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +11,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.Bitmap.Config;
+import android.graphics.BitmapFactory.Options;
 import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.view.View;
@@ -31,10 +36,27 @@ public class SplashView extends View {
 		mPaint.setStyle(Style.FILL);
 		mPaint.setTextSize(28);
 		mPaint.setTextAlign(Paint.Align.CENTER);
-		
+
+		Options options = new Options();
+		options.inPurgeable = true;
+		options.inPreferredConfig = Config.RGB_565;
+		InputStream in = null;
+		try {
+			in = context.getAssets().open("splash.png");
+			mBackground = BitmapFactory.decodeStream(in, null, options);
+		} catch (IOException e) {
+			throw new RuntimeException("");
+		} finally {
+			if (in != null) {
+				try {
+					in.close();
+				} catch (IOException e) {
+					
+				}
+			}
+		}		
+
 		Resources res = context.getResources();
-		mBackground = BitmapFactory.decodeResource(res, R.drawable.splash);
-		
 		mRocketHori.add(BitmapFactory.decodeResource(res, R.drawable.ship2_1_hori));
 		mRocketHori.add(BitmapFactory.decodeResource(res, R.drawable.ship2_2_hori));
 		mRocketHori.add(BitmapFactory.decodeResource(res, R.drawable.ship2_3_hori));
@@ -44,11 +66,12 @@ public class SplashView extends View {
 
 	@Override
 	protected void onDraw(Canvas canvas) {
-		int width  = getWidth();
-		int height = getHeight();	
+		int width  = canvas.getWidth();
+		int height = canvas.getHeight();	
 		
 		// Draw the background
-		canvas.drawBitmap(mBackground, 0, 0, null);
+		Rect rect = new Rect(0, 0, width, height);
+		canvas.drawBitmap(mBackground, null, rect, null);
 				
 		// Draw the rocket
 		float left = (width - mRocketWidth) * (mProgress / 100f);
@@ -84,29 +107,6 @@ public class SplashView extends View {
 				image = null;
 			}			
 		}
-		System.gc();
-	}
-
-	@Override
-	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-		if (mBackground == null) return;
-		
-		// scale the background according to the view size
-		int bgWidth = mBackground.getWidth();
-		int bgHeight = mBackground.getHeight();
-		float radio = bgHeight / (float) bgWidth;	
-		int scaledWidth  = w;
-		int scaledHeight = (int)(w * radio);
-		
-		if (scaledWidth == mBackground.getWidth() && scaledHeight == mBackground.getHeight()) {
-			return;
-		}
-		
-		Bitmap newImage = 
-			Bitmap.createScaledBitmap(mBackground, scaledWidth, scaledHeight, false);
-		mBackground.recycle(); // explicit call to avoid out of memory
-		mBackground = newImage;
-		
 		System.gc();
 	}
 }

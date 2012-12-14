@@ -1,14 +1,19 @@
 package edu.neu.madcourse.binbo.rocketrush.gameobjects;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Bitmap.Config;
+import android.graphics.BitmapFactory.Options;
 import edu.neu.madcourse.binbo.R;
 import edu.neu.madcourse.binbo.rocketrush.GameCtrl;
 import edu.neu.madcourse.binbo.rocketrush.GameEngine;
@@ -35,8 +40,9 @@ public class BackgroundFar extends Background {
 		}
 		sImageLoaded = true;
 		
-		BitmapFactory.Options options = new BitmapFactory.Options(); 
-        options.inPurgeable = true;
+		Options options = new Options();
+		options.inPurgeable = true;
+		options.inPreferredConfig = Config.RGB_565;
 		
 		sImages.add(BitmapFactory.decodeResource(res, R.drawable.bg1_far, options));
 		sImages.add(BitmapFactory.decodeResource(res, R.drawable.bg2_far, options));

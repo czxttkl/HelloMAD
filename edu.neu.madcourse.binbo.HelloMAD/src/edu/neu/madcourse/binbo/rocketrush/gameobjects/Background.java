@@ -1,5 +1,6 @@
 package edu.neu.madcourse.binbo.rocketrush.gameobjects;
 
+import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -9,16 +10,8 @@ public class Background extends GameObject {
 	protected Bitmap mImage = null;
 	
 	public Background(Resources res) {
-		super(res);		
+		super(res);	
 		setKind(BACKGROUND);
-		setMovable(false);
-		setCollidable(false);
-	}
-
-	public Background(Resources res, Bitmap image) {
-		super(res);
-		setKind(BACKGROUND);
-		setImage(image);
 		setMovable(false);
 		setCollidable(false);
 	}

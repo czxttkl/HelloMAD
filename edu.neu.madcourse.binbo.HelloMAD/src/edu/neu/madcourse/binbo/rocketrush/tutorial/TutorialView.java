@@ -1,12 +1,17 @@
 package edu.neu.madcourse.binbo.rocketrush.tutorial;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import edu.neu.madcourse.binbo.R;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BitmapFactory.Options;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Bitmap.Config;
 import android.graphics.Paint.Style;
 import android.graphics.Rect;
 import android.util.AttributeSet;
@@ -17,12 +22,13 @@ public class TutorialView extends View {
 	protected Bitmap mImage = null;
 	protected int mScreenWidth  = 0;
 	protected int mScreenHeight = 0;	
+	protected Context mContext = null;
 //	private Paint  mPaint = null;  // used for testing only
 //	private String mText  = "";    // used for testing only	
 	
 	public TutorialView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		
+		mContext = context;
 //		mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 //		mPaint.setColor(Color.BLUE);
 //		mPaint.setStyle(Style.FILL);
@@ -45,18 +51,39 @@ public class TutorialView extends View {
 	@Override
 	protected void onDraw(Canvas canvas) {	
 		if (mImage == null) {
+			String imageName = "tutorial_1.png";
 			if (mImageIndex == 0) {
-				mImage = BitmapFactory.decodeResource(getResources(), R.drawable.tutorial_1);
+				imageName = "tutorial_1.png";
 			} else if (mImageIndex == 1) {
-				mImage = BitmapFactory.decodeResource(getResources(), R.drawable.tutorial_2);
+				imageName = "tutorial_2.png";
 			} else if (mImageIndex == 2) {
-				mImage = BitmapFactory.decodeResource(getResources(), R.drawable.tutorial_3);
+				imageName = "tutorial_3.png";
 			} else if (mImageIndex == 3) {
-				mImage = BitmapFactory.decodeResource(getResources(), R.drawable.tutorial_end);
+				imageName = "tutorial_end.png";
+			}
+			
+			Options options = new Options();			
+			options.inPurgeable = true;
+			options.inPreferredConfig = Config.RGB_565;
+			InputStream in = null;
+			try {
+				in = mContext.getAssets().open(imageName);
+				mImage = BitmapFactory.decodeStream(in, null, options);
+			} catch (IOException e) {
+				throw new RuntimeException("");
+			} finally {
+				if (in != null) {
+					try {
+						in.close();
+					} catch (IOException e) {
+						
+					}
+				}
 			}
 		}
 		Rect rect = new Rect(0, 0, mScreenWidth, mScreenHeight);
-		canvas.drawBitmap(mImage, null, rect, null); 			
+		canvas.drawBitmap(mImage, null, rect, null);
+//		canvas.drawBitmap(mImage, 0, 0, null);
 //		mImage.recycle();
 //		mImage = null;		
 		System.gc();

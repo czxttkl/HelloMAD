@@ -1,8 +1,10 @@
 package edu.neu.madcourse.binbo.rocketrush.gameobjects;
 
+import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Bitmap.Config;
 import edu.neu.madcourse.binbo.R;
 import edu.neu.madcourse.binbo.rocketrush.GameCtrl;
 import edu.neu.madcourse.binbo.rocketrush.GameEngine;
@@ -12,13 +14,11 @@ public class MenuBackgroundFar extends Background {
 	public MenuBackgroundFar(Resources res) {
 		super(res);
 		setZOrder(ZOrders.BACKGROUND_FAR);		
-		setImage(BitmapFactory.decodeResource(res, R.drawable.bg_menu));
-	}
-	
-	public MenuBackgroundFar(Resources res, Bitmap image) {
-		super(res);
-		setZOrder(ZOrders.BACKGROUND_FAR);
-		setImage(image);
+		
+		BitmapFactory.Options options = new BitmapFactory.Options(); 
+        options.inPurgeable = true;
+        options.inPreferredConfig = Config.RGB_565;        
+		setImage(BitmapFactory.decodeResource(res, R.drawable.bg_menu, options));
 	}
 	
 	@Override

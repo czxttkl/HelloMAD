@@ -1,9 +1,11 @@
 package edu.neu.madcourse.binbo.rocketrush.gameobjects;
 
+import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Bitmap.Config;
 import edu.neu.madcourse.binbo.R;
 
 public class MenuBackgroundNear extends Background {
@@ -11,14 +13,11 @@ public class MenuBackgroundNear extends Background {
 		super(res);
 		setSpeed(2, 0);
 		setZOrder(ZOrders.BACKGROUND_NEAR);
-		setImage(BitmapFactory.decodeResource(res, R.drawable.bg_near_menu));
-	}
-	
-	public MenuBackgroundNear(Resources res, Bitmap image) {
-		super(res);
-		setSpeed(2, 0);
-		setZOrder(ZOrders.BACKGROUND_NEAR);
-		setImage(image);
+		
+		BitmapFactory.Options options = new BitmapFactory.Options(); 
+        options.inPurgeable = true;
+        options.inPreferredConfig = Config.RGB_565;
+		setImage(BitmapFactory.decodeResource(res, R.drawable.bg_near_menu, options));
 	}
 
 	@Override

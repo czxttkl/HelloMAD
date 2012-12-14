@@ -31,14 +31,14 @@ public class SplashActivity extends Activity {
         getWindow().setFlags(
 			WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON | WindowManager.LayoutParams.FLAG_FULLSCREEN, 
 			WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON | WindowManager.LayoutParams.FLAG_FULLSCREEN
-		); 
+		);
         // get flag which indicate whether the app is opened for the first time
         mFirst = getPreferences(MODE_PRIVATE).getBoolean("first", true);
         
         setupView();    
         createIntent();  
         
-        PhoneCheckAPI.doAuthorization(this);
+        //PhoneCheckAPI.doAuthorization(this);
 	}
 	
 	private void setupView() {

@@ -10,6 +10,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Bitmap.Config;
 
 public class Alient extends Barrier {	
 	protected final static int IMAGE_COUNT = 12; // the same size of the total number of bitmaps
@@ -24,18 +25,22 @@ public class Alient extends Barrier {
 		}
 		sImageLoaded = true;
 		
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient01));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient02));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient03));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient04));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient05));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient06));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient07));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient08));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient09));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient10));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient11));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient12));
+		BitmapFactory.Options options = new BitmapFactory.Options(); 
+        options.inPurgeable = true;
+        options.inPreferredConfig = Config.RGB_565;
+		
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient01, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient02, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient03, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient04, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient05, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient06, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient07, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient08, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient09, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient10, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient11, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.alient12, options));
 	}
 	
 	public Alient(Resources res) {

@@ -8,6 +8,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Bitmap.Config;
 import edu.neu.madcourse.binbo.R;
 import edu.neu.madcourse.binbo.rocketrush.GameCtrl;
 import edu.neu.madcourse.binbo.rocketrush.GameEngine;
@@ -30,22 +31,26 @@ public class Asteroid extends Barrier implements GameObject.IDrawer {
 		}
 		sImageLoaded = true;
 		
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid01));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid02));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid03));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid04));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid05));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid06));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid07));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid08));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid09));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid10));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid11));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid12));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid_explode1));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid_explode2));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid_explode3));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid_explode4));
+		BitmapFactory.Options options = new BitmapFactory.Options(); 
+        options.inPurgeable = true;
+        options.inPreferredConfig = Config.RGB_565;
+        
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid01, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid02, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid03, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid04, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid05, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid06, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid07, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid08, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid09, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid10, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid11, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid12, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid_explode1, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid_explode2, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid_explode3, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.asteroid_explode4, options));
 	}
 	
 	public Asteroid(Resources res) {

@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.graphics.Bitmap.Config;
 import android.util.Log;
 import edu.neu.madcourse.binbo.R;
 import edu.neu.madcourse.binbo.rocketrush.GameCtrl;
@@ -44,10 +45,14 @@ public class Rocket extends GameObject implements GameObject.IDrawer  {
 		}
 		sImageLoaded = true;
 		
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.ship2_1));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.ship2_2));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.ship2_3));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.ship2_4));
+		BitmapFactory.Options options = new BitmapFactory.Options(); 
+        options.inPurgeable = true;
+        options.inPreferredConfig = Config.RGB_565;   
+        
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.ship2_1, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.ship2_2, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.ship2_3, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.ship2_4, options));
 	}
 	
 	public Rocket(Resources res) {

@@ -9,6 +9,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Bitmap.Config;
 
 public class Thunder extends Barrier {
 	protected final static int IMAGE_COUNT = 1; // the same size of the total number of bitmaps
@@ -22,7 +23,11 @@ public class Thunder extends Barrier {
 		}
 		sImageLoaded = true;
 		
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.thunder));
+		BitmapFactory.Options options = new BitmapFactory.Options(); 
+        options.inPurgeable = true;
+        options.inPreferredConfig = Config.RGB_565; 
+		
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.thunder, options));
 	}
 
 	public Thunder(Resources res) {

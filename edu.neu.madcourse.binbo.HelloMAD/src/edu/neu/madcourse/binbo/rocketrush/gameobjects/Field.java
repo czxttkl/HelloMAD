@@ -9,6 +9,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Bitmap.Config;
 
 public class Field extends Reward {
 	protected final static int IMAGE_COUNT = 2; // the same size of the total number of bitmaps
@@ -28,9 +29,13 @@ public class Field extends Reward {
 		}
 		sImageLoaded = true;
 		
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.single_protector_1));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.single_protector_2));
-		sImages.add(BitmapFactory.decodeResource(res, R.drawable.protection_bubble));
+		BitmapFactory.Options options = new BitmapFactory.Options(); 
+        options.inPurgeable = true;
+        options.inPreferredConfig = Config.RGB_565; 
+        
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.single_protector_1, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.single_protector_2, options));
+		sImages.add(BitmapFactory.decodeResource(res, R.drawable.protection_bubble, options));
 	}
 	
 	public Field(Resources res) {

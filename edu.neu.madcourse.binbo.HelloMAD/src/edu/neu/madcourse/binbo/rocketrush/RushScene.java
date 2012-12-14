@@ -56,11 +56,11 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 	public List<GameObject> load() {
 		// create game objects
 		if (mBackgroundFar == null) {
-			mBackgroundFar = new BackgroundFar(mRes);			
+			mBackgroundFar = new BackgroundFar(mContext.getResources());			
 			mObjects.add(mBackgroundFar);
 		}
 		if (mBackgroundNear == null) {
-			mBackgroundNear = new BackgroundNear(mRes);			
+			mBackgroundNear = new BackgroundNear(mContext.getResources());			
 			mObjects.add(mBackgroundNear);
 		}
 		if (mSpeedBar == null) {
