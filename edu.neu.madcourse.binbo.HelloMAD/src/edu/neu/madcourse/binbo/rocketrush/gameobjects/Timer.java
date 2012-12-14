@@ -90,7 +90,7 @@ public class Timer extends Utility {
 		if (width <= 480) {
 			mPaint.setTextSize(32);
 		} else {
-			mPaint.setTextSize(38);
+			mPaint.setTextSize(40);
 		}
 	}
 	

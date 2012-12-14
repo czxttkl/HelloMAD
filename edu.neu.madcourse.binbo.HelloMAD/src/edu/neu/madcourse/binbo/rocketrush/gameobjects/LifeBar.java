@@ -113,7 +113,7 @@ public class LifeBar extends Utility {
 	    if (width <= 480) {
 	    	mPaint0.setTextSize(27);
 	    } else {
-	    	mPaint0.setTextSize(30);
+	    	mPaint0.setTextSize(32);
 	    }
 	}
 

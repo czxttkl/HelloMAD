@@ -102,7 +102,7 @@ public class Odometer extends Utility {
 		if (width <= 480) {
 			mPaint.setTextSize(27);
 	    } else {
-	    	mPaint.setTextSize(30);
+	    	mPaint.setTextSize(32);
 	    }
 	}
 }
