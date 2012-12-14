@@ -33,5 +33,14 @@
 		android:layout_height="wrap_content"
 		android:layout_gravity="right|bottom"
 		android:padding="16dip" /> -->
+		
+	<ImageButton
+    	android:id="@+id/endTutorialButton"
+    	android:background="#00000000"
+    	android:contentDescription="back"
+    	android:src="@drawable/btn_end_tutorial_selector"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"/>
 	
 </FrameLayout>

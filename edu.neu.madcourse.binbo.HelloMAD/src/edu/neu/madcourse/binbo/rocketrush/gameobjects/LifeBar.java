@@ -99,16 +99,22 @@ public class LifeBar extends Utility {
 		mCanvasHeight = height;
 	    
 	    r2.left   = 78;
-	    r2.top    = 26;
+	    r2.top    = 23;
 	    r2.right  = 68 + width / 3f;
-	    r2.bottom = 42;
+	    r2.bottom = 39;
 	    
 	    r3.left   = 78;
-	    r3.top    = 26;
+	    r3.top    = 23;
 	    r3.right  = 68 + width / 3f;
-	    r3.bottom = 42;
+	    r3.bottom = 39;
 	    
 	    mWidth = r3.right - r3.left;
+	    
+	    if (width <= 480) {
+	    	mPaint0.setTextSize(27);
+	    } else {
+	    	mPaint0.setTextSize(30);
+	    }
 	}
 
 	public interface OnLifeChangedListener {

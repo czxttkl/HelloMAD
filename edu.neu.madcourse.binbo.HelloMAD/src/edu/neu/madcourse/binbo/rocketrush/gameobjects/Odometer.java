@@ -96,4 +96,13 @@ public class Odometer extends Utility {
 		void onReachTarget(int odometer);
 		void onReachMilestone(int odometer);
 	}
+
+	@Override
+	public void onSizeChanged(int width, int height) {
+		if (width <= 480) {
+			mPaint.setTextSize(27);
+	    } else {
+	    	mPaint.setTextSize(30);
+	    }
+	}
 }

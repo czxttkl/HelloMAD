@@ -15,7 +15,7 @@ public class Timer extends Utility {
 	protected Paint mPaint = null;
 	protected int mTime = 40;
 	protected int mOneSecond = 1000;
-	protected String mTextTime = "Time: " + mTime;
+	protected String mTextTime = "Time " + mTime;
 	protected int mCanvasWidth  = 0;
 	protected int mCanvasHeight = 0;
 	protected OnTimeUpdateListener mTimeUpdateListener = null;
@@ -86,6 +86,12 @@ public class Timer extends Utility {
 	public void onSizeChanged(int width, int height) {
 		mCanvasWidth  = width;
 		mCanvasHeight = height;
+		
+		if (width <= 480) {
+			mPaint.setTextSize(32);
+		} else {
+			mPaint.setTextSize(38);
+		}
 	}
 	
 	public interface OnTimeUpdateListener {

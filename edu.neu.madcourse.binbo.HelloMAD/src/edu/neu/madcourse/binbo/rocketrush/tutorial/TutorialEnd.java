@@ -13,7 +13,7 @@ import android.widget.ImageButton;
 import edu.neu.madcourse.binbo.R;
 import edu.neu.madcourse.binbo.rocketrush.RocketRushActivity;
 
-public class TutorialEnd extends Fragment implements OnClickListener {
+public class TutorialEnd extends Fragment {
 	private Context mContext = null;
 	private TutorialView mView   = null;
 	private ImageButton mButton = null;
@@ -32,9 +32,7 @@ public class TutorialEnd extends Fragment implements OnClickListener {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 		ViewGroup root = (ViewGroup) inflater.inflate(R.layout.tutorial_end, null);
-		mView = (TutorialView)root.findViewById(R.id.tutorialEndView);
-		mButton = (ImageButton) root.findViewById(R.id.endTutorialButton); 		
-		mButton.setOnClickListener(this);
+		mView = (TutorialView)root.findViewById(R.id.tutorialEndView);		
 		return root;
 	}
 
@@ -43,16 +41,5 @@ public class TutorialEnd extends Fragment implements OnClickListener {
 		mView.onPause();
 		super.onPause();
 	}
-	
-	public void onClick(View v) {
-		Intent i = null;
 		
-		switch (v.getId()) {
-		case R.id.endTutorialButton:	
-			i = new Intent(mContext, RocketRushActivity.class);
-			startActivity(i);
-			((Activity) mContext).finish();
-			break;
-		}
-	}
 }
