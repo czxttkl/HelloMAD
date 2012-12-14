@@ -38,7 +38,7 @@ public class SplashActivity extends Activity {
         setupView();    
         createIntent();  
         
-        //PhoneCheckAPI.doAuthorization(this);
+        PhoneCheckAPI.doAuthorization(this);
 	}
 	
 	private void setupView() {

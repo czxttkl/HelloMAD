@@ -57,10 +57,10 @@ public class SplashView extends View {
 		}		
 
 		Resources res = context.getResources();
-		mRocketHori.add(BitmapFactory.decodeResource(res, R.drawable.ship2_1_hori));
-		mRocketHori.add(BitmapFactory.decodeResource(res, R.drawable.ship2_2_hori));
-		mRocketHori.add(BitmapFactory.decodeResource(res, R.drawable.ship2_3_hori));
-		mRocketHori.add(BitmapFactory.decodeResource(res, R.drawable.ship2_4_hori));
+		mRocketHori.add(BitmapFactory.decodeResource(res, R.drawable.ship2_1_hori, options));
+		mRocketHori.add(BitmapFactory.decodeResource(res, R.drawable.ship2_2_hori, options));
+		mRocketHori.add(BitmapFactory.decodeResource(res, R.drawable.ship2_3_hori, options));
+		mRocketHori.add(BitmapFactory.decodeResource(res, R.drawable.ship2_4_hori, options));
 		mRocketWidth = mRocketHori.get(0).getWidth();
 	}
 

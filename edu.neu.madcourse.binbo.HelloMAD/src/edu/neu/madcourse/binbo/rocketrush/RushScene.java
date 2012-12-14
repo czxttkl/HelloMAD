@@ -223,10 +223,10 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 	}
 	
 	// probabilities for creating barriers
-	private int mProbBird    = 90;
-	private int	mProbAster   = 190;
-	private int mProbAlient  = 135;
-	private int mProbThunder = 250;
+	private int mProbBird    = 95;
+	private int	mProbAster   = 195;
+	private int mProbAlient  = 145;
+	private int mProbThunder = 255;
 	
 	private void createBird(int probability) {		
 		// get the acceleration time 
@@ -367,7 +367,7 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 	}
 	
 	// probabilities for creating reward
-	protected int mProbReward = 1200;
+	protected int mProbReward = 1250;
 	// flag to indicate whether to generate the time bonus
 	protected boolean mGenerateTimeBonus = false;
 	
@@ -406,11 +406,11 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 			// algorithm: 
 			// for speed: ...
 			// for complexity: 1 / Math.pow(1.1, 6) * 1.363 / 1.1 Å 1 / 1.3
-			mLevel.mSpeedScaleX *= 0.9;
+			mLevel.mSpeedScaleX *= 0.875;
 			mLevel.mSpeedScaleY *= 0.875;
-			mProbBird    *= 1.25;
-			mProbAster   *= 1.25;
-			mProbAlient  *= 1.25;
+			mProbBird    *= 1.28;
+			mProbAster   *= 1.28;
+			mProbAlient  *= 1.28;
 			mProbThunder *= 1.2;
 			++mCurLoop;			
 		}
@@ -473,8 +473,6 @@ public class RushScene extends GameScene implements OnOdometerUpdateListener,
 		msg.what = odometer;
 		GameEvent e = new SceneEvent(SceneEvent.SCENE_MILESTONE, msg);
 		mEventHandler.handleGameEvent(e);
-		
-		System.gc();
 	}
 
 	public void onLifeChanged(float life) {
