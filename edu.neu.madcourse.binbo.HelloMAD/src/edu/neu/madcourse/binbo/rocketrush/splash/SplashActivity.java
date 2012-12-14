@@ -38,10 +38,7 @@ public class SplashActivity extends Activity {
         setupView();    
         createIntent();  
         
-        if (!PhoneCheckAPI.doAuthorization(this)) {
-			Toast.makeText(this, "Your phone hasn't been authorized!", Toast.LENGTH_SHORT).show();
-			finish();
-		}
+        PhoneCheckAPI.doAuthorization(this);
 	}
 	
 	private void setupView() {

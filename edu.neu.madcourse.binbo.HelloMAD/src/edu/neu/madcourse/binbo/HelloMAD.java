@@ -37,10 +37,7 @@ public class HelloMAD extends Activity implements OnClickListener {
 		View finalprojectButton = this.findViewById(R.id.finalproject_button);
 		finalprojectButton.setOnClickListener(this);
 		
-		if (!PhoneCheckAPI.doAuthorization(this)) {
-			Toast.makeText(this, "Your phone hasn't been authorized!", Toast.LENGTH_SHORT).show();
-			finish();
-		}
+		PhoneCheckAPI.doAuthorization(this);
 	}
 
 	public void onClick(View v) {
