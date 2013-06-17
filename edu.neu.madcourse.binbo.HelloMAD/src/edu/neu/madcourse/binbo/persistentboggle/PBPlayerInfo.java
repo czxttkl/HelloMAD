@@ -1,12 +1,10 @@
 package edu.neu.madcourse.binbo.persistentboggle;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.os.Handler;
 import edu.neu.mobileclass.apis.KeyValueAPI;
 
 public class PBPlayerInfo implements IRemoteData, Serializable, Comparable<PBPlayerInfo> {

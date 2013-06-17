@@ -5,10 +5,6 @@ import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import edu.neu.madcourse.binbo.R;
-import edu.neu.madcourse.binbo.R.drawable;
-import edu.neu.madcourse.binbo.persistentboggle.PBInvite.GetInfoThread;
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -22,6 +18,8 @@ import android.os.Looper;
 import android.os.Message;
 import android.view.View;
 import android.widget.ListView;
+import edu.neu.madcourse.binbo.R;
+import edu.neu.madcourse.binbo.persistentboggle.PBInvite.GetInfoThread;
 
 public class InviteService extends Service {  
 	  

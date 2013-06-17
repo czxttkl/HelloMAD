@@ -7,7 +7,6 @@ import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.util.Log;
 
 class PlayTask extends AsyncTask<Void, Integer, Void>{ 
 

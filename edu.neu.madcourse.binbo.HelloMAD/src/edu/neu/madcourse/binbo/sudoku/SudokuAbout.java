@@ -8,10 +8,9 @@
  ***/
 package edu.neu.madcourse.binbo.sudoku;
 
-import edu.neu.madcourse.binbo.R;
-import edu.neu.madcourse.binbo.R.layout;
 import android.app.Activity;
 import android.os.Bundle;
+import edu.neu.madcourse.binbo.R;
 
 public class SudokuAbout extends Activity {
 	@Override

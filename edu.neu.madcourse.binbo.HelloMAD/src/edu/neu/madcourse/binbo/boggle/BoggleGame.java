@@ -3,11 +3,6 @@ package edu.neu.madcourse.binbo.boggle;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.neu.madcourse.binbo.R;
-import edu.neu.madcourse.binbo.R.id;
-import edu.neu.madcourse.binbo.R.layout;
-import edu.neu.madcourse.binbo.R.raw;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
@@ -26,10 +21,10 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
@@ -39,6 +34,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import edu.neu.madcourse.binbo.R;
 
 
 public class BoggleGame extends Activity implements IBoggleGame, OnClickListener, OnTouchListener {

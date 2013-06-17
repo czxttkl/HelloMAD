@@ -1,12 +1,12 @@
 package edu.neu.madcourse.binbo.rocketrush.gameobjects;
 
-import edu.neu.madcourse.binbo.rocketrush.GameEngine;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.graphics.Paint.Style;
+import android.graphics.Typeface;
+import edu.neu.madcourse.binbo.rocketrush.GameEngine;
 
 public class Curtain extends Utility {
 

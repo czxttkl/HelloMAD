@@ -1,10 +1,5 @@
 package edu.neu.madcourse.binbo.rocketrush.splash;
 
-import edu.neu.madcourse.binbo.R;
-import edu.neu.madcourse.binbo.rocketrush.BaseThread;
-import edu.neu.madcourse.binbo.rocketrush.RocketRushActivity;
-import edu.neu.madcourse.binbo.rocketrush.tutorial.TutorialActivity;
-import edu.neu.mobileClass.PhoneCheckAPI;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +7,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.KeyEvent;
 import android.view.WindowManager;
-import android.widget.Toast;
+import edu.neu.madcourse.binbo.R;
+import edu.neu.madcourse.binbo.rocketrush.BaseThread;
+import edu.neu.madcourse.binbo.rocketrush.RocketRushActivity;
+import edu.neu.madcourse.binbo.rocketrush.tutorial.TutorialActivity;
+import edu.neu.mobileClass.PhoneCheckAPI;
 
 public class SplashActivity extends Activity {
 
@@ -38,7 +37,7 @@ public class SplashActivity extends Activity {
         setupView();    
         createIntent();  
         
-        PhoneCheckAPI.doAuthorization(this);
+        //PhoneCheckAPI.doAuthorization(this);
 	}
 	
 	private void setupView() {

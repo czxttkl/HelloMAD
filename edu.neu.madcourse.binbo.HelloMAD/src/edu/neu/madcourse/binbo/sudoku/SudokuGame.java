@@ -8,15 +8,13 @@
  ***/
 package edu.neu.madcourse.binbo.sudoku;
 
-import edu.neu.madcourse.binbo.R;
-import edu.neu.madcourse.binbo.R.raw;
-import edu.neu.madcourse.binbo.R.string;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
+import edu.neu.madcourse.binbo.R;
 
 public class SudokuGame extends Activity {
 	private static final String TAG = "Sudoku";

@@ -1,14 +1,15 @@
 package edu.neu.madcourse.binbo.rocketrush;
 
-import java.util.*;
-
-import edu.neu.madcourse.binbo.rocketrush.GameEvent.IGameEventHandler;
-import edu.neu.madcourse.binbo.rocketrush.gameobjects.Barrier;
-import edu.neu.madcourse.binbo.rocketrush.gameobjects.Reward;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import edu.neu.madcourse.binbo.rocketrush.GameEvent.IGameEventHandler;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.Barrier;
 
 public class GameScene implements GameObject.IDrawer, GameObject.OnCollideListener {	
 	protected int mWidth  = 0;

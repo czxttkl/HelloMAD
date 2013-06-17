@@ -8,12 +8,11 @@
  ***/
 package edu.neu.madcourse.binbo.sudoku;
 
-import edu.neu.madcourse.binbo.R;
-import edu.neu.madcourse.binbo.R.xml;
 import android.content.Context;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import edu.neu.madcourse.binbo.R;
 
 public class SudokuPrefs extends PreferenceActivity {
 	// Option names and default values

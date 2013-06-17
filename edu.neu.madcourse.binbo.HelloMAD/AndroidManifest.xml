@@ -33,7 +33,7 @@
         </activity>
         
         <activity 
-            android:name=".rocketrush.splash.SplashActivity"    
+            android:name=".rocketrush.splash.SplashActivity"
 			android:label="@string/rocket_rush_app"      
 			android:icon="@drawable/rocket_rush_launcher"
 			android:screenOrientation="portrait"

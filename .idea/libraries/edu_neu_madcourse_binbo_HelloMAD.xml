@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="edu.neu.madcourse.binbo.HelloMAD">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/edu.neu.madcourse.binbo.HelloMAD.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

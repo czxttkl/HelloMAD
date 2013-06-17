@@ -1,23 +1,18 @@
 package edu.neu.madcourse.binbo.rocketrush.dialog;
 
-import edu.neu.madcourse.binbo.R;
-import edu.neu.madcourse.binbo.rocketrush.GameMode;
-import edu.neu.madcourse.binbo.rocketrush.RocketRushActivity;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.view.ContextThemeWrapper;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import edu.neu.madcourse.binbo.R;
+import edu.neu.madcourse.binbo.rocketrush.GameMode;
+import edu.neu.madcourse.binbo.rocketrush.RocketRushActivity;
 
 public class GameOverDialogFragment extends DialogFragment implements OnClickListener {
 	protected RocketRushActivity mActivity = null;

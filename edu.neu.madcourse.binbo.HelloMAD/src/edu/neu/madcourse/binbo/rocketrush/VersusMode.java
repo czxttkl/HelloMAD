@@ -1,11 +1,9 @@
 package edu.neu.madcourse.binbo.rocketrush;
 
-import java.util.List;
-
-import edu.neu.madcourse.binbo.R;
 import android.content.Context;
 import android.hardware.SensorEventListener;
 import android.os.Handler;
+import edu.neu.madcourse.binbo.R;
 
 public class VersusMode extends GameMode {
 	

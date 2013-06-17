@@ -1,15 +1,13 @@
 package edu.neu.madcourse.binbo.rocketrush.dialog;
 
-import edu.neu.madcourse.binbo.R;
-import edu.neu.madcourse.binbo.rocketrush.GameMode;
-import edu.neu.madcourse.binbo.rocketrush.RocketRushActivity;
-import edu.neu.madcourse.binbo.rocketrush.Setting;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import edu.neu.madcourse.binbo.R;
+import edu.neu.madcourse.binbo.rocketrush.GameMode;
+import edu.neu.madcourse.binbo.rocketrush.RocketRushActivity;
 
 public class RushModeDialogFragment extends DialogFragment {
 	protected RocketRushActivity mActivity = null;

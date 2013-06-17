@@ -2,10 +2,6 @@ package edu.neu.madcourse.binbo.persistentboggle;
 
 import org.json.JSONException;
 
-import edu.neu.madcourse.binbo.R;
-import edu.neu.madcourse.binbo.R.id;
-import edu.neu.madcourse.binbo.R.layout;
-import edu.neu.mobileclass.apis.KeyValueAPI;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
+import edu.neu.madcourse.binbo.R;
 
 public class PBMain extends Activity implements OnClickListener {
 	private TextView mTextViewAccount;

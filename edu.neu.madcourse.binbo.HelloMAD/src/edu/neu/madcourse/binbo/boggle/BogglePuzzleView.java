@@ -4,18 +4,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import edu.neu.madcourse.binbo.R;
-import edu.neu.madcourse.binbo.R.color;
-import edu.neu.madcourse.binbo.persistentboggle.PBPlayerInfo;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Point;
-import android.graphics.Rect;
 import android.graphics.Paint.FontMetrics;
 import android.graphics.Paint.Style;
+import android.graphics.Point;
 import android.graphics.RectF;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
@@ -24,7 +19,8 @@ import android.os.Parcelable;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
+import edu.neu.madcourse.binbo.R;
+import edu.neu.madcourse.binbo.persistentboggle.PBPlayerInfo;
 
 public class BogglePuzzleView extends View {
 	private static final String TAG = "Boggle";

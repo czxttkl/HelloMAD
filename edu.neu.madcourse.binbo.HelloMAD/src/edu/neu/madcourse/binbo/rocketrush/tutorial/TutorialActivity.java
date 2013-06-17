@@ -1,23 +1,18 @@
 package edu.neu.madcourse.binbo.rocketrush.tutorial;
 
 
-import edu.neu.madcourse.binbo.R;
-import edu.neu.madcourse.binbo.rocketrush.RocketRushActivity;
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Point;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
-import android.widget.FrameLayout;
+import android.view.WindowManager;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
+import edu.neu.madcourse.binbo.R;
+import edu.neu.madcourse.binbo.rocketrush.RocketRushActivity;
 
 public class TutorialActivity extends FragmentActivity implements OnClickListener {
 	private ViewPager mViewPager; // container for all tab views

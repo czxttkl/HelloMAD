@@ -8,7 +8,6 @@ import android.graphics.Paint.Style;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import edu.neu.madcourse.binbo.rocketrush.GameEngine;
-import edu.neu.madcourse.binbo.rocketrush.GameObject;
 
 public class Level extends Utility {	
 	protected int mLevel = 1;

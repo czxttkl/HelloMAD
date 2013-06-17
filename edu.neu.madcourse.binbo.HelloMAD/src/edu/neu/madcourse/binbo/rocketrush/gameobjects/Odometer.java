@@ -1,17 +1,12 @@
 package edu.neu.madcourse.binbo.rocketrush.gameobjects;
 
-import java.util.List;
-
 import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.graphics.Paint.Style;
 import edu.neu.madcourse.binbo.rocketrush.GameCtrl;
 import edu.neu.madcourse.binbo.rocketrush.GameEngine;
-import edu.neu.madcourse.binbo.rocketrush.GameObject;
 
 public class Odometer extends Utility {
 

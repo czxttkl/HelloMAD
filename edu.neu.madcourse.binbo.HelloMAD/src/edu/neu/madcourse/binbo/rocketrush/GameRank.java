@@ -1,32 +1,21 @@
 package edu.neu.madcourse.binbo.rocketrush;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import edu.neu.madcourse.binbo.R;
-import edu.neu.madcourse.binbo.boggle.BogglePuzzleView;
-import edu.neu.madcourse.binbo.persistentboggle.PBInvite;
-import edu.neu.madcourse.binbo.persistentboggle.PBPlayerInfo;
 import android.graphics.Color;
-import android.graphics.Point;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
 import android.view.Display;
-import android.view.Gravity;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import edu.neu.madcourse.binbo.R;
 
 public class GameRank extends FragmentActivity {
 	protected TableLayout mTable = null;

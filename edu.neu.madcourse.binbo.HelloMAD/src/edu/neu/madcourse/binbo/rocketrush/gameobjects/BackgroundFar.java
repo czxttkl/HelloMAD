@@ -1,19 +1,14 @@
 package edu.neu.madcourse.binbo.rocketrush.gameobjects;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Rect;
-import android.graphics.RectF;
 import android.graphics.Bitmap.Config;
+import android.graphics.BitmapFactory;
 import android.graphics.BitmapFactory.Options;
+import android.graphics.Canvas;
 import edu.neu.madcourse.binbo.R;
 import edu.neu.madcourse.binbo.rocketrush.GameCtrl;
 import edu.neu.madcourse.binbo.rocketrush.GameEngine;

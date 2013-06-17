@@ -1,6 +1,5 @@
 package edu.neu.madcourse.binbo.rocketrush;
 
-import edu.neu.madcourse.binbo.R;
 import android.content.Context;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -9,6 +8,7 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.view.WindowManager;
+import edu.neu.madcourse.binbo.R;
 
 public class Prefs extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
 	// Option names and default values

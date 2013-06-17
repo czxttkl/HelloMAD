@@ -1,14 +1,10 @@
 package edu.neu.madcourse.binbo.rocketrush;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Canvas;
-import edu.neu.madcourse.binbo.rocketrush.gameobjects.Asteroid;
-import edu.neu.madcourse.binbo.rocketrush.gameobjects.BackgroundNear;
 import edu.neu.madcourse.binbo.rocketrush.gameobjects.MenuBackgroundFar;
 import edu.neu.madcourse.binbo.rocketrush.gameobjects.MenuBackgroundNear;
 

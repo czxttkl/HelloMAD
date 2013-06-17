@@ -3,7 +3,6 @@ package edu.neu.madcourse.binbo.rocketrush;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.neu.madcourse.binbo.R;
 import android.content.Context;
 import android.hardware.SensorEventListener;
 import android.media.AudioManager;
@@ -12,6 +11,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
+import edu.neu.madcourse.binbo.R;
 
 public class RushMode extends GameMode {
 	

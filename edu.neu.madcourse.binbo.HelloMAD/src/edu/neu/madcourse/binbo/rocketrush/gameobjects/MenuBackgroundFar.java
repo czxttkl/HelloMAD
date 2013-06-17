@@ -1,13 +1,10 @@
 package edu.neu.madcourse.binbo.rocketrush.gameobjects;
 
-import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Bitmap.Config;
+import android.graphics.BitmapFactory;
 import edu.neu.madcourse.binbo.R;
-import edu.neu.madcourse.binbo.rocketrush.GameCtrl;
-import edu.neu.madcourse.binbo.rocketrush.GameEngine;
 
 public class MenuBackgroundFar extends Background {
 

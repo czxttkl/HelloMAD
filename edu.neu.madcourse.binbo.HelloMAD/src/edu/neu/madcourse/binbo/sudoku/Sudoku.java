@@ -8,13 +8,6 @@
  ***/
 package edu.neu.madcourse.binbo.sudoku;
 
-import edu.neu.madcourse.binbo.R;
-import edu.neu.madcourse.binbo.R.array;
-import edu.neu.madcourse.binbo.R.id;
-import edu.neu.madcourse.binbo.R.layout;
-import edu.neu.madcourse.binbo.R.menu;
-import edu.neu.madcourse.binbo.R.raw;
-import edu.neu.madcourse.binbo.R.string;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -26,6 +19,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import edu.neu.madcourse.binbo.R;
 
 public class Sudoku extends Activity implements OnClickListener {
 	private static final String TAG = "Sudoku";

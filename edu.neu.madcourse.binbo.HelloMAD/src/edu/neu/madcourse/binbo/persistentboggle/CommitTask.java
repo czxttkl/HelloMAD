@@ -1,7 +1,5 @@
 package edu.neu.madcourse.binbo.persistentboggle;
 
-import java.util.ArrayList;
-
 import org.json.JSONException;
 
 import android.os.AsyncTask;

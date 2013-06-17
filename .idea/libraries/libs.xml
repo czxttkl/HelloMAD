@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="libs">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/edu.neu.madcourse.binbo.HelloMAD/libs/keyvalue.jar!/" />
+      <root url="jar://$PROJECT_DIR$/edu.neu.madcourse.binbo.HelloMAD/libs/mobclass.jar!/" />
+      <root url="jar://$PROJECT_DIR$/edu.neu.madcourse.binbo.HelloMAD/libs/android-support-v4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

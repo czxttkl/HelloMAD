@@ -1,11 +1,7 @@
 package edu.neu.madcourse.binbo.rocketrush.speech;
 
-import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 import android.media.AudioFormat;
 import android.media.AudioRecord;

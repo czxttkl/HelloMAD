@@ -3,19 +3,16 @@ package edu.neu.madcourse.binbo.rocketrush.tutorial;
 import java.io.IOException;
 import java.io.InputStream;
 
-import edu.neu.madcourse.binbo.R;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapFactory.Options;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Bitmap.Config;
-import android.graphics.Paint.Style;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
+import edu.neu.madcourse.binbo.R;
 
 public class TutorialView extends View {
 	protected int mImageIndex = 0;

@@ -1,9 +1,8 @@
 package edu.neu.madcourse.binbo.persistentboggle;
 
-import edu.neu.madcourse.binbo.R;
-import edu.neu.madcourse.binbo.R.layout;
 import android.app.Activity;
 import android.os.Bundle;
+import edu.neu.madcourse.binbo.R;
 
 public class PBAbout extends Activity {
 	@Override

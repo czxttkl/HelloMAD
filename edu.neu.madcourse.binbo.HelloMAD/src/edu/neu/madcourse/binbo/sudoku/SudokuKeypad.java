@@ -8,15 +8,12 @@
  ***/
 package edu.neu.madcourse.binbo.sudoku;
 
-import edu.neu.madcourse.binbo.R;
-import edu.neu.madcourse.binbo.R.id;
-import edu.neu.madcourse.binbo.R.layout;
-import edu.neu.madcourse.binbo.R.string;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import edu.neu.madcourse.binbo.R;
 
 public class SudokuKeypad extends Dialog {
 

@@ -1,9 +1,8 @@
 package edu.neu.madcourse.binbo.rocketrush;
 
-import edu.neu.madcourse.binbo.rocketrush.GameEvent.IGameEventHandler;
 import android.hardware.SensorEventListener;
-import android.media.SoundPool;
 import android.os.Handler;
+import edu.neu.madcourse.binbo.rocketrush.GameEvent.IGameEventHandler;
 
 
 public class GameMode implements IGameEventHandler {

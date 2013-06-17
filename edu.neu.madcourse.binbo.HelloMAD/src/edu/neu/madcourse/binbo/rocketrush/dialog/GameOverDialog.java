@@ -1,6 +1,5 @@
 package edu.neu.madcourse.binbo.rocketrush.dialog;
 
-import edu.neu.madcourse.binbo.R;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,6 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import edu.neu.madcourse.binbo.R;
 
 public class GameOverDialog extends Activity implements OnClickListener {
 	

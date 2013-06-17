@@ -1,6 +1,5 @@
 package edu.neu.madcourse.binbo.rocketrush.tutorial;
 
-import edu.neu.madcourse.binbo.rocketrush.tutorial.TutorialActivity.OnTutorialChangedListener;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -9,6 +8,7 @@ import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import edu.neu.madcourse.binbo.rocketrush.tutorial.TutorialActivity.OnTutorialChangedListener;
 
 public class ProgressView extends View implements OnTutorialChangedListener {
 	

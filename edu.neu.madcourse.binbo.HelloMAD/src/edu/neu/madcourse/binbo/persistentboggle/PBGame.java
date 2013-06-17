@@ -2,43 +2,50 @@ package edu.neu.madcourse.binbo.persistentboggle;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import org.json.JSONException;
-import org.json.JSONObject;
-
-import edu.neu.madcourse.binbo.R;
-import edu.neu.madcourse.binbo.R.id;
-import edu.neu.madcourse.binbo.R.layout;
-import edu.neu.madcourse.binbo.R.raw;
-import edu.neu.madcourse.binbo.boggle.BoggleMusic;
-import edu.neu.madcourse.binbo.boggle.BogglePuzzle;
-import edu.neu.madcourse.binbo.boggle.BogglePuzzleView;
-import edu.neu.madcourse.binbo.boggle.IBoggleGame;
-import edu.neu.madcourse.binbo.boggle.NativeDictionary;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
-import android.hardware.*;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
-import android.os.*;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.*;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.*;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+import edu.neu.madcourse.binbo.R;
+import edu.neu.madcourse.binbo.boggle.BoggleMusic;
+import edu.neu.madcourse.binbo.boggle.BogglePuzzle;
+import edu.neu.madcourse.binbo.boggle.BogglePuzzleView;
+import edu.neu.madcourse.binbo.boggle.IBoggleGame;
+import edu.neu.madcourse.binbo.boggle.NativeDictionary;
 
 public class PBGame extends Activity implements IBoggleGame, OnClickListener, OnTouchListener {
 	private static final String TAG = "Persistent Boggle";	

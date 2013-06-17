@@ -1,18 +1,17 @@
 package edu.neu.madcourse.binbo;
 
-import edu.neu.madcourse.binbo.rocketrush.splash.SplashActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ScrollView;
-import android.widget.TableLayout;
+import edu.neu.madcourse.binbo.rocketrush.splash.SplashActivity;
 
 public class Description extends Activity implements OnClickListener {
 	protected Button mStartButton = null;

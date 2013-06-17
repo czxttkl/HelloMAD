@@ -1,6 +1,5 @@
 package edu.neu.madcourse.binbo.rocketrush;
 
-import edu.neu.madcourse.binbo.R;
 import android.app.Activity;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -8,9 +7,9 @@ import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+import edu.neu.madcourse.binbo.R;
 
 public class Setting extends Activity implements OnSeekBarChangeListener {
 	public final static String SND_KEY = "sound volume";

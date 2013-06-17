@@ -4,11 +4,8 @@ import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.graphics.Paint.Style;
 import edu.neu.madcourse.binbo.rocketrush.GameEngine;
-import edu.neu.madcourse.binbo.rocketrush.GameObject;
-import edu.neu.madcourse.binbo.rocketrush.GameObject.ZOrders;
 
 public class Timer extends Utility {
 

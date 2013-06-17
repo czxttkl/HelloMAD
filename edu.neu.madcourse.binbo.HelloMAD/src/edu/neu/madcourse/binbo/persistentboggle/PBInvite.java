@@ -9,15 +9,8 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import edu.neu.madcourse.binbo.R;
-import edu.neu.madcourse.binbo.R.color;
-import edu.neu.madcourse.binbo.R.id;
-import edu.neu.madcourse.binbo.R.layout;
-import edu.neu.madcourse.binbo.R.string;
-
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -26,7 +19,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -34,6 +26,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
+import edu.neu.madcourse.binbo.R;
 
 public class PBInvite extends Activity implements OnClickListener {
 	private PBPlayerInfo mHostInfo = null;

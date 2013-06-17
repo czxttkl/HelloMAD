@@ -4,10 +4,6 @@ import java.util.Date;
 
 import org.json.JSONException;
 
-import edu.neu.madcourse.binbo.R;
-import edu.neu.madcourse.binbo.R.id;
-import edu.neu.madcourse.binbo.R.layout;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +11,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.Toast;
+import edu.neu.madcourse.binbo.R;
 
 public class PBSignUp extends Activity implements OnClickListener {
 	private EditText mEditTextAccount = null;

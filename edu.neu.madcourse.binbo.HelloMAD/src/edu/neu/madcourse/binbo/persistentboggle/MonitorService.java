@@ -4,9 +4,6 @@ import java.util.ArrayList;
 
 import org.json.JSONException;
 
-import edu.neu.madcourse.binbo.R;
-import edu.neu.madcourse.binbo.R.drawable;
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -19,6 +16,7 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
 import android.widget.Toast;
+import edu.neu.madcourse.binbo.R;
 
 
 public class MonitorService extends Service {  

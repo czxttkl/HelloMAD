@@ -1,10 +1,10 @@
 package edu.neu.madcourse.binbo.boggle;
 
-import edu.neu.madcourse.binbo.R;
 import android.content.Context;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import edu.neu.madcourse.binbo.R;
 
 public class BogglePrefs extends PreferenceActivity {
 	// Option names and default values

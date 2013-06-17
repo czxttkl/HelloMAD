@@ -4,16 +4,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import edu.neu.madcourse.binbo.rocketrush.gameobjects.*;
-import edu.neu.madcourse.binbo.rocketrush.gameobjects.Curtain.OnCurtainEventListener;
-import edu.neu.madcourse.binbo.rocketrush.gameobjects.LifeBar.OnLifeChangedListener;
-import edu.neu.madcourse.binbo.rocketrush.gameobjects.Odometer.OnOdometerUpdateListener;
-import edu.neu.madcourse.binbo.rocketrush.gameobjects.TimeBonus.OnGotTimeBonusListener;
-import edu.neu.madcourse.binbo.rocketrush.gameobjects.Timer.OnTimeUpdateListener;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.os.Message;
 import android.os.Vibrator;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.Alient;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.Asteroid;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.BackgroundFar;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.BackgroundNear;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.Barrier;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.Bird;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.Curtain;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.Curtain.OnCurtainEventListener;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.Field;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.Level;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.LifeBar;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.LifeBar.OnLifeChangedListener;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.Odometer;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.Odometer.OnOdometerUpdateListener;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.Rocket;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.SpeedBar;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.Thunder;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.TimeBonus;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.TimeBonus.OnGotTimeBonusListener;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.Timer;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.Timer.OnTimeUpdateListener;
+import edu.neu.madcourse.binbo.rocketrush.gameobjects.TrickyAlient;
 
 
 public class RushScene extends GameScene implements OnOdometerUpdateListener, 

@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import edu.neu.madcourse.binbo.R;
-import edu.neu.madcourse.binbo.rocketrush.GameEngine;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Bitmap.Config;
+import edu.neu.madcourse.binbo.R;
+import edu.neu.madcourse.binbo.rocketrush.GameEngine;
 
 public class Alient extends Barrier {	
 	protected final static int IMAGE_COUNT = 12; // the same size of the total number of bitmaps
